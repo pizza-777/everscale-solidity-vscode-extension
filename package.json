@@ -6,19 +6,18 @@
 	"engines": {
 		"vscode": "^1.59.0"
 	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/freeton20/ton-highlight"
+	},
 	"categories": [
 		"Snippets"
 	],
-	"activationEvents": [
-        "onCommand:ton-solidity.helloWorld"
+	"activationEvents": [	
+		"onLanguage:ton-solidity"		
 	],
 	"main": "./extension.js",
-	"contributes": {
-		"commands": [{
-            "command": "ton-solidity.helloWorld",
-            "title": "Hello World"
-
-		}],
+	"contributes": {		
 		"languages": [
 		  {
 			"id": "ton-solidity",

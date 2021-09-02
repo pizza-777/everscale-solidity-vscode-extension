@@ -528,7 +528,7 @@
                     }
                 },
                 {
-                    "match": "\\b(rand)\\.(next|getSeed|setSeed|shuffle)\\b",
+                    "match": "\\b(rnd)\\.(next|getSeed|setSeed|shuffle)\\b",
                     "captures": {
                         "1":{
                           "name":"entity.name.class"   

@@ -17,27 +17,27 @@ function activate(context) {
 	console.log('Congratulations, your extension "ton-solidity" is now active!');
 	disposable = vscode.languages.registerHoverProvider('ton-solidity', {
 		provideHover(document, position) {
-			const wordRange = document.getWordRangeAtPosition(position,new RegExp(/[A-Za-z\.]+/));
+			const wordRange = document.getWordRangeAtPosition(position, new RegExp(/[A-Za-z\.]+/));
 			const word = document.getText(wordRange);
 			let suggestion = null;
-			for(const [, value] of Object.entries(wordsSet)){
-				if(value.prefix == word)
-				if(Array.isArray(value.description)){					
-					suggestion = value.description.join("\n")
-				}else{
-					suggestion = value.description;
-				}   
-			}				
+			for (const [, value] of Object.entries(wordsSet)) {
+				if (word.includes(value.prefix))
+					if (Array.isArray(value.description)) {
+						suggestion = value.description.join("\n")
+					} else {
+						suggestion = value.description;
+					}
+			}
 			return new vscode.Hover(suggestion);
-		  }
+		}
 	});
-	
+
 	context.subscriptions.push(disposable);
 
 }
 
 // this method is called when your extension is deactivated
-function deactivate() {}
+function deactivate() { }
 
 module.exports = {
 	activate,

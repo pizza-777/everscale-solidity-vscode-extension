@@ -314,18 +314,39 @@
             "name": "keyword.control.unchecked"
         },
         "control-pragma": {
-            "match": "\\b(pragma)(?:\\s+([A-Za-z_]\\w+)\\s+([^\\s]+))?\\b",
-            "captures": {
-                "1": {
-                    "name": "keyword.control.pragma"
+            "patterns": [
+                {
+                    "match": "(pragma) (msgValue|AbiHeader|solidity|ton-solidity|experimental) ([0-9a-zA-Z\\.\\s<>=]+)(;)",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.control.pragma"
+                        },
+                        "2": {
+                            "name": "entity.name.tag.pragma"
+                        },
+                        "3": {
+                            "name": "constant.numeric"
+                        },
+                        "4": {
+                            "name":"punctuation.terminator.statement"
+                        }
+                    }
                 },
-                "2": {
-                    "name": "entity.name.tag.pragma"
-                },
-                "3": {
-                    "name": "constant.other.pragma"
+                {
+                    "match": "(pragma) (ignoreIntOverflow)(;)",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.control.pragma"
+                        },
+                        "2": {
+                            "name": "entity.name.tag.pragma"
+                        },
+                        "3": {
+                            "name": "punctuation.terminator.statement"
+                        }
+                    }
                 }
-            }
+            ]            
         },
         "control-underscore": {
             "match": "\\b(_)\\b",

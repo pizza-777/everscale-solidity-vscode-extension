@@ -7,10 +7,11 @@
 		},
 		"pragma solidity":{
 			"prefix": "pragmа solidity",
-			"body": "pragma solidity ${1:version};"
+			"body": "pragma solidity ${1:version};",
+			"description":"standart solidity version pragma"
 		},
 		"pragma ton-solidity":{
-			"prefix": "pragmt",
+			"prefix": "pragma ton-solidity",
 			"body": "pragma ton-solidity >= ${1:version};",
 			"description":[
 				"It's used to reject compilation source file with some versions of the compiler.\n",
@@ -20,9 +21,9 @@
 				"pragma ton-solidity < 0.35.5; \n// Check compiler version is less 0.35.5"
 			]
 		},
-		"pragma ignoreIntOverflow":{
-			"prefix": "pragmа ignoreIntOverflow",
-			"body": "pragma ignoreIntOverflow;",
+		"ignoreIntOverflow":{
+			"prefix": "ignoreIntOverflow",
+			"body": "ignoreIntOverflow;",
 			"description": "Turns off binary operation result overflow check."
 		},
 		"pragma AbiHeader":{

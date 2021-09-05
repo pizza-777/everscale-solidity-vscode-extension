@@ -7,6 +7,7 @@ const { getErrors } = require('./utils');
 const wordsSet = snippets_json['.source.ton-solidity'];
 
 let _tondevTerminal;
+let t_out;
 /**
  * @param {vscode.ExtensionContext} context
  */
@@ -16,8 +17,8 @@ function activate(context) {
 	console.log('Congratulations, your extension "ton-solidity" is now active!');
 	disposable = vscode.languages.registerHoverProvider('ton-solidity', {
 		provideHover(document, position) {
-			const wordRange = document.getWordRangeAtPosition(position, new RegExp(/[A-Za-z\.]+/));
-			const word = document.getText(wordRange);
+			const wordRange = document.getWordRangeAtPosition(position, /\S{1,30}/);
+			const word = document.getText(wordRange);			
 			let suggestion = null;
 			for (const [, value] of Object.entries(wordsSet)) {
 				if (word.includes(value.prefix))
@@ -68,8 +69,8 @@ function updateDiagnostics(document, collection) {
 		let collectionSet = r.map(value => {			
 			
 			return {
-				code: value.info,
-				message: 'message',
+				code: '',
+				message: value.info,
 				range: new vscode.Range(new vscode.Position(value.coord.raw-1, value.coord.position-1), new vscode.Position(value.coord.raw-1, value.coord.position + value.errorLenght-1)),
 				severity: value.severity == 'Error' ? vscode.DiagnosticSeverity.Error : vscode.DiagnosticSeverity.Warning,
 				source: '',
@@ -80,6 +81,7 @@ function updateDiagnostics(document, collection) {
 		})
 		collection.set(document.uri, collectionSet);		
 	})
+}
 
 async function runCommand(command, args) {
 	const terminal = tondevTerminal();

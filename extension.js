@@ -21,12 +21,14 @@ function activate(context) {
 			const word = document.getText(wordRange);			
 			let suggestion = null;
 			for (const [, value] of Object.entries(wordsSet)) {
-				if (word.includes(value.prefix))
+				if (word.includes(value.prefix)){
 					if (Array.isArray(value.description)) {
 						suggestion = value.description.join("\n")
 					} else {
 						suggestion = value.description;
 					}
+					break;
+				}					
 			}
 			return new vscode.Hover(suggestion);
 		}
@@ -51,7 +53,6 @@ function activate(context) {
 			updateDiagnostics(documentChangeEvent.document, collection);
 		}
 	}));
-
 }
 
 function updateDiagnostics(document, collection) {
@@ -66,8 +67,7 @@ function updateDiagnostics(document, collection) {
 	args['file'] = filePath;
 	args['output'] = '';
 	runCommand(compileCommand, args).then( r => {
-		let collectionSet = r.map(value => {			
-			
+		let collectionSet = r.map(value => {	
 			return {
 				code: '',
 				message: value.info,

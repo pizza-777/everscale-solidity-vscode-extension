@@ -1,10 +1,5 @@
 {
 	".source.ton-solidity": {
-		"spdx license": {
-			"prefix": "spdx", 
-			"body": "// SPDX-License-Identifier: MIT",
-			"description": "SPDX License"
-		},
 		"pragma solidity":{
 			"prefix": "pragmа solidity",
 			"body": "pragma solidity ${1:version};",
@@ -48,19 +43,23 @@
 			]
 		},
 		"import contract": {
-			"prefix": "imp",
+			"prefix": "import",
 			"body": "import '${1:contract}';"
 		},
         "contract declaration": {
-			"prefix": "con",
+			"prefix": "contract",
 			"body": "contract ${1:Name} {\n\t$0\n}"
 		},
 		"library declaration": {
-			"prefix": "lib",
-			"body": "library ${1:Name} {\n\t$0\n}"
+			"prefix": "library",
+			"body": "library ${1:Name} {\n\t$0\n}",
+			"description": [
+				"Libraries are similar to contracts, but they cannot have state variables and cannot inherit nor be inherited. Libraries can be seen as implicit base contracts of the contracts that use them. \nThey will not be explicitly visible in the inheritance \nhierarchy, but calls to library functions look just like calls to functions \nof explicit base contracts (using qualified access like LibName.func(a, b, c)). \nThere is also another way to call library function: obj.func(b, c).\n",
+				"For now libraries are stored as a part of the code of the contact that uses libraries. In future, it can be changed.\n"
+			]
 		},
 		"interface declaration": {
-			"prefix": "interf",
+			"prefix": "interface",
 			"body": "interface ${1:Name} {\n\t$0\n}"
 		},
 		"enum declaration": {
@@ -68,11 +67,11 @@
 			"body": "enum ${1:Name} {${2:item1}, ${3:item2} }"
 		},
         "mapping declaration":{
-            "prefix": "map",
+            "prefix": "mapping",
 			"body": "mapping (${1:type1}=>${2:type2}) ${3:name};"
 		},
 		"constructor declaration": {
-			"prefix": "const",
+			"prefix": "constructor",
 			"body": "constructor (${1:type} ${2:name}) public {\n\t$0\n}"
 		},
         "function declaration": {
@@ -89,7 +88,7 @@
 			"body": "function ${1:name}(${2:type} ${3:name}) view public returns (${4:type} ${5:name}) {\n\t$0\n}"
         },
         "event declaration": {
-			"prefix": "ev",
+			"prefix": "event",
 			"body": "event ${1:name}(${2:type} ${3:name} $0);"
         },
 		"error declaration": {
@@ -97,7 +96,7 @@
 			"body": "error ${1:name}(${2:type} ${3:name} $0);"
         },
         "modifier declaration": {
-			"prefix": "mod",
+			"prefix": "modifier",
 			"body": "modifier ${1:name}($2) {\n\t$0_\n}"
         },
         "if else statement": {
@@ -994,7 +993,8 @@
 				"require(bool condition, [uint errorCode = 100, [Type exceptionArgument]]);\n",
 				"require function can be used to check \nthe condition and throw an exception if the \ncondition is not met. \nThe function takes condition and optional parameters: \nerror code (unsigned integer) and \nthe object of any type.\n",
 				"Example:",
-				"uint a = 5;\nrequire(a == 6, 101, \"a is not equal to six\");"
+				"uint a = 5;",
+				"require(a == 6, 101, \"a is not equal to six\");"
 			]
 		},
         "revert": {
@@ -1531,6 +1531,129 @@
 				"gasToValue(uint128 value, int8 wid) returns (uint128 gas)\n",	
 				"Returns how much gas could be bought on value \nnanotons in workchain wid. \nThrows an exception if wid doesn't equal 0 and -1.\n"	
 			]			
-		}			
+		},
+        "constant": {
+			"prefix": "constant",
+			"body": "constant ${1:name} = ${0:value};",			
+			"description": [
+				"Example: uint constant cost = 100;\n",	
+				"For constant variables, the value has to be \na constant at compile time and this value is \nsubstituted where the variable is used. \nThe value has to be assigned where the \nvariable is declared.\n"	
+			]			
+		},
+        "static": {
+			"prefix": "static",
+			"body": "static ${0:name};",			
+			"description": [				
+				"Static state variables are used in generation \nof the contract origin state. Such variables can be \nset while deploying contract from contract \n(onchain) or by tvm-linker (offchain).\n",	
+				"Example: ",
+				"uint static a; ",
+				"// ok // uint static b = 123; // error\n"	
+			]			
+		},
+        "nano": {
+			"prefix": "nano",
+			"body": "nano",			
+			"description": [				
+				"1 nano = 0.000000001 ton or 1e-9ton\n"				
+			]			
+		},
+        "nanoton": {
+			"prefix": "nanoton",
+			"body": "nanoton",			
+			"description": [				
+				"1 nanoton == 0.000000001 ton or 1e-9ton\n"				
+			]			
+		},
+        "nTon": {
+			"prefix": "nTon",
+			"body": "nTon",			
+			"description": [				
+				"1 nTon == 0.000000001 ton or 1e-9ton\n"				
+			]			
+		},
+        "ton": {
+			"prefix": "ton",
+			"body": "ton",			
+			"description": [				
+				"1 ton == 1e9 nanoton\n"				
+			]			
+		},
+        "Ton": {
+			"prefix": "Ton",
+			"body": "Ton",			
+			"description": [				
+				"1 Ton == 1e9 nanoton\n"				
+			]			
+		},
+        "micro": {
+			"prefix": "micro",
+			"body": "micro",			
+			"description": [				
+				"1 Ton == 1e-6 ton\n"				
+			]			
+		},
+        "microton": {
+			"prefix": "microton",
+			"body": "microton",			
+			"description": [				
+				"1 microton == 1e-6 ton\n"				
+			]			
+		},
+        "milli": {
+			"prefix": "milli",
+			"body": "milli",			
+			"description": [				
+				"1 milli == 1e-3 ton\n"				
+			]			
+		},
+        "milliton": {
+			"prefix": "milliton",
+			"body": "milliton",			
+			"description": [				
+				"1 milliton == 1e-3 ton\n"				
+			]			
+		},
+        "kiloton": {
+			"prefix": "kiloton",
+			"body": "kiloton",			
+			"description": [				
+				"1 kiloton == 1e3 ton\n"				
+			]			
+		},
+        "kTon": {
+			"prefix": "kTon",
+			"body": "kTon",			
+			"description": [				
+				"1 kTon == 1e3 ton\n"				
+			]			
+		},
+        "megaton": {
+			"prefix": "megaton",
+			"body": "megaton",			
+			"description": [				
+				"1 kTon == 1e6 ton\n"				
+			]			
+		},
+        "MTon": {
+			"prefix": "MTon",
+			"body": "MTon",			
+			"description": [				
+				"1 MTon == 1e6 ton\n"				
+			]			
+		},
+        "gigaton": {
+			"prefix": "gigaton",
+			"body": "gigaton",			
+			"description": [				
+				"1 gigaton == 1e6 gigaton\n"				
+			]			
+		},
+        "GTon": {
+			"prefix": "GTon",
+			"body": "GTon",			
+			"description": [				
+				"1 GTon == 1e6 GTon\n"				
+			]			
+		}		
     }
 }

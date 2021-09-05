@@ -10,10 +10,10 @@
 			"body": "pragma ton-solidity >= ${1:version};",
 			"description":[
 				"It's used to reject compilation source file with some versions of the compiler.\n",
-				"Examples:",
-				"pragma ton-solidity >= 0.35.5; \n// Check compiler version is at least 0.35.5",
-				"pragma ton-solidity ^ 0.35.5; \n// Check compiler version is at least 0.35.5 and less 0.36.0",
-				"pragma ton-solidity < 0.35.5; \n// Check compiler version is less 0.35.5"
+				"Example:\n",
+				"pragma ton-solidity >= 0.35.5; // Check compiler version is at least 0.35.5",
+				"pragma ton-solidity ^ 0.35.5; // Check compiler version is at least 0.35.5 and less 0.36.0",
+				"pragma ton-solidity \\< 0.35.5; // Check compiler version is less 0.35.5"
 			]
 		},
 		"ignoreIntOverflow":{
@@ -25,7 +25,7 @@
 			"prefix": "pragmа AbiHeader",
 			"body": "pragma AbiHeader ${1|time,pubkey,expire|};",
 			"description": [
-				"Force message forming utility to fill \nan appropriate field(s) in the header of \nthe exteranl inbound message to be \nsent to this contract:\n",
+				"Force message forming utility to fill an appropriate field(s) in the header of the exteranl inbound message to be sent to this contract:\n",
 				" * pubkey - public key by which the message can be signed;",
 				" * time - local time at what message was created;",
 				" * expire - time at which message should be meant as expired."
@@ -35,10 +35,10 @@
 			"prefix": "pragma msgValue",
 			"body": "pragma msgValue ${1: value};",
 			"description": [
-				"pragma msgValue <value>;\n",
-				"Allows specifying default value in nanotons \nattached to the internal messages that \ncontract sends to call another contract. \nIf it's not specified, this value is set \nto 10 000 000 nanotons.",
-				"Examples:",
-				"pragma msgValue 123456789;",
+				"pragma msgValue \\<value>;\n",
+				"Allows specifying default value in nanotons attached to the internal messages that contract sends to call another contract. If it's not specified, this value is set to 10 000 000 nanotons.\n",
+				"Example:\n",
+				"pragma msgValue 123456789;\n",
 				"pragma msgValue 1 ton;"
 			]
 		},
@@ -54,8 +54,8 @@
 			"prefix": "library",
 			"body": "library ${1:Name} {\n\t$0\n}",
 			"description": [
-				"Libraries are similar to contracts, but they cannot have state variables and cannot inherit nor be inherited. Libraries can be seen as implicit base contracts of the contracts that use them. \nThey will not be explicitly visible in the inheritance \nhierarchy, but calls to library functions look just like calls to functions \nof explicit base contracts (using qualified access like LibName.func(a, b, c)). \nThere is also another way to call library function: obj.func(b, c).\n",
-				"For now libraries are stored as a part of the code of the contact that uses libraries. In future, it can be changed.\n"
+				"Libraries are similar to contracts, but they cannot have state variables and cannot inherit nor be inherited. Libraries can be seen as implicit base contracts of the contracts that use them. They will not be explicitly visible in the inheritance hierarchy, but calls to library functions look just like calls to functions of explicit base contracts (using qualified access like LibName.func(a, b, c)). There is also another way to call library function: obj.func(b, c).\n",
+				"For now libraries are stored as a part of the code of the contact that uses libraries. In future, it can be changed."
 			]
 		},
 		"interface declaration": {
@@ -105,7 +105,7 @@
 		},
         "for statement": {
 			"prefix": "for",
-			"body": "for (uint256 ${1:index} = 0; $1 < ${2:array}.length; $1${3:++}) {\n\t$0\n}"
+			"body": "for (uint256 ${1:index} = 0; $1 \\< ${2:array}.length; $1${3:++}) {\n\t$0\n}"
 		},
 		"unchecked" : {
 			"prefix": "unchecked",
@@ -135,7 +135,7 @@
 			"prefix": ".depth",
 			"body": ".depth()",
 			"description": [
-				"<TvmCell>.depth() returns(uint64);",
+				"\\<TvmCell>.depth() returns(uint64);\n",
 				"Returns the depth of TvmCell c. If c has no references, then d = 0; otherwise d is one plus the maximum of depths of cells referred to from c. If c is a Null instead of a Cell, returns zero."
 			]
 		},
@@ -143,7 +143,7 @@
 			"prefix": ".dataSize",
 			"body": ".dataSize(${uint n})",
 			"description": [
-				"<TvmCell>.dataSize(uint n) returns (uint /*cells*/, uint /*bits*/, uint /*refs*/);",
+				"\\<TvmCell>.dataSize(uint n) returns (uint /\\*cells\\*/, uint /\\*bits\\*/, uint /\\*refs\\*/);\n",
 				"Returns the count of distinct cells, data bits in the distinct cells and cell references in the distinct cells. If count of the distinct cells exceeds n+1 then a cell overflow exception (8) is thrown. This function is a wrapper for opcode \"CDATASIZE\" "
 			]
 		},
@@ -151,7 +151,7 @@
 			"prefix": ".dataSizeQ",
 			"body": ".dataSizeQ(${uint n})",
 			"description": [
-				"<TvmCell>.dataSizeQ(uint n) returns (optional(uint /*cells*/, uint /*bits*/, uint /*refs*/));",
+				"\\<TvmCell>.dataSizeQ(uint n) returns (optional(uint /\\*cells\\*/, uint /\\*bits\\*/, uint /\\*refs\\*/));\n",
 				"Returns the count of distinct cells, data bits in the distinct cells and cell references in the distinct cells. If count of the distinct cells exceeds n+1 then this function returns an optional that has no value. This function is a wrapper for opcode \"CDATASIZEQ\" "
 			]
 		},
@@ -159,7 +159,7 @@
 			"prefix": ".toSlice",
 			"body": ".toSlice()",
 			"description": [
-				"<TvmCell>.toSlice() returns (TvmSlice);",
+				"\\<TvmCell>.toSlice() returns (TvmSlice);\n",
 				"Converts the cell to a slice."
 			]
 		},
@@ -167,15 +167,15 @@
 			"prefix": ".empty",
 			"body": ".empty()",
 			"description": [
-				"<TvmSlice>.empty() returns (bool);\n",
-				"Checks whether a Slice is empty \n(i.e., contains no bits of data and no cell references)."
+				"\\<TvmSlice>.empty() returns (bool);\n",
+				"Checks whether a Slice is empty (i.e., contains no bits of data and no cell references)."
 			]
 		},
 		"<TvmSlice>.size": {
 			"prefix": ".size",
 			"body": ".size()",
 			"description": [
-				"<TvmSlice>.size() returns (uint16 /*bits*/, uint8 /*refs*/);",
+				"\\<TvmSlice>.size() returns (uint16 /\\*bits\\*/, uint8 /\\*refs\\*/);\n",
 				"Returns number of data bits and references in the slice."
 			]
 		},
@@ -183,7 +183,7 @@
 			"prefix": ".dataSize",
 			"body": ".dataSize(${uint n})",
 			"description": [
-				"<TvmSlice>.dataSize(uint n) returns (uint /*cells*/, uint /*bits*/, uint /*refs*/);",
+				"\\<TvmSlice>.dataSize(uint n) returns (uint /\\*cells\\*/, uint /\\*bits\\*/, uint /\\*refs\\*/);\n",
 				"Returns the count of distinct cells, data bits in the distinct cells and cell references in the distinct cells. If count of the distinct cells exceeds n+1 then a cell overflow exception (8) is thrown. Note that the returned count of distinct cells does not take into account the cell that contains the slice itself. This function is a wrapper for opcode SDATASIZE"
 			]
 		},
@@ -191,7 +191,7 @@
 			"prefix": ".dataSizeQ",
 			"body": ".dataSizeQ(${uint n})",
 			"description": [
-				"<TvmSlice>.dataSizeQ(uint n) returns (optional(uint /*cells*/, uint /*bits*/, uint /*refs*/));",
+				"\\<TvmSlice>.dataSizeQ(uint n) returns (optional(uint /\\*cells\\*/, uint /\\*bits\\*/, uint /\\*refs\\*/));\n",
 				"Returns the count of distinct cells, data bits in the distinct cells and cell references in the distinct cells. If count of the distinct cells exceeds n+1 then this function returns an optional that has no value. Note that the returned count of distinct cells does not take into account the cell that contains the slice itself. This function is a wrapper for opcode SDATASIZEQ"
 			]
 		},
@@ -199,7 +199,7 @@
 			"prefix": ".bits",
 			"body": ".bits()",
 			"description": [
-				"<TvmSlice>.bits() returns (uint16);",
+				"\\<TvmSlice>.bits() returns (uint16);\n",
 				"Returns number of references in the slice."
 			]
 		},
@@ -207,7 +207,7 @@
 			"prefix": ".refs",
 			"body": ".refs()",
 			"description": [
-				"<TvmSlice>.refs() returns (uint8);",
+				"\\<TvmSlice>.refs() returns (uint8);\n",
 				"Returns number of references in the slice."
 			]
 		},
@@ -215,7 +215,7 @@
 			"prefix": ".bitsAndRefs",
 			"body": ".bitsAndRefs()",
 			"description": [
-				"<TvmSlice>.bitsAndRefs() returns (uint16, uint8);",
+				"\\<TvmSlice>.bitsAndRefs() returns (uint16, uint8);\n",
 				"Returns number of data bits and references in the slice."
 			]
 		},
@@ -223,7 +223,7 @@
 			"prefix": ".depth",
 			"body": ".depth()",
 			"description": [
-				"<TvmSlice>.depth() returns (uint64);",
+				"\\<TvmSlice>.depth() returns (uint64);\n",
 				"Returns the depth of the slice. If slice has no references, then 0 is returned, otherwise function result is one plus the maximum of depths of the cells referred to from the slice."
 			]
 		},
@@ -231,7 +231,7 @@
 			"prefix": ".hasNBits",
 			"body": ".hasNBits(${uint16 bits}))",
 			"description": [
-				"<TvmSlice>.hasNBits(uint16 bits) returns (bool);",
+				"\\<TvmSlice>.hasNBits(uint16 bits) returns (bool);\n",
 				"Checks whether the slice contains the specified amount of data bits."
 			]
 		},
@@ -239,7 +239,7 @@
 			"prefix": ".hasNRefs",
 			"body": ".hasNRefs(${uint8 bits}))",
 			"description": [
-				"<TvmSlice>.hasNRefs(uint8 bits) returns (bool);",
+				"\\<TvmSlice>.hasNRefs(uint8 bits) returns (bool);\n",
 				"Checks whether the slice contains the specified amount of references."
 			]
 		},
@@ -247,7 +247,7 @@
 			"prefix": ".hasNBitsAndRefs",
 			"body": ".hasNBitsAndRefs(${uint16 bits}, ${uint8 refs})",
 			"description": [
-				"<TvmSlice>.hasNBitsAndRefs(uint16 bits, uint8 refs) returns (bool);",
+				"\\<TvmSlice>.hasNBitsAndRefs(uint16 bits, uint8 refs) returns (bool);\n",
 				"Checks whether the slice contains the specified amount of data bits and references."
 			]
 		},
@@ -255,22 +255,22 @@
 			"prefix": ".compare",
 			"body": ".compare(${1:TvmSlice other})",
 			"description": [
-				"<TvmSlice>.compare(TvmSlice other) returns (int8);",
-				"Lexicographically compares the slice and other data bits of the root slice and returns result as an integer:",
-				"1 - slice > other",
-				"0 - slice == other",
-				"-1 - slice < other"
+				"\\<TvmSlice>.compare(TvmSlice other) returns (int8);\n",
+				"Lexicographically compares the slice and other data bits of the root slice and returns result as an integer:\n",
+				" * 1 - slice > other",
+				" * 0 - slice == other",
+				" * -1 - slice < other"
 			]
 		},
 		"<TvmSlice>.decode": {
 			"prefix": ".decode",
 			"body": ".decode(${1:TypeA}, ${2:TypeB} ...)",
 			"description": [
-				"<TvmSlice>.decode(TypeA, TypeB, ...) returns (TypeA /*a*/, TypeB /*b*/, ...);",
-				"Supported types: uintN, intN, bytesN, bool, ufixedMxN, fixedMxN, address, contract, TvmCell, bytes, string, mapping, ExtraCurrencyCollection, array, optional and struct",
-				"Example:",
-				"TvmSlice slice = ...;",
-				"(uint8 a, uint16 b) = slice.decode(uint8, uint16);",
+				"\\<TvmSlice>.decode(TypeA, TypeB, ...) returns (TypeA /\\*a\\*/, TypeB /\\*b\\*/, ...);\n",
+				"Supported types: `uintN`, `intN`, `bytesN`, `bool`, `ufixedMxN`, `fixedMxN`, `address`, `contract`, `TvmCell`, `bytes`, `string`, `mapping`, `ExtraCurrencyCollection`, `array`, `optional` and `struct`\n",
+				"Example:\n",
+				"TvmSlice slice = ...;\n",
+				"(uint8 a, uint16 b) = slice.decode(uint8, uint16);\n",
 				"(uint16 num0, uint32 num1, address addr) = slice.decode(uint16, uint32, address);"
 			]
 		},
@@ -278,7 +278,7 @@
 			"prefix": ".loadRef",
 			"body": ".loadRef()",
 			"description": [
-				"<TvmSlice>.loadRef() returns (TvmCell);",
+				"\\<TvmSlice>.loadRef() returns (TvmCell);\n",
 				"Loads a cell from the slice reference."				
 			]
 		},
@@ -286,7 +286,7 @@
 			"prefix": ".loadRefAsSlice",
 			"body": ".loadRefAsSlice()",
 			"description": [
-				"<TvmSlice>.loadRefAsSlice() returns (TvmSlice);",
+				"\\<TvmSlice>.loadRefAsSlice() returns (TvmSlice);\n",
 				"Loads a cell from the slice reference and converts it into a slice."				
 			]
 		},
@@ -294,7 +294,7 @@
 			"prefix": ".loadSigned",
 			"body": ".loadSigned(${1:uint16 bitSize})",
 			"description": [
-				"<TvmSlice>.loadSigned(uint16 bitSize) returns (int);",
+				"\\<TvmSlice>.loadSigned(uint16 bitSize) returns (int);\n",
 				"Loads a signed integer with the given bitSize from the slice."				
 			]
 		},
@@ -302,7 +302,7 @@
 			"prefix": ".loadSiloadUnsignedgned",
 			"body": ".loadUnsigned(${1:uint16 bitSize})",
 			"description": [
-				"<TvmSlice>.loadSigned(uint16 bitSize) returns (uint);",
+				"\\<TvmSlice>.loadSigned(uint16 bitSize) returns (uint);\n",
 				"Loads an unsigned integer with the given bitSize from the slice."				
 			]
 		},
@@ -310,7 +310,7 @@
 			"prefix": ".loadTons",
 			"body": ".loadTons()",
 			"description": [
-				"<TvmSlice>.loadTons() returns (uint128);",
+				"\\<TvmSlice>.loadTons() returns (uint128);\n",
 				"Loads (deserializes) VarUInteger 16 and returns an unsigned 128-bit integer."				
 			]
 		},
@@ -318,8 +318,8 @@
 			"prefix": ".loadSlice",
 			"body": ".loadSlice()",
 			"description": [
-				"<TvmSlice>.loadSlice(uint length) returns (TvmSlice);",
-				"<TvmSlice>.loadSlice(uint length, uint refs) returns (TvmSlice);",				
+				"\\<TvmSlice>.loadSlice(uint length) returns (TvmSlice);\n",
+				"\\<TvmSlice>.loadSlice(uint length, uint refs) returns (TvmSlice);\n",				
 				"Loads the first length bits and refs references from the slice into a separate slice."				
 			]
 		},
@@ -327,22 +327,22 @@
 			"prefix": ".decodeFunctionParams",
 			"body": ".decodeFunctionParams(${1:functionName})",
 			"description": [
-				"Decodes parameters of the function or constructor (if contract type is provided). This function is usually used in onBounce function.",
-				"Examples:",
-				"Decode parameters of the public function which doesn't return values:",
-				"<TvmSlice>.decodeFunctionParams(functionName) returns (TypeA /*a*/, TypeB /*b*/, ...);",
-				"Decode parameters of the public function which returns values:",
-				"<TvmSlice>.decodeFunctionParams(functionName) returns (uint32 callbackFunctionId, TypeA /*a*/, TypeB /*b*/, ...);",
-				"Decode constructor parameters:",				
-				"<TvmSlice>.decodeFunctionParams(ContractName) returns (TypeA /*a*/, TypeB /*b*/, ...);"				
+				"Decodes parameters of the function or constructor (if contract type is provided). This function is usually used in onBounce function.\n",
+				"Example:\n",
+				"Decode parameters of the public function which doesn't return values:\n",
+				"\\<TvmSlice>.decodeFunctionParams(functionName) returns (TypeA /\\*a\\*/, TypeB /\\*b\\*/, ...);\n",
+				"Decode parameters of the public function which returns values:\n",
+				"\\<TvmSlice>.decodeFunctionParams(functionName) returns (uint32 callbackFunctionId, TypeA /\\*a\\*/, TypeB /\\*b\\*/, ...);\n",
+				"Decode constructor parameters:\n",				
+				"\\<TvmSlice>.decodeFunctionParams(ContractName) returns (TypeA /\\*a\\*/, TypeB /\\*b\\*/, ...);"				
 			]
 		},
 		"<TvmSlice>.skip": {
 			"prefix": ".skip",
 			"body": ".skip(${1:uint length}${0: ,uint refs})",
 			"description": [
-				"<TvmSlice>.skip(uint length);",
-				"<TvmSlice>.skip(uint length, uint refs);",				
+				"\\<TvmSlice>.skip(uint length);\n",
+				"\\<TvmSlice>.skip(uint length, uint refs);\n",				
 				"Skips the first length bits and refs references from the slice."				
 			]
 		},
@@ -350,7 +350,7 @@
 			"prefix": ".toSlice",
 			"body": ".toSlice()",
 			"description": [
-				"<TvmBuilder>.toSlice() returns (TvmSlice);",
+				"\\<TvmBuilder>.toSlice() returns (TvmSlice);\n",
 				"Converts the builder into a slice."								
 			]
 		},
@@ -358,7 +358,7 @@
 			"prefix": ".toCell",
 			"body": ".toCell()",
 			"description": [
-				"<TvmBuilder>.toCell() returns (TvmCell);",
+				"\\<TvmBuilder>.toCell() returns (TvmCell);\n",
 				"Converts the builder into a cell."								
 			]
 		},
@@ -366,7 +366,7 @@
 			"prefix": ".bits",
 			"body": ".bits()",
 			"description": [
-				"<TvmBuilder>.bits() returns (uint16);",
+				"\\<TvmBuilder>.bits() returns (uint16);\n",
 				"Returns the number of data bits already stored in the builder."								
 			]
 		},
@@ -374,7 +374,7 @@
 			"prefix": ".refs",
 			"body": ".refs()",
 			"description": [
-				"<TvmBuilder>.refs() returns (uint8);",
+				"\\<TvmBuilder>.refs() returns (uint8);\n",
 				"Returns the number of references already stored in the builder."								
 			]
 		},
@@ -382,7 +382,7 @@
 			"prefix": ".bitsAndRefs",
 			"body": ".bitsAndRefs()",
 			"description": [
-				"<TvmBuilder>.bitsAndRefs() returns (uint16 /*bits*/, uint8 /*refs*/);",
+				"\\<TvmBuilder>.bitsAndRefs() returns (uint16 /\\*bits\\*/, uint8 /\\*refs\\*/);\n",
 				"Returns the number of data bits and references already stored in the builder."								
 			]
 		},
@@ -390,7 +390,7 @@
 			"prefix": ".remBits",
 			"body": ".remBits()",
 			"description": [
-				"<TvmBuilder>.remBits() returns (uint16);",
+				"\\<TvmBuilder>.remBits() returns (uint16);\n",
 				"Returns the number of data bits that can still be stored in the builder."								
 			]
 		},
@@ -398,7 +398,7 @@
 			"prefix": ".remRefs",
 			"body": ".remRefs()",
 			"description": [
-				"<TvmBuilder>.remRefs() returns (uint8);",
+				"\\<TvmBuilder>.remRefs() returns (uint8);\n",
 				"Returns the number of references that can still be stored in the builder."								
 			]
 		},
@@ -406,7 +406,7 @@
 			"prefix": ".remBitsAndRefs",
 			"body": ".remBitsAndRefs()",
 			"description": [
-				"<TvmBuilder>.remBitsAndRefs() returns (uint16 /*bits*/, uint8 /*refs*/);",
+				"\\<TvmBuilder>.remBitsAndRefs() returns (uint16 /\\*bits\\*/, uint8 /\\*refs\\*/);\n",
 				"Returns the number of data bits and references that can still be stored in the builder."								
 			]
 		},
@@ -414,7 +414,7 @@
 			"prefix": ".depth",
 			"body": ".depth()",
 			"description": [
-				"<TvmBuilder>.depth() returns (uint64);",
+				"\\<TvmBuilder>.depth() returns (uint64);\n",
 				"Returns the depth of the builder. If no cell references are stored in the builder, then 0 is returned; otherwise function result is one plus the maximum of depths of cells referred to from the builder."								
 			]
 		},
@@ -422,12 +422,12 @@
 			"prefix": ".store",
 			"body": ".store(${list_of_values})",
 			"description": [
-				"<TvmBuilder>.store(/*list_of_values*/);",
-				"Stores the list of values in the builder.",
-				"Example:",							
-				"uint8 a = 11;",
-				"int16 b = 22;",
-				"TvmBuilder builder;",
+				"\\<TvmBuilder>.store(/\\*list_of_values\\\\*/);\n",
+				"Stores the list of values in the builder.\n",
+				"Example:\n",							
+				"uint8 a = 11;\n",
+				"int16 b = 22;\n",
+				"TvmBuilder builder;\n",
 				"builder.store(a, b, uint(33));"			
 			]
 		},
@@ -435,7 +435,7 @@
 			"prefix": ".storeOnes",
 			"body": ".storeOnes(${1:uint n})",
 			"description": [
-				"<TvmBuilder>.storeOnes(uint n);",
+				"\\<TvmBuilder>.storeOnes(uint n);\n",
 				"Stores n binary ones into Builder."								
 			]
 		},
@@ -443,7 +443,7 @@
 			"prefix": ".storeZeroes",
 			"body": ".storeZeroes(${1:uint n})",
 			"description": [
-				"<TvmBuilder>.storeZeroes(uint n);",
+				"\\<TvmBuilder>.storeZeroes(uint n);\n",
 				"Stores n binary zeroes into Builder."
 			]
 		},
@@ -451,7 +451,7 @@
 			"prefix": ".storeSigned",
 			"body": ".storeSigned(${1:int256 value}, ${2:uint16 bitSize})",
 			"description": [
-				"<TvmBuilder>.storeSigned(int256 value, uint16 bitSize);",
+				"\\<TvmBuilder>.storeSigned(int256 value, uint16 bitSize);\n",
 				"Stores a signed integer value with given bitSize in the builder."
 			]
 		},
@@ -459,7 +459,7 @@
 			"prefix": ".storeUnsigned",
 			"body": ".storeUnsigned(${1:uint256 value}, ${2:uint16 bitSize})",
 			"description": [
-				"<TvmBuilder>.storeUnsigned(uint256 value, uint16 bitSize);",
+				"\\<TvmBuilder>.storeUnsigned(uint256 value, uint16 bitSize);\n",
 				"Stores an unsigned integer value with given bitSize in the builder."
 			]
 		},
@@ -467,9 +467,9 @@
 			"prefix": ".storeRef",
 			"body": ".storeRef(${1|TvmBuilder b,TvmCell c,TvmSlice s|})",
 			"description": [
-			"<TvmBuilder>.storeRef(TvmBuilder b);",
-			"<TvmBuilder>.storeRef(TvmCell c);",
-			"<TvmBuilder>.storeRef(TvmSlice s);",
+			"\\<TvmBuilder>.storeRef(TvmBuilder b);\n",
+			"\\<TvmBuilder>.storeRef(TvmCell c);\n",
+			"\\<TvmBuilder>.storeRef(TvmSlice s);\n",
 			"Stores TvmBuilder b/TvmCell c/TvmSlice c in the reference of the builder."				
 			]
 		},
@@ -477,7 +477,7 @@
 			"prefix": ".storeTons",
 			"body": ".storeTons(${1:uint128 value}})",
 			"description": [
-				"<TvmBuilder>.storeTons(uint128 value);",
+				"\\<TvmBuilder>.storeTons(uint128 value);\n",
 				"Stores (serializes) an integer value and stores it in the builder as VarUInteger 16. See TL-B scheme."
 			]
 		},
@@ -485,7 +485,7 @@
 			"prefix": ".get",
 			"body": ".get()",
 			"description": [
-				"<optional(Type)>.get() returns (Type);",
+				"\\<optional(Type)>.get() returns (Type);\n",
 				"Returns the contained value, if the optional contains one. Otherwise, throws an exception."
 			]
 		},
@@ -493,36 +493,20 @@
 			"prefix": ".hasValue",
 			"body": ".hasValue()",
 			"description": [
-				"<optional(Type)>.hasValue() returns (bool);",
+				"\\<optional(Type)>.hasValue() returns (bool);\n",
 				"Checks whether opt contains a value."
-			]
-		},
-		"<optional(Type)>.set": {
-			"prefix": ".set",
-			"body": ".set(${1:Type value})",
-			"description": [
-				"<optional(Type)>.set(Type value);",
-				"Replaces the content of the optional with the contents of other."
-			]
-		},
-		"<optional(Type)>.reset": {
-			"prefix": ".reset",
-			"body": ".reset()",
-			"description": [
-				"<optional(Type)>.reset();",
-				"Deletes the content of the optional."
 			]
 		},
 		"<vector(Type)>.push": {
 			"prefix": ".push",
 			"body": ".push(${1:Type obj})",
 			"description": [
-				"<vector(Type)>.push(Type obj);",
+				"\\<vector(Type)>.push(Type obj);\n",
 				"Appends obj to the vector.\n",
-				"Example:",
-				"vector(uint) vect;",
-				"uint a = 11;",
-				"vect.push(a);",
+				"Example:\n",
+				"vector(uint) vect;\n",
+				"uint a = 11;\n",
+				"vect.push(a);\n",
 				"vect.push(111);"
 			]
 		},
@@ -530,11 +514,11 @@
 			"prefix": ".pop",
 			"body": ".pop()",
 			"description": [
-				"<vector(Type)>.pop() returns (Type);",
+				"\\<vector(Type)>.pop() returns (Type);\n",
 				"Pops the last value from the vector and returns is.\n",
-				"Example:",
-				"vector(uint) vect;",
-				"...",
+				"Example:\n",
+				"vector(uint) vect;\n",
+				"...\n",
 				"uint a = vect.pop();"				
 			]
 		},
@@ -542,11 +526,11 @@
 			"prefix": ".length",
 			"body": ".length()",
 			"description": [
-				"<vector(Type)>.length() returns (uint8);",
+				"\\<vector(Type)>.length() returns (uint8);\n",
 				"Returns length of the vector.\n",
-				"Example:",
-				"vector(uint) vect;",
-				"...",
+				"Example:\n",
+				"vector(uint) vect;\n",
+				"...\n",
 				"uint8 len = vect.length();"			
 			]
 		},
@@ -554,11 +538,11 @@
 			"prefix": ".empty",
 			"body": ".empty()",
 			"description": [
-				"<vector(Type)>.empty() returns (bool);",
+				"\\<vector(Type)>.empty() returns (bool);\n",
 				"Checks whether the vector is empty.\n",
-				"Example:",
-				"vector(uint) vect;",
-				"...",
+				"Example:\n",
+				"vector(uint) vect;\n",
+				"...\n",
 				"bool is_empty = vect.empty();"			
 			]
 		},
@@ -567,7 +551,7 @@
 			"body": "for ((uint ${1:key}, uint ${2:value}) : ${3:range_expression}) {\n\t$0\n}",
 			"description": [
 				"Executes a for loop over a range.\n",
-				"Examples:",
+				"Example:\n",
 				"for (uint val : arr) {}// iteration over array ",
 				"for ((uint32 key, uint value) : map) {} // iteration over mapping ",
 				"for ((, uint value) : map) {} // key is omitted  "
@@ -584,10 +568,10 @@
 			"description": [
 				"bitSize(int x) returns (uint16)",
 				"bitSize computes the smallest c ≥ 0 such that x fits into a c-bit signed integer (−2c−1 ≤ x < 2c−1).\n",
-				"Example:",
+				"Example:\n",
 				"require(bitSize(12) == 5); // 12 == 1100(in bin sys)",
-				"require(bitSize(1) == 2);",
-				"require(bitSize(-1) == 1);",
+				"require(bitSize(1) == 2);\n",
+				"require(bitSize(-1) == 1);\n",
 				"require(bitSize(0) == 0);"							
 			]
 		},
@@ -596,10 +580,10 @@
 			"body": "uBitSize(${1:uint x})",
 			"description": [
 				"uBitSize(int x) returns (uint16)",
-				"uBitSize computes the smallest c ≥ 0 such that x fits into a c-bit unsigned integer (0 ≤ x < 2c).",
+				"uBitSize computes the smallest c ≥ 0 such that x fits into a c-bit unsigned integer (0 ≤ x < 2c).\n",
 				"Example:\n",
-				"require(uBitSize(10) == 4);",
-				"require(uBitSize(1) == 1);",
+				"require(uBitSize(10) == 4);\n",
+				"require(uBitSize(1) == 1);\n",
 				"require(uBitSize(0) == 0);"							
 			]
 		},
@@ -607,8 +591,8 @@
 			"prefix": ".unpack",
 			"body": ".unpack()",
 			"description": [
-				"<struct>.unpack() returns (TypeA /*a*/, TypeB /*b*/, ...);",
-				"Unpacks all members stored in the struct.",
+				"\\<struct>.unpack() returns (TypeA /\\*a\\*/, TypeB /\\*b\\\\*/, ...);\n",
+				"Unpacks all members stored in the struct.\n",
 				"Example:\n",
 				"struct MyStruct {\n\tuint a;\n\tint b;\n\taddress c;\n}\n",
 				"function f() pure public {\n\tMyStruct s = MyStruct(1, -1, address(2));\n\t(uint a, int b, address c) = s.unpack();\n}"							
@@ -618,8 +602,8 @@
 			"prefix": ".empty",
 			"body": ".empty()",
 			"description": [
-				"<array>.empty() returns (bool);",
-				"Returns status flag whether the array is empty (its length is 0).",
+				"\\<array>.empty() returns (bool);\n",
+				"Returns status flag whether the array is empty (its length is 0).\n",
 				"Example:\n",
 				"uint[] arr;\nrequire(arr.empty());\narr.push();\nrequire(!arr.empty());"							
 			]
@@ -628,7 +612,7 @@
 			"prefix": ".empty",
 			"body": ".empty()",
 			"description": [
-				"<bytes>.empty() returns (bool);\n",
+				"\\<bytes>.empty() returns (bool);\n",
 				"Returns status flag whether the bytes is empty (its length is 0)."				
 			]
 		},
@@ -636,7 +620,7 @@
 			"prefix": ".length",
 			"body": ".length",
 			"description": [
-				"<bytes>.length returns (uint)\n",
+				"\\<bytes>.length returns (uint)\n",
 				"Returns length of the byte array."			
 			]
 		},
@@ -644,26 +628,26 @@
 			"prefix": ".toSlice",
 			"body": ".toSlice()",
 			"description": [
-				"<bytes>.toSlice() returns (TvmSlice);\n",
-				"Converts bytes to TvmSlice.",
-				"Warning: if length of the array is greater than 127\nthen extra bytes are stored in the first reference of the slice. \nUse <TvmSlice>.loadRef() to load that extra bytes."			
+				"\\<bytes>.toSlice() returns (TvmSlice);\n",
+				"Converts bytes to TvmSlice.\n",
+				"Warning: if length of the array is greater than 127\nthen extra bytes are stored in the first reference of the slice. Use \\<TvmSlice\\>.loadRef() to load that extra bytes."			
 			]
 		},
         "<bytes>.dataSize": {
 			"prefix": ".dataSize",
 			"body": ".dataSize(${1:uint n})",
-			"description": "<bytes>.dataSize(uint n) returns (uint /*cells*/, uint /*bits*/, uint /*refs*/);"							
+			"description": "\\<bytes>.dataSize(uint n) returns (uint /\\*cells\\*/, uint /\\*bits\\*/, uint /\\*refs\\*/);"							
 		},
         "<bytes>.dataSizeQ": {
 			"prefix": ".dataSizeQ",
 			"body": ".dataSizeQ(${1:uint n})",
-			"description": "<bytes>.dataSizeQ(uint n) \nreturns (optional(uint /*cells*/, uint /*bits*/, uint /*refs*/));"							
+			"description": "\\<bytes>.dataSizeQ(uint n) returns (optional(uint /\\*cells\\*/, uint /\\*bits\\*/, uint /\\*refs\\*/));"							
 		},
         "<bytes>.append": {
 			"prefix": ".append",
 			"body": ".append(${1:bytes tail})",
 			"description": [
-				"<bytes>.append(bytes tail);\n",
+				"\\<bytes>.append(bytes tail);\n",
 				"Modifies the bytes by concatenating tail bytes to the end of the bytes."							
 			]
 		},
@@ -671,7 +655,7 @@
 			"prefix": ".empty",
 			"body": ".empty()",
 			"description": [
-				"<string>.empty() returns (bool);\n",
+				"\\<string>.empty() returns (bool);\n",
 				"Returns status flag whether the string is empty (its length is 0)."							
 			]
 		},
@@ -679,7 +663,7 @@
 			"prefix": ".byteLength",
 			"body": ".byteLength()",
 			"description": [
-				"<string>.byteLength() returns (uint32);\n",
+				"\\<string>.byteLength() returns (uint32);\n",
 				"Returns byte length of the string data."							
 			]
 		},
@@ -687,9 +671,9 @@
 			"prefix": ".substr",
 			"body": ".substr()",
 			"description": [
-				"<string>.substr(uint from[, uint count]) returns (string);\n",
-				"Returns a substring starting from the\nbyte with number from with byte length count.\nNote: if count is not set, then the new string \nwill be cut from the from byte to the end of the string.",
-				"Example:",
+				"\\<string>.substr(uint from[, uint count]) returns (string);\n",
+				"Returns a substring starting from the\nbyte with number from with byte length count. Note: if count is not set, then the new string will be cut from the from byte to the end of the string.\n",
+				"Example:\n",
 				"string long = \"0123456789\";\nstring a = long.substr(1, 2); // a = \"12\"\nstring b = long.substr(6); // b = \"6789\""
 			]
 		},
@@ -697,7 +681,7 @@
 			"prefix": ".append",
 			"body": ".append(${1:string tail})",
 			"description": [
-				"<string>.append(string tail);\n",
+				"\\<string>.append(string tail);\n",
 				"Appends the tail string to the string."				
 			]
 		},
@@ -705,17 +689,17 @@
 			"prefix": ".find",
 			"body": ".find(${1|substring,byte('symbol')|})",
 			"description": [
-				"<string>.find(bytes1 symbol) returns (optional(uint32));\n",
-				"<string>.find(string substr) returns (optional(uint32));\n",
-				"Looks for symbol (or substring) in the string \nand returns index of the first (find) occurrence. \nIf there is no such symbol in the string, \nempty optional is returned."				
+				"\\<string>.find(bytes1 symbol) returns (optional(uint32));\n",
+				"\\<string>.find(string substr) returns (optional(uint32));\n",
+				"Looks for symbol (or substring) in the string and returns index of the first (find) occurrence. If there is no such symbol in the string, empty optional is returned."				
 			]
 		},
         "<string>.findLast": {
 			"prefix": ".findLast",
 			"body": ".findLast(${1|substring,byte('symbol')|})",
 			"description": [
-				"<string>.findLast(bytes1 symbol) returns (optional(uint32));\n",
-				"<string>.findLast(string substr) returns (optional(uint32));\n",
+				"\\<string>.findLast(bytes1 symbol) returns (optional(uint32));\n",
+				"\\<string>.findLast(string substr) returns (optional(uint32));\n",
 				"Looks for symbol (or substring) in the string and returns index of the last (findLast) occurrence. If there is no such symbol in the string, empty optional is returned."				
 			]
 		},
@@ -724,8 +708,8 @@
 			"body": "format(${1: string template}, ${2:TypeA a, TypeB b, ...})",
 			"description": [
 				"format(string template, TypeA a, TypeB b, ...) returns (string);\n",
-				"Builds a string with arbitrary parameters.",
-				"Example:",
+				"Builds a string with arbitrary parameters.\n",
+				"Example:\n",
 				"format(\"Hello {}\", 123) \\\\ \"Hello 123\"\n"				
 			]
 		},
@@ -733,9 +717,9 @@
 			"prefix": "stoi",
 			"body": "stoi(${1: string inputStr})",
 			"description": [
-				"stoi(string inputStr) returns (uint /*result*/, bool /*status*/);\n",
-				"Converts a string into an integer. \nString is meant to be number in decimal format,\nonly if string starts with '0x' \nit will be converted from a hexadecimal format.\nFunction returns the integer, that can\nbe converted from uint to int and boolean status,\nwhich is false in case of illegal characters\nin the string.\nWarning: this function consumes too much gas,\nthat's why it's better not to use it onchain. ",
-				"Example:",
+				"stoi(string inputStr) returns (uint /\\*result\\*/, bool /\\*status\\*/);\n",
+				"Converts a string into an integer. String is meant to be number in decimal format,\nonly if string starts with '0x' it will be converted from a hexadecimal format. Function returns the integer, that can\nbe converted from uint to int and boolean status,\nwhich is false in case of illegal characters\nin the string. Warning: this function consumes too much gas,\nthat's why it's better not to use it onchain. ",
+				"Example:\n",
 				"(res, status) = stoi(\"123\");"				
 			]
 		},
@@ -744,7 +728,7 @@
 			"body": "address(${1: address_value})",
 			"description": [
 				"Constructs an address of type addr_std with\nzero workchain id and given address value.\n",				
-				"Example:",
+				"Example:\n",
 				"uint address_value;\naddress addrStd = address(address_value);"				
 			]
 		},
@@ -761,22 +745,22 @@
         "address.makeAddrExtern": {
 			"prefix": "address.makeAddrExtern",
 			"body": "address.makeAddrExtern(${1: addrNumber}, ${2: bitCnt})",
-			"description": "Constructs an address of type addr_extern \nwith given value with bitCnt bit length.\n"
+			"description": "Constructs an address of type addr_extern with given value with bitCnt bit length.\n"
 		},
         "<address>.wid": {
 			"prefix": ".wid",
 			"body": ".wid()",
 			"description": [
-				"<address>.wid returns (int8);\n",
-				"Returns the workchain id of addr_std or addr_var.\nThrows \"range check error\" exception \n(error code equal to 5) for another address types."
+				"\\<address>.wid returns (int8);\n",
+				"Returns the workchain id of addr_std or addr_var. Throws \"range check error\" exception (error code equal to 5) for another address types."
 			]
 		},
         "<address>.value": {
 			"prefix": ".value",
 			"body": ".value()",
 			"description": [
-				"<address>.value returns (uint);\n",
-				"Returns the address value of addr_std \nor addr_var if addr_var has 256-bit\naddress value. \nThrows \"range check error\" exception (error code equal to 5) \nfor another address types.\n"
+				"\\<address>.value returns (uint);\n",
+				"Returns the address value of addr_std or addr_var if addr_var has 256-bit\naddress value. Throws \"range check error\" exception (error code equal to 5) for another address types.\n"
 			]
 		},
         "<address>.balance": {
@@ -799,7 +783,7 @@
 			"prefix": ".getType",
 			"body": ".getType()",
 			"description": [
-				"<address>.getType() returns (uint8);\n",
+				"\\<address>.getType() returns (uint8);\n",
 				"Returns type of the address:\n0 - addr_none 1 - addr_extern 2 - addr_std"
 			]
 		},
@@ -807,15 +791,15 @@
 			"prefix": ".isStdZero",
 			"body": ".isStdZero()",
 			"description": [
-				"<address>.isStdZero() returns (bool);\n",
-				"Returns the result of comparison between this \naddress with zero address of type addr_std.\n"
+				"\\<address>.isStdZero() returns (bool);\n",
+				"Returns the result of comparison between this address with zero address of type addr_std.\n"
 			]
 		},
         "<address>.isStdAddrWithoutAnyCast": {
 			"prefix": ".isStdAddrWithoutAnyCast",
 			"body": ".isStdAddrWithoutAnyCast()",
 			"description": [
-				"<address>.isStdAddrWithoutAnyCast() returns (bool);\n",
+				"\\<address>.isStdAddrWithoutAnyCast() returns (bool);\n",
 				"Check whether this address is of type addr_std without any cast.\n"
 			]
 		},
@@ -823,15 +807,15 @@
 			"prefix": ".isExternZero",
 			"body": ".isExternZero()",
 			"description": [
-				"<address>.isExternZero() returns (bool);\n",
-				"Returns the result of comparison between this address \nwith zero address of type addr_extern.\n"
+				"\\<address>.isExternZero() returns (bool);\n",
+				"Returns the result of comparison between this address with zero address of type addr_extern.\n"
 			]
 		},
         "<address>.isNone": {
 			"prefix": ".isNone",
 			"body": ".isNone()",
 			"description": [
-				"<address>.isNone() returns (bool);\n",
+				"\\<address>.isNone() returns (bool);\n",
 				"Check whether this address is of type addr_none.\n"
 			]
 		},
@@ -839,10 +823,10 @@
 			"prefix": ".unpack",
 			"body": ".unpack()",
 			"description": [
-				"<address>.unpack() returns (int8 /*wid*/, uint256 /*value*/);\n",
-				"Parses <address> containing a valid MsgAddressInt \n(addr_std or addr_var), applies rewriting \nfrom the anycast (if present) to the same-length \nprefix of the address, and returns both \nthe workchain wid and the 256-bit address \nvalue. If the address value is not 256-bit, \nor if <address> is not a valid serialization \nof MsgAddressInt, throws a cell deserialization \nexception.",
+				"\\<address>.unpack() returns (int8 /\\*wid\\*/, uint256 /\\*value\\*/);\n",
+				"Parses \\<address> containing a valid MsgAddressInt (addr_std or addr_var), applies rewriting from the anycast (if present) to the same-length prefix of the address, and returns both the workchain wid and the 256-bit address value. If the address value is not 256-bit, or if \\<address> is not a valid serialization of MsgAddressInt, throws a cell deserialization exception.\n",
 				"It's wrapper for opcode REWRITESTDADDR.\n",
-				"Example:",
+				"Example:\n",
 				"(int8 wid, uint addr) = address(this).unpack();\n"
 			]
 		},
@@ -850,33 +834,39 @@
 			"prefix": ".transfer",
 			"body": ".transfer(${1:uint128 value}, ${2:bool bounce}, ${3:uint16 flag}, ${4:TvmCell body}, ${5:ExtraCurrencyCollection currencies})",
 			"description": [
-				"<address>.transfer(\n\tuint128 value, \n\tbool bounce, \n\tuint16 flag, \n\tTvmCell body, \n\tExtraCurrencyCollection currencies\n);\n",
-				"Sends an internal outbound message to defined address.\nAll parameters can be omitted, except value.\n"				
+				"\\<address>.transfer(",
+				"      uint128 value, ",
+				"      bool bounce, ",
+				"      uint16 flag, ",
+				"      TvmCell body,",
+				"      ExtraCurrencyCollection currencies",
+				");\n",
+				"Sends an internal outbound message to defined address. All parameters can be omitted, except value.\n"				
 			]
 		},
         "<mapping>.min": {
 			"prefix": ".min",
 			"body": ".min()",
 			"description": [
-				"<map>.min() returns (optional(KeyType, ValueType));\n",
-				"Computes the minimal key in the mapping and \nreturns an optional value containing \nthat key and the associated value. \nIf mapping is empty, this function returns \nan empty optional.\n"				
+				"\\<map>.min() returns (optional(KeyType, ValueType));\n",
+				"Computes the minimal key in the mapping and returns an optional value containing that key and the associated value. If mapping is empty, this function returns an empty optional.\n"				
 			]
 		},
         "<mapping>.max": {
 			"prefix": ".max",
 			"body": ".max()",
 			"description": [
-				"<map>.max() returns (optional(KeyType, ValueType));\n",
-				"Computes the maximal key in the mapping and \nreturns an optional value containing \nthat key and the associated value. \nIf mapping is empty, this function returns \nan empty optional.\n"				
+				"\\<map>.max() returns (optional(KeyType, ValueType));\n",
+				"Computes the maximal key in the mapping and returns an optional value containing that key and the associated value. If mapping is empty, this function returns an empty optional.\n"				
 			]
 		},
         "<mapping>.next": {
 			"prefix": ".next",
 			"body": ".next(${1:KeyType key})",
 			"description": [
-				"<map>.next(KeyType key) returns (optional(KeyType, ValueType));\n",
-				"Computes the maximal key in the mapping \nthat is lexicographically greater \nthan key and returns an optional value \ncontaining that key and the associated value. \nReturns an empty optional if there is no \nsuch key. \nIf KeyType is an integer type, argument for \nthis functions can not possibly fit KeyType.\n",
-				"Example:",
+				"\\<map>.next(KeyType key) returns (optional(KeyType, ValueType));\n",
+				"Computes the maximal key in the mapping that is lexicographically greater than key and returns an optional value containing that key and the associated value. Returns an empty optional if there is no such key. If KeyType is an integer type, argument for this functions can not possibly fit KeyType.\n",
+				"Example:\n",
 				"mapping(uint8 => uint) m;\noptional(uint8, uint) = m.next(-1);"				
 			]
 		},
@@ -884,9 +874,9 @@
 			"prefix": ".prev",
 			"body": ".prev(${1:KeyType key})",
 			"description": [
-				"<map>.prev(KeyType key) returns (optional(KeyType, ValueType));\n",
-				"Computes the minimal key in the mapping \nthat is lexicographically less \nthan key and returns an optional value \ncontaining that key and the associated value. \nReturns an empty optional if there is no \nsuch key. \nIf KeyType is an integer type, argument for \nthis functions can not possibly fit KeyType.\n",				
-				"Example:",
+				"\\<map>.prev(KeyType key) returns (optional(KeyType, ValueType));\n",
+				"Computes the minimal key in the mapping that is lexicographically less than key and returns an optional value containing that key and the associated value. Returns an empty optional if there is no such key. If KeyType is an integer type, argument for this functions can not possibly fit KeyType.\n",				
+				"Example:\n",
 				"mapping(uint8 => uint) m;\noptional(uint8, uint) = m.prev(123);"
 			]
 		},
@@ -894,47 +884,47 @@
 			"prefix": ".nextOrEq",
 			"body": ".nextOrEq(${1:KeyType key})",
 			"description": [
-				"<map>.nextOrEq(KeyType key) returns (optional(KeyType, ValueType));\n",
-				"Computes the maximal key in the mapping that \nis lexicographically greater than or equal \nto key and returns an optional value \ncontaining that key and the associated value. \nReturns an empty optional if there \nis no such key. \nIf KeyType is an integer type, argument \nfor this functions can not possibly fit KeyType.\n"						
+				"\\<map>.nextOrEq(KeyType key) returns (optional(KeyType, ValueType));\n",
+				"Computes the maximal key in the mapping that is lexicographically greater than or equal to key and returns an optional value containing that key and the associated value. Returns an empty optional if there is no such key. If KeyType is an integer type, argument for this functions can not possibly fit KeyType.\n"						
 			]
 		},
         "<mapping>.prevOrEq": {
 			"prefix": ".prevOrEq",
 			"body": ".prevOrEq(${1:KeyType key})",
 			"description": [
-				"<map>.prevOrEq(KeyType key) returns (optional(KeyType, ValueType));\n",
-				"Computes the minimal key in the mapping that \nis lexicographically less than or equal \nto key and returns an optional value \ncontaining that key and the associated value. \nReturns an empty optional if there \nis no such key. \nIf KeyType is an integer type, argument \nfor this functions can not possibly fit KeyType.\n"						
+				"\\<map>.prevOrEq(KeyType key) returns (optional(KeyType, ValueType));\n",
+				"Computes the minimal key in the mapping that is lexicographically less than or equal to key and returns an optional value containing that key and the associated value. Returns an empty optional if there is no such key. If KeyType is an integer type, argument for this functions can not possibly fit KeyType.\n"						
 			]
 		},
         "<mapping>.delMin": {
 			"prefix": ".delMin",
 			"body": ".delMin()",
 			"description": [
-				"<map>.delMin() returns (optional(KeyType, ValueType));\n",
-				"If mapping is not empty then this function computes \nthe minimal key of the mapping, deletes that key \nand the associated value from the mapping and \nreturns an optional value containing that key and \nthe associated value. \nReturns an empty optional if there is no such key.\n"
+				"\\<map>.delMin() returns (optional(KeyType, ValueType));\n",
+				"If mapping is not empty then this function computes the minimal key of the mapping, deletes that key and the associated value from the mapping and returns an optional value containing that key and the associated value. Returns an empty optional if there is no such key.\n"
 			]
 		},
         "<mapping>.delMax": {
 			"prefix": ".delMax",
 			"body": ".delMax()",
 			"description": [
-				"<map>.delMax() returns (optional(KeyType, ValueType));\n",
-				"If mapping is not empty then this function computes \nthe maximum key of the mapping, deletes that key \nand the associated value from the mapping and \nreturns an optional value containing that key and \nthe associated value. \nReturns an empty optional if there is no such key.\n"
+				"\\<map>.delMax() returns (optional(KeyType, ValueType));\n",
+				"If mapping is not empty then this function computes the maximum key of the mapping, deletes that key and the associated value from the mapping and returns an optional value containing that key and the associated value. Returns an empty optional if there is no such key.\n"
 			]
 		},
         "<mapping>.fetch": {
 			"prefix": ".fetch",
 			"body": ".fetch(${1:KeyType key})",
 			"description": [
-				"<map>.fetch(KeyType key) returns (optional(ValueType));\n",
-				"Checks whether key presents in the mapping \nand returns an optional with the associated value. \nReturns an empty optional if there is no \nsuch key.\n"
+				"\\<map>.fetch(KeyType key) returns (optional(ValueType));\n",
+				"Checks whether key presents in the mapping and returns an optional with the associated value. Returns an empty optional if there is no such key.\n"
 			]
 		},
         "<mapping>.exists": {
 			"prefix": ".exists",
 			"body": ".exists(${1:KeyType key})",
 			"description": [
-				"<map>.exists(KeyType key) returns (bool);\n",
+				"\\<map>.exists(KeyType key) returns (bool);\n",
 				"Returns a status flag whether key presents in the mapping.\n"
 			]
 		},
@@ -942,7 +932,7 @@
 			"prefix": ".empty",
 			"body": ".empty()",
 			"description": [
-				"<map>.empty() returns (bool);\n",
+				"\\<map>.empty() returns (bool);\n",
 				"Returns a status flag whether the mapping is empty.\n"
 			]
 		},
@@ -950,15 +940,15 @@
 			"prefix": ".replace",
 			"body": ".replace(${1:KeyType key}, ${2:ValueType value})",
 			"description": [
-				"<map>.replace(KeyType key, ValueType value) returns (bool);\n",
-				"Sets the value associated with key only if \nkey presents in the mapping and returns the success flag.\n"
+				"\\<map>.replace(KeyType key, ValueType value) returns (bool);\n",
+				"Sets the value associated with key only if key presents in the mapping and returns the success flag.\n"
 			]
 		},
         "<mapping>.add": {
 			"prefix": ".add",
 			"body": ".add(${1:KeyType key}, ${2:ValueType value})",
 			"description": [
-				"<map>.add(KeyType key, ValueType value) returns (bool);\n",
+				"\\<map>.add(KeyType key, ValueType value) returns (bool);\n",
 				"Sets the value associated with key only if key does not present in the mapping.\n"
 			]
 		},
@@ -966,24 +956,24 @@
 			"prefix": ".getSet",
 			"body": ".getSet(${1:KeyType key}, ${2:ValueType value})",
 			"description": [
-				"<map>.getSet(KeyType key, ValueType value) returns (optional(ValueType));\n",
-				"Sets the value associated with key, \nbut also returns an optional with \nthe old value associated with the key, \nif presents. \nOtherwise, returns an empty optional.\n"
+				"\\<map>.getSet(KeyType key, ValueType value) returns (optional(ValueType));\n",
+				"Sets the value associated with key, but also returns an optional with the old value associated with the key, if presents. Otherwise, returns an empty optional.\n"
 			]
 		},
         "<mapping>.getAdd": {
 			"prefix": ".getAdd",
 			"body": ".getAdd(${1:KeyType key}, ${2:ValueType value})",
 			"description": [
-				"<map>.getAdd(KeyType key, ValueType value) returns (optional(ValueType));\n",
-				"Sets the value associated with key, \nbut only if key does not present in \nthe mapping. \nReturns an optional with the old value \nwithout changing the dictionary if that \nvalue presents in the mapping, otherwise \nreturns an empty optional.\n"
+				"\\<map>.getAdd(KeyType key, ValueType value) returns (optional(ValueType));\n",
+				"Sets the value associated with key, but only if key does not present in the mapping. Returns an optional with the old value without changing the dictionary if that value presents in the mapping, otherwise returns an empty optional.\n"
 			]
 		},
         "<mapping>.getReplace": {
 			"prefix": ".getReplace",
 			"body": ".getReplace(${1:KeyType key}, ${2:ValueType value})",
 			"description": [
-				"<map>.getReplace(KeyType key, ValueType value) returns (optional(ValueType));\n",
-				"Sets the value associated with key, \nbut only if key presents in the mapping. \nOn success, returns an optional with \nthe old value associated with the key. \nOtherwise, returns an empty optional.\n"
+				"\\<map>.getReplace(KeyType key, ValueType value) returns (optional(ValueType));\n",
+				"Sets the value associated with key, but only if key presents in the mapping. On success, returns an optional with the old value associated with the key. Otherwise, returns an empty optional.\n"
 			]
 		},
         "require": {
@@ -991,9 +981,9 @@
 			"body": "require(${1:bool condition}, ${2:uint errorCode}, ${3:Type exceptionArgument})",
 			"description": [
 				"require(bool condition, [uint errorCode = 100, [Type exceptionArgument]]);\n",
-				"require function can be used to check \nthe condition and throw an exception if the \ncondition is not met. \nThe function takes condition and optional parameters: \nerror code (unsigned integer) and \nthe object of any type.\n",
-				"Example:",
-				"uint a = 5;",
+				"require function can be used to check the condition and throw an exception if the condition is not met. The function takes condition and optional parameters: error code (unsigned integer) and the object of any type.\n",
+				"Example:\n",
+				"uint a = 5;\n",
 				"require(a == 6, 101, \"a is not equal to six\");"
 			]
 		},
@@ -1002,40 +992,57 @@
 			"body": "revert(${1:uint errorCode}, ${2:Type exceptionArgument})",
 			"description": [
 				"revert(uint errorCode = 100, [Type exceptionArgument]);\n",
-				"revert function can be used to throw exceptions. \nThe function takes an optional error code \n(unsigned integer) and the object of any type.\n",
-				"Example:",
+				"revert function can be used to throw exceptions. The function takes an optional error code (unsigned integer) and the object of any type.\n",
+				"Example:\n",
 				"revert(102, \"We have a some problem\");"
 			]
 		},
         "receive": {
 			"prefix": "receive",
 			"body": "receive () external {\n\t$0\n}",
-			"description": "receive function is called in 2 cases:\n\t1. msg.data (or message body) is empty.\n\t2. msg.data starts with 32-bit zero.\n\tThen message body may contain data, \n\tfor example string with comment."
+			"description": [
+				"receive function is called in 2 cases:",
+				"1. msg.data (or message body) is empty.",
+				"2. msg.data starts with 32-bit zero.",
+				"\nThen message body may contain data, for example string with comment."
+			]
 		},
         "fallback": {
 			"prefix": "fallback",
 			"body": "fallback () external {\n\t$0\n}",
-			"description": "fallback function is called when a body of an inbound \ninternal/external message in such cases:\n\t1. The message contains a function id that the contract \n\tdoesn't contain.\n\t2. Bit length of message between 1 and 31 (including).\n\t3. Bit length of message equals to zero, but the \n\tmessage contains reference(s).\n"
+			"description": [
+				"fallback function is called when a body of an inbound internal/external message in such cases:",
+				"1. The message contains a function id that the contract doesn't contain.",
+				"2. Bit length of message between 1 and 31 (including).",
+				"3. Bit length of message equals to zero, but the message contains reference(s)."
+			]
 		},
         "onBounce": {
 			"prefix": "onBounce",
 			"body": "onBounce (TvmSlice body) external {\n\t$0\n}",
-			"description": "onBounce function is executed when contract \nreceives a bounced inbound internal message. \nThe message is generated by the network if \nthe contract sends an internal message with bounce: true and\n\tcalled contract doesn't exist;\n\tcalled contract fails at storage/credit/computing \n\tphase (not at action phase!).\n"
+			"description": [
+				"onBounce function is executed when contract receives a bounced inbound internal message. The message is generated by the network if the contract sends an internal message with bounce: true and",
+				" * called contract doesn't exist;",
+				" * called contract fails at storage/credit/computing phase (not at action phase!).",
+				"\nThe message is generated only if the remaining message value is enough for sending one back.\n",
+				"body is empty or contains at most 256 data bits of the original message (without references). The function id takes 32 bits and parameters can take at most 224 bits. It depends on the network config. If onBounce function is not defined then the contract does nothing on receiving a bounced inbound internal message.\n",				
+				"If the onBounce function throws an exception then another bounced messages are not generated."
+			]
 		},
         "onTickTock": {
 			"prefix": "onTickTock",
 			"body": "onTickTock (TvmSlice isTock) external {\n\t$0\n}",
-			"description": "onTickTock function is executed on tick/tock \ntransaction. That transactions are automatically invoked for \ncertain special accounts. \nFor tick transactions isTock is false, \nfor tock transactions - true.\n"
+			"description": "onTickTock function is executed on tick/tock transaction. That transactions are automatically invoked for certain special accounts. For tick transactions isTock is false, for tock transactions - true.\n"
 		},
         "onCodeUpgrade": {
 			"prefix": "onCodeUpgrade",
 			"body": "onCodeUpgrade () private {\n\t$0\n}",
-			"description": "onCodeUpgrade function can have arbitrary set of \narguments and should be executed after \ntvm.setcode() function call. \nIn this function tvm.resetStorage() should be \ncalled if the set of state variables is changed \nin the new version of the contract. \nThis function implicitly calls tvm.commit(). \nThen return from onCodeUpgrade TVM execution is \nfinished with exit code 0.\n"
+			"description": "onCodeUpgrade function can have arbitrary set of arguments and should be executed after tvm.setcode() function call. In this function tvm.resetStorage() should be called if the set of state variables is changed in the new version of the contract. This function implicitly calls tvm.commit(). Then return from onCodeUpgrade TVM execution is finished with exit code 0.\n"
 		},
         "afterSignatureCheck": {
 			"prefix": "afterSignatureCheck",
 			"body": "afterSignatureCheck (TvmSlice body, TvmCell message) private inline returns (TvmSlice){\n\t$0\n}",
-			"description": "afterSignatureCheck function is used to define \ncustom replay protection function instead of the \ndefault one. \nNever call tvm.commit() or tvm.accept() in the \nfunction because the function can be called \nbefore calling constructor.\n"
+			"description": "afterSignatureCheck function is used to define custom replay protection function instead of the default one. Never call tvm.commit() or tvm.accept() in the function because the function can be called before calling constructor.\n"
 		},
         "msg.sender": {
 			"prefix": "msg.sender",
@@ -1058,7 +1065,7 @@
 			"body": "msg.currencies",
 			"description": [
 				"msg.currencies returns (ExtraCurrencyCollection);\n",
-				"Collections of arbitrary currencies contained \nin the balance of the inbound message."
+				"Collections of arbitrary currencies contained in the balance of the inbound message."
 			]
 		},
         "msg.pubkey": {
@@ -1066,7 +1073,7 @@
 			"body": "msg.pubkey()",
 			"description": [
 				"msg.pubkey() returns (uint256);\n",
-				"Returns sender's public key, obtained from \nthe body of the external inbound message. \nIf the message is not signed, msg.pubkey() \nreturns 0. \nIf the message is signed and message header \n(pragma AbiHeader) does not contain pubkey \nthen msg.pubkey() is equal to tvm.pubkey()."
+				"Returns sender's public key, obtained from the body of the external inbound message. If the message is not signed, msg.pubkey() returns 0. If the message is signed and message header (pragma AbiHeader) does not contain pubkey then msg.pubkey() is equal to tvm.pubkey()."
 			]
 		},
         "msg.isInternal": {
@@ -1105,7 +1112,7 @@
 			"body": "tvm.accept()",
 			"description": [
 				"tvm.accept();\n",
-				"Executes TVM instruction \"ACCEPT\" (TVM - A.11.2. - F800). \nThis instruction sets current gas limit to its \nmaximal allowed value. \nThis action is required to process external messages, \nwhich bring no value.\n"
+				"Executes TVM instruction \"ACCEPT\" (TVM - A.11.2. - F800). This instruction sets current gas limit to its maximal allowed value. This action is required to process external messages, which bring no value.\n"
 			]
 		},
         "tvm.commit": {
@@ -1113,7 +1120,7 @@
 			"body": "tvm.commit()",
 			"description": [
 				"tvm.commit();\n",
-				"Creates a \"check point\" of the state variables \n(by copying them from c7 to c4) and register c5. \nIf the contract throws an exception at the \ncomputing phase then the state variables and \nregister c5 will roll back to the \"check point\", \nand the computing phase will be considered \n\"successful\". \nIf contract doesn't throw an exception, \nit has no effect.\n"
+				"Creates a \"check point\" of the state variables (by copying them from c7 to c4) and register c5. If the contract throws an exception at the computing phase then the state variables and register c5 will roll back to the \"check point\", and the computing phase will be considered \"successful\". If contract doesn't throw an exception, it has no effect.\n"
 			]
 		},
         "tvm.rawCommit": {
@@ -1121,8 +1128,8 @@
 			"body": "tvm.rawCommit()",
 			"description": [
 				"tvm.rawCommit();\n",
-				"Creates a \"check point\" of the state variables but \n doesn't copy the state variables from c7 to c4. \nIt's a wrapper for opcode COMMIT. See TVM.\n",
-				"Note: Don't use tvm.rawCommit() after \ntvm.accept() in processing external \nmessages because you don't save from c7 to \nc4 the hidden state variable timestamp, \nwhich is used for replay protection.\n"
+				"Creates a \"check point\" of the state variables but  doesn't copy the state variables from c7 to c4. It's a wrapper for opcode COMMIT. See TVM.\n",
+				"Note: Don't use tvm.rawCommit() after tvm.accept() in processing external messages because you don't save from c7 to c4 the hidden state variable timestamp, which is used for replay protection.\n"
 			]
 		},
         "tvm.getData": {
@@ -1130,8 +1137,8 @@
 			"body": "tvm.getData()",
 			"description": [
 				"tvm.getData() returns (TvmCell);\n",
-				"It's an experimental function.\n A dual of the tvm.setData() returning value of c4 register. \nGetting a raw storage cell is useful when \nupgrading a new version of contract that \nintroduces an altered data layout.\nManipulation with a raw storage cell requires \nan understanding of the way the compiler \nlayouts the data. Refer to the description of \ntvm.setData() below to get more details.\n",
-				"Note: state variables and replay protection \ntimestamp stored in data cell have the same \nvalues that were before the transaction. \nSee tvm.commit() how to update register c4.\n"
+				"It's an experimental function.\n A dual of the tvm.setData() returning value of c4 register. Getting a raw storage cell is useful when upgrading a new version of contract that introduces an altered data layout.\nManipulation with a raw storage cell requires an understanding of the way the compiler layouts the data. Refer to the description of tvm.setData() below to get more details.\n",
+				"Note: state variables and replay protection timestamp stored in data cell have the same values that were before the transaction. See tvm.commit() how to update register c4.\n"
 			]
 		},
         "tvm.setData": {
@@ -1139,8 +1146,12 @@
 			"body": "tvm.setData()",
 			"description": [
 				"tvm.setData() returns (TvmCell);\n",
-				"It's an experimental function.\nSet cell data to register c4. Note, after \nreturning from a public function all state \nvariable from c7 will copy to c4 and \ntvm.setData will have no effect. \nExample of usage of such hint to set c4:\n",
-				"TvmCell data = ...;\ntvm.setData(data); // set register c4\ntvm.rawCommit();   // save register c4 and c5\nrevert(200);       // throw the exception to terminate the transaction\n",
+				"It's an experimental function.Set cell data to register c4. \n",
+				"Note, after returning from a public function all state variable from c7 will copy to c4 and tvm.setData will have no effect. Example of usage of such hint to set c4:\n",
+				"TvmCell data = ...;\n",
+				"tvm.setData(data); // set register c4\n",
+				"tvm.rawCommit();   // save register c4 and c5\n",
+				"revert(200);       // throw the exception to terminate the transaction\n",
 				"Be careful with the hidden state variable timestamp and think about possibility of replaying external messages.\n"
 			]
 		},
@@ -1149,8 +1160,8 @@
 			"body": "tvm.log(${1:string log})",
 			"description": [
 				"tvm.log(string log);\n",
-				"Dumps log string. This function is wrapper for TVM \ninstructions PRINTSTR (for constant literal \nstrings shorter than 16 symbols) and STRDUMP (for \nother strings). logtvm is an alias for tvm.log(string).\nNote: For long strings dumps only the first 127 symbols.\n",
-				"Example:",
+				"Dumps log string. This function is wrapper for TVM instructions PRINTSTR (for constant literal strings shorter than 16 symbols) and STRDUMP (for other strings). logtvm is an alias for tvm.log(string).\nNote: For long strings dumps only the first 127 symbols.\n",
+				"Example:\n",
 				"tvm.log(\"Hello,world!\");\n"
 			]
 		},
@@ -1159,8 +1170,8 @@
 			"body": "tvm.hexdump(${1:T a})",
 			"description": [
 				"tvm.hexdump(T a);\n",
-				"Dumps cell data or integer. \nNote that for cells this function dumps data \nonly from the first cell. \nT must be an integer type or TvmCell.\n",
-				"Example:",
+				"Dumps cell data or integer. Note that for cells this function dumps data only from the first cell. T must be an integer type or TvmCell.\n",
+				"Example:\n",
 				"tvm.hexdump(123);\\\\Output: 7B\n"
 			]
 		},
@@ -1169,8 +1180,8 @@
 			"body": "tvm.bindump(${1:T a})",
 			"description": [
 				"tvm.bindump(T a);\n",
-				"Dumps cell data or integer. \nNote that for cells this function dumps data \nonly from the first cell. \nT must be an integer type or TvmCell.\n",
-				"Example:",
+				"Dumps cell data or integer. Note that for cells this function dumps data only from the first cell. T must be an integer type or TvmCell.\n",
+				"Example:\n",
 				"tvm.bindump(123);\\\\Output: 1111011\n"
 			]
 		},
@@ -1179,15 +1190,15 @@
 			"body": "tvm.setcode(TvmCell newCode);",
 			"description": [
 				"tvm.setcode(TvmCell newCode);\n",
-				"This command creates an output action that \nwould change this smart contract code to that \ngiven by Cell newCode (this change will take effect \nonly after the successful termination of the current \nrun of the smart contract).\n"
+				"This command creates an output action that would change this smart contract code to that given by Cell newCode (this change will take effect only after the successful termination of the current run of the smart contract).\n"
 			]
 		},
         "tvm.rawConfigParam": {
 			"prefix": "tvm.rawConfigParam",
 			"body": "tvm.rawConfigParam(${1:uint8 paramNumber});",
 			"description": [
-				"tvm.rawConfigParam(uint8 paramNumber) returns (TvmCell cell, bool status);",
-				"Executes TVM instruction \"CONFIGPARAM\". \nThis command returns the value of the global configuration \nparameter with integer index paramNumber. \nArgument should be an integer literal. Supported \nparamNumbers: 1, 15, 17, 34.\n"
+				"tvm.rawConfigParam(uint8 paramNumber) returns (TvmCell cell, bool status);\n",
+				"Executes TVM instruction \"CONFIGPARAM\". This command returns the value of the global configuration parameter with integer index paramNumber. Argument should be an integer literal. Supported paramNumbers: 1, 15, 17, 34.\n"
 			]
 		},
         "tvm.rawReserve": {
@@ -1195,7 +1206,7 @@
 			"body": "tvm.rawReserve(${1:uint value), ${2:uint8 flag});",
 			"description": [
 				"tvm.rawReserve(uint value, uint8 flag);\ntvm.rawReserve(uint value, ExtraCurrencyCollection currency, uint8 flag);\n",
-				"Creates an output action which reserves \nreserve nanotons. It is roughly equivalent to create \nan outbound message carrying reserve nanotons to \noneself, so that the subsequent output actions would \nnot be able to spend more money than the \nremainder. It's a wrapper for opcodes \"RAWRESERVE\" \nand \"RAWRESERVEX\".\n"
+				"Creates an output action which reserves reserve nanotons. It is roughly equivalent to create an outbound message carrying reserve nanotons to oneself, so that the subsequent output actions would not be able to spend more money than the remainder. It's a wrapper for opcodes \"RAWRESERVE\" and \"RAWRESERVEX\".\n"
 			]
 		},
         "tvm.hash": {
@@ -1203,20 +1214,20 @@
 			"body": "tvm.hash(${1|TvmCell cellTree,string data,bytes data,TvmSlice data|});",
 			"description": [
 				"tvm.hash(TvmCell cellTree) returns (uint256);\ntvm.hash(string data) returns (uint256);\ntvm.hash(bytes data) returns (uint256);\ntvm.hash(TvmSlice data) returns (uint256);\n",
-				"Executes TVM instruction \"HASHCU\" or \"HASHSU\". \nIt computes the representation hash of a given \nargument and returns it as a 256-bit unsigned integer. \nFor string and bytes it computes hash of the tree \nof cells, which contains data, but not data itself. \nSee sha256 to count hash of data.\n"
+				"Executes TVM instruction \"HASHCU\" or \"HASHSU\". It computes the representation hash of a given argument and returns it as a 256-bit unsigned integer. For string and bytes it computes hash of the tree of cells, which contains data, but not data itself. See sha256 to count hash of data.\n"
 			]
 		},
         "tvm.checkSign": {
 			"prefix": "tvm.checkSign",
 			"body": "tvm.checkSign(${1|uint256 hash\\, uint256 SignHighPart\\, uint256 SignLowPart\\, uint256 pubkey,uint256 hash\\, TvmSlice signature\\, uint256 pubkey,TvmSlice data\\, TvmSlice signature\\, uint256 pubkey|});",
-			"description": "returns (bool)\nExecutes TVM instruction \"CHKSIGNU\" for variants 1 and 2. \nThis command checks the Ed25519-signature of a hash using public key pubkey. \nSignature is represented by two uint256 SignHighPart and \nSignLowPart in the first variant and by a slice signature \nin the second variant. \nIn the third variant executes TVM instruction \n\"CHKSIGNS\". \nThis command checks Ed25519-signature of data using \npublic key pubkey. Signature is represented by a \nslice signature.\n"							
+			"description": "returns (bool)\nExecutes TVM instruction \"CHKSIGNU\" for variants 1 and 2. This command checks the Ed25519-signature of a hash using public key pubkey. Signature is represented by two uint256 SignHighPart and SignLowPart in the first variant and by a slice signature in the second variant. In the third variant executes TVM instruction \"CHKSIGNS\". This command checks Ed25519-signature of data using public key pubkey. Signature is represented by a slice signature.\n"							
 		},
         "tvm.insertPubkey": {
 			"prefix": "tvm.insertPubkey",
 			"body": "tvm.insertPubkey(${1:TvmCell stateInit}, ${2:uint256 pubkey})",
 			"description": [
 				"tvm.insertPubkey(TvmCell stateInit, uint256 pubkey) returns (TvmCell);\n",
-				"Inserts a public key into stateInit data field. \nIf stateInit has wrong format then throws exception.\n"		
+				"Inserts a public key into stateInit data field. If stateInit has wrong format then throws exception.\n"		
 			]					
 		},
         "tvm.buildStateInit": {
@@ -1232,7 +1243,7 @@
 			"body": "tvm.buildEmptyData(${1:uint256 publicKey})",
 			"description": [
 				"tvm.buildEmptyData(uint256 publicKey) returns (TvmCell);\n",
-				"Generates a persistent storage of the contract \nthat contains only public key. data can be used to \ngenerate StateInit (TBLKCH - 3.1.7.).\n"						
+				"Generates a persistent storage of the contract that contains only public key. data can be used to generate StateInit (TBLKCH - 3.1.7.).\n"						
 			]					
 		},
         "tvm.deploy": {
@@ -1240,7 +1251,7 @@
 			"body": "tvm.deploy(${1:TvmCell stateInit}, ${2:TvmCell payload}, ${3:uint128 value}, ${4:int8 wid})",
 			"description": [
 				"returns(address);\n",
-				"Deploys a new contract and returns the address \nof the deployed contract. This function may \nbe useful if you want to write a universal \ncontract that can deploy any contract. \n"						
+				"Deploys a new contract and returns the address of the deployed contract. This function may be useful if you want to write a universal contract that can deploy any contract.\n"						
 			]					
 		},
         "tvm.code": {
@@ -1248,7 +1259,7 @@
 			"body": "tvm.code()",
 			"description": [
 				"tvm.code() returns (TvmCell);\n",
-				"Returns contract's code. \n"						
+				"Returns contract's code.\n"						
 			]					
 		},
         "tvm.codeSalt": {
@@ -1256,7 +1267,7 @@
 			"body": "tvm.codeSalt(${1:TvmCell code})",
 			"description": [
 				"tvm.codeSalt(TvmCell code) returns (optional(TvmCell) optSalt);\n",
-				"If code contains salt then optSalt contains one. \nOtherwise, optSalt doesn't contain any value. \n"						
+				"If code contains salt then optSalt contains one. Otherwise, optSalt doesn't contain any value.\n"						
 			]					
 		},
         "tvm.pubkey": {
@@ -1264,7 +1275,7 @@
 			"body": "tvm.pubkey()",
 			"description": [
 				"tvm.pubkey() returns (uint256);\n",
-				"Returns contract's public key, stored in contract data. If key is not set, function returns 0. \n"						
+				"Returns contract's public key, stored in contract data. If key is not set, function returns 0.\n"						
 			]					
 		},
         "tvm.setPubkey": {
@@ -1272,7 +1283,7 @@
 			"body": "tvm.setPubkey(${1:uint256 newPubkey})",
 			"description": [
 				"tvm.setPubkey(uint256 newPubkey);\n",
-				"Set new contract's public key.  \n"						
+				"Set new contract's public key.\n"						
 			]					
 		},
         "tvm.setCurrentCode": {
@@ -1280,7 +1291,7 @@
 			"body": "tvm.setCurrentCode(${1:TvmCell newCode})",
 			"description": [
 				"tvm.setCurrentCode(TvmCell newCode);\n",
-				"Changes this smart contract current code to \nthat given by Cell newCode. Unlike tvm.setcode() this \nfunction changes code of the smart contract only \nfor current TVM execution, but has no effect \nafter termination of the current run of the smart \ncontract. \n"						
+				"Changes this smart contract current code to that given by Cell newCode. Unlike tvm.setcode() this function changes code of the smart contract only for current TVM execution, but has no effect after termination of the current run of the smart contract.\n"						
 			]					
 		},
         "tvm.resetStorage": {
@@ -1293,7 +1304,7 @@
 			"body": "tvm.functionId(${1:functionName})",
 			"description": [
 				"// id of public function\ntvm.functionId(functionName) returns (uint32);\n\n// id of public constructor\ntvm.functionId(ContractName) returns (uint32);\n",
-				"Returns a function id (uint32) for \npublic/external function or constructor. \n"						
+				"Returns a function id (uint32) for public/external function or constructor.\n"						
 			]					
 		},
         "tvm.encodeBody": {
@@ -1301,7 +1312,7 @@
 			"body": "tvm.encodeBody(${1:function},${2:callbackFunction},${3: arg0, arg1, arg2, ...})",
 			"description": [
 				"tvm.encodeBody(function, arg0, arg1, arg2, ...) returns (TvmCell);\ntvm.encodeBody(function, callbackFunction, arg0, arg1, arg2, ...) returns (TvmCell);\n",
-				"Constructs a function call message body that can \nbe used as the payload for <address>.transfer(). \nIf function is responsible then callbackFunction \nparameter must be set.\n"						
+				"Constructs a function call message body that can be used as the payload for <address>.transfer(). If function is responsible then callbackFunction parameter must be set.\n"						
 			]					
 		},
         "tvm.exit": {
@@ -1309,7 +1320,7 @@
 			"body": "tvm.exit()",
 			"description": [
 				"tvm.exit();\n",
-				"Function are used to save state variables \nand to quickly terminate execution of the \nsmart contract.\nExit code is equal to zero\n"						
+				"Function are used to save state variables and to quickly terminate execution of the smart contract.\nExit code is equal to zero\n"						
 			]					
 		},
         "tvm.exit1": {
@@ -1317,15 +1328,15 @@
 			"body": "tvm.exit1()",
 			"description": [
 				"tvm.exit1();\n",
-				"Function are used to save state variables \nand to quickly terminate execution of the \nsmart contract.\nExit code is equal to one\n"						
+				"Function are used to save state variables and to quickly terminate execution of the smart contract.Exit code is equal to one\n"						
 			]					
 		},
         "tvm.buildExtMsg": {
 			"prefix": "tvm.buildExtMsg",
-			"body": "tvm.buildExtMsg({\n\tdest: ${1:address},\n\ttime:${2:uint64},\n\texpire:${3:uint64},\n\tcall:{${4:functionIdentifier[, list_of_function_arguments]}},\n\tsign:${5:bool},\n\tpubkey:${6:optional(uint256)},\n\tabiVer:${7:uint8},\n\tcallbackId:${8:uint32},\n\tonErrorId:${9:uint32}, \n\tstateInit:${10:TvmCell},\n\tsignBoxHandle:${11:optional(uint32)}\n\t\\});",
+			"body": "tvm.buildExtMsg({\n\tdest: ${1:address},\n\ttime:${2:uint64},\n\texpire:${3:uint64},\n\tcall:{${4:functionIdentifier[, list_of_function_arguments]}},\n\tsign:${5:bool},\n\tpubkey:${6:optional(uint256)},\n\tabiVer:${7:uint8},\n\tcallbackId:${8:uint32},\n\tonErrorId:${9:uint32},\n\tstateInit:${10:TvmCell},\n\tsignBoxHandle:${11:optional(uint32)}\n\t\\});",
 			"description": [
 				"returns (TvmCell);\n",
-				"Function should be used only offchain and \nintended to be used only in debot contracts. Allows \ncreating an external inbound message, that calls \nthe func function of the contract on address \ndestination with specified function arguments.\n"									
+				"Function should be used only offchain and intended to be used only in debot contracts. Allows creating an external inbound message, that calls the func function of the contract on address destination with specified function arguments.\n"									
 			]
 		},
         "tvm.buildIntMsg": {
@@ -1333,7 +1344,7 @@
 			"body": "tvm.buildIntMsg({\n\tdest:${1:address},\n\tvalue:${2:uint128},\n\tcall:{${4:function, [callbackFunction, ] arg0, arg1, arg2, ...}},\n\tbounce:${5:bool},\n\tcurrencies:${6:ExtraCurrencyCollection}\n\t\\});",			
 			"description": [
 				"returns (TvmCell);\n",
-				"Function should be used only offchain and \nintended to be used only in debot contracts. Allows \ncreating an external inbound message, that calls \nthe func function of the contract on address \ndestination with specified function arguments.\n"								
+				"Function should be used only offchain and intended to be used only in debot contracts. Allows creating an external inbound message, that calls the func function of the contract on address destination with specified function arguments.\n"								
 			]	
 		},
         "tvm.sendrawmsg": {
@@ -1341,7 +1352,7 @@
 			"body": "tvm.sendrawmsg(${1:TvmCell msg}, ${2:uint8 flag});",			
 			"description": [
 				"tvm.sendrawmsg(TvmCell msg, uint8 flag);\n",
-				"Send the internal/external message msg with flag. \nIt's wrapper for opcode SENDRAWMSG (TVM - A.11.10). \nInternal message msg can be generated by tvm.buildIntMsg().\n"								
+				"Send the internal/external message msg with flag. It's wrapper for opcode SENDRAWMSG (TVM - A.11.10). Internal message msg can be generated by tvm.buildIntMsg().\n"								
 			]	
 		},
         "math.min": {
@@ -1349,7 +1360,7 @@
 			"body": "math.min(${1:T a, T b, ...});",			
 			"description": [
 				"math.min(T a, T b, ...) returns (T);\n",
-				"Returns the minimal value of the passed arguments. \nT should be an integer or fixed point type\n"								
+				"Returns the minimal value of the passed arguments. T should be an integer or fixed point type\n"								
 			]	
 		},
         "math.max": {
@@ -1357,16 +1368,16 @@
 			"body": "math.max(${1:T a, T b, ...});",			
 			"description": [
 				"math.max(T a, T b, ...) returns (T);\n",
-				"Returns the maximal value of the passed arguments. \nT should be an integer or fixed point type\n"								
+				"Returns the maximal value of the passed arguments. T should be an integer or fixed point type\n"								
 			]	
 		},
         "math.minmax": {
 			"prefix": "math.minmax",
 			"body": "math.minmax(${1:T a, T b, ...});",			
 			"description": [
-				"math.minmax(T a, T b) returns (T /*min*/, T /*max*/);\n",
-				"Returns minimal and maximal values of \nthe passed arguments. \nT should be an integer or fixed point type\n",
-				"Example:",
+				"math.minmax(T a, T b) returns (T /\\*min\\*/, T /\\*max\\*/);\n",
+				"Returns minimal and maximal values of the passed arguments. T should be an integer or fixed point type\n",
+				"Example:\n",
 				"(uint a, uint b) = math.minmax(20, 10); // (10, 20)"								
 			]	
 		},
@@ -1383,7 +1394,7 @@
 			"body": "math.modpow2(${1:uint value}, ${2:uint power});",			
 			"description": [
 				"math.modpow2(uint value, uint power) returns (uint);\n",
-				"Computes the value modulo 2^power. \nNote that power should be a constant integer.\n"												
+				"Computes the value modulo 2^power. Note that power should be a constant integer.\n"												
 			]	
 		},
         "math.divc": {
@@ -1391,7 +1402,7 @@
 			"body": "math.divc(${1:T a}, ${2:T b});",			
 			"description": [
 				"math.divc(T a, T b) returns (T);\n",
-				"Returns result of the division of two integers. \nT should be an integer or fixed point type.\nThe return value is rounded ceiling\n"												
+				"Returns result of the division of two integers. T should be an integer or fixed point type. The return value is rounded ceiling\n"												
 			]	
 		},
         "math.divr": {
@@ -1399,7 +1410,7 @@
 			"body": "math.divr(${1:T a}, ${2:T b});",			
 			"description": [
 				"math.divr(T a, T b) returns (T);\n",
-				"Returns result of the division of two integers. \nT should be an integer or fixed point type.\nThe return value is rounded nearest\n"												
+				"Returns result of the division of two integers. T should be an integer or fixed point type. The return value is rounded nearest\n"												
 			]	
 		},
         "math.muldiv": {
@@ -1407,7 +1418,7 @@
 			"body": "math.muldiv(${1:T a}, ${2:T b}, ${3:T c});",			
 			"description": [
 				"math.muldiv(T a, T b, T c) returns (T);\n",
-				"Multiplies two values and then divides \nthe result by a third value. \nT is integer type. The return value \nis rounded(floor). \n"																
+				"Multiplies two values and then divides the result by a third value. T is integer type. The return value is rounded(floor).\n"																
 			]	
 		},
         "math.muldivr": {
@@ -1415,7 +1426,7 @@
 			"body": "math.muldivr(${1:T a}, ${2:T b}, ${3:T c});",			
 			"description": [
 				"math.muldivr(T a, T b, T c) returns (T);\n",
-				"Multiplies two values and then divides \nthe result by a third value. \nT is integer type. The return value \nis rounded(nearest). \n"												
+				"Multiplies two values and then divides the result by a third value. T is integer type. The return value is rounded(nearest).\n"												
 			]	
 		},
         "math.muldivc": {
@@ -1423,23 +1434,23 @@
 			"body": "math.muldivc(${1:T a}, ${2:T b}, ${3:T c});",			
 			"description": [
 				"math.muldivc(T a, T b, T c) returns (T);\n",
-				"Multiplies two values and then divides \nthe result by a third value. \nT is integer type. The return value \nis rounded(ceiling). \n"												
+				"Multiplies two values and then divides the result by a third value. T is integer type. The return value is rounded(ceiling).\n"												
 			]	
 		},
         "math.muldivmod": {
 			"prefix": "math.muldivmod",
 			"body": "math.muldivmod(${1:T a}, ${2:T b}, ${3:T c});",			
 			"description": [
-				"math.muldivmod(T a, T b, T c) (T /*result*/, T /*remainder*/);\n",
-				"This instruction multiplies first two arguments, \ndivides the result by third argument and \nreturns the result and the remainder. \nIntermediate result is stored in the 514 bit buffer, \nand the final result is rounded to the floor.\n"												
+				"math.muldivmod(T a, T b, T c) (T /\\*result\\*/, T /\\*remainder\\*/);\n",
+				"This instruction multiplies first two arguments, divides the result by third argument and returns the result and the remainder. Intermediate result is stored in the 514 bit buffer, and the final result is rounded to the floor.\n"												
 			]	
 		},
         "math.divmod": {
 			"prefix": "math.divmod",
 			"body": "math.divmod(${1:T a}, ${2:T b});",			
 			"description": [
-				"math.divmod(T a, T b) returns (T /*result*/, T /*remainder*/);\n",
-				"This instruction divides the first number \nby the second one and returns the result\nand the remainder. Result is rounded to the floor. \nT is integer type.\n"												
+				"math.divmod(T a, T b) returns (T /\\*result\\*/, T /\\*remainder\\*/);\n",
+				"This instruction divides the first number by the second one and returns the result\nand the remainder. Result is rounded to the floor. T is integer type.\n"												
 			]	
 		},
         "math.sign": {
@@ -1471,9 +1482,14 @@
 			"body": "rnd.next(${1:[Type limit]})",			
 			"description": [
 				"rnd.next([Type limit]) returns (Type);\n",
-				"Generates a new pseudo-random number.\n\t1. Returns uint256 number.\n\t2. If the first argument limit > 0 then \n\tfunction returns the value in the range \n\t0..limit-1. Else if limit < 0 then the \n\treturned value lies in range limit..-1. \n\tElse if limit == 0 then it returns 0.\n",
-				"Examples:",
-				"// 1)\nuint256 r0 = rnd.next(); // 0..2^256-1\n// 2)\nuint8 r1 = rnd.next(100);  // 0..99\nint8 r2 = rnd.next(int8(100));  // 0..99\nint8 r3 = rnd.next(int8(-100)); // -100..-1\n"		
+				"Generates a new pseudo-random number.\n",
+				"1. Returns uint256 number.",
+				"2. If the first argument limit > 0 then function returns the value in the range 0..limit-1. Else if limit < 0 then the returned value lies in range limit..-1. Else if limit == 0 then it returns 0.\n",
+				"Example:\n",
+				"// 1)\nuint256 r0 = rnd.next(); // 0..2^256-1",
+				"// 2)\nuint8 r1 = rnd.next(100);  // 0..99",
+				"int8 r2 = rnd.next(int8(100));  // 0..99",
+				"int8 r3 = rnd.next(int8(-100)); // -100..-1\n"		
 			]				
 		},
         "rnd.getSeed": {
@@ -1496,8 +1512,9 @@
 			"prefix": "rnd.shuffle",
 			"body": "rnd.shuffle(${1:uint someNumber(optional)})",			
 			"description": [
-				"Randomizes the random seed.\n\n1. Mixes the random seed and someNumber\nrnd.shuffle(uint someNumber);\n",
-				"2. Mixes the random seed and the logical time of the current transaction.\nrnd.shuffle();\n"	
+				"Randomizes the random seed.\n",
+				"1. Mixes the random seed and someNumber\nrnd.shuffle(uint someNumber);",
+				"2. Mixes the random seed and the logical time of the current transaction."				
 			]			
 		},
         "selfdestruct": {
@@ -1505,15 +1522,22 @@
 			"body": "selfdestruct(${1:address dest_addr})",			
 			"description": [
 				"selfdestruct(address dest_addr);\n",
-				"Creates and sends the message that carries \nall the remaining balance of the current smart \ncontract and destroys the current account.\n"	
+				"Creates and sends the message that carries all the remaining balance of the current smart contract and destroys the current account.\n"	
 			]			
 		},
         "sha256": {
 			"prefix": "sha256",
 			"body": "sha256(${1|TvmSlice slice, bytes b, string str|})",			
 			"description": [
-				"// (1)\nsha256(TvmSlice slice) returns (uint256)\n// (2) \nsha256(bytes b) returns (uint256)\n// (3)\nsha256(string str) returns (uint256)\n",	
-				"1. Compute the SHA-256 hash. If the bit \nlength of slice is not divisible by eight, \nthrows a cell underflow exception. \nReferences of slice are not used to compute \nthe hash. Only data bits located in the \nroot cell of slice are used. 2. Compute the SHA-256 hash only for the \nfirst 127 bytes. If bytes.length > 127 then b[128], \nb[129], b[130] ... elements are ignored.\n 3. Same as for bytes: only the first 127 \nbytes are taken into account.\n"	
+				"//(1)\n",
+				"`sha256(TvmSlice slice) returns (uint256)`\n",
+				"//(2)\n\n",
+				"sha256(bytes b) returns (uint256)\n",
+				"//(3)\n",
+				"sha256(string str) returns (uint256)\n",	
+				"1. Compute the SHA-256 hash. If the bit length of slice is not divisible by eight, throws a cell underflow exception. References of slice are not used to compute the hash. Only data bits located in the root cell of slice are used.  ",
+				"2. Compute the SHA-256 hash only for the first 127 bytes. If bytes.length > 127 then b[128], b[129], b[130] ... elements are ignored.",
+				"3. Same as for bytes: only the first 127 nbytes are taken into account.\n"	
 			]			
 		},
         "gasToValue": {
@@ -1521,7 +1545,7 @@
 			"body": "gasToValue(${1:uint128 gas}, ${2:int8 wid})",			
 			"description": [
 				"gasToValue(uint128 gas, int8 wid) returns (uint128 value)\n",	
-				"Returns worth of gas in workchain wid. Throws an \nexception if wid doesn't equal 0 and -1.\n"	
+				"Returns worth of gas in workchain wid. Throws an exception if wid doesn't equal 0 and -1.\n"	
 			]			
 		},
         "valueToGas": {
@@ -1529,7 +1553,7 @@
 			"body": "valueToGas(${1:uint128 value}, ${2:int8 wid})",			
 			"description": [
 				"gasToValue(uint128 value, int8 wid) returns (uint128 gas)\n",	
-				"Returns how much gas could be bought on value \nnanotons in workchain wid. \nThrows an exception if wid doesn't equal 0 and -1.\n"	
+				"Returns how much gas could be bought on value nanotons in workchain wid. Throws an exception if wid doesn't equal 0 and -1.\n"	
 			]			
 		},
         "constant": {
@@ -1537,16 +1561,16 @@
 			"body": "constant ${1:name} = ${0:value};",			
 			"description": [
 				"Example: uint constant cost = 100;\n",	
-				"For constant variables, the value has to be \na constant at compile time and this value is \nsubstituted where the variable is used. \nThe value has to be assigned where the \nvariable is declared.\n"	
+				"For constant variables, the value has to be a constant at compile time and this value is substituted where the variable is used. The value has to be assigned where the variable is declared.\n"	
 			]			
 		},
         "static": {
 			"prefix": "static",
 			"body": "static ${0:name};",			
 			"description": [				
-				"Static state variables are used in generation \nof the contract origin state. Such variables can be \nset while deploying contract from contract \n(onchain) or by tvm-linker (offchain).\n",	
-				"Example: ",
-				"uint static a; ",
+				"Static state variables are used in generation of the contract origin state. Such variables can be set while deploying contract from contract (onchain) or by tvm-linker (offchain).\n",	
+				"Example:\n",
+				"uint static a;",
 				"// ok // uint static b = 123; // error\n"	
 			]			
 		},
@@ -1569,13 +1593,6 @@
 			"body": "nTon",			
 			"description": [				
 				"1 nTon == 0.000000001 ton or 1e-9ton\n"				
-			]			
-		},
-        "ton": {
-			"prefix": "ton",
-			"body": "ton",			
-			"description": [				
-				"1 ton == 1e9 nanoton\n"				
 			]			
 		},
         "Ton": {
@@ -1654,6 +1671,22 @@
 			"description": [				
 				"1 GTon == 1e6 GTon\n"				
 			]			
+		},
+		"<optional(Type)>.set": {
+			"prefix": ".set",
+			"body": ".set(${1:Type value})",
+			"description": [
+				"\\<optional(Type)>.set(Type value);\n",
+				"Replaces the content of the optional with the contents of other."
+			]
+		},
+		"<optional(Type)>.reset": {
+			"prefix": ".reset",
+			"body": ".reset()",
+			"description": [
+				"\\<optional(Type)>.reset();\n",
+				"Deletes the content of the optional."
+			]
 		}		
     }
 }

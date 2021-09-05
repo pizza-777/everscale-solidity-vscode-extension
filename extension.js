@@ -17,7 +17,7 @@ function activate(context) {
 	console.log('Congratulations, your extension "ton-solidity" is now active!');
 	disposable = vscode.languages.registerHoverProvider('ton-solidity', {
 		provideHover(document, position) {
-			const wordRange = document.getWordRangeAtPosition(position, /\S{1,30}/);
+			const wordRange = document.getWordRangeAtPosition(position, /[a-zA-Z\.]{1,30}/);
 			const word = document.getText(wordRange);			
 			let suggestion = null;
 			for (const [, value] of Object.entries(wordsSet)) {

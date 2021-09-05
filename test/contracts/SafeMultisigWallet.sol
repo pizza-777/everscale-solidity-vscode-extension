@@ -4,6 +4,7 @@ pragma ignoreIntOverflow;
 pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 pragma AbiHeader time;
+pragma ton-solidity >= 0.46.0;
 
 interface IAccept {
     function acceptTransfer(bytes payload) external payable;
@@ -107,6 +108,7 @@ contract MultisigWallet is IAccept {
     function _initialize(uint256[] owners, uint8 reqConfirms) inline private {
         uint8 ownerCount = 0;
         m_ownerKey = owners[0];
+        
 
         uint256 len = owners.length;
         for (uint256 i = 0; (i < len && ownerCount < MAX_CUSTODIAN_COUNT); i++) {
@@ -144,12 +146,13 @@ contract MultisigWallet is IAccept {
     }
 
     /// @dev Decrement queued transaction count by custodian with defined index.
-    function _decMaskValue(uint256 mask, uint8 index) inline private pure returns (uint256) {
+    function _decMaskValue(uint256 mask, uint8 index) inline private pure returns (uint256) {          
         return mask - (1 << (8 * uint256(index)));
     }
 
     /// @dev Checks bit with defined index in the mask.
     function _checkBit(uint32 mask, uint8 index) inline private pure returns (bool) {
+        tvm.resetStorage();
         return (mask & (uint32(1) << index)) != 0;
     }
 
@@ -399,12 +402,15 @@ contract MultisigWallet is IAccept {
         while (success) {
             custodians.push(CustodianInfo(index, key));
             (key, index, success) = m_custodians.next(key);
-        }
+        }       
     }    
 
     /*
      * Fallback and receive functions to receive simple transfers.
      */
+     onBounce (TvmSlice body) external {
+         a.store(list_of_values)
+     }
     
     fallback () external payable {}
 

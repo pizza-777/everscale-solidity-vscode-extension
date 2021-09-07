@@ -1,10 +1,7 @@
 const vscode = require('vscode');
 const { controllers } = require('tondev');
-const snippets_json = require("./snippets/ton-solidity.json");
 const path = require('path');
-const { getErrors } = require('./utils');
-
-const wordsSet = snippets_json['.source.ton-solidity'];
+const { getErrors, getSuggestion } = require('./utils');
 
 let _tondevTerminal;
 let t_out;
@@ -18,19 +15,8 @@ function activate(context) {
 	disposable = vscode.languages.registerHoverProvider('ton-solidity', {
 		provideHover(document, position) {
 			const wordRange = document.getWordRangeAtPosition(position, /[a-zA-Z\.]{1,30}/);
-			const word = document.getText(wordRange);			
-			let suggestion = null;
-			for (const [, value] of Object.entries(wordsSet)) {
-				if (word.includes(value.prefix)){
-					if (Array.isArray(value.description)) {
-						suggestion = value.description.join("\n")
-					} else {
-						suggestion = value.description;
-					}
-					break;
-				}					
-			}
-			return new vscode.Hover(suggestion);
+			const word = document.getText(wordRange);						
+			return new vscode.Hover(getSuggestion(word));
 		}
 	});
 

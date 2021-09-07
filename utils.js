@@ -1,5 +1,7 @@
-const snippets_json = require("./snippets/ton-solidity.json");
-const wordsSet = snippets_json['.source.ton-solidity'];
+const snippetsJson = require("./snippets/ton-solidity.json");
+const wordsSet = snippetsJson['.source.ton-solidity'];
+const fs = require("fs");
+const path = require('path');
 
 function getErrors(string) {
     if (!string) {
@@ -38,6 +40,7 @@ function getErrors(string) {
 
 function getSuggestion(word){
     let suggestion = null;
+    counter = 0;
     for (const [, value] of Object.entries(wordsSet)) {
         if (word.includes(value.prefix)){
             if (Array.isArray(value.description)) {
@@ -45,7 +48,12 @@ function getSuggestion(word){
             } else {
                 suggestion = value.description;
             }
-            break;
+            counter++;
+            if(counter == 2){
+                let snippetPath = path.resolve(__dirname, "snippets/includes/"+value.prefix.replace(/^\./,'')+".md");
+                suggestion = fs.readFileSync(snippetPath,"utf8");
+                return suggestion;
+            }
         }					
     }
    return suggestion;

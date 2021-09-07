@@ -131,7 +131,7 @@
 			"body": "\/\/\/ @notice Explain to an end user what this does\r\n\/\/\/ @dev Explain to a developer any extra details\r\n\/\/\/ @param Documents a parameter just like in doxygen (must be followed by parameter name)",
 			"description": "natspec for event"
 		},		
-		"<TvmTvmCell>.depth": {
+		"<TvmCell>.depth": {
 			"prefix": ".depth",
 			"body": ".depth()",
 			"description": [
@@ -260,18 +260,6 @@
 				" * 1 - slice > other",
 				" * 0 - slice == other",
 				" * -1 - slice < other"
-			]
-		},
-		"<TvmSlice>.decode": {
-			"prefix": ".decode",
-			"body": ".decode(${1:TypeA}, ${2:TypeB} ...)",
-			"description": [
-				"\\<TvmSlice>.decode(TypeA, TypeB, ...) returns (TypeA /\\*a\\*/, TypeB /\\*b\\*/, ...);\n",
-				"Supported types: `uintN`, `intN`, `bytesN`, `bool`, `ufixedMxN`, `fixedMxN`, `address`, `contract`, `TvmCell`, `bytes`, `string`, `mapping`, `ExtraCurrencyCollection`, `array`, `optional` and `struct`\n",
-				"Example:\n",
-				"TvmSlice slice = ...;\n",
-				"(uint8 a, uint16 b) = slice.decode(uint8, uint16);\n",
-				"(uint16 num0, uint32 num1, address addr) = slice.decode(uint16, uint32, address);"
 			]
 		},
 		"<TvmSlice>.loadRef": {
@@ -1687,6 +1675,18 @@
 				"\\<optional(Type)>.reset();\n",
 				"Deletes the content of the optional."
 			]
-		}		
+		},
+		"<TvmSlice>.decode": {
+			"prefix": ".decode",
+			"body": ".decode(${1:TypeA}, ${2:TypeB} ...)",
+			"description": [
+				"\\<TvmSlice>.decode(TypeA, TypeB, ...) returns (TypeA /\\*a\\*/, TypeB /\\*b\\*/, ...);\n",
+				"Supported types: `uintN`, `intN`, `bytesN`, `bool`, `ufixedMxN`, `fixedMxN`, `address`, `contract`, `TvmCell`, `bytes`, `string`, `mapping`, `ExtraCurrencyCollection`, `array`, `optional` and `struct`\n",
+				"Example:\n",
+				"TvmSlice slice = ...;\n",
+				"(uint8 a, uint16 b) = slice.decode(uint8, uint16);\n",
+				"(uint16 num0, uint32 num1, address addr) = slice.decode(uint16, uint32, address);"
+			]
+		}
     }
 }

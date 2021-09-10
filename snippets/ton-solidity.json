@@ -72,17 +72,16 @@
 		},
 		"constructor declaration": {
 			"prefix": "constructor",
-			"body": "constructor (${1:type} ${2:name}) public {\n\t$0\n}"
+			"body": "constructor(${1:type} ${2:name}) public {\n\t$0\n}"
 		},
         "function declaration": {
 			"prefix": "func",
-			"body": "function ${1:name}(${2:type} ${3:name}) {\n\t$0\n}"
+			"body": "function ${1:name}(${2:type} ${3:name}) (${4|public|private|internal|external|) {\n\t$0\n}"
 		},
         "function return declaration": {
 			"prefix": "funcr",
-			"body": "function ${1:name}(${2:type} ${3:name}) returns (${4:type} ${5:name}) {\n\t$0\n}"
-		}
-        ,
+			"body": "function ${1:name}(${2:type} ${3:name}) (${4|public|private|internal|external|) returns (${4:type} ${5:name}) {\n\t$0\n}"
+		},
         "function view declaration": {
 			"prefix": "funcrview",
 			"body": "function ${1:name}(${2:type} ${3:name}) view public returns (${4:type} ${5:name}) {\n\t$0\n}"
@@ -97,7 +96,7 @@
         },
         "modifier declaration": {
 			"prefix": "modifier",
-			"body": "modifier ${1:name}($2) {\n\t$0_\n}"
+			"body": "modifier ${1:name}($2) {\n\t$0_;\n}"
         },
         "if else statement": {
 			"prefix": "ife",
@@ -966,7 +965,7 @@
 		},
         "require": {
 			"prefix": "require",
-			"body": "require(${1:bool condition}, ${2:uint errorCode}, ${3:Type exceptionArgument})",
+			"body": "require(${1:bool condition}, ${2:uint errorCode}, ${3:Type exceptionArgument});",
 			"description": [
 				"require(bool condition, [uint errorCode = 100, [Type exceptionArgument]]);\n",
 				"require function can be used to check the condition and throw an exception if the condition is not met. The function takes condition and optional parameters: error code (unsigned integer) and the object of any type.\n",
@@ -1097,7 +1096,7 @@
 		},
         "tvm.accept": {
 			"prefix": "tvm.accept",
-			"body": "tvm.accept()",
+			"body": "tvm.accept();",
 			"description": [
 				"tvm.accept();\n",
 				"Executes TVM instruction \"ACCEPT\" (TVM - A.11.2. - F800). This instruction sets current gas limit to its maximal allowed value. This action is required to process external messages, which bring no value.\n"
@@ -1105,7 +1104,7 @@
 		},
         "tvm.commit": {
 			"prefix": "tvm.commit",
-			"body": "tvm.commit()",
+			"body": "tvm.commit();",
 			"description": [
 				"tvm.commit();\n",
 				"Creates a \"check point\" of the state variables (by copying them from c7 to c4) and register c5. If the contract throws an exception at the computing phase then the state variables and register c5 will roll back to the \"check point\", and the computing phase will be considered \"successful\". If contract doesn't throw an exception, it has no effect.\n"
@@ -1113,7 +1112,7 @@
 		},
         "tvm.rawCommit": {
 			"prefix": "tvm.rawCommit",
-			"body": "tvm.rawCommit()",
+			"body": "tvm.rawCommit();",
 			"description": [
 				"tvm.rawCommit();\n",
 				"Creates a \"check point\" of the state variables but  doesn't copy the state variables from c7 to c4. It's a wrapper for opcode COMMIT. See TVM.\n",
@@ -1122,7 +1121,7 @@
 		},
         "tvm.getData": {
 			"prefix": "tvm.getData",
-			"body": "tvm.getData()",
+			"body": "tvm.getData();",
 			"description": [
 				"tvm.getData() returns (TvmCell);\n",
 				"It's an experimental function.\n A dual of the tvm.setData() returning value of c4 register. Getting a raw storage cell is useful when upgrading a new version of contract that introduces an altered data layout.\nManipulation with a raw storage cell requires an understanding of the way the compiler layouts the data. Refer to the description of tvm.setData() below to get more details.\n",
@@ -1131,7 +1130,7 @@
 		},
         "tvm.setData": {
 			"prefix": "tvm.setData",
-			"body": "tvm.setData()",
+			"body": "tvm.setData();",
 			"description": [
 				"tvm.setData() returns (TvmCell);\n",
 				"It's an experimental function.Set cell data to register c4. \n",
@@ -1145,7 +1144,7 @@
 		},
         "tvm.log": {
 			"prefix": "tvm.log",
-			"body": "tvm.log(${1:string log})",
+			"body": "tvm.log(${1:string log});",
 			"description": [
 				"tvm.log(string log);\n",
 				"Dumps log string. This function is wrapper for TVM instructions PRINTSTR (for constant literal strings shorter than 16 symbols) and STRDUMP (for other strings). logtvm is an alias for tvm.log(string).\nNote: For long strings dumps only the first 127 symbols.\n",
@@ -1155,7 +1154,7 @@
 		},
         "tvm.hexdump": {
 			"prefix": "tvm.hexdump",
-			"body": "tvm.hexdump(${1:T a})",
+			"body": "tvm.hexdump(${1:T a});",
 			"description": [
 				"tvm.hexdump(T a);\n",
 				"Dumps cell data or integer. Note that for cells this function dumps data only from the first cell. T must be an integer type or TvmCell.\n",
@@ -1165,7 +1164,7 @@
 		},
         "tvm.bindump": {
 			"prefix": "tvm.bindump",
-			"body": "tvm.bindump(${1:T a})",
+			"body": "tvm.bindump(${1:T a});",
 			"description": [
 				"tvm.bindump(T a);\n",
 				"Dumps cell data or integer. Note that for cells this function dumps data only from the first cell. T must be an integer type or TvmCell.\n",
@@ -1555,8 +1554,8 @@
 			"description": [				
 				"Static state variables are used in generation of the contract origin state. Such variables can be set while deploying contract from contract (onchain) or by tvm-linker (offchain).\n",	
 				"Example:\n",
-				"uint static a;",
-				"// ok // uint static b = 123; // error\n"	
+				"uint static a; //ok\n",
+				"uint static b = 123; // error\n"	
 			]			
 		},
         "nano": {

@@ -5,6 +5,9 @@ const { getErrors, getSuggestion } = require('./utils');
 
 let _tondevTerminal;
 let t_out;
+let lastTime = 0;
+let counter = 0
+const TYPING_DELAY = 500;
 /**
  * @param {vscode.ExtensionContext} context
  */
@@ -29,20 +32,19 @@ function activate(context) {
 			updateDiagnostics(editor.document, collection);
 		}
 	}));
-	let lastTime = 0;
-	let counter = 0
-	context.subscriptions.push(vscode.workspace.onDidChangeTextDocument(async documentChangeEvent => {
-		let currTime = Date.now();		
-		if((currTime-lastTime) > 2000 || counter < 4){//prevent when typing ...
+
+	context.subscriptions.push(vscode.workspace.onDidChangeTextDocument(async documentChangeEvent => {	
+		let currTime = Date.now();			
+		if((currTime-lastTime) > TYPING_DELAY){
+			counter = 0;			
+		}
+		if(counter < 4){//prevent when typing ...
 			if (documentChangeEvent) {							
-			await updateDiagnostics(documentChangeEvent.document, collection);			
+				updateDiagnostics(documentChangeEvent.document, collection);			
+				lastTime = currTime;				
 			}
 			counter++;
-		}
-		if((currTime-lastTime) > 2000){
-			counter = 0;
-			lastTime = currTime;
-		}
+		}		
 	}));
 }
 
@@ -72,7 +74,7 @@ async function updateDiagnostics(document, collection) {
 				severity: value.severity == 'Error' ? vscode.DiagnosticSeverity.Error : vscode.DiagnosticSeverity.Warning,
 				source: '',
 				relatedInformation: [
-					new vscode.DiagnosticRelatedInformation(new vscode.Location(document.uri, new vscode.Range(new vscode.Position(line, character), new vscode.Position(value.coord.raw - 1, character + value.errorLenght))), value.info)
+					new vscode.DiagnosticRelatedInformation(new vscode.Location(document.uri, new vscode.Range(new vscode.Position(line, character), new vscode.Position(line, character + value.errorLenght))), value.info)
 				]
 			}
 		})

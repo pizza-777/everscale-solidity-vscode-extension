@@ -40,7 +40,7 @@ function getErrors(string) {
 
 function getSuggestion(word){
     let suggestion = null;
-    counter = 0;
+    let counter = 0;
     for (const [, value] of Object.entries(wordsSet)) {
         if (word.includes(value.prefix)){
             if (Array.isArray(value.description)) {

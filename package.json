@@ -1,8 +1,20 @@
 {
   "name": "ton-solidity",
   "displayName": "ton-solidity",
-  "description": "Support for ton-solidity language",
+  "description": "TON Solidity Language for Visual Studio Code",
   "version": "0.0.1",
+  "keywords": [
+    "solidity",
+    "ton-solidity",
+    "TON",
+    "FreeTON",
+    "Free TON",
+    "blockchain",
+    "tondev",
+    "highlighting"  
+  ],  
+  "publisher": "freeton20",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.59.0"
   },
@@ -11,6 +23,7 @@
     "url": "https://github.com/freeton20/ton-highlight"
   },
   "categories": [
+    "Programming Languages",
     "Snippets"
   ],
   "activationEvents": [
@@ -44,6 +57,7 @@
       }
     ]
   },
+  "icon": "assets/icon.png",
   "scripts": {
     "lint": "eslint .",
     "pretest": "npm run lint",

@@ -409,7 +409,7 @@ contract MultisigWallet is IAccept {
      * Fallback and receive functions to receive simple transfers.
      */
      onBounce (TvmSlice body) external {
-         a.store(list_of_values)
+       
      }
     
     fallback () external payable {}

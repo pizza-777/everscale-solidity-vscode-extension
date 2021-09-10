@@ -593,7 +593,7 @@
 				"\\<array>.empty() returns (bool);\n",
 				"Returns status flag whether the array is empty (its length is 0).\n",
 				"Example:\n",
-				"uint[] arr;\nrequire(arr.empty());\narr.push();\nrequire(!arr.empty());"							
+				"uint[] arr;\n\nrequire(arr.empty());\n\narr.push();\n\nrequire(!arr.empty());"							
 			]
 		},
         "<bytes>.empty": {
@@ -1516,12 +1516,9 @@
         "sha256": {
 			"prefix": "sha256",
 			"body": "sha256(${1|TvmSlice slice, bytes b, string str|})",			
-			"description": [
-				"//(1)\n",
-				"`sha256(TvmSlice slice) returns (uint256)`\n",
-				"//(2)\n\n",
-				"sha256(bytes b) returns (uint256)\n",
-				"//(3)\n",
+			"description": [				
+				"sha256(TvmSlice slice) returns (uint256)\n",				
+				"sha256(bytes b) returns (uint256)\n",				
 				"sha256(string str) returns (uint256)\n",	
 				"1. Compute the SHA-256 hash. If the bit length of slice is not divisible by eight, throws a cell underflow exception. References of slice are not used to compute the hash. Only data bits located in the root cell of slice are used.  ",
 				"2. Compute the SHA-256 hash only for the first 127 bytes. If bytes.length > 127 then b[128], b[129], b[130] ... elements are ignored.",

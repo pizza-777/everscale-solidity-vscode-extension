@@ -9,13 +9,10 @@ let t_out;
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "ton-solidity" is now active!');
-	disposable = vscode.languages.registerHoverProvider('ton-solidity', {
+	let disposable = vscode.languages.registerHoverProvider('ton-solidity', {
 		provideHover(document, position) {
-			const wordRange = document.getWordRangeAtPosition(position, /[a-zA-Z\.]{1,30}/);
-			const word = document.getText(wordRange);						
+			const wordRange = document.getWordRangeAtPosition(position, /[a-zA-Z0-9\.]{1,30}/);
+			const word = document.getText(wordRange);
 			return new vscode.Hover(getSuggestion(word));
 		}
 	});
@@ -28,20 +25,28 @@ function activate(context) {
 		updateDiagnostics(vscode.window.activeTextEditor.document, collection)
 	}
 	context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(editor => {
-		console.log('ondidchangetxteditor');
 		if (editor) {
 			updateDiagnostics(editor.document, collection);
 		}
 	}));
-	context.subscriptions.push(vscode.workspace.onDidChangeTextDocument(documentChangeEvent => {
-		console.log('ondidchangetxtdocument');
-		if (documentChangeEvent) {
-			updateDiagnostics(documentChangeEvent.document, collection);
+	let lastTime = 0;
+	let counter = 0
+	context.subscriptions.push(vscode.workspace.onDidChangeTextDocument(async documentChangeEvent => {
+		let currTime = Date.now();		
+		if((currTime-lastTime) > 2000 || counter < 4){//prevent when typing ...
+			if (documentChangeEvent) {							
+			await updateDiagnostics(documentChangeEvent.document, collection);			
+			}
+			counter++;
+		}
+		if((currTime-lastTime) > 2000){
+			counter = 0;
+			lastTime = currTime;
 		}
 	}));
 }
 
-function updateDiagnostics(document, collection) {
+async function updateDiagnostics(document, collection) {
 	t_out = [];
 	_tondevTerminal = null;
 	let filePath = document.uri.fsPath;
@@ -52,21 +57,26 @@ function updateDiagnostics(document, collection) {
 	let args = [];
 	args['file'] = filePath;
 	args['output'] = '';
-	runCommand(compileCommand, args).then( r => {
-		let collectionSet = r.map(value => {	
+	let r = await runCommand(compileCommand, args);
+
+		if (r == undefined) {
+			return;
+		}
+		let collectionSet = r.map(value => {
+			let line = Math.abs(value.coord.raw - 1);
+			let character = Math.abs(value.coord.position - 1);
 			return {
 				code: '',
 				message: value.info,
-				range: new vscode.Range(new vscode.Position(value.coord.raw-1, value.coord.position-1), new vscode.Position(value.coord.raw-1, value.coord.position + value.errorLenght-1)),
+				range: new vscode.Range(new vscode.Position(line, character), new vscode.Position(line, character + value.errorLenght)),
 				severity: value.severity == 'Error' ? vscode.DiagnosticSeverity.Error : vscode.DiagnosticSeverity.Warning,
 				source: '',
 				relatedInformation: [
-					new vscode.DiagnosticRelatedInformation(new vscode.Location(document.uri, new vscode.Range(new vscode.Position(value.coord.raw, value.coord.position-1), new vscode.Position(value.coord.raw-1, value.coord.position + value.errorLenght-1))), value.info)
+					new vscode.DiagnosticRelatedInformation(new vscode.Location(document.uri, new vscode.Range(new vscode.Position(line, character), new vscode.Position(value.coord.raw - 1, character + value.errorLenght))), value.info)
 				]
 			}
 		})
-		collection.set(document.uri, collectionSet);		
-	})
+		collection.set(document.uri, collectionSet);	
 }
 
 async function runCommand(command, args) {
@@ -88,12 +98,12 @@ function tondevTerminal() {
 				output.appendLine(args.map((x) => `${x}`).join(""));
 			},
 			writeError: (text) => {
-				t_out.push(text);				
+				t_out.push(text);
 			},
 			write: (text) => {
-				t_out.push(text);				
+				t_out.push(text);
 			},
-		};		
+		};
 	}
 	return _tondevTerminal;
 }

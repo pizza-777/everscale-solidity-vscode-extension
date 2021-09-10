@@ -41,8 +41,19 @@ function getErrors(string) {
 function getSuggestion(word){
     let suggestion = null;
     let counter = 0;
-    for (const [, value] of Object.entries(wordsSet)) {
+    if(word.match(/AbiHeader|msgValue|pragma|(ton-)?solidity/)){
+        let snippetPath = path.resolve(__dirname, "snippets/includes/"+word+".md");
+        suggestion = fs.readFileSync(snippetPath,"utf8");
+        return suggestion;
+    }
+    let prefixLength = 0;
+    for (const [, value] of Object.entries(wordsSet)) {        
         if (word.includes(value.prefix)){
+            //take the most matched value
+            if(value.prefix.length < prefixLength){
+                continue;
+            }
+            prefixLength = value.prefix.length;            
             if (Array.isArray(value.description)) {
                 suggestion = value.description.join("\n")
             } else {

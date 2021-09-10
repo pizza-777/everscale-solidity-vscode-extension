@@ -316,7 +316,7 @@
         "control-pragma": {
             "patterns": [
                 {
-                    "match": "(pragma) (msgValue|AbiHeader|solidity|ton-solidity|experimental) ([0-9a-zA-Z\\.\\s<>=]+)(;)",
+                    "match": "(pragma) (msgValue|AbiHeader|solidity|ton-solidity|experimental) ([0-9a-zA-Z_\\.\\s<>=]+)(;)",
                     "captures": {
                         "1": {
                             "name": "keyword.control.pragma"
@@ -602,7 +602,7 @@
             "name": "storage.modifier.payable"
         },
         "type-modifier-constant": {
-            "match": "\\b(constant)\\b",
+            "match": "\\b(constant|static)\\b",
             "name": "storage.modifier.readonly"
         },
         "type-modifier-immutable": {

@@ -12,7 +12,7 @@ const TYPING_DELAY = 500;
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
-	let disposable = vscode.languages.registerHoverProvider('ton-solidity', {
+	let hoverProvider = vscode.languages.registerHoverProvider('ton-solidity', {
 		provideHover(document, position) {
 			const wordRange = document.getWordRangeAtPosition(position, /[a-zA-Z0-9\.]{1,30}/);
 			const word = document.getText(wordRange);
@@ -20,7 +20,7 @@ function activate(context) {
 		}
 	});
 
-	context.subscriptions.push(disposable);
+	context.subscriptions.push(hoverProvider);
 
 	const collection = vscode.languages.createDiagnosticCollection("tonsol");
 

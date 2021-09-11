@@ -33,18 +33,18 @@ function activate(context) {
 		}
 	}));
 
-	context.subscriptions.push(vscode.workspace.onDidChangeTextDocument(async documentChangeEvent => {	
-		let currTime = Date.now();			
-		if((currTime-lastTime) > TYPING_DELAY){
-			counter = 0;			
+	context.subscriptions.push(vscode.workspace.onDidChangeTextDocument(async documentChangeEvent => {
+		let currTime = Date.now();
+		if ((currTime - lastTime) > TYPING_DELAY) {
+			counter = 0;
 		}
-		if(counter < 4){//prevent when typing ...
-			if (documentChangeEvent) {							
-				updateDiagnostics(documentChangeEvent.document, collection);			
-				lastTime = currTime;				
+		if (counter < 4) {//prevent when typing ...
+			if (documentChangeEvent) {
+				updateDiagnostics(documentChangeEvent.document, collection);
+				lastTime = currTime;
 			}
 			counter++;
-		}		
+		}
 	}));
 }
 
@@ -58,27 +58,27 @@ async function updateDiagnostics(document, collection) {
 	const compileCommand = controllers[1].commands[1];
 	let args = [];
 	args['file'] = filePath;
-	args['output'] = '';
+	args['outputDir'] = path.resolve(__dirname, 'abi');
 	let r = await runCommand(compileCommand, args);
 
-		if (r == undefined) {
-			return;
+	if (r == undefined) {
+		return;
+	}
+	let collectionSet = r.map(value => {
+		let line = Math.abs(value.coord.raw - 1);
+		let character = Math.abs(value.coord.position - 1);
+		return {
+			code: '',
+			message: value.info,
+			range: new vscode.Range(new vscode.Position(line, character), new vscode.Position(line, character + value.errorLenght)),
+			severity: value.severity == 'Error' ? vscode.DiagnosticSeverity.Error : vscode.DiagnosticSeverity.Warning,
+			source: '',
+			relatedInformation: [
+				new vscode.DiagnosticRelatedInformation(new vscode.Location(document.uri, new vscode.Range(new vscode.Position(line, character), new vscode.Position(line, character + value.errorLenght))), value.info)
+			]
 		}
-		let collectionSet = r.map(value => {
-			let line = Math.abs(value.coord.raw - 1);
-			let character = Math.abs(value.coord.position - 1);
-			return {
-				code: '',
-				message: value.info,
-				range: new vscode.Range(new vscode.Position(line, character), new vscode.Position(line, character + value.errorLenght)),
-				severity: value.severity == 'Error' ? vscode.DiagnosticSeverity.Error : vscode.DiagnosticSeverity.Warning,
-				source: '',
-				relatedInformation: [
-					new vscode.DiagnosticRelatedInformation(new vscode.Location(document.uri, new vscode.Range(new vscode.Position(line, character), new vscode.Position(line, character + value.errorLenght))), value.info)
-				]
-			}
-		})
-		collection.set(document.uri, collectionSet);	
+	})
+	collection.set(document.uri, collectionSet);
 }
 
 async function runCommand(command, args) {

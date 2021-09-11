@@ -1,24 +1,32 @@
 ##### .empty
- 1\. **\<TvmSlice>**.empty() returns (bool);
+ 1. Checks whether a Slice is empty (i.e., contains no bits of data and no cell references).
+ ```
+ <TvmSlice>.empty() returns (bool);
+ ```
 
-Checks whether a Slice is empty (i.e., contains no bits of data and no cell references).
+2. Checks whether the vector is empty.
+```
+<vector(Type)>.empty() returns (bool);
+```
 
-2\. **\<vector(Type)>**.empty() returns (bool);
+3. Returns status flag whether the array is empty (its length is 0).
+```
+<array>.empty() returns (bool);
+```
 
-Checks whether the vector is empty.
+4. Returns status flag whether the bytes is empty (its length is 0).
+```
+<bytes>.empty() returns (bool);
+```
 
-3\. **\<array>**.empty() returns (bool);
+5. Returns status flag whether the string is empty (its length is 0).
+```
+<string>.empty() returns (bool);
+```
 
-Returns status flag whether the array is empty (its length is 0).
+6. Returns a status flag whether the mapping is empty.
+```
+<map>.empty() returns (bool);
+```
 
-4\. **\<bytes>**.empty() returns (bool);
 
-Returns status flag whether the bytes is empty (its length is 0).
-
-5\. **\<string>**.empty() returns (bool);
-
-Returns status flag whether the string is empty (its length is 0).
-
-6\. **\<map>**.empty() returns (bool);
-
-Returns a status flag whether the mapping is empty.

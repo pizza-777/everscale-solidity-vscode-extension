@@ -1,9 +1,12 @@
 ##### .length
 
-1\. **\<vector(Type)>**.length() returns (uint8);
+1\. Returns length of the vector.
+```
+<vector(Type)>**.length() returns (uint8);
+```
 
-Returns length of the vector.
+2\. Returns length of the byte array.
+```
+<bytes>**.length returns (uint);
+```
 
-2\. **\<bytes>**.length returns (uint)
-
-Returns length of the byte array.

@@ -1,9 +1,11 @@
 ##### .append
 
-1\. **\<string>**.append(string tail);
+1\. Appends the tail string to the string
+```
+<string>.append(string tail); 
+```
 
-Appends the tail string to the string
-
-2\. **\<bytes>**.append(bytes tail);
-
-Modifies the bytes by concatenating tail bytes to the end of the bytes.
+2\. Modifies the bytes by concatenating tail bytes to the end of the bytes.
+```
+<bytes>.append(bytes tail);
+```

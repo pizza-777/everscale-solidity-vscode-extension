@@ -46,7 +46,7 @@
     "snippets": [
       {
         "language": "ton-solidity",
-        "path": "./snippets/ton-solidity.json"
+        "path": "./snippets/snippets.json"
       }
     ],
     "grammars": [

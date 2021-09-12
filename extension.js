@@ -16,8 +16,8 @@ function activate(context) {
 	const completionProvider = vscode.languages.registerCompletionItemProvider(
 		{ scheme: 'file' },
 		{
-			provideCompletionItems(document, position) {				
-				return getCompletionItems();
+			provideCompletionItems(document, position) {
+				return getCompletionItems(document);
 			}
 		}
 	);

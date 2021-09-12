@@ -75,10 +75,11 @@ function getSuggestion(word) {
     return suggestion;
 }
 
-function getCompletionItems() {
+function getCompletionItems(document) {
     //все собрать
+    parseAbiFunctions(document);
     let completionItems = [];
-    for (const [key, value] of Object.entries(wordsSetCompletion)) {        
+    for (const [key, value] of Object.entries(wordsSetCompletion)) {
         const completionItem = new vscode.CompletionItem(value.prefix, getSnippetType(value.body));
         completionItem.detail = key;
         if (Array.isArray(value.description)) {
@@ -86,8 +87,8 @@ function getCompletionItems() {
         } else {
             completionItem.documentation = value.description;
         }
-        completionItem.insertText = new vscode.SnippetString(value.prefix);
-        
+        completionItem.insertText = new vscode.SnippetString(value.body);
+
         completionItems.push(completionItem);
     }
 
@@ -95,11 +96,50 @@ function getCompletionItems() {
     //применить фильтер (а может он и сам применится)
 }
 
-function getSnippetType(body){
-    if(body.match(/\..*\(/)){
+function parseAbiFunctions(document) {
+    let abiPathData = path.parse(document.uri.fsPath);
+    let abiPath = path.resolve(__dirname, "abi/" + abiPathData.name + ".abi.json");
+    let abi;
+    try {
+        delete require.cache[abiPath]
+        abi = require(abiPath);
+    } catch (e) {
+        return [];
+    }
+    for (const [, functionItem] of Object.entries(abi.functions)) {
+        if (functionItem.name == 'constructor') {
+            continue;
+        }
+        //public variable
+        if (functionItem.outputs.length == 1 && functionItem.outputs[0].name == functionItem.name) {
+            continue;
+        }
+        let key = 'function ' + functionItem.name;
+        let prefix = functionItem.name;
+        let paramsBody = [];
+        let paramsInputDescription = [];
+        //input
+        for (const [index, inputItem] of Object.entries(functionItem.inputs)) {
+            paramsBody.push('${' + (Number(index) + 1) + ':' + inputItem.type + ' ' + inputItem.name + '}');
+            paramsInputDescription.push(inputItem.type+':'+inputItem.name);            
+        }
+        let body = functionItem.name + '(' + paramsBody.join(', ') + ')';
+        let description = 'function '+functionItem.name+'('+paramsInputDescription.join(', ')+')';
+        //output
+        let paramsOutputDescription = [];
+        for (const [, outputItem] of Object.entries(functionItem.outputs)) {            
+            paramsOutputDescription.push(outputItem.type);            
+        }
+        description += ': '+paramsOutputDescription.join(', ')
+        wordsSetCompletion[key] = { prefix, body, description };
+    }
+}
+
+function getSnippetType(body) {
+    if (body.match(/\..*\(/)) {
         return vscode.CompletionItemKind.Method;
     }
-    if(body.match(/\(.*\)/)){
+    if (body.match(/\(.*\)/)) {
         return vscode.CompletionItemKind.Function;
     }
 

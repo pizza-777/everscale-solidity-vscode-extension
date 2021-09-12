@@ -1,7 +1,7 @@
 const vscode = require('vscode');
 const { controllers } = require('tondev');
 const path = require('path');
-const { getErrors, getSuggestion } = require('./utils');
+const { getErrors, getSuggestion, getCompletionItems } = require('./utils');
 
 let _tondevTerminal;
 let t_out;
@@ -12,6 +12,17 @@ const TYPING_DELAY = 500;
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
+
+	const completionProvider = vscode.languages.registerCompletionItemProvider(
+		{ scheme: 'file' },
+		{
+			provideCompletionItems(document, position) {				
+				return getCompletionItems();
+			}
+		}
+	);
+	context.subscriptions.push(completionProvider);
+
 	let hoverProvider = vscode.languages.registerHoverProvider('ton-solidity', {
 		provideHover(document, position) {
 			const wordRange = document.getWordRangeAtPosition(position, /[a-zA-Z0-9\.]{1,30}/);

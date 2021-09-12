@@ -43,12 +43,6 @@
         "configuration": "./ton-solidity.configuration.json"
       }
     ],
-    "snippets": [
-      {
-        "language": "ton-solidity",
-        "path": "./snippets/snippets.json"
-      }
-    ],
     "grammars": [
       {
         "language": "ton-solidity",

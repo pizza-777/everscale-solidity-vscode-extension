@@ -76,11 +76,11 @@
 		},
         "function declaration": {
 			"prefix": "func",
-			"body": "function ${1:name}(${2:type} ${3:name}) (${4|public|private|internal|external|) {\n\t$0\n}"
+			"body": "function ${1:name}(${2:type} ${3:name}) ${4|public,private,internal,external|} {\n\t$0\n}"
 		},
         "function return declaration": {
 			"prefix": "funcr",
-			"body": "function ${1:name}(${2:type} ${3:name}) (${4|public|private|internal|external|) returns (${4:type} ${5:name}) {\n\t$0\n}"
+			"body": "function ${1:name}(${2:type} ${3:name}) ${4|public,private,internal,external|} returns (${4:type} ${5:name}) {\n\t$0\n}"
 		},
         "function view declaration": {
 			"prefix": "funcrview",

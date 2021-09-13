@@ -10,7 +10,8 @@ TON Solidity is the language used in Free TON blockchain to create smart contrac
 ## Features
 
 ### On hover information
-<img src="https://i.postimg.cc/Pr71x5Cg/c702ab54149cffff249a03c50f862cb40b2ee368.gif" style="max-width:800px">
+
+[![1.gif](https://i.postimg.cc/5yym0xzj/1.gif)](https://postimg.cc/y3qRpCvz)
 
 ### Ton-solidity autocomplete
 
@@ -24,7 +25,7 @@ Use ```Ctrl+Space```
 
 ### Code diagnostic on the fly
 
-[![dd04bcc8d651a51d915e1c05a19e3a7efeea13e2.gif](https://i.postimg.cc/tR2hK5pC/dd04bcc8d651a51d915e1c05a19e3a7efeea13e2.gif)](https://postimg.cc/4nH7tpYr)
+[![4.gif](https://i.postimg.cc/1zywXmhP/4.gif)](https://postimg.cc/hX3f3qt3)
 
 ### Detailed autocomplete information
 

@@ -378,7 +378,7 @@
             "name": "constant.language.time"
         },
         "constant-currency": {
-            "match": "\\b(nano|nanoton|nTon|ton|micro|microton|milli|milliton|kiloton|kTon|megaton|MTon|gigaton|GTon)\\b",
+            "match": "\\b(nano|nanoton|Ton|nTon|ton|micro|microton|milli|milliton|kiloton|kTon|megaton|MTon|gigaton|GTon)\\b",
             "name": "constant.language.currency"
         },
         "number": {
@@ -490,7 +490,7 @@
                     "name": "variable.language.builtin.abi"
                 },
                 {
-                    "match": "\\b(msg)\\.(sender|pubkey|value|currencies|createdAt|data)\\b",
+                    "match": "\\b(msg)\\.(pubkey)\\b",
                     "captures": {
                         "1":{
                           "name":"entity.name.class"   
@@ -501,8 +501,48 @@
                     }
                 },
                 {
-                    "match": "\\b(tx\\.origin|tx\\.gasprice|msg\\.data|msg\\.sig|msg\\.value)\\b",
-                    "name": "variable.language.transaction"
+                    "match": "\\b(msg)\\.(value)\\b",
+                    "captures": {
+                        "1":{
+                          "name":"entity.name.class"   
+                        },
+                        "2":{
+                            "name":"constant.numeric"
+                        }                       
+                    }
+                },
+                {
+                    "match": "\\b(msg)\\.(data|sender|)\\b",
+                    "captures": {
+                        "1":{
+                          "name":"entity.name.class"   
+                        },
+                        "2":{
+                            "name":"support.type.primitive"
+                        }                       
+                    }
+                },
+                {
+                    "match": "\\b(msg)\\.(createdAt)\\b",
+                    "captures": {
+                        "1":{
+                          "name":"entity.name.class"   
+                        },
+                        "2":{
+                            "name":"constant.language.time"
+                        }                       
+                    }
+                },
+                {
+                    "match": "\\b(tx)\\.(currencies)\\b",
+                    "captures": {
+                        "1":{
+                          "name":"entity.name.class"   
+                        },
+                        "2":{
+                            "name":"constant.language.currency"
+                        }                       
+                    }
                 },
                 {
                     "match": "\\b(tvm)\\.(accept|pubkey|setPubkey|hash|getData|log|hexdump|bindupm|configParam|rawConfigParam|rawReserve|checkSign|insertPubkey|functionId|encodeBody|exit|exit1|buildExtMsg|buildIntMsg)\\b",
@@ -544,7 +584,7 @@
                           "name":"entity.name.class"   
                         },
                         "2":{
-                            "name":"entity.name.function"
+                            "name":"constant.language.time"
                         }                       
                     }
                 },

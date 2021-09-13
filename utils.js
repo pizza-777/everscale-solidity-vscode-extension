@@ -139,10 +139,17 @@ function getSnippetType(body) {
     if (body.match(/\..*\(/)) {
         return vscode.CompletionItemKind.Method;
     }
+    if (body.match(/\.\w+/)) {
+        return vscode.CompletionItemKind.Property;
+    }
     if (body.match(/\(.*\)/)) {
         return vscode.CompletionItemKind.Function;
     }
+    if (body.match(/\b[nmicrlkegMatTGo]+\b/)) {
+        return vscode.CompletionItemKind.Unit;
+    }
 
+   
     return vscode.CompletionItemKind.Snippet;
 }
 

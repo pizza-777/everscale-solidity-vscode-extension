@@ -14,7 +14,10 @@ const TYPING_DELAY = 500;
 function activate(context) {
 
 	const completionProvider = vscode.languages.registerCompletionItemProvider(
-		{ scheme: 'file' },
+		{ 
+			scheme: 'file' ,
+			language: 'ton-solidity'
+		},
 		{
 			provideCompletionItems(document, position) {
 				return getCompletionItems(document);

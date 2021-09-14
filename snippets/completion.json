@@ -1683,6 +1683,73 @@
 				"(uint8 a, uint16 b) = slice.decode(uint8, uint16);\n",
 				"(uint16 num0, uint32 num1, address addr) = slice.decode(uint16, uint32, address);"
 			]
+		},
+		"TvmCell": {
+			"prefix": "TvmCell",
+			"body": "TvmCell ${1:name}",
+			"description": [
+				"TvmCell represents TVM cell (TVM - 1.1.3). The compiler defines the following operators and functions to work with this type:\n",
+				"Operators:\n",
+				" * Comparisons: ==, != (evaluate to bool)\n",
+				"Functions:\n",
+				" * <TvmCell>.depth()",
+				" * <TvmCell>.dataSize()",
+				" * <TvmCell>.dataSizeQ()",
+				" * <TvmCell>.toSlice()"
+			]
+		},
+		"TvmSlice": {
+			"prefix": "TvmSlice",
+			"body": "TvmSlice ${1:name}",
+			"description": [
+				"TvmSlice represents TVM cell slice (TVM - 1.1.3). The compiler defines the following operators and functions to work with this type:\n",
+				"Operators:\n",
+				" * Comparisons: <=, <, ==, !=, >=, > (evaluate to bool). Note: only bit data from the root cells are compared, references are ignored.\n",
+				"Functions:\n",
+				" * <TvmSlice>.empty()",
+				" * <TvmSlice>.size()",
+				" * <TvmSlice>.dataSize",
+				" * <TvmSlice>.dataSizeQ()",
+				" * <TvmSlice>.bits()",
+				" * <TvmSlice>.refs()",
+				" * <TvmSlice>.bitsAndRefs()",
+				" * <TvmSlice>.depth()",
+				" * <TvmSlice>.hasNBits(), <TvmSlice>.hasNRefs() and <TvmSlice>.hasNBitsAndRefs()",
+				" * <TvmSlice>.compare()\n",
+				"TvmSlice load primitives:\n",
+				" * \t<TvmSlice>.decode()",
+				" * \t<TvmSlice>.loadRef()",
+				" * \t<TvmSlice>.loadRefAsSlice()",
+				" * \t<TvmSlice>.loadSigned()",
+				" * \t<TvmSlice>.loadUnsigned()",
+				" * \t<TvmSlice>.loadTons()",
+				" * \t<TvmSlice>.loadSlice()",
+				" * \t<TvmSlice>.decodeFunctionParams()",
+				" * \t<TvmSlice>.skip()"
+			]
+		},
+		"TvmBuilder": {
+			"prefix": "TvmBuilder",
+			"body": "TvmBuilder ${1:name}",
+			"description": [
+				"TvmBuilder represents TTVM cell builder (TVM - 1.1.3). The compiler defines the following functions to work with this type:\n",
+				" * <TvmBuilder>.toSlice()",
+				" * <TvmBuilder>.toCell()",
+				" * <TvmBuilder>.bits()",
+				" * <TvmBuilder>.refs()",
+				" * <TvmBuilder>.bitsAndRefs()",
+				" * <TvmBuilder>.remBits()",
+				" * <TvmBuilder>.remRefs()",
+				" * <TvmBuilder>.remBitsAndRefs()",
+				" * <TvmBuilder>.depth()",
+				" * <TvmBuilder>.store()",
+				" * <TvmBuilder>.storeOnes()",
+				" * <TvmBuilder>.storeZeroes()",
+				" * <TvmBuilder>.storeSigned()",
+				" * <TvmBuilder>.storeUnsigned()",
+				" * <TvmBuilder>.storeRef()",
+				" * <TvmBuilder>.storeTons()"
+			]
 		}
     }
 }

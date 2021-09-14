@@ -1,4 +1,5 @@
 const vscode = require('vscode');
+const strip = require('strip-comments');
 
 const snippetsJsonHover = require("./snippets/hover.json");
 const wordsSetHover = snippetsJsonHover['.source.ton-solidity'];
@@ -43,16 +44,23 @@ function getErrors(string) {
     })
 }
 
-function getHoverSuggestion(word, document) {
-    let userFunctions = parseAbiFunctions(document);
-    Object.keys(userFunctions).map(function(k) {
-        userFunctions[k] = {
-            prefix: userFunctions[k].prefix,
-            body: userFunctions[k].body,
-            description: "```\n"+userFunctions[k].description+"\n```"//enable highliting for code
+function highliteIt(functionSet){
+      Object.keys(functionSet).map(function(k) {
+        functionSet[k] = {
+            prefix: functionSet[k].prefix,
+            body: functionSet[k].body,
+            description: "```\n"+functionSet[k].description+"\n```"//enable highliting for code
         }
       });
-    let wordsHover = { ...wordsSetHover, ...userFunctions};        
+
+      return functionSet;
+}
+
+function getHoverSuggestion(word, document) {
+    let userFunctions = highliteIt(parseAbiFunctions(document));
+    let privateFunctions = highliteIt(parsePrivateFunctions(document))
+  
+    let wordsHover = { ...wordsSetHover, ...userFunctions, ...privateFunctions};        
     let suggestion = null;
     let counter = 0;
     if (word.match(/AbiHeader|msgValue|pragma|(ton-)?solidity/)) {
@@ -85,7 +93,7 @@ function getHoverSuggestion(word, document) {
 }
 
 function getCompletionItems(document) {    
-    let completions = { ...wordsSetCompletion, ...parseAbiFunctions(document)};    
+    let completions = { ...wordsSetCompletion, ...parseAbiFunctions(document), ...parsePrivateFunctions(document)};    
     let completionItems = [];
     for (const [key, value] of Object.entries(completions)) {
         const completionItem = new vscode.CompletionItem(value.prefix, getSnippetType(value.body));
@@ -112,9 +120,9 @@ function parseAbiFunctions(document) {
         delete require.cache[abiPath]
         abi = require(abiPath);
     } catch (e) {
-        return [];
+        return {};
     }
-    let completions = [];
+    let completions = {};
     for (const [, functionItem] of Object.entries(abi.functions)) {
         if (functionItem.name == 'constructor') {
             continue;
@@ -144,6 +152,26 @@ function parseAbiFunctions(document) {
     }
 
     return completions;
+}
+
+function parsePrivateFunctions(document){
+    let code = document.getText();
+    code = strip(code);
+    let privateFunctions = {};
+    let matches = [...code.matchAll(/((function\s+([a-z_A-Z0-9]+))\((.*)\)(.*private.*)){/gm)];  
+        for(let item of matches){
+            let params = item[4].split(",");
+            let fparams = params.map((value, index)=>{
+                return '${'+Number(index+1)+':'+value+'}';
+            })
+            let importParams = fparams.join(", ");
+            privateFunctions[item[2]] = {
+                prefix: item[3],
+                body: item[2]+'('+importParams+')',
+                description: item[1]
+            }
+        }
+    return privateFunctions;
 }
 
 function getSnippetType(body) {

@@ -11,8 +11,8 @@
     "Free TON",
     "blockchain",
     "tondev",
-    "highlighting"  
-  ],  
+    "highlighting"
+  ],
   "publisher": "freeton20",
   "license": "MIT",
   "engines": {
@@ -69,6 +69,7 @@
     "vscode-test": "^1.5.2"
   },
   "dependencies": {
+    "strip-comments": "^2.0.1",
     "tondev": "^0.9.0"
   }
 }

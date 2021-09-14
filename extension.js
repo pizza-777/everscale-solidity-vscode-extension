@@ -28,7 +28,7 @@ function activate(context) {
 
 	let hoverProvider = vscode.languages.registerHoverProvider('ton-solidity', {
 		provideHover(document, position) {
-			const wordRange = document.getWordRangeAtPosition(position, /[a-zA-Z0-9\.]{1,30}/);
+			const wordRange = document.getWordRangeAtPosition(position, /[_a-zA-Z0-9\.]{1,30}/);
 			const word = document.getText(wordRange);
 			return new vscode.Hover(getHoverSuggestion(word, document));
 		}

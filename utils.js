@@ -43,7 +43,16 @@ function getErrors(string) {
     })
 }
 
-function getSuggestion(word) {
+function getHoverSuggestion(word, document) {
+    let userFunctions = parseAbiFunctions(document);
+    Object.keys(userFunctions).map(function(k) {
+        userFunctions[k] = {
+            prefix: userFunctions[k].prefix,
+            body: userFunctions[k].body,
+            description: "```\n"+userFunctions[k].description+"\n```"//enable highliting for code
+        }
+      });
+    let wordsHover = { ...wordsSetHover, ...userFunctions};        
     let suggestion = null;
     let counter = 0;
     if (word.match(/AbiHeader|msgValue|pragma|(ton-)?solidity/)) {
@@ -52,7 +61,7 @@ function getSuggestion(word) {
         return suggestion;
     }
     let prefixLength = 0;
-    for (const [, value] of Object.entries(wordsSetHover)) {
+    for (const [, value] of Object.entries(wordsHover)) {
         if (word.includes(value.prefix)) {
             //take the most matched value
             if (value.prefix.length < prefixLength) {
@@ -75,11 +84,10 @@ function getSuggestion(word) {
     return suggestion;
 }
 
-function getCompletionItems(document) {
-    //все собрать
-    parseAbiFunctions(document);
+function getCompletionItems(document) {    
+    let completions = { ...wordsSetCompletion, ...parseAbiFunctions(document)};    
     let completionItems = [];
-    for (const [key, value] of Object.entries(wordsSetCompletion)) {
+    for (const [key, value] of Object.entries(completions)) {
         const completionItem = new vscode.CompletionItem(value.prefix, getSnippetType(value.body));
         completionItem.detail = key;
         if (Array.isArray(value.description)) {
@@ -93,8 +101,8 @@ function getCompletionItems(document) {
     }
 
     return completionItems;
-    //применить фильтер (а может он и сам применится)
 }
+
 
 function parseAbiFunctions(document) {
     let abiPathData = path.parse(document.uri.fsPath);
@@ -106,6 +114,7 @@ function parseAbiFunctions(document) {
     } catch (e) {
         return [];
     }
+    let completions = [];
     for (const [, functionItem] of Object.entries(abi.functions)) {
         if (functionItem.name == 'constructor') {
             continue;
@@ -130,9 +139,11 @@ function parseAbiFunctions(document) {
         for (const [, outputItem] of Object.entries(functionItem.outputs)) {            
             paramsOutputDescription.push(outputItem.type);            
         }
-        description += ': '+paramsOutputDescription.join(', ')
-        wordsSetCompletion[key] = { prefix, body, description };
+        description += paramsOutputDescription.length > 0 ? ': '+paramsOutputDescription.join(', ') : '';
+        completions[key] = { prefix, body, description };
     }
+
+    return completions;
 }
 
 function getSnippetType(body) {
@@ -155,6 +166,6 @@ function getSnippetType(body) {
 
 module.exports = {
     getErrors,
-    getSuggestion,
+    getHoverSuggestion,
     getCompletionItems
 }

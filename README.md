@@ -33,6 +33,10 @@ Use ```Ctrl+Space```
 
 ## Release Notes
 
-### 1.0.0
+### 0.1.0
 
 Initial release.
+
+## Contacts
+
+Telegram: ```@tg2020ukraine```

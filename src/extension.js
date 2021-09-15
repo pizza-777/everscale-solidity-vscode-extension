@@ -1,7 +1,7 @@
 const vscode = require('vscode');
 const { controllers } = require('tondev');
 const path = require('path');
-const { getErrors, getHoverSuggestion, getCompletionItems } = require('./utils');
+const { getErrors, getHoverItems, getSnippetItems } = require('./utils');
 
 let _tondevTerminal;
 let t_out;
@@ -20,7 +20,7 @@ function activate(context) {
 		},
 		{
 			provideCompletionItems(document, position) {
-				return getCompletionItems(document);
+				return getSnippetItems(document);
 			}
 		}
 	);
@@ -30,7 +30,7 @@ function activate(context) {
 		provideHover(document, position) {
 			const wordRange = document.getWordRangeAtPosition(position, /[_a-zA-Z0-9\.]{1,30}/);
 			const word = document.getText(wordRange);
-			return new vscode.Hover(getHoverSuggestion(word, document));
+			return new vscode.Hover(getHoverItems(word, document));
 		}
 	});
 

@@ -2,8 +2,10 @@
 
 All notable changes to the "ton-solidity" extension will be documented in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+## [0.1.0] 2021-09-15
 
-## [Unreleased]
-
-- Initial release
+### Added
+- Syntax highlighting
+- Snippets with details
+- Checking for errors and warnings and highlighting it
+- Hover information

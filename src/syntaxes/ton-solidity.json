@@ -328,7 +328,7 @@
                             "name": "constant.numeric"
                         },
                         "4": {
-                            "name":"punctuation.terminator.statement"
+                            "name": "punctuation.terminator.statement"
                         }
                     }
                 },
@@ -346,7 +346,7 @@
                         }
                     }
                 }
-            ]            
+            ]
         },
         "control-underscore": {
             "match": "\\b(_)\\b",
@@ -492,111 +492,111 @@
                 {
                     "match": "\\b(msg)\\.(pubkey)\\b",
                     "captures": {
-                        "1":{
-                          "name":"entity.name.class"   
+                        "1": {
+                            "name": "entity.name.class"
                         },
-                        "2":{
-                            "name":"entity.name.function"
-                        }                       
+                        "2": {
+                            "name": "entity.name.function"
+                        }
                     }
                 },
                 {
                     "match": "\\b(msg)\\.(value)\\b",
                     "captures": {
-                        "1":{
-                          "name":"entity.name.class"   
+                        "1": {
+                            "name": "entity.name.class"
                         },
-                        "2":{
-                            "name":"constant.numeric"
-                        }                       
+                        "2": {
+                            "name": "constant.numeric"
+                        }
                     }
                 },
                 {
                     "match": "\\b(msg)\\.(data|sender|)\\b",
                     "captures": {
-                        "1":{
-                          "name":"entity.name.class"   
+                        "1": {
+                            "name": "entity.name.class"
                         },
-                        "2":{
-                            "name":"support.type.primitive"
-                        }                       
+                        "2": {
+                            "name": "support.type.primitive"
+                        }
                     }
                 },
                 {
                     "match": "\\b(msg)\\.(createdAt)\\b",
                     "captures": {
-                        "1":{
-                          "name":"entity.name.class"   
+                        "1": {
+                            "name": "entity.name.class"
                         },
-                        "2":{
-                            "name":"constant.language.time"
-                        }                       
+                        "2": {
+                            "name": "constant.language.time"
+                        }
                     }
                 },
                 {
                     "match": "\\b(tx)\\.(currencies)\\b",
                     "captures": {
-                        "1":{
-                          "name":"entity.name.class"   
+                        "1": {
+                            "name": "entity.name.class"
                         },
-                        "2":{
-                            "name":"constant.language.currency"
-                        }                       
+                        "2": {
+                            "name": "constant.language.currency"
+                        }
                     }
                 },
                 {
                     "match": "\\b(tvm)\\.(accept|pubkey|setPubkey|hash|getData|log|hexdump|bindupm|configParam|rawConfigParam|rawReserve|checkSign|insertPubkey|functionId|encodeBody|exit|exit1|buildExtMsg|buildIntMsg)\\b",
                     "captures": {
-                        "1":{
-                          "name":"entity.name.class"   
+                        "1": {
+                            "name": "entity.name.class"
                         },
-                        "2":{
-                            "name":"entity.name.function"
-                        }                       
+                        "2": {
+                            "name": "entity.name.function"
+                        }
                     }
                 },
                 {
                     "match": "\\b(tvm)\\.(commit|rawCommit|setcode|setCurrentCode|resetStorage|setData|buildStateInit|buildEmptyData|deploy|code|codeSalt|setCodeSalt)\\b",
                     "captures": {
-                        "1":{
-                          "name":"entity.name.class"   
+                        "1": {
+                            "name": "entity.name.class"
                         },
-                        "2":{
-                            "name":"storage.type.function"
-                        }                       
+                        "2": {
+                            "name": "storage.type.function"
+                        }
                     }
                 },
                 {
-                    "match": "\\b(math)\\.(min|max|abs|modpow2|divc|divr|muldiv|muldivr|muldivc|muldivmod|divmod|sign)\\b",
+                    "match": "\\b(math)\\.(minmax|min|max|abs|modpow2|divc|divr|muldiv|muldivr|muldivc|muldivmod|divmod|sign)\\b",
                     "captures": {
-                        "1":{
-                          "name":"entity.name.class"   
+                        "1": {
+                            "name": "entity.name.class"
                         },
-                        "2":{
-                            "name":"support.function.math"
-                        }                       
+                        "2": {
+                            "name": "support.function.math"
+                        }
                     }
                 },
                 {
                     "match": "\\b(tx|block)\\.(timestamp)\\b",
                     "captures": {
-                        "1":{
-                          "name":"entity.name.class"   
+                        "1": {
+                            "name": "entity.name.class"
                         },
-                        "2":{
-                            "name":"constant.language.time"
-                        }                       
+                        "2": {
+                            "name": "constant.language.time"
+                        }
                     }
                 },
                 {
                     "match": "\\b(rnd)\\.(next|getSeed|setSeed|shuffle)\\b",
                     "captures": {
-                        "1":{
-                          "name":"entity.name.class"   
+                        "1": {
+                            "name": "entity.name.class"
                         },
-                        "2":{
-                            "name":"support.function.math"
-                        }                       
+                        "2": {
+                            "name": "support.function.math"
+                        }
                     }
                 }
             ]

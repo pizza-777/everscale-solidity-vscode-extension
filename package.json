@@ -1,81 +1,81 @@
 {
-  "name": "ton-solidity",
-  "displayName": "ton-solidity",
-  "description": "TON Solidity Language for Visual Studio Code",
-  "version": "0.1.0",
-  "keywords": [
-    "solidity",
-    "ton-solidity",
-    "TON",
-    "FreeTON",
-    "Free TON",
-    "blockchain",
-    "tondev",
-    "highlighting"
-  ],
-  "publisher": "freeton20",
-  "license": "Apache-2.0",
-  "licenses": [
-    {
-      "type": "Apache-2.0",
-      "url": "http://www.apache.org/licenses/LICENSE-2.0"
-    }
-  ],
-  "engines": {
-    "vscode": "^1.59.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/freeton20/ton-highlight"
-  },  
-  "categories": [
-    "Programming Languages",
-    "Snippets"
-  ],
-  "activationEvents": [
-    "onLanguage:ton-solidity"
-  ],
-  "main": "./src/extension.js",
-  "contributes": {
-    "languages": [
-      {
-        "id": "ton-solidity",
-        "aliases": [
-          "ton-solidity"
-        ],
-        "extensions": [
-          ".sol"
-        ],
-        "configuration": "./ton-solidity.configuration.json"
-      }
+    "name": "ton-solidity",
+    "displayName": "ton-solidity",
+    "description": "TON Solidity Language for Visual Studio Code",
+    "version": "0.1.0",
+    "keywords": [
+        "solidity",
+        "ton-solidity",
+        "TON",
+        "FreeTON",
+        "Free TON",
+        "blockchain",
+        "tondev",
+        "highlighting"
     ],
-    "grammars": [
-      {
-        "language": "ton-solidity",
-        "scopeName": "source.ton-solidity",
-        "path": "./src/syntaxes/ton-solidity.json"
-      }
-    ]
-  },
-  "icon": "assets/icon.png",
-  "scripts": {
-    "lint": "eslint .",
-    "pretest": "npm run lint",
-    "test": "node ./test/runTest.js"
-  },
-  "devDependencies": {
-    "@types/glob": "^7.1.3",
-    "@types/mocha": "^8.2.2",
-    "@types/node": "14.x",
-    "@types/vscode": "^1.59.0",
-    "eslint": "^7.27.0",
-    "glob": "^7.1.7",
-    "mocha": "^8.4.0",
-    "typescript": "^4.3.2",
-    "vscode-test": "^1.5.2"
-  },
-  "dependencies": {
-    "strip-comments": "^2.0.1",
-    "tondev": "^0.9.0"
-  }
+    "publisher": "freeton20",
+    "license": "Apache-2.0",
+    "licenses": [
+        {
+            "type": "Apache-2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0"
+        }
+    ],
+    "engines": {
+        "vscode": "^1.59.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/freeton20/ton-highlight"
+    },
+    "categories": [
+        "Programming Languages",
+        "Snippets"
+    ],
+    "activationEvents": [
+        "onLanguage:ton-solidity"
+    ],
+    "main": "./src/extension.js",
+    "contributes": {
+        "languages": [
+            {
+                "id": "ton-solidity",
+                "aliases": [
+                    "ton-solidity"
+                ],
+                "extensions": [
+                    ".sol"
+                ],
+                "configuration": "./ton-solidity.configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "ton-solidity",
+                "scopeName": "source.ton-solidity",
+                "path": "./src/syntaxes/ton-solidity.json"
+            }
+        ]
+    },
+    "icon": "assets/icon.png",
+    "scripts": {
+        "lint": "eslint .",
+        "pretest": "npm run lint",
+        "test": "node ./test/runTest.js"
+    },
+    "devDependencies": {
+        "@types/glob": "^7.1.3",
+        "@types/mocha": "^8.2.2",
+        "@types/node": "14.x",
+        "@types/vscode": "^1.59.0",
+        "eslint": "^7.27.0",
+        "glob": "^7.1.7",
+        "mocha": "^8.4.0",
+        "typescript": "^4.3.2",
+        "vscode-test": "^1.5.2"
+    },
+    "dependencies": {
+        "strip-comments": "^2.0.1",
+        "tondev": "^0.9.0"
+    }
 }

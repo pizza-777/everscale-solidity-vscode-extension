@@ -16,19 +16,21 @@ It's wrapper for opcode REWRITESTDADDR.
 ----
 
 Examples 1:
+
 ```
 struct MyStruct {
-	uint a;
-	int b;
-	address c;
+    uint a;
+    int b;
+    address c;
 }
 function f() pure public {
-	MyStruct s = MyStruct(1, -1, address(2));
-	(uint a, int b, address c) = s.unpack();
+    MyStruct s = MyStruct(1, -1, address(2));
+    (uint a, int b, address c) = s.unpack();
 }
 ```
 
 Example 2:
+
 ```
 (int8 wid, uint addr) = address(this).unpack();
 ```

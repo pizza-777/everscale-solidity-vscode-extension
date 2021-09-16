@@ -19,7 +19,7 @@ function activate(context) {
 			language: 'ton-solidity'
 		},
 		{
-			provideCompletionItems(document, position) {
+			provideCompletionItems(document) {
 				return getSnippetItems(document);
 			}
 		}

@@ -1,42 +1,56 @@
 const strip = require('strip-comments');
 const path = require('path');
 
-function parseAbiFunctions(document) {
+function getAbi(document) {
     let abiPathData = path.parse(document.uri.fsPath);
-    let abiPath = path.resolve(__dirname, `abi/${abiPathData.name}.abi.json`);
-    let abi;
+    let abiPath = path.resolve(__dirname, `abi/${abiPathData.name}.abi.json`);  
     try {
         delete require.cache[abiPath]
-        abi = require(abiPath);
+        let abi = require(abiPath);
+        return abi;
     } catch (e) {
-        return {};
+        return { functions: {} };
     }
+}
+
+function getInputParams(functionItem) {
+    let paramsBody = [];
+    let paramsInputDescription = [];
+    for (const [index, inputItem] of Object.entries(functionItem.inputs)) {
+        paramsBody.push(`\${${Number(index) + 1}:${inputItem.type} ${inputItem.name}}`);
+        paramsInputDescription.push(`${inputItem.type}:${inputItem.name}`);
+    }
+    return {
+        body: `${functionItem.name}(${paramsBody.join(', ')})`,
+        description: `function ${functionItem.name}(${paramsInputDescription.join(', ')})`
+    }
+}
+
+function getOutputParams(functionItem) {
+    let paramsOutputDescription = [];
+    for (const [, outputItem] of Object.entries(functionItem.outputs)) {
+        paramsOutputDescription.push(outputItem.type);
+    }
+    return paramsOutputDescription;
+}
+
+function publicVariable(functionItem) {
+    return functionItem.outputs.length == 1 && functionItem.outputs[0].name == functionItem.name;
+}
+
+function parseAbiFunctions(document) {
+    let abi = getAbi(document);
     let completions = {};
     for (const [, functionItem] of Object.entries(abi.functions)) {
-        if (functionItem.name == 'constructor') {
-            continue;
-        }
-        //public variable
-        if (functionItem.outputs.length == 1 && functionItem.outputs[0].name == functionItem.name) {
-            continue;
-        }
+        if (functionItem.name == 'constructor' || publicVariable(functionItem)) continue;
+
         let key = `function ${functionItem.name}`;
         let prefix = functionItem.name;
-        let paramsBody = [];
-        let paramsInputDescription = [];
-        //input
-        for (const [index, inputItem] of Object.entries(functionItem.inputs)) {
-            paramsBody.push(`\${${Number(index) + 1}:${inputItem.type} ${inputItem.name}}`);
-            paramsInputDescription.push(`${inputItem.type}:${inputItem.name}`);
-        }
-        let body = `${functionItem.name}(${paramsBody.join(', ')})`;
-        let description = `function ${functionItem.name}(${paramsInputDescription.join(', ')})`;
-        //output
-        let paramsOutputDescription = [];
-        for (const [, outputItem] of Object.entries(functionItem.outputs)) {
-            paramsOutputDescription.push(outputItem.type);
-        }
+        let body, description;
+        ({ body, description } = getInputParams(functionItem));
+        let paramsOutputDescription = getOutputParams(functionItem)
         description += paramsOutputDescription.length > 0 ? `: ${paramsOutputDescription.join(', ')}` : '';
+
         completions[key] = { prefix, body, description };
     }
 
@@ -65,5 +79,5 @@ function parsePrivateFunctions(document) {
 
 module.exports = {
     parseAbiFunctions,
-    parsePrivateFunctions    
+    parsePrivateFunctions
 }

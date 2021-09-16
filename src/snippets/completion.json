@@ -132,7 +132,7 @@
         },
         "<TvmCell>.depth": {
             "prefix": ".depth",
-            "body": ".depth()",
+            "body": "depth()",
             "description": [
                 "<TvmCell>.depth() returns(uint64);\n",
                 "Returns the depth of TvmCell c. If c has no references, then d = 0; otherwise d is one plus the maximum of depths of cells referred to from c. If c is a Null instead of a Cell, returns zero."
@@ -140,7 +140,7 @@
         },
         "<TvmCell>.dataSize": {
             "prefix": ".dataSize",
-            "body": ".dataSize(${uint n})",
+            "body": "dataSize(${1:uint n})",
             "description": [
                 "<TvmCell>.dataSize(uint n) returns (uint cells, uint bits, uint refs);\n",
                 "Returns the count of distinct cells, data bits in the distinct cells and cell references in the distinct cells. If count of the distinct cells exceeds n+1 then a cell overflow exception (8) is thrown. This function is a wrapper for opcode \"CDATASIZE\" "
@@ -148,7 +148,7 @@
         },
         "<TvmCell>.dataSizeQ": {
             "prefix": ".dataSizeQ",
-            "body": ".dataSizeQ(${uint n})",
+            "body": "dataSizeQ(${1:uint n})",
             "description": [
                 "<TvmCell>.dataSizeQ(uint n) returns (optional(uint cells, uint bits, uint refs));\n",
                 "Returns the count of distinct cells, data bits in the distinct cells and cell references in the distinct cells. If count of the distinct cells exceeds n+1 then this function returns an optional that has no value. This function is a wrapper for opcode \"CDATASIZEQ\" "
@@ -156,7 +156,7 @@
         },
         "<TvmCell>.toSlice": {
             "prefix": ".toSlice",
-            "body": ".toSlice()",
+            "body": "toSlice()",
             "description": [
                 "<TvmCell>.toSlice() returns (TvmSlice);\n",
                 "Converts the cell to a slice."
@@ -164,7 +164,7 @@
         },
         "<TvmSlice>.empty": {
             "prefix": ".empty",
-            "body": ".empty()",
+            "body": "empty()",
             "description": [
                 "<TvmSlice>.empty() returns (bool);\n",
                 "Checks whether a Slice is empty (i.e., contains no bits of data and no cell references)."
@@ -172,7 +172,7 @@
         },
         "<TvmSlice>.size": {
             "prefix": ".size",
-            "body": ".size()",
+            "body": "size()",
             "description": [
                 "<TvmSlice>.size() returns (uint16 bits, uint8 refs);\n",
                 "Returns number of data bits and references in the slice."
@@ -180,7 +180,7 @@
         },
         "<TvmSlice>.dataSize": {
             "prefix": ".dataSize",
-            "body": ".dataSize(${uint n})",
+            "body": "dataSize(${1:uint n})",
             "description": [
                 "<TvmSlice>.dataSize(uint n) returns (uint cells, uint bits, uint refs);\n",
                 "Returns the count of distinct cells, data bits in the distinct cells and cell references in the distinct cells. If count of the distinct cells exceeds n+1 then a cell overflow exception (8) is thrown. Note that the returned count of distinct cells does not take into account the cell that contains the slice itself. This function is a wrapper for opcode SDATASIZE"
@@ -188,7 +188,7 @@
         },
         "<TvmSlice>.dataSizeQ": {
             "prefix": ".dataSizeQ",
-            "body": ".dataSizeQ(${uint n})",
+            "body": "dataSizeQ(${1:uint n})",
             "description": [
                 "<TvmSlice>.dataSizeQ(uint n) returns (optional(uint cells, uint bits, uint refs));\n",
                 "Returns the count of distinct cells, data bits in the distinct cells and cell references in the distinct cells. If count of the distinct cells exceeds n+1 then this function returns an optional that has no value. Note that the returned count of distinct cells does not take into account the cell that contains the slice itself. This function is a wrapper for opcode SDATASIZEQ"
@@ -196,7 +196,7 @@
         },
         "<TvmSlice>.bits": {
             "prefix": ".bits",
-            "body": ".bits()",
+            "body": "bits()",
             "description": [
                 "<TvmSlice>.bits() returns (uint16);\n",
                 "Returns number of references in the slice."
@@ -204,7 +204,7 @@
         },
         "<TvmSlice>.refs": {
             "prefix": ".refs",
-            "body": ".refs()",
+            "body": "refs()",
             "description": [
                 "<TvmSlice>.refs() returns (uint8);\n",
                 "Returns number of references in the slice."
@@ -212,7 +212,7 @@
         },
         "<TvmSlice>.bitsAndRefs": {
             "prefix": ".bitsAndRefs",
-            "body": ".bitsAndRefs()",
+            "body": "bitsAndRefs()",
             "description": [
                 "<TvmSlice>.bitsAndRefs() returns (uint16, uint8);\n",
                 "Returns number of data bits and references in the slice."
@@ -220,7 +220,7 @@
         },
         "<TvmSlice>.depth": {
             "prefix": ".depth",
-            "body": ".depth()",
+            "body": "depth()",
             "description": [
                 "<TvmSlice>.depth() returns (uint64);\n",
                 "Returns the depth of the slice. If slice has no references, then 0 is returned, otherwise function result is one plus the maximum of depths of the cells referred to from the slice."
@@ -228,7 +228,7 @@
         },
         "<TvmSlice>.hasNBits": {
             "prefix": ".hasNBits",
-            "body": ".hasNBits(${uint16 bits}))",
+            "body": "hasNBits(${1:uint16 bits})",
             "description": [
                 "<TvmSlice>.hasNBits(uint16 bits) returns (bool);\n",
                 "Checks whether the slice contains the specified amount of data bits."
@@ -236,7 +236,7 @@
         },
         "<TvmSlice>.hasNRefs": {
             "prefix": ".hasNRefs",
-            "body": ".hasNRefs(${uint8 bits}))",
+            "body": "hasNRefs(${1:uint8 bits})",
             "description": [
                 "<TvmSlice>.hasNRefs(uint8 bits) returns (bool);\n",
                 "Checks whether the slice contains the specified amount of references."
@@ -244,7 +244,7 @@
         },
         "<TvmSlice>.hasNBitsAndRefs": {
             "prefix": ".hasNBitsAndRefs",
-            "body": ".hasNBitsAndRefs(${uint16 bits}, ${uint8 refs})",
+            "body": "hasNBitsAndRefs(${1:uint16 bits}, ${2:uint8 refs})",
             "description": [
                 "<TvmSlice>.hasNBitsAndRefs(uint16 bits, uint8 refs) returns (bool);\n",
                 "Checks whether the slice contains the specified amount of data bits and references."
@@ -252,7 +252,7 @@
         },
         "<TvmSlice>.compare": {
             "prefix": ".compare",
-            "body": ".compare(${1:TvmSlice other})",
+            "body": "compare(${1:TvmSlice other})",
             "description": [
                 "<TvmSlice>.compare(TvmSlice other) returns (int8);\n",
                 "Lexicographically compares the slice and other data bits of the root slice and returns result as an integer:\n",
@@ -263,7 +263,7 @@
         },
         "<TvmSlice>.loadRef": {
             "prefix": ".loadRef",
-            "body": ".loadRef()",
+            "body": "loadRef()",
             "description": [
                 "<TvmSlice>.loadRef() returns (TvmCell);\n",
                 "Loads a cell from the slice reference."
@@ -271,7 +271,7 @@
         },
         "<TvmSlice>.loadRefAsSlice": {
             "prefix": ".loadRefAsSlice",
-            "body": ".loadRefAsSlice()",
+            "body": "loadRefAsSlice()",
             "description": [
                 "<TvmSlice>.loadRefAsSlice() returns (TvmSlice);\n",
                 "Loads a cell from the slice reference and converts it into a slice."
@@ -279,7 +279,7 @@
         },
         "<TvmSlice>.loadSigned": {
             "prefix": ".loadSigned",
-            "body": ".loadSigned(${1:uint16 bitSize})",
+            "body": "loadSigned(${1:uint16 bitSize})",
             "description": [
                 "<TvmSlice>.loadSigned(uint16 bitSize) returns (int);\n",
                 "Loads a signed integer with the given bitSize from the slice."
@@ -287,7 +287,7 @@
         },
         "<TvmSlice>.loadUnsigned": {
             "prefix": ".loadSiloadUnsignedgned",
-            "body": ".loadUnsigned(${1:uint16 bitSize})",
+            "body": "loadUnsigned(${1:uint16 bitSize})",
             "description": [
                 "<TvmSlice>.loadSigned(uint16 bitSize) returns (uint);\n",
                 "Loads an unsigned integer with the given bitSize from the slice."
@@ -295,7 +295,7 @@
         },
         "<TvmSlice>.loadTons": {
             "prefix": ".loadTons",
-            "body": ".loadTons()",
+            "body": "loadTons()",
             "description": [
                 "<TvmSlice>.loadTons() returns (uint128);\n",
                 "Loads (deserializes) VarUInteger 16 and returns an unsigned 128-bit integer."
@@ -303,7 +303,7 @@
         },
         "<TvmSlice>.loadSlice": {
             "prefix": ".loadSlice",
-            "body": ".loadSlice()",
+            "body": "loadSlice()",
             "description": [
                 "<TvmSlice>.loadSlice(uint length) returns (TvmSlice);\n",
                 "<TvmSlice>.loadSlice(uint length, uint refs) returns (TvmSlice);\n",
@@ -312,7 +312,7 @@
         },
         "<TvmSlice>.decodeFunctionParams": {
             "prefix": ".decodeFunctionParams",
-            "body": ".decodeFunctionParams(${1:functionName})",
+            "body": "decodeFunctionParams(${1:functionName})",
             "description": [
                 "Decodes parameters of the function or constructor (if contract type is provided). This function is usually used in onBounce function.\n",
                 "Example:\n",
@@ -326,7 +326,7 @@
         },
         "<TvmSlice>.skip": {
             "prefix": ".skip",
-            "body": ".skip(${1:uint length}${0: ,uint refs})",
+            "body": "skip(${1:uint length}${0: ,uint refs})",
             "description": [
                 "<TvmSlice>.skip(uint length);\n",
                 "<TvmSlice>.skip(uint length, uint refs);\n",
@@ -335,7 +335,7 @@
         },
         "<TvmBuilder>.toSlice": {
             "prefix": ".toSlice",
-            "body": ".toSlice()",
+            "body": "toSlice()",
             "description": [
                 "<TvmBuilder>.toSlice() returns (TvmSlice);\n",
                 "Converts the builder into a slice."
@@ -343,7 +343,7 @@
         },
         "<TvmBuilder>.toCell": {
             "prefix": ".toCell",
-            "body": ".toCell()",
+            "body": "toCell()",
             "description": [
                 "<TvmBuilder>.toCell() returns (TvmCell);\n",
                 "Converts the builder into a cell."
@@ -351,7 +351,7 @@
         },
         "<TvmBuilder>.bits": {
             "prefix": ".bits",
-            "body": ".bits()",
+            "body": "bits()",
             "description": [
                 "<TvmBuilder>.bits() returns (uint16);\n",
                 "Returns the number of data bits already stored in the builder."
@@ -359,7 +359,7 @@
         },
         "<TvmBuilder>.refs": {
             "prefix": ".refs",
-            "body": ".refs()",
+            "body": "refs()",
             "description": [
                 "<TvmBuilder>.refs() returns (uint8);\n",
                 "Returns the number of references already stored in the builder."
@@ -367,7 +367,7 @@
         },
         "<TvmBuilder>.bitsAndRefs": {
             "prefix": ".bitsAndRefs",
-            "body": ".bitsAndRefs()",
+            "body": "bitsAndRefs()",
             "description": [
                 "<TvmBuilder>.bitsAndRefs() returns (uint16 bits, uint8 refs);\n",
                 "Returns the number of data bits and references already stored in the builder."
@@ -375,7 +375,7 @@
         },
         "<TvmBuilder>.remBits": {
             "prefix": ".remBits",
-            "body": ".remBits()",
+            "body": "remBits()",
             "description": [
                 "<TvmBuilder>.remBits() returns (uint16);\n",
                 "Returns the number of data bits that can still be stored in the builder."
@@ -383,7 +383,7 @@
         },
         "<TvmBuilder>.remRefs": {
             "prefix": ".remRefs",
-            "body": ".remRefs()",
+            "body": "remRefs()",
             "description": [
                 "<TvmBuilder>.remRefs() returns (uint8);\n",
                 "Returns the number of references that can still be stored in the builder."
@@ -391,7 +391,7 @@
         },
         "<TvmBuilder>.remBitsAndRefs": {
             "prefix": ".remBitsAndRefs",
-            "body": ".remBitsAndRefs()",
+            "body": "remBitsAndRefs()",
             "description": [
                 "<TvmBuilder>.remBitsAndRefs() returns (uint16 bits, uint8 refs);\n",
                 "Returns the number of data bits and references that can still be stored in the builder."
@@ -399,7 +399,7 @@
         },
         "<TvmBuilder>.depth": {
             "prefix": ".depth",
-            "body": ".depth()",
+            "body": "depth()",
             "description": [
                 "<TvmBuilder>.depth() returns (uint64);\n",
                 "Returns the depth of the builder. If no cell references are stored in the builder, then 0 is returned; otherwise function result is one plus the maximum of depths of cells referred to from the builder."
@@ -407,7 +407,7 @@
         },
         "<TvmBuilder>.store": {
             "prefix": ".store",
-            "body": ".store(${list_of_values})",
+            "body": "store(${1:list_of_values})",
             "description": [
                 "<TvmBuilder>.store(list_of_values\\);\n",
                 "Stores the list of values in the builder.\n",
@@ -420,7 +420,7 @@
         },
         "<TvmBuilder>.storeOnes": {
             "prefix": ".storeOnes",
-            "body": ".storeOnes(${1:uint n})",
+            "body": "storeOnes(${1:uint n})",
             "description": [
                 "<TvmBuilder>.storeOnes(uint n);\n",
                 "Stores n binary ones into Builder."
@@ -428,7 +428,7 @@
         },
         "<TvmBuilder>.storeZeroes": {
             "prefix": ".storeZeroes",
-            "body": ".storeZeroes(${1:uint n})",
+            "body": "storeZeroes(${1:uint n})",
             "description": [
                 "<TvmBuilder>.storeZeroes(uint n);\n",
                 "Stores n binary zeroes into Builder."
@@ -436,7 +436,7 @@
         },
         "<TvmBuilder>.storeSigned": {
             "prefix": ".storeSigned",
-            "body": ".storeSigned(${1:int256 value}, ${2:uint16 bitSize})",
+            "body": "storeSigned(${1:int256 value}, ${2:uint16 bitSize})",
             "description": [
                 "<TvmBuilder>.storeSigned(int256 value, uint16 bitSize);\n",
                 "Stores a signed integer value with given bitSize in the builder."
@@ -444,7 +444,7 @@
         },
         "<TvmBuilder>.storeUnsigned": {
             "prefix": ".storeUnsigned",
-            "body": ".storeUnsigned(${1:uint256 value}, ${2:uint16 bitSize})",
+            "body": "storeUnsigned(${1:uint256 value}, ${2:uint16 bitSize})",
             "description": [
                 "<TvmBuilder>.storeUnsigned(uint256 value, uint16 bitSize);\n",
                 "Stores an unsigned integer value with given bitSize in the builder."
@@ -452,7 +452,7 @@
         },
         "<TvmBuilder>.storeRef": {
             "prefix": ".storeRef",
-            "body": ".storeRef(${1|TvmBuilder b,TvmCell c,TvmSlice s|})",
+            "body": "storeRef(${1|TvmBuilder b,TvmCell c,TvmSlice s|})",
             "description": [
                 "<TvmBuilder>.storeRef(TvmBuilder b);\n",
                 "<TvmBuilder>.storeRef(TvmCell c);\n",
@@ -462,7 +462,7 @@
         },
         "<TvmBuilder>.storeTons": {
             "prefix": ".storeTons",
-            "body": ".storeTons(${1:uint128 value}})",
+            "body": "storeTons(${1:uint128 value}})",
             "description": [
                 "<TvmBuilder>.storeTons(uint128 value);\n",
                 "Stores (serializes) an integer value and stores it in the builder as VarUInteger 16. See TL-B scheme."
@@ -470,7 +470,7 @@
         },
         "<optional(Type)>.get": {
             "prefix": ".get",
-            "body": ".get()",
+            "body": "get()",
             "description": [
                 "<optional(Type)>.get() returns (Type);\n",
                 "Returns the contained value, if the optional contains one. Otherwise, throws an exception."
@@ -478,7 +478,7 @@
         },
         "<optional(Type)>.hasValue": {
             "prefix": ".hasValue",
-            "body": ".hasValue()",
+            "body": "hasValue()",
             "description": [
                 "<optional(Type)>.hasValue() returns (bool);\n",
                 "Checks whether opt contains a value."
@@ -486,7 +486,7 @@
         },
         "<vector(Type)>.push": {
             "prefix": ".push",
-            "body": ".push(${1:Type obj})",
+            "body": "push(${1:Type obj})",
             "description": [
                 "<vector(Type)>.push(Type obj);\n",
                 "Appends obj to the vector.\n",
@@ -499,7 +499,7 @@
         },
         "<vector(Type)>.pop": {
             "prefix": ".pop",
-            "body": ".pop()",
+            "body": "pop()",
             "description": [
                 "<vector(Type)>.pop() returns (Type);\n",
                 "Pops the last value from the vector and returns is.\n",
@@ -511,7 +511,7 @@
         },
         "<vector(Type)>.length": {
             "prefix": ".length",
-            "body": ".length()",
+            "body": "length()",
             "description": [
                 "<vector(Type)>.length() returns (uint8);\n",
                 "Returns length of the vector.\n",
@@ -523,7 +523,7 @@
         },
         "<vector(Type)>.empty": {
             "prefix": ".empty",
-            "body": ".empty()",
+            "body": "empty()",
             "description": [
                 "<vector(Type)>.empty() returns (bool);\n",
                 "Checks whether the vector is empty.\n",
@@ -576,7 +576,7 @@
         },
         "<struct>.unpack": {
             "prefix": ".unpack",
-            "body": ".unpack()",
+            "body": "unpack()",
             "description": [
                 "<struct>.unpack() returns (TypeA a, TypeB b\\, ...);\n",
                 "Unpacks all members stored in the struct.\n",
@@ -587,7 +587,7 @@
         },
         "<array>.empty": {
             "prefix": ".empty",
-            "body": ".empty()",
+            "body": "empty()",
             "description": [
                 "<array>.empty() returns (bool);\n",
                 "Returns status flag whether the array is empty (its length is 0).\n",
@@ -597,7 +597,7 @@
         },
         "<bytes>.empty": {
             "prefix": ".empty",
-            "body": ".empty()",
+            "body": "empty()",
             "description": [
                 "<bytes>.empty() returns (bool);\n",
                 "Returns status flag whether the bytes is empty (its length is 0)."
@@ -605,7 +605,7 @@
         },
         "<bytes>.length": {
             "prefix": ".length",
-            "body": ".length",
+            "body": "length",
             "description": [
                 "<bytes>.length returns (uint)\n",
                 "Returns length of the byte array."
@@ -613,7 +613,7 @@
         },
         "<bytes>.toSlice": {
             "prefix": ".toSlice",
-            "body": ".toSlice()",
+            "body": "toSlice()",
             "description": [
                 "<bytes>.toSlice() returns (TvmSlice);\n",
                 "Converts bytes to TvmSlice.\n",
@@ -622,17 +622,17 @@
         },
         "<bytes>.dataSize": {
             "prefix": ".dataSize",
-            "body": ".dataSize(${1:uint n})",
+            "body": "dataSize(${1:uint n})",
             "description": "<bytes>.dataSize(uint n) returns (uint cells, uint bits, uint refs);"
         },
         "<bytes>.dataSizeQ": {
             "prefix": ".dataSizeQ",
-            "body": ".dataSizeQ(${1:uint n})",
+            "body": "dataSizeQ(${1:uint n})",
             "description": "<bytes>.dataSizeQ(uint n) returns (optional(uint cells, uint bits, uint refs));"
         },
         "<bytes>.append": {
             "prefix": ".append",
-            "body": ".append(${1:bytes tail})",
+            "body": "append(${1:bytes tail})",
             "description": [
                 "<bytes>.append(bytes tail);\n",
                 "Modifies the bytes by concatenating tail bytes to the end of the bytes."
@@ -640,7 +640,7 @@
         },
         "<string>.empty": {
             "prefix": ".empty",
-            "body": ".empty()",
+            "body": "empty()",
             "description": [
                 "<string>.empty() returns (bool);\n",
                 "Returns status flag whether the string is empty (its length is 0)."
@@ -648,7 +648,7 @@
         },
         "<string>.byteLength": {
             "prefix": ".byteLength",
-            "body": ".byteLength()",
+            "body": "byteLength()",
             "description": [
                 "<string>.byteLength() returns (uint32);\n",
                 "Returns byte length of the string data."
@@ -656,7 +656,7 @@
         },
         "<string>.substr": {
             "prefix": ".substr",
-            "body": ".substr()",
+            "body": "substr()",
             "description": [
                 "<string>.substr(uint from[, uint count]) returns (string);\n",
                 "Returns a substring starting from the\nbyte with number from with byte length count. Note: if count is not set, then the new string will be cut from the from byte to the end of the string.\n",
@@ -666,7 +666,7 @@
         },
         "<string>.append": {
             "prefix": ".append",
-            "body": ".append(${1:string tail})",
+            "body": "append(${1:string tail})",
             "description": [
                 "<string>.append(string tail);\n",
                 "Appends the tail string to the string."
@@ -674,7 +674,7 @@
         },
         "<string>.find": {
             "prefix": ".find",
-            "body": ".find(${1|substring,byte('symbol')|})",
+            "body": "find(${1|substring,byte('symbol')|})",
             "description": [
                 "<string>.find(bytes1 symbol) returns (optional(uint32));\n",
                 "<string>.find(string substr) returns (optional(uint32));\n",
@@ -683,7 +683,7 @@
         },
         "<string>.findLast": {
             "prefix": ".findLast",
-            "body": ".findLast(${1|substring,byte('symbol')|})",
+            "body": "findLast(${1|substring,byte('symbol')|})",
             "description": [
                 "<string>.findLast(bytes1 symbol) returns (optional(uint32));\n",
                 "<string>.findLast(string substr) returns (optional(uint32));\n",
@@ -736,7 +736,7 @@
         },
         "<address>.wid": {
             "prefix": ".wid",
-            "body": ".wid()",
+            "body": "wid()",
             "description": [
                 "<address>.wid returns (int8);\n",
                 "Returns the workchain id of addr_std or addr_var. Throws \"range check error\" exception (error code equal to 5) for another address types."
@@ -744,7 +744,7 @@
         },
         "<address>.value": {
             "prefix": ".value",
-            "body": ".value()",
+            "body": "value()",
             "description": [
                 "<address>.value returns (uint);\n",
                 "Returns the address value of addr_std or addr_var if addr_var has 256-bit\naddress value. Throws \"range check error\" exception (error code equal to 5) for another address types.\n"
@@ -768,7 +768,7 @@
         },
         "<address>.getType": {
             "prefix": ".getType",
-            "body": ".getType()",
+            "body": "getType()",
             "description": [
                 "<address>.getType() returns (uint8);\n",
                 "Returns type of the address:\n0 - addr_none 1 - addr_extern 2 - addr_std"
@@ -776,7 +776,7 @@
         },
         "<address>.isStdZero": {
             "prefix": ".isStdZero",
-            "body": ".isStdZero()",
+            "body": "isStdZero()",
             "description": [
                 "<address>.isStdZero() returns (bool);\n",
                 "Returns the result of comparison between this address with zero address of type addr_std.\n"
@@ -784,7 +784,7 @@
         },
         "<address>.isStdAddrWithoutAnyCast": {
             "prefix": ".isStdAddrWithoutAnyCast",
-            "body": ".isStdAddrWithoutAnyCast()",
+            "body": "isStdAddrWithoutAnyCast()",
             "description": [
                 "<address>.isStdAddrWithoutAnyCast() returns (bool);\n",
                 "Check whether this address is of type addr_std without any cast.\n"
@@ -792,7 +792,7 @@
         },
         "<address>.isExternZero": {
             "prefix": ".isExternZero",
-            "body": ".isExternZero()",
+            "body": "isExternZero()",
             "description": [
                 "<address>.isExternZero() returns (bool);\n",
                 "Returns the result of comparison between this address with zero address of type addr_extern.\n"
@@ -800,7 +800,7 @@
         },
         "<address>.isNone": {
             "prefix": ".isNone",
-            "body": ".isNone()",
+            "body": "isNone()",
             "description": [
                 "<address>.isNone() returns (bool);\n",
                 "Check whether this address is of type addr_none.\n"
@@ -808,7 +808,7 @@
         },
         "<address>.unpack": {
             "prefix": ".unpack",
-            "body": ".unpack()",
+            "body": "unpack()",
             "description": [
                 "<address>.unpack() returns (int8 wid, uint256 value);\n",
                 "Parses <address> containing a valid MsgAddressInt (addr_std or addr_var), applies rewriting from the anycast (if present) to the same-length prefix of the address, and returns both the workchain wid and the 256-bit address value. If the address value is not 256-bit, or if <address> is not a valid serialization of MsgAddressInt, throws a cell deserialization exception.\n",
@@ -819,7 +819,7 @@
         },
         "<address>.transfer": {
             "prefix": ".transfer",
-            "body": ".transfer(${1:uint128 value}, ${2:bool bounce}, ${3:uint16 flag}, ${4:TvmCell body}, ${5:ExtraCurrencyCollection currencies})",
+            "body": "transfer(${1:uint128 value}, ${2:bool bounce}, ${3:uint16 flag}, ${4:TvmCell body}, ${5:ExtraCurrencyCollection currencies})",
             "description": [
                 "<address>.transfer(",
                 "      uint128 value, ",
@@ -833,7 +833,7 @@
         },
         "<mapping>.min": {
             "prefix": ".min",
-            "body": ".min()",
+            "body": "min()",
             "description": [
                 "<map>.min() returns (optional(KeyType, ValueType));\n",
                 "Computes the minimal key in the mapping and returns an optional value containing that key and the associated value. If mapping is empty, this function returns an empty optional.\n"
@@ -841,7 +841,7 @@
         },
         "<mapping>.max": {
             "prefix": ".max",
-            "body": ".max()",
+            "body": "max()",
             "description": [
                 "<map>.max() returns (optional(KeyType, ValueType));\n",
                 "Computes the maximal key in the mapping and returns an optional value containing that key and the associated value. If mapping is empty, this function returns an empty optional.\n"
@@ -849,7 +849,7 @@
         },
         "<mapping>.next": {
             "prefix": ".next",
-            "body": ".next(${1:KeyType key})",
+            "body": "next(${1:KeyType key})",
             "description": [
                 "<map>.next(KeyType key) returns (optional(KeyType, ValueType));\n",
                 "Computes the maximal key in the mapping that is lexicographically greater than key and returns an optional value containing that key and the associated value. Returns an empty optional if there is no such key. If KeyType is an integer type, argument for this functions can not possibly fit KeyType.\n",
@@ -859,7 +859,7 @@
         },
         "<mapping>.prev": {
             "prefix": ".prev",
-            "body": ".prev(${1:KeyType key})",
+            "body": "prev(${1:KeyType key})",
             "description": [
                 "<map>.prev(KeyType key) returns (optional(KeyType, ValueType));\n",
                 "Computes the minimal key in the mapping that is lexicographically less than key and returns an optional value containing that key and the associated value. Returns an empty optional if there is no such key. If KeyType is an integer type, argument for this functions can not possibly fit KeyType.\n",
@@ -869,7 +869,7 @@
         },
         "<mapping>.nextOrEq": {
             "prefix": ".nextOrEq",
-            "body": ".nextOrEq(${1:KeyType key})",
+            "body": "nextOrEq(${1:KeyType key})",
             "description": [
                 "<map>.nextOrEq(KeyType key) returns (optional(KeyType, ValueType));\n",
                 "Computes the maximal key in the mapping that is lexicographically greater than or equal to key and returns an optional value containing that key and the associated value. Returns an empty optional if there is no such key. If KeyType is an integer type, argument for this functions can not possibly fit KeyType.\n"
@@ -877,7 +877,7 @@
         },
         "<mapping>.prevOrEq": {
             "prefix": ".prevOrEq",
-            "body": ".prevOrEq(${1:KeyType key})",
+            "body": "prevOrEq(${1:KeyType key})",
             "description": [
                 "<map>.prevOrEq(KeyType key) returns (optional(KeyType, ValueType));\n",
                 "Computes the minimal key in the mapping that is lexicographically less than or equal to key and returns an optional value containing that key and the associated value. Returns an empty optional if there is no such key. If KeyType is an integer type, argument for this functions can not possibly fit KeyType.\n"
@@ -885,7 +885,7 @@
         },
         "<mapping>.delMin": {
             "prefix": ".delMin",
-            "body": ".delMin()",
+            "body": "delMin()",
             "description": [
                 "<map>.delMin() returns (optional(KeyType, ValueType));\n",
                 "If mapping is not empty then this function computes the minimal key of the mapping, deletes that key and the associated value from the mapping and returns an optional value containing that key and the associated value. Returns an empty optional if there is no such key.\n"
@@ -893,7 +893,7 @@
         },
         "<mapping>.delMax": {
             "prefix": ".delMax",
-            "body": ".delMax()",
+            "body": "delMax()",
             "description": [
                 "<map>.delMax() returns (optional(KeyType, ValueType));\n",
                 "If mapping is not empty then this function computes the maximum key of the mapping, deletes that key and the associated value from the mapping and returns an optional value containing that key and the associated value. Returns an empty optional if there is no such key.\n"
@@ -901,7 +901,7 @@
         },
         "<mapping>.fetch": {
             "prefix": ".fetch",
-            "body": ".fetch(${1:KeyType key})",
+            "body": "fetch(${1:KeyType key})",
             "description": [
                 "<map>.fetch(KeyType key) returns (optional(ValueType));\n",
                 "Checks whether key presents in the mapping and returns an optional with the associated value. Returns an empty optional if there is no such key.\n"
@@ -909,7 +909,7 @@
         },
         "<mapping>.exists": {
             "prefix": ".exists",
-            "body": ".exists(${1:KeyType key})",
+            "body": "exists(${1:KeyType key})",
             "description": [
                 "<map>.exists(KeyType key) returns (bool);\n",
                 "Returns a status flag whether key presents in the mapping.\n"
@@ -917,7 +917,7 @@
         },
         "<mapping>.empty": {
             "prefix": ".empty",
-            "body": ".empty()",
+            "body": "empty()",
             "description": [
                 "<map>.empty() returns (bool);\n",
                 "Returns a status flag whether the mapping is empty.\n"
@@ -925,7 +925,7 @@
         },
         "<mapping>.replace": {
             "prefix": ".replace",
-            "body": ".replace(${1:KeyType key}, ${2:ValueType value})",
+            "body": "replace(${1:KeyType key}, ${2:ValueType value})",
             "description": [
                 "<map>.replace(KeyType key, ValueType value) returns (bool);\n",
                 "Sets the value associated with key only if key presents in the mapping and returns the success flag.\n"
@@ -933,7 +933,7 @@
         },
         "<mapping>.add": {
             "prefix": ".add",
-            "body": ".add(${1:KeyType key}, ${2:ValueType value})",
+            "body": "add(${1:KeyType key}, ${2:ValueType value})",
             "description": [
                 "<map>.add(KeyType key, ValueType value) returns (bool);\n",
                 "Sets the value associated with key only if key does not present in the mapping.\n"
@@ -941,7 +941,7 @@
         },
         "<mapping>.getSet": {
             "prefix": ".getSet",
-            "body": ".getSet(${1:KeyType key}, ${2:ValueType value})",
+            "body": "getSet(${1:KeyType key}, ${2:ValueType value})",
             "description": [
                 "<map>.getSet(KeyType key, ValueType value) returns (optional(ValueType));\n",
                 "Sets the value associated with key, but also returns an optional with the old value associated with the key, if presents. Otherwise, returns an empty optional.\n"
@@ -949,7 +949,7 @@
         },
         "<mapping>.getAdd": {
             "prefix": ".getAdd",
-            "body": ".getAdd(${1:KeyType key}, ${2:ValueType value})",
+            "body": "getAdd(${1:KeyType key}, ${2:ValueType value})",
             "description": [
                 "<map>.getAdd(KeyType key, ValueType value) returns (optional(ValueType));\n",
                 "Sets the value associated with key, but only if key does not present in the mapping. Returns an optional with the old value without changing the dictionary if that value presents in the mapping, otherwise returns an empty optional.\n"
@@ -957,7 +957,7 @@
         },
         "<mapping>.getReplace": {
             "prefix": ".getReplace",
-            "body": ".getReplace(${1:KeyType key}, ${2:ValueType value})",
+            "body": "getReplace(${1:KeyType key}, ${2:ValueType value})",
             "description": [
                 "<map>.getReplace(KeyType key, ValueType value) returns (optional(ValueType));\n",
                 "Sets the value associated with key, but only if key presents in the mapping. On success, returns an optional with the old value associated with the key. Otherwise, returns an empty optional.\n"
@@ -1658,7 +1658,7 @@
         },
         "<optional(Type)>.set": {
             "prefix": ".set",
-            "body": ".set(${1:Type value})",
+            "body": "set(${1:Type value})",
             "description": [
                 "<optional(Type)>.set(Type value);\n",
                 "Replaces the content of the optional with the contents of other."
@@ -1666,7 +1666,7 @@
         },
         "<optional(Type)>.reset": {
             "prefix": ".reset",
-            "body": ".reset()",
+            "body": "reset()",
             "description": [
                 "<optional(Type)>.reset();\n",
                 "Deletes the content of the optional."
@@ -1674,7 +1674,7 @@
         },
         "<TvmSlice>.decode": {
             "prefix": ".decode",
-            "body": ".decode(${1:TypeA}, ${2:TypeB} ...)",
+            "body": "decode(${1:TypeA}, ${2:TypeB} ...)",
             "description": [
                 "<TvmSlice>.decode(TypeA, TypeB, ...) returns (TypeA a, TypeB b, ...);\n",
                 "Supported types: `uintN`, `intN`, `bytesN`, `bool`, `ufixedMxN`, `fixedMxN`, `address`, `contract`, `TvmCell`, `bytes`, `string`, `mapping`, `ExtraCurrencyCollection`, `array`, `optional` and `struct`\n",

@@ -1560,7 +1560,7 @@
             "prefix": "constant",
             "body": "constant ${1:name} = ${0:value};",
             "description": [
-                "uint constant cost = 100;\n",
+                "```\nuint constant cost = 100;\n```\n",
                 "For constant variables, the value has to be a constant at compile time and this value is substituted where the variable is used. The value has to be assigned where the variable is declared.\n"
             ]
         },

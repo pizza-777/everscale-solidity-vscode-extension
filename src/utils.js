@@ -111,8 +111,43 @@ function getSnippetItems(document) {
     }
     return completionItems;
 }
+
+function getFuncData(funcName, funcs) {
+    for (const [, func] of Object.entries(funcs)) {
+        if (func.prefix.includes(funcName)) {
+            return {
+                label: func.description,
+                documentation: null,
+                activeSignature: 0,
+                activeParameter: 1
+            }
+        }
+    }
+    return null;
+}
+
+function getSignatures(document, position) {
+    //взяти функцію і визначти дані
+    let funcs = { ...parseAbiFunctions(document), ...parsePrivateFunctions(document) };
+    const wordRange = document.getWordRangeAtPosition(position, /[_a-zA-Z0-9\.\(]+/);;
+    const funcName = document.getText(wordRange).replace('(', '');
+    const data = getFuncData(funcName, funcs);
+
+    const signatureHelp = new vscode.SignatureHelp();
+    const signatureInformation = new vscode.SignatureInformation();
+
+    signatureInformation.label = data.label;
+    signatureInformation.documentation = data.documentation;
+    signatureHelp.activeSignature = data.activeSignature;
+    signatureHelp.activeParameter = data.activeParameter;
+    signatureHelp.signatures = [
+        signatureInformation
+    ]
+    return signatureHelp;
+}
 module.exports = {
     getErrors,
     getHoverItems,
-    getSnippetItems
+    getSnippetItems,
+    getSignatures
 }

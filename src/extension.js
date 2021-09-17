@@ -1,23 +1,32 @@
 const vscode = require('vscode');
 const { controllers } = require('tondev');
 const path = require('path');
-const { getErrors, getHoverItems, getSnippetItems } = require('./utils');
+const { getErrors, getHoverItems, getSnippetItems, getSignatures } = require('./utils');
 
 let _tondevTerminal;
 let t_out;
 let lastTime = 0;
 let counter = 0
 const TYPING_DELAY = 500;
+const MODE = { scheme: 'file', language: 'ton-solidity' }
 /**
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
 
-	const completionProvider = vscode.languages.registerCompletionItemProvider(
-		{ 
-			scheme: 'file' ,
-			language: 'ton-solidity'
+	const signatureProvider = vscode.languages.registerSignatureHelpProvider(
+		MODE,
+		{
+			provideSignatureHelp(document, position,) {
+				return getSignatures(document, position);
+			}
 		},
+		'(',
+		')'
+	);
+	context.subscriptions.push(signatureProvider);
+	const completionProvider = vscode.languages.registerCompletionItemProvider(
+		MODE,
 		{
 			provideCompletionItems(document) {
 				return getSnippetItems(document);

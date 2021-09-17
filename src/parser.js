@@ -3,7 +3,7 @@ const path = require('path');
 
 function getAbi(document) {
     let abiPathData = path.parse(document.uri.fsPath);
-    let abiPath = path.resolve(__dirname, `abi/${abiPathData.name}.abi.json`);  
+    let abiPath = path.resolve(__dirname, `abi/${abiPathData.name}.abi.json`);
     try {
         delete require.cache[abiPath]
         let abi = require(abiPath);

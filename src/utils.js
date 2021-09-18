@@ -10,7 +10,6 @@ const wordsSetCompletion = snippetsJsonCompletion['.source.ton-solidity'];
 const fs = require("fs");
 const path = require('path');
 
-
 function formatDescription(description) {
     if (Array.isArray(description)) {
         return description.join("\n")
@@ -73,6 +72,11 @@ function getErrors(string) {
     })
 }
 
+function checkParam(find, str) {
+    const re = new RegExp(`${find}$`);
+    return str.match(re);    
+}
+
 function getHoverItems(word, document) {
     let abiFunctions = highliteIt(parseAbiFunctions(document));
     let privateFunctions = highliteIt(parsePrivateFunctions(document))
@@ -85,15 +89,15 @@ function getHoverItems(word, document) {
     }
     let prefixLength = 0;
     for (const [, value] of Object.entries(wordsHover)) {
-        if (word.includes(value.prefix)) {
-            //take the most matched value
-            if (value.prefix.length < prefixLength) continue;
-            if (value.prefix.length == prefixLength) counter++;
-            prefixLength = value.prefix.length;
+        if (!checkParam(value.prefix, word)) continue;    
+        //take the most matched value
+        if (value.prefix.length < prefixLength) continue;
+        if (value.prefix.length == prefixLength) counter++;
+        prefixLength = value.prefix.length;
 
-            suggestion = formatDescription(value.description);
-            if (counter > 0) return getSnippetsIncludes(value.prefix.replace(/^\./, ''));
-        }
+        suggestion = formatDescription(value.description);
+        if (counter > 0) return getSnippetsIncludes(value.prefix.replace(/^\./, ''));
+
     }
     return suggestion;
 }
@@ -119,7 +123,7 @@ function getFuncData(funcName, funcs) {
                 label: func.description,
                 documentation: null,
                 activeSignature: 0,
-                activeParameter: 1
+                activeParameter: 0
             }
         }
     }
@@ -127,7 +131,6 @@ function getFuncData(funcName, funcs) {
 }
 
 function getSignatures(document, position) {
-    //взяти функцію і визначти дані
     let funcs = { ...parseAbiFunctions(document), ...parsePrivateFunctions(document) };
     const wordRange = document.getWordRangeAtPosition(position, /[_a-zA-Z0-9\.\(]+/);;
     const funcName = document.getText(wordRange).replace('(', '');

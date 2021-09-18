@@ -22,7 +22,7 @@ function activate(context) {
 			}
 		},
 		'(',
-		')'
+		','
 	);
 	context.subscriptions.push(signatureProvider);
 	const completionProvider = vscode.languages.registerCompletionItemProvider(
@@ -126,7 +126,7 @@ function tondevTerminal() {
 				t_out.push(text);
 			},
 			write: (text) => {
-				t_out.push(text);
+				t_out.push(`INFO: ${text}`);
 			},
 		};
 	}

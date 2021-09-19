@@ -123,10 +123,9 @@ function tondevTerminal() {
 				output.appendLine(args.map((x) => `${x}`).join(""));
 			},
 			writeError: (text) => {
-				t_out.push(text);
+				!t_out.includes(text) && t_out.push(text);
 			},
-			write: (text) => {
-				t_out.push(`INFO: ${text}`);
+			write: () => {				
 			},
 		};
 	}

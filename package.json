@@ -2,7 +2,7 @@
     "name": "ton-solidity",
     "displayName": "ton-solidity",
     "description": "TON Solidity Language for Visual Studio Code",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "keywords": [
         "solidity",
         "ton-solidity",
@@ -13,7 +13,7 @@
         "tondev",
         "highlighting"
     ],
-    "publisher": "freeton20",
+    "publisher": "zfreeton",
     "license": "Apache-2.0",
     "licenses": [
         {

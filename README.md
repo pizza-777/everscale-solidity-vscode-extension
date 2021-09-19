@@ -1,17 +1,32 @@
-# TON Solidity support for Visual Studio code
+# TON Solidity support for Visual Studio Code
 
-TON Solidity is the language used in Free TON blockchain to create smart contracts. This extension provides: 
+-----
+
+TON Solidity is the language used in Free TON blockchain to create smart contracts. This extension provides:
 
 * Syntax highlighting
 * Snippets with details
-* Checking for errors and warnings and highlighting it
-* Hover information
+* Checking for errors, warnings and highlighting it
+* Display an information popup on hover
+* Suggesting function params when typing
+
+-----
+
+## Installation
+
+### Extension Marketplace
+
+Launch Quick Open, paste the following command, and press <kbd>Enter</kbd>
+
+`ext install zfreeton.ton-solidity`
+
+### CLI
+
+With [shell commands](https://code.visualstudio.com/docs/editor/command-line) installed, you can use the following command to install the extension:
+
+`$ code --install-extension zfreeton.ton-solidity`
 
 ## Features
-
-### On hover information
-
-![Hover information](assets/hover-information.gif)
 
 ### Ton-solidity autocomplete with detailed information
 
@@ -25,7 +40,20 @@ Use ```Ctrl+Space```
 
 ### Code diagnostic on the fly
 
-[![4.gif](https://i.postimg.cc/7YCpt4Rx/4.gif)](https://postimg.cc/Vd8G5x1T)
+![Code diagnostic](assets/code-diagnostic.gif)
+
+### On hover information
+
+![Hover information](assets/hover-information.gif)
+
+### Params helper
+
+![Params helper](assets/params-helper.gif)
+
+This extension only working with TON Solidity language. If You are using Ethereum Solidity, use other extensions for this.
+You have quick switch between two solidity languages:
+
+![Language Switcher](assets/language-switcher.gif)
 
 ## Release Notes
 

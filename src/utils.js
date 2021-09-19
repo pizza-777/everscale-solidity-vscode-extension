@@ -119,30 +119,23 @@ function getSnippetItems(document) {
 function getFuncData(funcName, funcs) {
     for (const [, func] of Object.entries(funcs)) {
         if (func.prefix.includes(funcName)) {
-            return {
-                label: func.description,
-                documentation: null,
-                activeSignature: 0,
-                activeParameter: 0
-            }
+            let label = func.body.replace(/(\{|\$|[0-9]:|\\|})/gm,'');       
+            return { label }
         }
     }
     return null;
 }
 
 function getSignatures(document, position) {
-    let funcs = { ...parseAbiFunctions(document), ...parsePrivateFunctions(document) };
-    const wordRange = document.getWordRangeAtPosition(position, /[_a-zA-Z0-9\.\(]+/);;
-    const funcName = document.getText(wordRange).replace('(', '');
+    let funcs = { ...parseAbiFunctions(document), ...parsePrivateFunctions(document), ...wordsSetCompletion };
+    const wordRange = document.getWordRangeAtPosition(position, /[_a-zA-Z0-9\.\(\,]+/);;
+    const funcName = document.getText(wordRange).replace(/\(.*/g, '');
     const data = getFuncData(funcName, funcs);
+    if (!data) return;
 
     const signatureHelp = new vscode.SignatureHelp();
-    const signatureInformation = new vscode.SignatureInformation();
-
-    signatureInformation.label = data.label;
-    signatureInformation.documentation = data.documentation;
-    signatureHelp.activeSignature = data.activeSignature;
-    signatureHelp.activeParameter = data.activeParameter;
+    const signatureInformation = new vscode.SignatureInformation(data.label);
+  
     signatureHelp.signatures = [
         signatureInformation
     ]

@@ -28,6 +28,11 @@ With [shell commands](https://code.visualstudio.com/docs/editor/command-line) in
 
 ## Features
 
+### Highlighting
+
+For example light and dark themes: "Solarized Light" and "Matherial Theme":
+![solarized-dark](assets/solarized-light.png) ![matherial-theme](assets/matherial-theme.png)  
+
 ### Ton-solidity autocomplete with detailed information
 
 Use ```Ctrl+Space```

@@ -1662,14 +1662,14 @@
             "prefix": "gigaton",
             "body": "gigaton",
             "description": [
-                "1 gigaton == 1e6 gigaton\n"
+                "1 gigaton == 1e6 ton\n"
             ]
         },
         "GTon": {
             "prefix": "GTon",
             "body": "GTon",
             "description": [
-                "1 GTon == 1e6 GTon\n"
+                "1 GTon == 1e6 ton\n"
             ]
         },
         "<optional(Type)>.set": {

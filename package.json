@@ -2,7 +2,7 @@
     "name": "ton-solidity",
     "displayName": "TON Solidity Support",
     "description": "TON Solidity Language for Visual Studio Code",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "keywords": [
         "solidity",
         "ton-solidity",

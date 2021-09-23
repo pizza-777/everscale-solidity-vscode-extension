@@ -719,6 +719,9 @@
                     "include": "#declaration-storage"
                 },
                 {
+                    "include":"#declaration-debot-interface"
+                },
+                {
                     "include": "#declaration-error"
                 }
             ]
@@ -1208,6 +1211,153 @@
                     "match": "\\b(mapping)\\b",
                     "name": "storage.type.mapping"
                 }
+            ]
+        },
+        "declaration-debot-interface": { 
+            "patterns":[
+                {
+                    "match": "\\b(SigningBoxInput|NumberInput|AddressInput|AmountInput|ConfirmInput|CountryInput)\\.(get)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.interface"
+                        },
+                        "2": {
+                            "name": "entity.name.function"
+                        }
+                    }
+                },
+                {
+                    "match": "\\b(Base64|Hex)\\.(encode|decode)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.interface"
+                        },
+                        "2": {
+                            "name": "entity.name.function"
+                        }
+                    }
+                },
+                {
+                    "match": "\\b(DateTimeInput)\\.(getTime|getDate|getDateTime|getTimeZoneOffset)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.interface"
+                        },
+                        "2": {
+                            "name": "entity.name.function"
+                        }
+                    }
+                },
+                {
+                    "match": "\\b(Json)\\.(deserialize)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.interface"
+                        },
+                        "2": {
+                            "name": "entity.name.function"
+                        }
+                    }
+                },
+                {
+                    "match": "\\b(Menu)\\.(select)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.interface"
+                        },
+                        "2": {
+                            "name": "entity.name.function"
+                        }
+                    }
+                },
+                {
+                    "match": "\\b(Network)\\.(get|post)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.interface"
+                        },
+                        "2": {
+                            "name": "entity.name.function"
+                        }
+                    }
+                },
+                {
+                    "match": "\\b(EncryptionBoxInput)\\.(getNaclSecretBox|getNaclBox|getChaCha20Box|remove|getSupportedAlgorithms)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.interface"
+                        },
+                        "2": {
+                            "name": "entity.name.function"
+                        }
+                    }
+                },
+                {
+                    "match": "\\b(QRCode)\\.(read|draw)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.interface"
+                        },
+                        "2": {
+                            "name": "entity.name.function"
+                        }
+                    }
+                },
+                {
+                    "match": "\\b(Query)\\.(collection)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.interface"
+                        },
+                        "2": {
+                            "name": "entity.name.function"
+                        }
+                    }
+                },
+                {
+                    "match": "\\b(Sdk)\\.(getBalance|getAccountType|getAccountCodeHash|encrypt|decrypt|signHash|genRandom|substring|mnemonicFromRandom|mnemonicVerify|mnemonicDeriveSignKeys|hdkeyXprvFromMnemonic|hdkeyDeriveFromXprv|hdkeyDeriveFromXprvPath|hdkeySecretFromXprv|hdkeyPublicFromXprv|naclSignKeypairFromSecretKey|naclBox|naclBoxOpen|naclKeypairFromSecret|chacha20)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.interface"
+                        },
+                        "2": {
+                            "name": "entity.name.function"
+                        }
+                    }
+                },
+                {
+                    "match": "\\b(SecurityCardManagemenet)\\.(getBlockHashes|turnOnWallet|setRecoveryData|getRecoveryData|getSerialNumber|getTonWalletAppletState|createKeyForHmac)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.interface"
+                        },
+                        "2": {
+                            "name": "entity.name.function"
+                        }
+                    }
+                },
+                {
+                    "match": "\\b(Terminal)\\.(input|print|printf)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.interface"
+                        },
+                        "2": {
+                            "name": "entity.name.function"
+                        }
+                    }
+                },
+                {
+                    "match": "\\b(UserInfo)\\.(getAccount|getPublicKey|getSigningBox)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.interface"
+                        },
+                        "2": {
+                            "name": "entity.name.function"
+                        }
+                    }
+                }  
             ]
         },
         "declaration-error": {

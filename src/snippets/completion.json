@@ -2234,6 +2234,101 @@
                 "\nArguments:",
                 " - answerId: uint32 — function id of callback.\nReturns:\n - handle: uint32 — handle to signing keypair, can be 0.\n"
             ]
+        },
+        "import debot": {
+            "prefix": "import debot",
+            "body": "import \"https://raw.githubusercontent.com/tonlabs/debots/main/Debot.sol\";",
+            "description": ""
+        },
+        "import AddressInput": {
+            "prefix": "import AddressInput",
+            "body": "import \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/AddressInput/AddressInput.sol\";",
+            "description": ""
+        },
+        "import AmountInput": {
+            "prefix": "import AmountInput",
+            "body": "import \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/AmountInput/AmountInput.sol\";",
+            "description": ""
+        },
+        "import Base64": {
+            "prefix": "import Base64",
+            "body": "import \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/Base64/Base64.sol\";",
+            "description": ""
+        },
+        "import ConfirmInput": {
+            "prefix": "import ConfirmInput",
+            "body": "import \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/ConfirmInput/ConfirmInput.sol\";",
+            "description": ""
+        },
+        "import CountryInput": {
+            "prefix": "import CountryInput",
+            "body": "import \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/CountryInput/CountryInput.sol\";",
+            "description": ""
+        },
+        "import DateTimeInput": {
+            "prefix": "import DateTimeInput",
+            "body": "import \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/DateTimeInput/DateTimeInput.sol\";",
+            "description": ""
+        },
+        "import EncryptionBoxInput": {
+            "prefix": "import EncryptionBoxInput",
+            "body": "import \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/EncryptionBoxInput/EncryptionBoxInput.sol\";",
+            "description": ""
+        },
+        "import Hex": {
+            "prefix": "import Hex",
+            "body": "import \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/Hex/Hex.sol\";",
+            "description": ""
+        },
+        "import Media": {
+            "prefix": "import Media",
+            "body": "import \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/Media/Media.sol\";",
+            "description": ""
+        },
+        "import Menu": {
+            "prefix": "import Menu",
+            "body": "import \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/Menu/Menu.sol\";",
+            "description": ""
+        },
+        "import Network": {
+            "prefix": "import Network",
+            "body": "import \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/Network/Network.sol\";",
+            "description": ""
+        },
+        "import NumberInput": {
+            "prefix": "import NumberInput",
+            "body": "import \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/NumberInput/NumberInput.sol\";",
+            "description": ""
+        },
+        "import QRCode": {
+            "prefix": "import QRCode",
+            "body": "import \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/QRCode/QRCode.sol\";",
+            "description": ""
+        },
+        "import Query": {
+            "prefix": "import Query",
+            "body": "import \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/Query/Query.sol\";",
+            "description": ""
+        },
+        "import SecurityCardManagement": {
+            "prefix": "import SecurityCardManagement",
+            "body": "import \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/SecurityCardManagement/SecurityCardManagement.sol\";",
+            "description": ""
+        },
+        "import SigningBoxInput": {
+            "prefix": "import SigningBoxInput",
+            "body": "import \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/SigningBoxInput/SigningBoxInput.sol\";",
+            "description": ""
+        },
+        "import Terminal": {
+            "prefix": "import Terminal",
+            "body": "import \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/Terminal/Terminal.sol\";",
+            "description": ""
+        },
+        "import UserInfo": {
+            "prefix": "import UserInfo",
+            "body": "import \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/UserInfo/UserInfo.sol\";",
+            "description": ""
         }
     }
 }

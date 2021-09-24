@@ -1828,7 +1828,7 @@
             "description": [
                 "Prints prompt message to the user and returns true or false choice",
                 "\nArguments:",
-                " - answerId: uint32 — id of function callback.\n - prompt: bytes — utf-8 string to print to the user before input.\nReturns:\n{ value: bool }\n",
+                " - answerId: uint32 — id of function callback.\n - prompt: bytes — utf-8 string to print to the user before input.\n\nReturns:\n\n{ value: bool }\n",
                 "Example:\n```\nfunction start() public override {\n    ConfirmInput.get(tvm.functionId(setConfirm), \"Say yes or no:\");\n}\nfunction setConfirm(bool value) public pure {\n    // TODO: continue here\n}\n```"
             ]
         },
@@ -1838,7 +1838,7 @@
             "description": [
                 "Allows to get the country code entered by the user.",
                 "\nArguments:",
-                " - answerId: uint32 — function id of result callback\n - prompt: bytes — utf-8 string to print to the user before input\n - permitted: string[] - if not empty, list of country codes permitted for input\n - banned: string[] - if not empty, list of country codes banned for input\nReturns:\n - value: string — country code (ISO 3166-1 alpha-2) entered by user\n",
+                " - answerId: uint32 — function id of result callback\n - prompt: bytes — utf-8 string to print to the user before input\n - permitted: string[] - if not empty, list of country codes permitted for input\n - banned: string[] - if not empty, list of country codes banned for input\n\nReturns:\n\n - value: string — country code (ISO 3166-1 alpha-2) entered by user\n",
                 "Example:\n```\nfunction start() public override {\n    CountryInput.get(tvm.functionId(setCountryCode), \"Enter your country code:\", [], []);\n    // or if Russia, Bulgaria and Cuba permitted for input:\n    // CountryInput.get(tvm.functionId(setCountryCode), \"Enter your country code:\", ['RU', 'BG', 'CU'], []);\n    // or if the drop-down list of countries should not include North Korea and Lebanon\n    // CountryInput.get(tvm.functionId(setCountryCode), \"Enter your country:\", [], ['KP', 'LB']);\n}\nfunction setCountryCode(string value) public pure {\n    // TODO: continue here\n}\n```"
             ]
         },
@@ -1848,7 +1848,7 @@
             "description": [
                 "returns date timestamp selected by user.\nNote: function accepts date in unixtime (seconds from the midnight UTC-0 of 1st Jan 1970) which is int128 bits long, negative values are allowed. Date unixtime includes day, month, year and 0 hours, 0 minutes and 0 seconds.",
                 "\nArguments:",
-                " - answerId: uint32 — function id of result callback\n - prompt: bytes — utf-8 string to print to the user before input.\n - defaultDate: int128 - date by default.\n - minDate: int128 - minimum date that can be chosen.\n - maxDate: int128 - maximum date that can be chosen.\nReturns:\n date: int128 - chosen date unixtime (UTC-0).",
+                " - answerId: uint32 — function id of result callback\n - prompt: bytes — utf-8 string to print to the user before input.\n - defaultDate: int128 - date by default.\n - minDate: int128 - minimum date that can be chosen.\n - maxDate: int128 - maximum date that can be chosen.\n\nReturns:\n\n date: int128 - chosen date unixtime (UTC-0).",
                 "\nExample:```\nfunction start() public override {\n    DateTimeInput.getDate(tvm.functionId(setDate),\n        \"Choose a day in 2021 from the begining until current day:\", \n        int128(now), 1609448400, int128(now));\n}\nfunction setDate(int128 date) public {\n    // TODO: continue here\n}\n```"
             ]
         },
@@ -1858,7 +1858,7 @@
             "description": [
                 "returns the timestamp within a day selected by the user.",
                 "\nArguments:",
-                " - answerId: uint32 — function id of result callback\n - prompt: bytes — utf-8 string to print to the user before input.\n - defaultTime: uint32 — time by default.\n - minTime: uint32 — minimum time that can be chosen.\n - maxTime: uint32 — maximum time that can be chosen.\n - minuteInterval: uint8 - minimal allowed minuteInterval between neibour times in minutes. Valid values are {1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30}.\nReturns:\n time: uint32 — chosen timestamp.",
+                " - answerId: uint32 — function id of result callback\n - prompt: bytes — utf-8 string to print to the user before input.\n - defaultTime: uint32 — time by default.\n - minTime: uint32 — minimum time that can be chosen.\n - maxTime: uint32 — maximum time that can be chosen.\n - minuteInterval: uint8 - minimal allowed minuteInterval between neibour times in minutes. Valid values are {1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30}.\n\nReturns:\n\n time: uint32 — chosen timestamp.",
                 "\nExample:```\nDateTimeInput.getTime(tvm.functionId(setTime), \n\"Choose a day time (local):\", \n55800, 55800, 86100, 1);\n```"
             ]
         },
@@ -1868,7 +1868,7 @@
             "description": [
                 "allow to select date and time.",
                 "\nArguments:",
-                " - answerId: uint32 — function id of result callback.\n - prompt: bytes — utf-8 string to print to the user before input.\n - defaultDatetime:  int128 - unixtime, default date and time.\n - minDatetime: int128 - unixtime, minimum allowed date and time to choose.\n - maxDatetime: int128 - unixtime, maximum allowed date and time to choose.\n - minuteInterval: uint8 - minimal allowed minuteInterval between neibour times in minutes. Valid values are {1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30}.\n - inTimeZoneOffset: int16 - time zone offset related to UTC-0 in minutes. There is a special value 0x7FFF which defines local user time zone.\nReturns:\n datetime: int128 - unixtime of chozen date and time.\n - timeZoneOffset: int16 - time zone offset in minutes. Use this value for correct date and time representation for the user.\n "
+                " - answerId: uint32 — function id of result callback.\n - prompt: bytes — utf-8 string to print to the user before input.\n - defaultDatetime:  int128 - unixtime, default date and time.\n - minDatetime: int128 - unixtime, minimum allowed date and time to choose.\n - maxDatetime: int128 - unixtime, maximum allowed date and time to choose.\n - minuteInterval: uint8 - minimal allowed minuteInterval between neibour times in minutes. Valid values are {1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30}.\n - inTimeZoneOffset: int16 - time zone offset related to UTC-0 in minutes. There is a special value 0x7FFF which defines local user time zone.\n\nReturns:\n\n datetime: int128 - unixtime of chozen date and time.\n - timeZoneOffset: int16 - time zone offset in minutes. Use this value for correct date and time representation for the user.\n "
             ]
         },
         "DateTimeInput.getTimeZoneOffset": {
@@ -1877,7 +1877,7 @@
             "description": [
                 "returns user time zone offset in minutes.",
                 "\nArguments:",
-                " - answerId: uint32 — function id of result callback.\nReturns:\n timeZoneOffset: int16 - user time zone offset in minutes."
+                " - answerId: uint32 — function id of result callback.\n\nReturns:\n\n timeZoneOffset: int16 - user time zone offset in minutes."
             ]
         },
         "EncryptionBoxInput.getNaclSecretBox": {
@@ -1886,7 +1886,7 @@
             "description": [
                 "Prints prompt message to the user and returns handle to opened Nacl secret box.",
                 "\nArguments:",
-                " - answerId: uint32 — id of function callback.\n - prompt: bytes — utf-8 string to print to the user before input, OPTIONAL (empty string is similar to null).\n - nonce: bytes — bytes of nonce.\nReturns:\n - handle: uint32 — id of registered encryption box.\n"
+                " - answerId: uint32 — id of function callback.\n - prompt: bytes — utf-8 string to print to the user before input, OPTIONAL (empty string is similar to null).\n - nonce: bytes — bytes of nonce.\n\nReturns:\n\n - handle: uint32 — id of registered encryption box.\n"
             ]
         },
         "EncryptionBoxInput.getNaclBox": {
@@ -1895,7 +1895,7 @@
             "description": [
                 "Prints prompt message to the user and returns handle to Nacl box.",
                 "\nArguments:",
-                " - answerId: uint32 — id of function callback.\n - prompt: bytes — utf-8 string to print to the user before input, OPTIONAL (empty string is similar to null).\n - nonce: bytes — bytes of nonce.\n - theirPubkey: uinit256 - receiver's public key.\nReturns:\n - handle: uint32 — id of registered encryption box.\n "
+                " - answerId: uint32 — id of function callback.\n - prompt: bytes — utf-8 string to print to the user before input, OPTIONAL (empty string is similar to null).\n - nonce: bytes — bytes of nonce.\n - theirPubkey: uinit256 - receiver's public key.\n\nReturns:\n\n - handle: uint32 — id of registered encryption box.\n "
             ]
         },
         "EncryptionBoxInput.getChaCha20Box": {
@@ -1904,7 +1904,7 @@
             "description": [
                 "Prints prompt message to the user and returns handle to ChaCha20 box.",
                 "\nArguments:",
-                " - answerId: uint32 — id of function callback.\n - prompt: bytes — utf-8 string to print to the user before input, OPTIONAL (empty string is similar to null).\n - nonce: bytes — 96-bit nonce.\nReturns:\n - handle: uint32 — id of registered encryption box.\n"
+                " - answerId: uint32 — id of function callback.\n - prompt: bytes — utf-8 string to print to the user before input, OPTIONAL (empty string is similar to null).\n - nonce: bytes — 96-bit nonce.\n\nReturns:\n\n - handle: uint32 — id of registered encryption box.\n"
             ]
         },
         "EncryptionBoxInput.remove": {
@@ -1913,7 +1913,7 @@
             "description": [
                 "Removes encryption box handle from Browser and destroys underlying Encryption Box.",
                 "\nArguments:",
-                " - answerId: uint32 — id of function callback.\n - handle: uint32 — encryption box handle to remove. This handle becomes invalid after removing.\nReturns:\n - removed: bool - true if handle was found and successfully removed. Otherwise false.\n "
+                " - answerId: uint32 — id of function callback.\n - handle: uint32 — encryption box handle to remove. This handle becomes invalid after removing.\n\nReturns:\n\n - removed: bool - true if handle was found and successfully removed. Otherwise false.\n "
             ]
         },
         "EncryptionBoxInput.getSupportedAlgorithms": {
@@ -1930,7 +1930,7 @@
             "description": [
                 "Encode data to hex format.",
                 "\nArguments:",
-                " - answerId: uint32 — function id of result callback.\n - data: bytes — input binary data.\nReturns:\n - hexstr: string — hex string\n",
+                " - answerId: uint32 — function id of result callback.\n - data: bytes — input binary data.\n\nReturns:\n\n - hexstr: string — hex string\n",
                 "Example:\n```\nbytes data = bytes(\"aaa\");\nHex.encode(tvm.functionId(setEncode), data);\n```"
             ]
         },
@@ -1940,7 +1940,7 @@
             "description": [
                 "Decode string from base64 format.",
                 "\nArguments:",
-                " - answerId: uint32 — function id of result callback.\n - hexstr: string — hex string.\nReturns:\n - data: bytes — output binary data\n",
+                " - answerId: uint32 — function id of result callback.\n - hexstr: string — hex string.\n\nReturns:\n\n - data: bytes — output binary data\n",
                 "Example:\n```\nstring hexstr = \"616161\";\n Hex.decode(tvm.functionId(setDecode), hexstr);\n```"
             ]
         },
@@ -1950,7 +1950,7 @@
             "description": [
                 "Deserialize json into the structure.",
                 "\nArguments:",
-                "answerId: uint32 — function id of result callback. Callback function should have two input parameters: \"result\" of type bool and \"obj\" of type <StructName>.\n - json: string — json utf8 string.\nReturns:\n - result: bool - result of operation:\n    true - operation succeeded;\n    false - operation failed.\n - obj: <StructName> - deserialised json into structure of type <StructName>\nNote: type of obj parameter is set by StructName input parameter. And input parameters of answerId function should have two input parameters: \"result\" of type bool and \"obj\" of type StructName.\n "
+                "answerId: uint32 — function id of result callback. Callback function should have two input parameters: \"result\" of type bool and \"obj\" of type <StructName>.\n - json: string — json utf8 string.\n\nReturns:\n\n - result: bool - result of operation:\n    true - operation succeeded;\n    false - operation failed.\n - obj: <StructName> - deserialised json into structure of type <StructName>\nNote: type of obj parameter is set by StructName input parameter. And input parameters of answerId function should have two input parameters: \"result\" of type bool and \"obj\" of type StructName.\n "
             ]
         },
         "Media.output": {
@@ -1959,7 +1959,7 @@
             "description": [
                 "Allows to show media of different formats (images, docs and others) to the user.",
                 "\nArguments:",
-                " - answerId: uint32 — function id of result callback\n - prompt: bytes — utf-8 string to print to the user on top of media.\n - data: bytes — utf-8 string with encoded media according to [RFC2397](https://datatracker.ietf.org/doc/html/rfc2397).\nReturns:\nMediaStatus - status of media output.",
+                " - answerId: uint32 — function id of result callback\n - prompt: bytes — utf-8 string to print to the user on top of media.\n - data: bytes — utf-8 string with encoded media according to [RFC2397](https://datatracker.ietf.org/doc/html/rfc2397).\n\nReturns:\n\nMediaStatus - status of media output.",
                 "Example:\n```\nMedia.output(tvm.functionId(setResult), \"PNG image\", format(\"data:image/png;base64,{}\", m_pngBase64));\n//=>function setResult(MediaStatus result);\n```"
             ]
         },
@@ -1969,7 +1969,7 @@
             "description": [
                 "Returns array of supported media types.",
                 "\nArguments:",
-                " - answerId: uint32 — function id of result callback.\nReturns:\nmediaTypes: bytes[] — array of strings with supported media types. Each string is in the format of \"type/subtype\". E.g. [\"image/png\", \"image/jpg\"]."
+                " - answerId: uint32 — function id of result callback.\n\nReturns:\n\nmediaTypes: bytes[] — array of strings with supported media types. Each string is in the format of \"type/subtype\". E.g. [\"image/png\", \"image/jpg\"]."
             ]
         },
         "Menu.select": {
@@ -1978,7 +1978,7 @@
             "description": [
                 "Prints prompt message to the user and returns string entered by user.",
                 "\nArguments:",
-                " - title: bytes — utf8 string with menu title.\n - description: bytes — utf8 string with a description of a menu. Optional, can be `\"\"` (empty string).\n - items: MenuItem[] - array of menu items.\nReturns:\nindex: uint32 — index of selected menu item starting from 0.",
+                " - title: bytes — utf8 string with menu title.\n - description: bytes — utf8 string with a description of a menu. Optional, can be `\"\"` (empty string).\n - items: MenuItem[] - array of menu items.\n\nReturns:\n\nindex: uint32 — index of selected menu item starting from 0.",
                 "MenuItem { title: bytes — utf8 string with a short name of menu item. description: string — utf8 string describing details of menu item. Optional, can be \"\" (empty string). handlerId: uint32 — id of a callback function to be called when this item is selected. }",
                 "Example:\n```\nfunction _menu() private inline {\n    Menu.select(\"Main menu\", \"description for menu\", [\n        MenuItem(\"menu 1\", \"\", tvm.functionId(handleMenu1)),\n        MenuItem(\"menu 2\", \"desc for menu 2\", tvm.functionId(handleMenu2))\n    ]);\n}\n```\n"
             ]
@@ -1996,7 +1996,7 @@
             "description": [
                 "Load data from the server using an HTTP GET request.",
                 "\nArguments:",
-                " - answerId: uint32 — id of callback function.\n - url: bytes — utf8 string with the name of the resource that you wish to fetch.\n - headers: bytes[] — array of utf8 strings with HTTP headers that you want to add to your request.\nReturns:\n - statusCode: int32 - response status code.\n - retHeaders: string[] - array of utf8 strings with response headers.\n - content: string — response body as utf8 string.\n"
+                " - answerId: uint32 — id of callback function.\n - url: bytes — utf8 string with the name of the resource that you wish to fetch.\n - headers: bytes[] — array of utf8 strings with HTTP headers that you want to add to your request.\n\nReturns:\n\n - statusCode: int32 - response status code.\n - retHeaders: string[] - array of utf8 strings with response headers.\n - content: string — response body as utf8 string.\n"
             ]
         },
         "Network.post": {
@@ -2005,7 +2005,7 @@
             "description": [
                 "Send data to the server using an HTTP POST request.",
                 "\nArguments:",
-                " - answerId: uint32 — id of callback function.\n - url: bytes — utf8 string with the name of the resource that you wish to fetch.\n - headers: bytes[] — array of utf8 strings with HTTP headers that you want to add to your request.\n - body: bytes — utf8 string with HTTP request body.\nReturns:\n- statusCode: int32 - response status code.\n- retHeaders: string[] - array of utf8 strings with response headers.\n- content: string — response body as utf8 string.\n"
+                " - answerId: uint32 — id of callback function.\n - url: bytes — utf8 string with the name of the resource that you wish to fetch.\n - headers: bytes[] — array of utf8 strings with HTTP headers that you want to add to your request.\n - body: bytes — utf8 string with HTTP request body.\n\nReturns:\n\n- statusCode: int32 - response status code.\n- retHeaders: string[] - array of utf8 strings with response headers.\n- content: string — response body as utf8 string.\n"
             ]
         },
         "NumberInput.get": {
@@ -2014,7 +2014,7 @@
             "description": [
                 "Interface for number input.",
                 "\nArguments:",
-                " - answerId: uint32 — id of callback function.\n - prompt: bytes — utf-8 string to print to the user before input.\n - min: int256 - minimal value allowed to input.\n - max: int256 - maximum value allowed to input.\nReturns:\n- { value: int256 }",
+                " - answerId: uint32 — id of callback function.\n - prompt: bytes — utf-8 string to print to the user before input.\n - min: int256 - minimal value allowed to input.\n - max: int256 - maximum value allowed to input.\n\nReturns:\n\n- { value: int256 }",
                 "\nExample:\n```\nfunction start() public override {\n    NumberInput.get(tvm.functionId(setNumber), \"Enter number:\", -10, 100);\n}n - $1function setNumber(int256 value) public pure {\n    // TODO: continue here\n}\n```\n"
             ]
         },
@@ -2024,7 +2024,7 @@
             "description": [
                 "Scans qrcode by camera or from image and returns its decoded data as string.",
                 "\nArguments:",
-                " - answerId: uint32 — function id of result callback.\n - prompt: bytes — utf-8 string with message to the user. Optional, empty string \"\" is treated like null.\nReturns:\nvalue: bytes — utf8 string with qrcode data.\nresult: uint8 — one of the `QRStatus` value. `Success` on success.",
+                " - answerId: uint32 — function id of result callback.\n - prompt: bytes — utf-8 string with message to the user. Optional, empty string \"\" is treated like null.\n\nReturns:\n\nvalue: bytes — utf8 string with qrcode data.\nresult: uint8 — one of the `QRStatus` value. `Success` on success.",
                 "\nExample:\n```\nfunction start() public override {\n    NumberInput.get(tvm.functionId(setNumber), \"Enter number:\", -10, 100);\n}n - $1function setNumber(int256 value) public pure {\n    // TODO: continue here\n}\n```\n"
             ]
         },
@@ -2034,7 +2034,7 @@
             "description": [
                 "Prints text as QR Code to the user.\nNote: DeBot Browsers can manually choose data correction level.",
                 "\nArguments:",
-                " - answerId: uint32 — function id of result callback.\n - prompt: bytes — utf-8 string with message to the user. Optional, empty string \"\" is treated like null.\n - text: bytes — utf-8 string to print as QRCode.\nReturns:\nresult: uint8 — one of the `QRStatus` value. `Success` on success and `ScannerError` on error.\nenum QRStatus { Success = 0, DataTooLong = 1, InvalidCharacter = 2, ScannerError = 3, Canceled = 4, NotSupported = 5 }",
+                " - answerId: uint32 — function id of result callback.\n - prompt: bytes — utf-8 string with message to the user. Optional, empty string \"\" is treated like null.\n - text: bytes — utf-8 string to print as QRCode.\n\nReturns:\n\nresult: uint8 — one of the `QRStatus` value. `Success` on success and `ScannerError` on error.\nenum QRStatus { Success = 0, DataTooLong = 1, InvalidCharacter = 2, ScannerError = 3, Canceled = 4, NotSupported = 5 }",
                 "\nExample:\n```\nQRCode.draw(tvm.functionId(setDrawResult), \"DeBot address\", format(\"{}\", address(this)));\n//=>function setDrawResult(QRStatus result)\n```"
             ]
         },
@@ -2053,7 +2053,7 @@
             "description": [
                 "Get account balance",
                 "\nArguments:",
-                " - answerId: uint32 — function id of result callback.\n - addr    : address — address of contract.\nReturns:\n- nanotokens: uint128 - account balance in nanotokens.\n"
+                " - answerId: uint32 — function id of result callback.\n - addr    : address — address of contract.\n\nReturns:\n\n- nanotokens: uint128 - account balance in nanotokens.\n"
             ]
         },
         "Sdk.getAccountType": {
@@ -2062,7 +2062,7 @@
             "description": [
                 "Get account type",
                 "\nArguments:",
-                " - answerId: uint32 — function id of result callback.\n - addr    : address — address of contract.\nReturns:\n - acc_type: int8 - account type. Valid values are -1 (unexist), 0 (uninit), 1 (active), 2 (frozen).\n"
+                " - answerId: uint32 — function id of result callback.\n - addr    : address — address of contract.\n\nReturns:\n\n - acc_type: int8 - account type. Valid values are -1 (unexist), 0 (uninit), 1 (active), 2 (frozen).\n"
             ]
         },
         "Sdk.getAccountCodeHash": {
@@ -2071,7 +2071,7 @@
             "description": [
                 "Get account code hash.",
                 "\nArguments:",
-                " - answerId: uint32 — function id of result callback.\n - addr    : address — smart contract address.\nReturns:\n - code_hash: uint256 - account code hash.\n"
+                " - answerId: uint32 — function id of result callback.\n - addr    : address — smart contract address.\n\nReturns:\n\n - code_hash: uint256 - account code hash.\n"
             ]
         },
         "Sdk.encrypt": {
@@ -2080,7 +2080,7 @@
             "description": [
                 "Encrypt data with defined encryption box.",
                 "\nArguments:",
-                " - answerId: uint32 — function id of result callback.\n - boxHandle: uint32 — encryption box handle. Remark: it can be received through 'EncryptionBoxInput' interface.\nReturns:\n - result: uint32 — result code of operation. 0 if succeeded, otherwise SDK error code.\n - encrypted: bytes — encrypted data bytes.\n"
+                " - answerId: uint32 — function id of result callback.\n - boxHandle: uint32 — encryption box handle. Remark: it can be received through 'EncryptionBoxInput' interface.\n\nReturns:\n\n - result: uint32 — result code of operation. 0 if succeeded, otherwise SDK error code.\n - encrypted: bytes — encrypted data bytes.\n"
             ]
         },
         "Sdk.decrypt": {
@@ -2089,7 +2089,7 @@
             "description": [
                 "Decrypt data with defined encryption box.",
                 "\nArguments:",
-                " - answerId: uint32 — function id of result callback.\n - boxHandle: uint32 — encryption box handle. Remark: it can be received through 'EncryptionBoxInput' interface.\nReturns:\n - result: uint32 — result code of operation. 0 if succeeded, otherwise SDK error code.\n - decrypted: bytes — decrypted data bytes.\n"
+                " - answerId: uint32 — function id of result callback.\n - boxHandle: uint32 — encryption box handle. Remark: it can be received through 'EncryptionBoxInput' interface.\n\nReturns:\n\n - result: uint32 — result code of operation. 0 if succeeded, otherwise SDK error code.\n - decrypted: bytes — decrypted data bytes.\n"
             ]
         },
         "Sdk.signHash": {
@@ -2098,7 +2098,7 @@
             "description": [
                 "Sign data hash (256bits) with defined signing box.",
                 "\nArguments:",
-                " - answerId: uint32 — function id of result callback.\n - boxHandle: uint32 — signing box handle.\n - hash: uint256 — data hash to sign.\nReturns:\n- signature: bytes — 512 bits of signature.\n"
+                " - answerId: uint32 — function id of result callback.\n - boxHandle: uint32 — signing box handle.\n - hash: uint256 — data hash to sign.\n\nReturns:\n\n- signature: bytes — 512 bits of signature.\n"
             ]
         },
         "Sdk.genRandom": {
@@ -2107,7 +2107,7 @@
             "description": [
                 "Generate random byte array of the specified length.",
                 "\nArguments:",
-                " - answerId: uint32 — function id of result callback.\n - length: uint32 — size of random byte array.\nReturns:\n - buffer: bytes — random bytes.\n"
+                " - answerId: uint32 — function id of result callback.\n - length: uint32 — size of random byte array.\n\nReturns:\n\n - buffer: bytes — random bytes.\n"
             ]
         },
         "Sdk.substring": {
@@ -2116,7 +2116,7 @@
             "description": [
                 "Return string of count bytes starting from start byte of original string.",
                 "\nArguments:",
-                " - answerId: uint32 — function id of result callback.\n - str: bytes — original string.\n - start: uint32 — index of byte in original string from which to start substring. 'start' must be less then length of original string.\n - count: uint32 — length in bytes of substring. Must be less or equal then ( 'str.legnth' - 'start' ).\nReturns:\nsubstr: bytes — substring of original string.\n "
+                " - answerId: uint32 — function id of result callback.\n - str: bytes — original string.\n - start: uint32 — index of byte in original string from which to start substring. 'start' must be less then length of original string.\n - count: uint32 — length in bytes of substring. Must be less or equal then ( 'str.legnth' - 'start' ).\n\nReturns:\n\nsubstr: bytes — substring of original string.\n "
             ]
         },
         "SecurityCardManagemenet.getBlockHashes": {
@@ -2125,7 +2125,7 @@
             "description": [
                 "Get H2, H3 hashes and serial number from security card. The browser should call getHashes function from the security card library to get H2, H3 and serial number.",
                 "\nArguments:",
-                " - answerId: uint32 — function id of result callback\nReturns:\n- h2: uint256 - H2 hash\n- h3: uint256 - H3 hash\n- sn: uint192 — card serial number\n"
+                " - answerId: uint32 — function id of result callback\n\nReturns:\n\n- h2: uint256 - H2 hash\n- h3: uint256 - H3 hash\n- sn: uint192 — card serial number\n"
             ]
         },
         "SecurityCardManagemenet.turnOnWallet": {
@@ -2134,7 +2134,7 @@
             "description": [
                 "Verify and setup security card initial data. Before forwarding the request to a security card, a browser must request a pin code and send it to the card with other data.",
                 "\nArguments:",
-                " - answerId: uint32 — function id of result callback\n - sn      : uint192 — card serial number\n - p1      : bytes — authentication password (128 bytes)\n - iv      : bytes — vector for AES128 CBC initialization for encrypting P1 (16 bytes)\n - cs      : bytes — common secret(32 bytes)\nReturns:\n- pubkey: uint256 - security card public key\n"
+                " - answerId: uint32 — function id of result callback\n - sn      : uint192 — card serial number\n - p1      : bytes — authentication password (128 bytes)\n - iv      : bytes — vector for AES128 CBC initialization for encrypting P1 (16 bytes)\n - cs      : bytes — common secret(32 bytes)\n\nReturns:\n\n- pubkey: uint256 - security card public key\n"
             ]
         },
         "SecurityCardManagemenet.setRecoveryData": {
@@ -2143,7 +2143,7 @@
             "description": [
                 "Set recovery data to security card",
                 "\nArguments:",
-                " - answerId: uint32 — function id of result callback\n - recoveryData : bytes — recovery data\nReturns:\n- result: bool - result of operation\n"
+                " - answerId: uint32 — function id of result callback\n - recoveryData : bytes — recovery data\n\nReturns:\n\n- result: bool - result of operation\n"
             ]
         },
         "SecurityCardManagemenet.getRecoveryData": {
@@ -2152,7 +2152,7 @@
             "description": [
                 "Get recovery data from security card",
                 "\nArguments:",
-                " - answerId: uint32 — function id of result callback.\nReturns:\n - recoveryData : bytes — recovery data.\n"
+                " - answerId: uint32 — function id of result callback.\n\nReturns:\n\n - recoveryData : bytes — recovery data.\n"
             ]
         },
         "SecurityCardManagemenet.getSerialNumber": {
@@ -2161,7 +2161,7 @@
             "description": [
                 "Get serial number of touched card",
                 "\nArguments:",
-                " - answerId: uint32 — function id of result callback.\nReturns:\n - serialNumber : uint192 — card serial number.\n"
+                " - answerId: uint32 — function id of result callback.\n\nReturns:\n\n - serialNumber : uint192 — card serial number.\n"
             ]
         },
         "SecurityCardManagemenet.getTonWalletAppletState": {
@@ -2170,7 +2170,7 @@
             "description": [
                 "Get card applet state.",
                 "\nArguments:",
-                " - answerId: uint32 — function id of result callback.\nReturns:\n - state : string — result of operation.\n"
+                " - answerId: uint32 — function id of result callback.\n\nReturns:\n\n - state : string — result of operation.\n"
             ]
         },
         "SecurityCardManagemenet.createKeyForHmac": {
@@ -2188,7 +2188,7 @@
             "description": [
                 "Prints prompt message to the user and returns handle for selected SigningBox.",
                 "\nArguments:",
-                " - answerId: uint32 — id of function callback.\n - prompt: bytes — utf-8 string to print to the user before input.\n - possiblePublicKeys: uint256[] - keys for identification of signing box. Can be empty.\nReturns:\n{ handle: uint32 }\n",
+                " - answerId: uint32 — id of function callback.\n - prompt: bytes — utf-8 string to print to the user before input.\n - possiblePublicKeys: uint256[] - keys for identification of signing box. Can be empty.\n\nReturns:\n\n{ handle: uint32 }\n",
                 "Example:",
                 "```\nfunction start() public override {\n    SigningBoxInput.get(tvm.functionId(setSigningBoxHandle), \"Enter my signing keys:\", [tvm.pubkey()]);\n}\nfunction setSigningBoxHandle(uint32 handle) public {\n    Terminal.print(0, format(\"Signing Box Handle: {}\", handle));\n}\n```\n"
             ]
@@ -2199,7 +2199,7 @@
             "description": [
                 "Prints prompt message to the user and returns string entered by user.",
                 "\nArguments:",
-                " - answerId: uint32 — function id of result callback\n - prompt: bytes — string printed to the user and describing what to enter\n - multiline: bool - allow multiline text input\nReturns:\n - value: bytes — utf8 string entered by user.\n"
+                " - answerId: uint32 — function id of result callback\n - prompt: bytes — string printed to the user and describing what to enter\n - multiline: bool - allow multiline text input\n\nReturns:\n\n - value: bytes — utf8 string entered by user.\n"
             ]
         },
         "Terminal.print": {
@@ -2230,7 +2230,7 @@
             "description": [
                 "Allows DeBots to receive TON address of user main account. Method should be implemented without user interaction if possible. Otherwise DeBot Browser should ask user to enter TON address of smart contract which can be considered the main user account. If user has no default account then zero address should be used.",
                 "\nArguments:",
-                " - answerId: uint32 — function id of result callback\nReturns:\n- value: address — TON address of main user account.\n"
+                " - answerId: uint32 — function id of result callback\n\nReturns:\n\n- value: address — TON address of main user account.\n"
             ]
         },
         "UserInfo.getPublicKey": {
@@ -2239,7 +2239,7 @@
             "description": [
                 "Allows DeBots to receive user default public key. Method should be implemented without user interaction if possible. If user has no default public key then the method should return 0.",
                 "\nArguments:",
-                " - answerId: uint32 — function id of callback.\nReturns:\n - value: uint256 - user default public key, can be 0.\n"
+                " - answerId: uint32 — function id of callback.\n\nReturns:\n\n - value: uint256 - user default public key, can be 0.\n"
             ]
         },
         "UserInfo.getSigningBox": {
@@ -2248,7 +2248,7 @@
             "description": [
                 "Allows DeBot to receive handle to keypair which can be used to sign external messages to the address returned by UserInfo.getAccount. This function can return zero handle. In that case DeBot should not use it to sign messages and should implement other ways to recevie signing keypair (e.g using SigningBoxHandle interface or delegate DEngine to receive signing box from browser).",
                 "\nArguments:",
-                " - answerId: uint32 — function id of callback.\nReturns:\n - handle: uint32 — handle to signing keypair, can be 0.\n"
+                " - answerId: uint32 — function id of callback.\n\nReturns:\n\n - handle: uint32 — handle to signing keypair, can be 0.\n"
             ]
         }
     }

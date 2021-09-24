@@ -12,3 +12,9 @@ All notable changes to the "ton-solidity" extension will be documented in this f
 - Hover information
 - Display an information popup on hover
 - Suggesting function params when typing
+
+## [1.1.0] 2021-09-24
+
+### Added
+
+- DeBots interfaces highlighting, autocompletion, support for imports

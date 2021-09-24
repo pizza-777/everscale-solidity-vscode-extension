@@ -9,6 +9,7 @@ TON Solidity is the language used in Free TON blockchain to create smart contrac
 * Checking for errors, warnings and highlighting it
 * Display an information popup on hover
 * Suggesting function params when typing
+* DeBots interfaces highlighting, autocompletion, support for imports
 
 -----
 
@@ -60,11 +61,14 @@ You have quick switch between two solidity languages:
 
 ![Language Switcher](assets/language-switcher.gif)
 
-## Release Notes
+## How to contribute
 
-### 1.0.0
+If You found a typo or want to improve something, a pull request is welcome.
+Some files meaning and locations:
 
-Initial release.
+```./src/snippets/completion.json``` — almost all completions snippets
+```./src/snippets/hover.json``` — all hover popups
+```./src/syntaxes/ton-solidity.json``` — syntax highlighting rules
 
 ## Contacts
 

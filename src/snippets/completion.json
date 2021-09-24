@@ -2332,7 +2332,7 @@
         },
         "function getDebotInfo": {
             "prefix": "function getDebotInfo",
-            "body": "function getDebotInfo() public functionID(0xDEB) override view returns(\n    string name, string version, string publisher, string key, string author,\n    address support, string hello, string language, string dabi, bytes icon\n) {\n    name = \"${1:Test DeBot}\";\n    version = \"${2:0.0.1}\";\n    publisher = \"${3:publisher name}\";\n    key = \"${4:How to use}\";\n    author = \"${5:Author name}\";\n    support = address.makeAddrStd(0, \"0x${6:address}\");\n    hello = \"${7:Hello, i am an test DeBot.}\";\n    language = \"${8:en}\";\n    dabi = \"\";\n    icon = \"\";\n}\n",
+            "body": "function getDebotInfo() public functionID(0xDEB) override view returns(\n    string name, string version, string publisher, string key, string author,\n    address support, string hello, string language, string dabi, bytes icon\n) {\n    name = \"${1:Test DeBot}\";\n    version = \"${2:0.0.1}\";\n    publisher = \"${3:publisher name}\";\n    key = \"${4:How to use}\";\n    author = \"${5:Author name}\";\n    support = address.makeAddrStd(0, \"0x${6:000000000000000000000000000000000000000000000000000000000000}\");\n    hello = \"${7:Hello, i am an test DeBot.}\";\n    language = \"${8:en}\";\n    dabi = \"\";\n    icon = \"\";\n}\n",
             "description": ""
         },
         "function getRequiredInterfaces": {

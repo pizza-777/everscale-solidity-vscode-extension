@@ -67,7 +67,9 @@ If You found a typo or want to improve something, a pull request is welcome.
 Some files meaning and locations:
 
 ```./src/snippets/completion.json``` — almost all completions snippets
+
 ```./src/snippets/hover.json``` — all hover popups
+
 ```./src/syntaxes/ton-solidity.json``` — syntax highlighting rules
 
 ## Contacts

@@ -22,7 +22,10 @@ function getSnippetsIncludes(name) {
     return fs.readFileSync(snippetPath, "utf8");
 }
 
-function getSnippetType(body) {
+function getSnippetType(body) {    
+    if (body.match(/(AddressInput|AmountInput|Base64|ConfirmInput|CountryInput|DateTimeInput|EncryptionBoxInput|Hex|JsonDeserialize|Media|Menu|Network|NumberInput|QRCode|Query|Sdk|SecurityCardManagement|SigningBoxInput|Terminal|UserInfo)/)) {
+        return vscode.CompletionItemKind.Interface;
+    }
     if (body.match(/\..*\(/)) return vscode.CompletionItemKind.Method;
     if (body.match(/\.\w+/)) return vscode.CompletionItemKind.Property;
     if (body.match(/\(.*\)/)) return vscode.CompletionItemKind.Function;
@@ -39,6 +42,11 @@ function highliteIt(functionSet) {
         }
     });
     return functionSet;
+}
+
+function checkParam(find, str) {
+    const re = new RegExp(`${find}$`);
+    return str.match(re);    
 }
 
 function getErrors(string) {
@@ -72,11 +80,6 @@ function getErrors(string) {
     })
 }
 
-function checkParam(find, str) {
-    const re = new RegExp(`${find}$`);
-    return str.match(re);    
-}
-
 function getHoverItems(word, document) {
     let abiFunctions = highliteIt(parseAbiFunctions(document));
     let privateFunctions = highliteIt(parsePrivateFunctions(document))
@@ -106,7 +109,7 @@ function getSnippetItems(document) {
     let completions = { ...wordsSetCompletion, ...parseAbiFunctions(document), ...parsePrivateFunctions(document) };
     let completionItems = [];
     for (const [key, value] of Object.entries(completions)) {
-        const completionItem = new vscode.CompletionItem(value.prefix, getSnippetType(value.body));
+        const completionItem = new vscode.CompletionItem(value.prefix, getSnippetType(value.body.split("\n")[0]));
         completionItem.detail = key;
         completionItem.documentation = formatDescription(value.description);
         completionItem.insertText = new vscode.SnippetString(value.body);

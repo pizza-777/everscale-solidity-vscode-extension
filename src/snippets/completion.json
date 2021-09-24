@@ -2329,6 +2329,21 @@
             "prefix": "import UserInfo",
             "body": "import \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/UserInfo/UserInfo.sol\";",
             "description": ""
+        },
+        "function getDebotInfo": {
+            "prefix": "function getDebotInfo",
+            "body": "function getDebotInfo() public functionID(0xDEB) override view returns(\n    string name, string version, string publisher, string key, string author,\n    address support, string hello, string language, string dabi, bytes icon\n) {\n    name = \"${1:Test DeBot}\";\n    version = \"${2:0.0.1}\";\n    publisher = \"${3:publisher name}\";\n    key = \"${4:How to use}\";\n    author = \"${5:Author name}\";\n    support = address.makeAddrStd(0, \"0x${6:address}\");\n    hello = \"${7:Hello, i am an test DeBot.}\";\n    language = \"${8:en}\";\n    dabi = \"\";\n    icon = \"\";\n}\n",
+            "description": ""
+        },
+        "function getRequiredInterfaces": {
+            "prefix": "function getRequiredInterfaces",
+            "body": "function getRequiredInterfaces() public view override returns (uint256[] interfaces) {\n    return [ ${1:ExampleInterface.ID} ];\n}\n",
+            "description": ""
+        },
+        "function start": {
+            "prefix": "function start",
+            "body": "function start() public override {\n    \n}\n ",
+            "description": ""
         }
     }
 }

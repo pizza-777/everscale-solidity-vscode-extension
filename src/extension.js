@@ -32,7 +32,7 @@ function activate(context) {
 				return getSnippetItems(document);
 			}
 		}
-	);
+	);	
 	context.subscriptions.push(completionProvider);
 
 	let hoverProvider = vscode.languages.registerHoverProvider('ton-solidity', {
@@ -44,9 +44,10 @@ function activate(context) {
 	});
 
 	context.subscriptions.push(hoverProvider);
-
 	const collection = vscode.languages.createDiagnosticCollection("tonsol");
-
+	vscode.workspace.onDidCloseTextDocument((document) => {				
+		updateDiagnostics(document, collection);		
+	});
 	if (vscode.window.activeTextEditor) {
 		updateDiagnostics(vscode.window.activeTextEditor.document, collection)
 	}

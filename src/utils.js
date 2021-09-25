@@ -63,7 +63,8 @@ function getErrors(string) {
         return true;
     })
     return a.map((value) => {
-        let coord = value[1] ? value[1].match(/\d+/g) : null;
+        let coord = value[1] ? value[1].match(/\d+:\d+/) : null;
+        if(coord !== null) coord = coord[0].split(":");
         let severity = value[0].match(/Warning/) ? 'Warning' : 'Error';
         let raw = !coord ? null : Number(coord[0]);
         let position = !coord ? null : Number(coord[1]);

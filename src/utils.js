@@ -23,7 +23,7 @@ function getSnippetsIncludes(name) {
 }
 
 function getSnippetType(body) {    
-    if (body.match(/(AddressInput|AmountInput|Base64|ConfirmInput|CountryInput|DateTimeInput|EncryptionBoxInput|Hex|JsonDeserialize|Media|Menu|Network|NumberInput|QRCode|Query|Sdk|SecurityCardManagement|SigningBoxInput|Terminal|UserInfo)/)) {
+    if (body.match(/(debot|AddressInput|AmountInput|Base64|ConfirmInput|CountryInput|DateTimeInput|EncryptionBoxInput|Hex|JsonDeserialize|Media|Menu|Network|NumberInput|QRCode|Query|Sdk|SecurityCardManagement|SigningBoxInput|Terminal|UserInfo)/)) {
         return vscode.CompletionItemKind.Interface;
     }
     if (body.match(/\..*\(/)) return vscode.CompletionItemKind.Method;
@@ -107,7 +107,7 @@ function getHoverItems(word, document) {
 }
 
 function getSnippetItems(document) {
-    let completions = { ...wordsSetCompletion, ...parseAbiFunctions(document), ...parsePrivateFunctions(document) };
+    let completions = { ...parseAbiFunctions(document), ...parsePrivateFunctions(document), ...wordsSetCompletion };
     let completionItems = [];
     for (const [key, value] of Object.entries(completions)) {
         const completionItem = new vscode.CompletionItem(value.prefix, getSnippetType(value.body.split("\n")[0]));

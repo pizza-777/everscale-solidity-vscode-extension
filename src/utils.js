@@ -22,9 +22,12 @@ function getSnippetsIncludes(name) {
     return fs.readFileSync(snippetPath, "utf8");
 }
 
-function getSnippetType(body) {    
+function getSnippetType(body) {
     if (body.match(/(debot|AddressInput|AmountInput|Base64|ConfirmInput|CountryInput|DateTimeInput|EncryptionBoxInput|Hex|JsonDeserialize|Media|Menu|Network|NumberInput|QRCode|Query|Sdk|SecurityCardManagement|SigningBoxInput|Terminal|UserInfo)/)) {
         return vscode.CompletionItemKind.Interface;
+    }
+    if (body.match(/(static|functionID|externalMsg|internalMsg|inline|constant|public|virtual|override)/)) {
+        return vscode.CompletionItemKind.Keyword;
     }
     if (body.match(/\..*\(/)) return vscode.CompletionItemKind.Method;
     if (body.match(/\.\w+/)) return vscode.CompletionItemKind.Property;
@@ -46,7 +49,7 @@ function highliteIt(functionSet) {
 
 function checkParam(find, str) {
     const re = new RegExp(`${find}$`);
-    return str.match(re);    
+    return str.match(re);
 }
 
 function getErrors(string) {
@@ -64,7 +67,7 @@ function getErrors(string) {
     })
     return a.map((value) => {
         let coord = value[1] ? value[1].match(/\d+:\d+/) : null;
-        if(coord !== null) coord = coord[0].split(":");
+        if (coord !== null) coord = coord[0].split(":");
         let severity = value[0].match(/Warning/) ? 'Warning' : 'Error';
         let raw = !coord ? null : Number(coord[0]);
         let position = !coord ? null : Number(coord[1]);
@@ -93,7 +96,7 @@ function getHoverItems(word, document) {
     }
     let prefixLength = 0;
     for (const [, value] of Object.entries(wordsHover)) {
-        if (!checkParam(value.prefix, word)) continue;    
+        if (!checkParam(value.prefix, word)) continue;
         //take the most matched value
         if (value.prefix.length < prefixLength) continue;
         if (value.prefix.length == prefixLength) counter++;
@@ -123,7 +126,7 @@ function getSnippetItems(document) {
 function getFuncData(funcName, funcs) {
     for (const [, func] of Object.entries(funcs)) {
         if (func.prefix.includes(funcName)) {
-            let label = func.body.replace(/(\{|\$|[0-9]:|\\|})/gm,'');       
+            let label = func.body.replace(/(\{|\$|[0-9]:|\\|})/gm, '');
             return { label }
         }
     }
@@ -139,7 +142,7 @@ function getSignatures(document, position) {
 
     const signatureHelp = new vscode.SignatureHelp();
     const signatureInformation = new vscode.SignatureInformation(data.label);
-  
+
     signatureHelp.signatures = [
         signatureInformation
     ]

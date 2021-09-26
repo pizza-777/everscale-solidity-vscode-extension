@@ -544,6 +544,17 @@
                     }
                 },
                 {
+                    "match": "\\b(address)\\.(makeAddrStd)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.class"
+                        },
+                        "2": {
+                            "name": "entity.name.function"
+                        }
+                    }
+                },
+                {
                     "match": "\\b(math)\\.(minmax|min|max|abs|modpow2|divc|divr|muldiv|muldivr|muldivc|muldivmod|divmod|sign)\\b",
                     "captures": {
                         "1": {
@@ -611,7 +622,7 @@
             ]
         },
         "type-modifier-access": {
-            "match": "\\b(internal|external|private|public)\\b",
+            "match": "\\b(internal|external|private|public|inline|externalMsg|internalMsg|functionID)\\b",
             "name": "storage.modifier.access"
         },
         "type-modifier-payable": {
@@ -1097,6 +1108,14 @@
                             "name": "entity.name.function"
                         }
                     }
+                },
+                {
+                    "match": "\\.get\\b",
+                    "captures": {
+                        "0": {
+                            "name": "storage.type.function"
+                        }
+                    }
                 }
             ]
         },
@@ -1346,6 +1365,17 @@
                         },
                         "2": {
                             "name": "entity.name.function"
+                        }
+                    }
+                },
+                {
+                    "match": "\\b(AddressInput|AmountInput|Base64|ConfirmInput|CountryInput|DateTimeInput|EncryptionBoxInput|Hex|JsonDeserialize|Media|Menu|Network|NumberInput|QRCode|Query|Sdk|SecurityCardManagement|SigningBoxInput|Terminal|UserInfo)\\.(ID)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.interface"
+                        },
+                        "2": {
+                            "name": "constant.numeric.hexadecimal"
                         }
                     }
                 }  

@@ -1574,6 +1574,51 @@
                 "```\nuint static b = 123; // error\n```"
             ]
         },
+        "public": {
+            "prefix": "public",
+            "body": "public",
+            "description": [
+                "For each public state variable, a getter function is generated. Generated function has the same name and return type as the public variable. This function can be called only locally. Public state variables are useful, because you don't need to write functions that return a particular state variable manually.\n",
+                "Example:\n",
+                "```\ncontract C {\n    uint public a;\n    uint public static b; // it's ok. Variable is public and static.\n}\n```\n"
+            ]
+        },
+        "inline": {
+            "prefix": "inline",
+            "body": "inline",
+            "description": [
+                "Instructs the compiler to insert a copy of the function body into each place where the function is called. Keyword can be used only for private and internal functions.\n",
+                "Example:\n",
+                "```\n// This function is called as usual function.\nfunction getSum(uint a, uint b) public returns (uint) {\n    return sum(a, b);\n}\n\n// Code of this function is inserted to the place of call.\nfunction sum(uint a, uint b) private inline returns (uint) {\n    return a + b;\n}\n```\n"
+            ]
+        },
+        "functionID": {
+            "prefix": "functionID",
+            "body": "functionID(${1:uint32 ID})",
+            "description": [
+                "functionID keyword allows setting identifier of the function manually. Each public function has unique 32-bit id. id==0 is reserved for receive function. If functionID is not used then function id is calculated as a hash of the function signature. In general, there is no need to set function id manually.\n",
+                "Example:\n",
+                "```\nfunction f() public pure functionID(123) {\n    /*...*/\n}\n```\n"
+            ]
+        },
+        "externalMsg": {
+            "prefix": "externalMsg",
+            "body": "externalMsg",
+            "description": [
+                "Specify which messages the function can handle. If is called by internal message, the function throws an exception with code 71.",
+                "Example:\n",
+                "```\nfunction f() public externalMsg { // this function receives only external messages \n    /*...*/\n}\n\n// Note: keyword 'external' specifies function visibility\nfunction ff() external externalMsg { // this function receives only external messages also  \n    /*...*/\n}\n```\n"
+            ]
+        },
+        "internalMsg": {
+            "prefix": "internalMsg",
+            "body": "internalMsg",
+            "description": [
+                "Specify which messages the function can handle. If is called by external message, the function throws an exception with code 72.",
+                "Example:\n",
+                "```\nfunction g() public internalMsg { // this function receives only internal messages\n    /*...*/\n}\n\n// These function receives internal and external messages.\nfunction fun() public { /*...*/ }\n```\n"
+            ]
+        },
         "nano": {
             "prefix": "nano",
             "body": "nano",

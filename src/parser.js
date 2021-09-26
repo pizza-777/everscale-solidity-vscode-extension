@@ -49,7 +49,7 @@ function parseAbiFunctions(document) {
         let body, description;
         ({ body, description } = getInputParams(functionItem));
         let paramsOutputDescription = getOutputParams(functionItem)
-        description += paramsOutputDescription.length > 0 ? `: ${paramsOutputDescription.join(', ')}` : '';
+        description += paramsOutputDescription.length > 0 ? `: ${paramsOutputDescription.join(', ')}` : ':{}';
 
         completions[key] = { prefix, body, description };
     }

@@ -32,22 +32,27 @@ function activate(context) {
 				return getSnippetItems(document);
 			}
 		}
-	);	
+	);
 	context.subscriptions.push(completionProvider);
 
-	let hoverProvider = vscode.languages.registerHoverProvider('ton-solidity', {
-		provideHover(document, position) {
-			const wordRange = document.getWordRangeAtPosition(position, /[_a-zA-Z0-9\.]{1,30}/);
-			const word = document.getText(wordRange);
-			return new vscode.Hover(getHoverItems(word, document));
-		}
-	});
+	let hoverProvider = vscode.languages.registerHoverProvider(
+		MODE,
+		{
+			provideHover(document, position) {
+				const wordRange = document.getWordRangeAtPosition(position, /[_a-zA-Z0-9\.]{1,30}/);
+				const word = document.getText(wordRange);
+				return new vscode.Hover(getHoverItems(word, document));
+			}
+		});
 
 	context.subscriptions.push(hoverProvider);
-	const collection = vscode.languages.createDiagnosticCollection("tonsol");
-	vscode.workspace.onDidCloseTextDocument((document) => {				
-		updateDiagnostics(document, collection);		
+
+	vscode.workspace.onDidCloseTextDocument((document) => {
+		if (document.languageId == MODE.language) collection.set(document.uri, null);
 	});
+
+	const collection = vscode.languages.createDiagnosticCollection("tonsol");
+
 	if (vscode.window.activeTextEditor) {
 		updateDiagnostics(vscode.window.activeTextEditor.document, collection)
 	}
@@ -73,6 +78,8 @@ function activate(context) {
 }
 
 async function updateDiagnostics(document, collection) {
+	if (document.languageId != MODE.language) return;
+	vscode.workspace.saveAll();
 	t_out = [];
 	_tondevTerminal = null;
 	let filePath = document.uri.fsPath;
@@ -96,10 +103,7 @@ async function updateDiagnostics(document, collection) {
 			message: value.info,
 			range: new vscode.Range(new vscode.Position(line, character), new vscode.Position(line, character + value.errorLenght)),
 			severity: value.severity == 'Error' ? vscode.DiagnosticSeverity.Error : vscode.DiagnosticSeverity.Warning,
-			source: '',
-			relatedInformation: [
-				new vscode.DiagnosticRelatedInformation(new vscode.Location(document.uri, new vscode.Range(new vscode.Position(line, character), new vscode.Position(line, character + value.errorLenght))), value.info)
-			]
+			source: ''			
 		}
 	})
 	collection.set(document.uri, collectionSet);
@@ -126,7 +130,7 @@ function tondevTerminal() {
 			writeError: (text) => {
 				!t_out.includes(text) && t_out.push(text);
 			},
-			write: () => {				
+			write: () => {
 			},
 		};
 	}

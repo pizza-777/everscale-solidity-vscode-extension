@@ -9,7 +9,6 @@ const wordsSetCompletion = snippetsJsonCompletion['.source.ton-solidity'];
 
 const fs = require("fs");
 const path = require('path');
-const { tondevHome } = require('tondev');
 
 function formatDescription(description) {
     if (Array.isArray(description)) {

@@ -103,7 +103,10 @@ async function updateDiagnostics(document, collection) {
 			message: value.info,
 			range: new vscode.Range(new vscode.Position(line, character), new vscode.Position(line, character + value.errorLenght)),
 			severity: value.severity == 'Error' ? vscode.DiagnosticSeverity.Error : vscode.DiagnosticSeverity.Warning,
-			source: ''			
+			source: value.source.fsPath,
+			relatedInformation: [
+				new vscode.DiagnosticRelatedInformation(new vscode.Location(value.source, new vscode.Range(new vscode.Position(line, character), new vscode.Position(line, character + value.errorLenght))), null)
+			]
 		}
 	})
 	collection.set(document.uri, collectionSet);

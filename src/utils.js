@@ -9,6 +9,7 @@ const wordsSetCompletion = snippetsJsonCompletion['.source.ton-solidity'];
 
 const fs = require("fs");
 const path = require('path');
+const { tondevHome } = require('tondev');
 
 function formatDescription(description) {
     if (Array.isArray(description)) {
@@ -26,7 +27,7 @@ function getSnippetType(body) {
     if (body.match(/(debot|AddressInput|AmountInput|Base64|ConfirmInput|CountryInput|DateTimeInput|EncryptionBoxInput|Hex|JsonDeserialize|Media|Menu|Network|NumberInput|QRCode|Query|Sdk|SecurityCardManagement|SigningBoxInput|Terminal|UserInfo)/)) {
         return vscode.CompletionItemKind.Interface;
     }
-    if (body.match(/(static|functionID|externalMsg|internalMsg|inline|constant|public|virtual|override)/)) {
+    if (body.match(/\b(static|functionID|externalMsg|internalMsg|inline|constant|public|virtual|override)\b/)) {
         return vscode.CompletionItemKind.Keyword;
     }
     if (body.match(/\..*\(/)) return vscode.CompletionItemKind.Method;

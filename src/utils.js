@@ -51,7 +51,15 @@ function checkParam(find, str) {
     const re = new RegExp(`${find}$`);
     return str.match(re);
 }
+function getErrorLenght(errorString) {
+    if (!errorString) return null;
 
+    let errorStringCounter = errorString.match(/[\^]/g);
+    if (errorStringCounter == null) {
+        return null;
+    }
+    return errorStringCounter.length;
+}
 function getErrors(string) {
     if (!string) return;
 
@@ -71,7 +79,7 @@ function getErrors(string) {
         let severity = value[0].match(/Warning/) ? 'Warning' : 'Error';
         let raw = !coord ? null : Number(coord[0]);
         let position = !coord ? null : Number(coord[1]);
-        let errorLenght = value[4] ? Number(value[4].match(/[\^]/g).length) : null;
+        let errorLenght = getErrorLenght(value[4]);
         return {
             info: value[0],
             coord: {

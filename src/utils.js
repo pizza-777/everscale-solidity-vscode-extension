@@ -64,18 +64,14 @@ function getErrorLenght(errorString) {
 function getErrorFilePath(string) {
     let filePath = string.match(/\s([\w\.\/]+\.sol):/);
     if (filePath == null || !filePath[1]) return null;
-    return filePath[1];
+
+    if(fs.existsSync(filePath[1])){
+         return filePath[1];
+    }else{
+        return vscode.window.activeTextEditor.document.uri.fsPath;
+    }    
 }
 
-function isCurrentFile(errorsString) {
-    let errorFilePath = getErrorFilePath(errorsString);
-    let currentFile = vscode.window.activeTextEditor.document.uri.fsPath;
-    if (errorFilePath == currentFile) {
-        return true;
-    }
-
-    return false;
-}
 function getErrors(string) {
     if (!string) return;
 
@@ -104,7 +100,7 @@ function getErrors(string) {
             },
             errorLenght,
             severity,
-            source: isCurrentFile(value.join("\n")) ? vscode.window.activeTextEditor.document.uri : new vscode.Uri('file', '', getErrorFilePath(value.join("\n")), '', '')
+            source: new vscode.Uri('file', '', getErrorFilePath(value.join("\n")), '', '') 
         }
     })
 }

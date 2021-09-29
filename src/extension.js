@@ -79,6 +79,7 @@ function activate(context) {
 
 async function updateDiagnostics(document, collection) {
 	if (document.languageId != MODE.language) return;
+	collection.clear();
 	vscode.workspace.saveAll();
 	t_out = [];
 	_tondevTerminal = null;

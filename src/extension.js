@@ -47,9 +47,9 @@ function activate(context) {
 
 	context.subscriptions.push(hoverProvider);
 
-	vscode.workspace.onDidCloseTextDocument((document) => {
+	context.subscriptions.push(vscode.workspace.onDidCloseTextDocument((document) => {
 		if (document.languageId == MODE.language) collection.set(document.uri, null);
-	});
+	}));
 
 	const collection = vscode.languages.createDiagnosticCollection("tonsol");
 

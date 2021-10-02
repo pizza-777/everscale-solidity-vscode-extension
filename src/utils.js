@@ -65,11 +65,10 @@ function getErrorFilePath(string) {
     let filePath = string.match(/\s([\w\.\/]+\.sol):/);
     if (filePath == null || !filePath[1]) return null;
 
-    if(fs.existsSync(filePath[1])){
-         return filePath[1];
-    }else{
-        return vscode.window.activeTextEditor.document.uri.fsPath;
-    }    
+    if (fs.existsSync(filePath[1])) {
+        return filePath[1];
+    }
+    return vscode.window.activeTextEditor.document.uri.fsPath;
 }
 
 function getErrors(string) {

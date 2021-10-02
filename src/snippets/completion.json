@@ -1489,9 +1489,9 @@
         },
         "rnd.setSeed": {
             "prefix": "rnd.setSeed",
-            "body": "rnd.setSeed()",
+            "body": "rnd.setSeed(${1:uint256 x})",
             "description": [
-                "rnd.setSeed(${1:uint256 x});\n",
+                "rnd.setSeed(uint256 x));\n",
                 "Sets the random seed to x.\n"
             ]
         },
@@ -2377,7 +2377,7 @@
         },
         "function getDebotInfo": {
             "prefix": "function getDebotInfo",
-            "body": "function getDebotInfo() public functionID(0xDEB) override view returns(\n    string name, string version, string publisher, string key, string author,\n    address support, string hello, string language, string dabi, bytes icon\n) {\n    name = \"${1:Test DeBot}\";\n    version = \"${2:0.0.1}\";\n    publisher = \"${3:publisher name}\";\n    key = \"${4:How to use}\";\n    author = \"${5:Author name}\";\n    support = address.makeAddrStd(0, 0x${6:000000000000000000000000000000000000000000000000000000000000});\n    hello = \"${7:Hello, i am an test DeBot.}\";\n    language = \"${8:en}\";\n    dabi = m_debotAbi.get();\n    icon = ${9:m_icon};\n}\n",
+            "body": "function getDebotInfo() public functionID(0xDEB) override view returns(\n    string name, string version, string publisher, string key, string author,\n    address support, string hello, string language, string dabi, bytes icon\n) {\n    name = \"${1:Test DeBot}\";\n    version = \"${2:0.0.1}\";\n    publisher = \"${3:publisher name}\";\n    key = \"${4:How to use}\";\n    author = \"${5:Author name}\";\n    support = address.makeAddrStd(0, 0x${6:000000000000000000000000000000000000000000000000000000000000});\n    hello = \"${7:Hello, i am an test DeBot.}\";\n    language = \"${8:en}\";\n    dabi = m_debotAbi.get();\n    icon = ${9:''};\n}\n",
             "description": ""
         },
         "function getRequiredInterfaces": {
@@ -2387,12 +2387,17 @@
         },
         "function start": {
             "prefix": "function start",
-            "body": "function start() public override {\n    \n}\n ",
+            "body": "function start() public override {\n    \n}\n",
             "description": ""
         },
         "function setIcon": {
             "prefix": "function setIcon",
             "body": "function setIcon(bytes icon) public {\n        require(msg.pubkey() == tvm.pubkey(), 100);\n        tvm.accept();\n        m_icon = icon;\n    }\n",
+            "description": ""
+        },
+        "debot template": {
+            "prefix": "debot template",
+            "body": "pragma ton-solidity >=0.46.0;\npragma AbiHeader expire;\npragma AbiHeader time;\npragma AbiHeader pubkey;\nimport \"https://raw.githubusercontent.com/tonlabs/debots/main/Debot.sol\";\nimport \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/Terminal/Terminal.sol\";\n\ncontract ${1:Name} is Debot{\n\n    function start() public override {       \n    }\n    \n    function getDebotInfo() public functionID(0xDEB) override view returns(\n        string name, string version, string publisher, string key, string author,\n        address support, string hello, string language, string dabi, bytes icon\n    ) {\n        name = \"Test DeBot\";\n        version = \"0.0.1\";\n        publisher = \"publisher name\";\n        key = \"How to use\";\n        author = \"Author name\";\n        support = address.makeAddrStd(0, 0x000000000000000000000000000000000000000000000000000000000000);\n        hello = \"Hello, i am an test DeBot.\";\n        language = \"en\";\n        dabi = m_debotAbi.get();\n        icon = '';\n    }\n    \n    function getRequiredInterfaces() public view override returns (uint256[] interfaces) {\n        return [ Terminal.ID ];\n    }     \n}\n",
             "description": ""
         }
     }

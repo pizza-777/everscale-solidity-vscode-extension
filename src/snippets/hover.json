@@ -1,10 +1,5 @@
 {
     ".source.ton-solidity": {
-        "pragma solidity": {
-            "prefix": "pragmа solidity",
-            "body": "pragma solidity ${1:version};",
-            "description": "standart solidity version pragma"
-        },
         "pragma ton-solidity": {
             "prefix": "pragma ton-solidity",
             "body": "pragma ton-solidity >= ${1:version};",

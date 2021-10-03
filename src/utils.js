@@ -26,9 +26,13 @@ function getSnippetType(body) {
     if (body.match(/(debot|AddressInput|AmountInput|Base64|ConfirmInput|CountryInput|DateTimeInput|EncryptionBoxInput|Hex|JsonDeserialize|Media|Menu|Network|NumberInput|QRCode|Query|Sdk|SecurityCardManagement|SigningBoxInput|Terminal|UserInfo)/)) {
         return vscode.CompletionItemKind.Interface;
     }
-    if (body.match(/\b(static|functionID|externalMsg|internalMsg|inline|constant|public|virtual|override)\b/)) {
+    if (body.match(/\b(pragma|static|functionID|externalMsg|internalMsg|inline|constant|public|virtual|override)\b/)) {
         return vscode.CompletionItemKind.Keyword;
     }
+
+    if (body.match(/\b(enum)\b/)) { return vscode.CompletionItemKind.Enum; }
+    if (body.match(/\b(struct)\b/)) { return vscode.CompletionItemKind.Struct; }
+    if (body.match(/\b(event)\b/)) { return vscode.CompletionItemKind.Struct; }
     if (body.match(/\..*\(/)) return vscode.CompletionItemKind.Method;
     if (body.match(/\.\w+/)) return vscode.CompletionItemKind.Property;
     if (body.match(/\(.*\)/)) return vscode.CompletionItemKind.Function;
@@ -91,17 +95,19 @@ function getErrors(string) {
         let raw = !coord ? null : Number(coord[0]);
         let position = !coord ? null : Number(coord[1]);
         let errorLenght = getErrorLenght(value[4]);
+        let source = vscode.Uri.file(getErrorFilePath(value.join("\n")));
         return {
-            info: value[0],
+            info: value.join('\r\n'),
             coord: {
                 raw,
                 position
             },
             errorLenght,
             severity,
-            source: new vscode.Uri('file', '', getErrorFilePath(value.join("\n")), '', '') 
-        }
-    })
+            source
+            }
+        })
+    
 }
 
 function getHoverItems(word, document) {
@@ -135,7 +141,7 @@ function getSnippetItems(document) {
     for (const [key, value] of Object.entries(completions)) {
         const completionItem = new vscode.CompletionItem(value.prefix, getSnippetType(value.body.split("\n")[0]));
         completionItem.detail = key;
-        completionItem.documentation = formatDescription(value.description);
+        completionItem.documentation = formatDescription(value['description']);
         completionItem.insertText = new vscode.SnippetString(value.body);
 
         completionItems.push(completionItem);

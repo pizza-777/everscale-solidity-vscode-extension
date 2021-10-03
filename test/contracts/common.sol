@@ -99,10 +99,30 @@ contract Test {
         require(1 GTon == 1e9 ton);
     }
 
-     function dst(TvmCell message, uint n) public {
+     function dst(TvmCell message, uint n, uint16 u16, uint8 u8) public {
          message.depth();
          message.dataSize(n);
-         message.     
-    }
-    
+         message.dataSizeQ(n);
+         TvmSlice s = message.toSlice();  
+         s.empty();
+         s.size();
+         s.bits();
+         s.refs();
+         s.dataSize(n);
+         s.dataSizeQ(n);
+         s.depth();
+         s.hasNBits(u16);
+         s.hasNRefs(u8);
+         s.hasNBitsAndRefs(u16, u8);
+         s.compare(s);
+         s.decode(uint8, uint16);
+         s.loadRef();
+         s.loadRefAsSlice();
+         s.loadSigned(u16);
+         s.loadUnsigned(u16);
+         s.loadTons();
+         s.loadSlice(n);
+         s.decodeFunctionParams(dst);
+         s.skip(n,n);
+    }    
 }

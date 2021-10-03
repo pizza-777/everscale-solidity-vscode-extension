@@ -31,7 +31,8 @@ function activate(context) {
 			provideCompletionItems(document) {
 				return getSnippetItems(document);
 			}
-		}
+		},
+		'.'
 	);
 	context.subscriptions.push(completionProvider);
 

@@ -437,7 +437,7 @@
         "type-primitive": {
             "patterns": [                
                 {
-                    "match": "\\b(TvmCell|TvmSlice|TvmBuilder|ExtraCurrencyCollection|address|string\\d*|bytes\\d*|int\\d*|uint\\d*|bool|hash\\d*)\\b\\s+(\\w+)",
+                    "match": "\\b(TvmCell|TvmSlice|TvmBuilder|ExtraCurrencyCollection|address|string\\d*|bytes\\d*|int\\d*|uint\\d*|bool|hash\\d*)\\b\\s*(\\w*)",
                     "captures": {
                         "1": {
                             "name": "support.type.primitive"
@@ -595,7 +595,7 @@
                     }
                 },
                 {
-                    "match": "\\b([\\w]+)\\.(depth|dataSize|toSlicee|empty|size|dataSizeQ|bits|refs|bitsAndRefs|depth|hasNBits|hasNRefs|hasNBitsAndRefs|compare|loadRef|loadRefAsSlice|loadSigned|loadUnsigned|loadTons|loadSlice|decodeFunctionParams|skip|toSlice|toCell|bits|refs|bitsAndRefs|remBits|remRefs|remBitsAndRefs|unpack|lenght|append|byteLength|substr|find|findLast|decode|store|storeOnes|storeZeroes|storeSigned|storeUnsigned|storeRef|storeTons)\\b",
+                    "match": "\\b([\\w]+)\\.(depth|dataSize|toSlicee|empty|size|dataSizeQ|bits|refs|bitsAndRefs|depth|hasNBits|hasNRefs|hasNBitsAndRefs|compare|loadRef|loadRefAsSlice|loadSigned|loadUnsigned|loadTons|loadSlice|decodeFunctionParams|skip|toSlice|toCell|bits|refs|bitsAndRefs|remBits|remRefs|remBitsAndRefs|unpack|length|append|byteLength|substr|find|findLast|decode|store|storeOnes|storeZeroes|storeSigned|storeUnsigned|storeRef|storeTons)\\b",
                     "captures": {
                         "1": {
                             "name": "variable.other.type"
@@ -614,7 +614,7 @@
                     "name": "keyword.control.exceptions"
                 },
                 {
-                    "match": "\\b(selfdestruct|suicide|fallback|receive|onCodeUpgrade)\\b",
+                    "match": "\\b(selfdestruct|suicide|fallback|receive|onCodeUpgrade|constructor)\\b",
                     "name": "keyword.control.contract"
                 },
                 {
@@ -622,7 +622,7 @@
                     "name": "support.function.math"
                 },
                 {
-                    "match": "\\b(unicode|format|stoi|gasToValue|valueToGas)\\b",
+                    "match": "\\b(unicode|format|stoi|gasToValue|valueToGas|optional|repeat)\\b",
                     "name": "support.function.string"
                 },
                 {
@@ -1128,9 +1128,9 @@
                     }
                 },
                 {
-                    "match": "\\.get\\b",
+                    "match": "\\.(get|set|reset|push|pop)\\b",
                     "captures": {
-                        "0": {
+                        "1": {
                             "name": "storage.type.function"
                         }
                     }
@@ -1140,64 +1140,53 @@
         "declaration-modifier": {
             "patterns": [
                 {
-                    "begin": "\\b(modifier)\\b\\s*(\\w+)",
+                    "begin": "\\b(modifier)\\s+(\\w+)\\b",
                     "beginCaptures": {
                         "1": {
-                            "name": "storage.type.function.modifier"
+                            "name": "storage.type.function"
                         },
                         "2": {
-                            "name": "entity.name.function.modifier"
+                            "name": "entity.name.function"
                         }
                     },
-                    "end": "(?=\\{)",
+                    "end": "(?=\\{|;)",
                     "patterns": [
+                        {
+                            "include": "#natspec"
+                        },
+                        {
+                            "include": "#global"
+                        },
                         {
                             "include": "#declaration-function-parameters"
                         },
                         {
-                            "begin": "(?<=\\))",
-                            "end": "(?=\\{)",
-                            "patterns": [
-                                {
-                                    "include": "#declaration-function-parameters"
-                                },
-                                {
-                                    "include": "#type-modifier-access"
-                                },
-                                {
-                                    "include": "#type-modifier-payable"
-                                },
-                                {
-                                    "include": "#type-modifier-immutable"
-                                },
-                                {
-                                    "include": "#type-modifier-extended-scope"
-                                },
-                                {
-                                    "include": "#function-call"
-                                },
-                                {
-                                    "include": "#modifier-call"
-                                },
-                                {
-                                    "include": "#control-flow"
-                                }
-                            ]
+                            "include": "#type-modifier-access"
+                        },
+                        {
+                            "include": "#type-modifier-payable"
+                        },
+                        {
+                            "include": "#type-modifier-immutable"
+                        },
+                        {
+                            "include": "#type-modifier-extended-scope"
+                        },
+                        {
+                            "include": "#control-flow"
+                        },
+                        {
+                            "include": "#function-call"
+                        },
+                        {
+                            "include": "#modifier-call"
+                        },
+                        {
+                            "include": "#punctuation"
                         }
                     ]
-                },
-                {
-                    "match": "\\b(modifier)(\\s+([A-Za-z_]\\w*))?\\b",
-                    "captures": {
-                        "1": {
-                            "name": "storage.modifier"
-                        },
-                        "3": {
-                            "name": "entity.name.function"
-                        }
-                    }
                 }
-            ]
+            ]               
         },
         "declaration-storage-mapping": {
             "patterns": [

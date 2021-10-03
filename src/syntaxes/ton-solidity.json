@@ -586,6 +586,17 @@
                             "name": "support.function.math"
                         }
                     }
+                },
+                {
+                    "match": "\\b([\\w]+)\\.(depth|dataSize|toSlicee|empty|size|dataSizeQ|bits|refs|bitsAndRefs|depth|hasNBits|hasNRefs|hasNBitsAndRefs|compare|loadRef|loadRefAsSlice|loadSigned|loadUnsigned|loadTons|loadSlice|decodeFunctionParams|skip|toSlice|toCell|bits|refs|bitsAndRefs|remBits|remRefs|remBitsAndRefs|unpack|lenght|append|byteLength|substr|find|findLast)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "variable.language.type"
+                        },
+                        "2": {
+                            "name": "entity.name.function"
+                        }
+                    }
                 }
             ]
         },

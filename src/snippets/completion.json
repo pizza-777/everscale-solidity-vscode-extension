@@ -1,5 +1,5 @@
 {
-    ".source.ton-solidity": {       
+    ".source.ton-solidity": {
         "pragma ton-solidity": {
             "prefix": "pragma ton-solidity",
             "body": "pragma ton-solidity >= ${1:version};",
@@ -742,16 +742,16 @@
             ]
         },
         "<address>.balance": {
-            "prefix": "address(this).balance",
-            "body": "address(this).balance",
+            "prefix": ".balance",
+            "body": ".balance",
             "description": [
                 "address(this).balance returns (uint128);\n",
                 "Returns the balance of this contract in nanotons.\n"
             ]
         },
         "<address>.currencies": {
-            "prefix": "address(this).currencies",
-            "body": "address(this).currencies",
+            "prefix": ".currencies",
+            "body": ".currencies",
             "description": [
                 "address(this).currencies returns (ExtraCurrencyCollection);\n",
                 "Returns currencies on the balance of this contract.\n"
@@ -1121,7 +1121,7 @@
         },
         "tvm.setData": {
             "prefix": "tvm.setData",
-            "body": "tvm.setData();",
+            "body": "tvm.setData(${1:TvmCell});",
             "description": [
                 "tvm.setData() returns (TvmCell);\n",
                 "It's an experimental function.Set cell data to register c4. \n",
@@ -1165,7 +1165,7 @@
         },
         "tvm.setcode": {
             "prefix": "tvm.setcode",
-            "body": "tvm.setcode(TvmCell newCode);",
+            "body": "tvm.setcode(${1:TvmCell newCode});",
             "description": [
                 "tvm.setcode(TvmCell newCode);\n",
                 "This command creates an output action that would change this smart contract code to that given by Cell newCode (this change will take effect only after the successful termination of the current run of the smart contract).\n"
@@ -1176,12 +1176,20 @@
             "body": "tvm.rawConfigParam(${1:uint8 paramNumber});",
             "description": [
                 "tvm.rawConfigParam(uint8 paramNumber) returns (TvmCell cell, bool status);\n",
-                "Executes TVM instruction \"CONFIGPARAM\". This command returns the value of the global configuration parameter with integer index paramNumber. Argument should be an integer literal. Supported paramNumbers: 1, 15, 17, 34.\n"
+                "Executes TVM instruction \"CONFIGPARAM\" (TVM - A.11.4. - F832). Returns the value of the global configuration parameter with integer index paramNumber as a cell and a boolean status.\n"
+            ]
+        },
+        "tvm.configParam": {
+            "prefix": "tvm.configParam",
+            "body": "tvm.configParam(${1:uint8 paramNumber});",
+            "description": [
+                "tvm.configParam(uint8 paramNumber) returns (TypeA a, TypeB b, ...);\n",
+                "Executes TVM instruction \"CONFIGPARAM\" (TVM - A.11.4. - F832). This command returns the value of the global configuration parameter with integer index paramNumber. Argument should be an integer literal. Supported paramNumbers: 1, 15, 17, 34.\n"
             ]
         },
         "tvm.rawReserve": {
             "prefix": "tvm.rawReserve",
-            "body": "tvm.rawReserve(${1:uint value), ${2:uint8 flag});",
+            "body": "tvm.rawReserve(${1:uint value}, ${2:uint8 flag});",
             "description": [
                 "tvm.rawReserve(uint value, uint8 flag);\ntvm.rawReserve(uint value, ExtraCurrencyCollection currency, uint8 flag);\n",
                 "Creates an output action which reserves reserve nanotons. It is roughly equivalent to create an outbound message carrying reserve nanotons to oneself, so that the subsequent output actions would not be able to spend more money than the remainder. It's a wrapper for opcodes \"RAWRESERVE\" and \"RAWRESERVEX\".\n"
@@ -1216,6 +1224,15 @@
                 "Generates a StateInit (TBLKCH - 3.1.7.) from code and data.\n"
             ]
         },
+        "tvm.stateInitHash": {
+            "prefix": "tvm.stateInitHash",
+            "body": "stateInitHash(${1:uint256 codeHash}, ${2:uint256 dataHash}, ${3:uint16 codeDepth}, ${4:uint16 dataDepth})",
+            "description": [
+                "Calculates hash of the stateInit for given code and data specifications.\n",
+                "Example:\n",
+                "TvmCell code = ...;\nTvmCell data = ...;\nuint codeHash = tvm.hash(code);\nuint dataHash = tvm.hash(data);\nuint16 codeDepth = code.depth();\nuint16 dataDepth = data.depth();\nuint256 hash = tvm.stateInitHash(codeHash, dataHash, codeDepth, dataDepth);\n"
+            ]
+        },
         "tvm.buildEmptyData": {
             "prefix": "tvm.buildEmptyData",
             "body": "tvm.buildEmptyData(${1:uint256 publicKey})",
@@ -1246,6 +1263,14 @@
             "description": [
                 "tvm.codeSalt(TvmCell code) returns (optional(TvmCell) optSalt);\n",
                 "If code contains salt then optSalt contains one. Otherwise, optSalt doesn't contain any value.\n"
+            ]
+        },
+        "tvm.setCodeSalt": {
+            "prefix": "tvm.setCodeSalt",
+            "body": "setCodeSalt(${1:TvmCell code}, ${2:TvmCell salt})",
+            "description": [
+                "Inserts salt into code and returns new code newCode.\n",
+                "tvm.setCodeSalt(TvmCell code, TvmCell salt) returns (TvmCell newCode);\n"
             ]
         },
         "tvm.pubkey": {
@@ -1884,7 +1909,7 @@
         },
         "DateTimeInput.getDateTime": {
             "prefix": "DateTimeInput.getDateTime",
-            "body": "DateTimeInput.getDateTime(tvm.functionId(${1:callbackFunctionName}), \"${2:bytes prompt}\", ${3:int128 defaultDatetime}, ${4:int128 minDatetime}, ${5:int128 maxDatetime}, ${6:uint8 minuteInterval}, ${7:uint8 minuteInterval}, ${8:int16 inTimeZoneOffset});",
+            "body": "DateTimeInput.getDateTime(tvm.functionId(${1:callbackFunctionName}), \"${2:bytes prompt}\", ${3:int128 defaultDatetime}, ${4:int128 minDatetime}, ${5:int128 maxDatetime}, ${6:uint8 minuteInterval}, ${7:int16 inTimeZoneOffset});",
             "description": [
                 "allow to select date and time.",
                 "\nArguments:",
@@ -1929,7 +1954,7 @@
         },
         "EncryptionBoxInput.remove": {
             "prefix": "EncryptionBoxInput.remove",
-            "body": "EncryptionBoxInput.remove(tvm.functionId(${1:callbackFunctionName}), ${2:uint256 handle});",
+            "body": "EncryptionBoxInput.remove(tvm.functionId(${1:callbackFunctionName}), ${2:uint32 handle});",
             "description": [
                 "Removes encryption box handle from Browser and destroys underlying Encryption Box.",
                 "\nArguments:",
@@ -1938,7 +1963,7 @@
         },
         "EncryptionBoxInput.getSupportedAlgorithms": {
             "prefix": "EncryptionBoxInput.getSupportedAlgorithms",
-            "body": "EncryptionBoxInput.getSupportedAlgorithms();",
+            "body": "EncryptionBoxInput.getSupportedAlgorithms(tvm.functionId(${1:setAlgorithms}));",
             "description": [
                 "Returns a list of algorithms supported by DeBot Browser.",
                 "Returns: names: bytes[] — array of algorithm names supported by DeBot Browser."
@@ -2058,6 +2083,36 @@
                 "\nExample: QRCode.draw(tvm.functionId(setDrawResult), \"DeBot address\", format(\"{}\", address(this)));\n//=>function setDrawResult(QRStatus result)"
             ]
         },
+        "QueryStatus.Success": {
+            "prefix": "QueryStatus.Success",
+            "body": "QueryStatus.Success",
+            "description": ""
+        },
+        "QueryStatus.FilterError": {
+            "prefix": "QueryStatus.FilterError",
+            "body": "QueryStatus.FilterError",
+            "description": ""
+        },
+        "QueryStatus.NetworkError": {
+            "prefix": "QueryStatus.NetworkError",
+            "body": "QueryStatus.NetworkError",
+            "description": ""
+        },
+        "QueryStatus.UnknownError": {
+            "prefix": "QueryStatus.UnknownError",
+            "body": "QueryStatus.UnknownError",
+            "description": ""
+        },
+        "SortDirection.Ascending": {
+            "prefix": "SortDirection.Ascending",
+            "body": "SortDirection.Ascending",
+            "description": ""
+        },
+        "SortDirection.Descending": {
+            "prefix": "SortDirection.Descending",
+            "body": "SortDirection.Descending",
+            "description": ""
+        },
         "Query.collection": {
             "prefix": "Query.collection",
             "body": "Query.collection(tvm.functionId(${1:callbackFunctionName}), ${2:uint8 collectionType}, ${3:bytes queryFilter}, ${4:bytes returnFilter}, ${5:uint32 limit}, ${6:orderBy QueryOrderBy});",
@@ -2067,14 +2122,36 @@
                 " - answerId: uint32 — id of function callback.\n - collectionType: uint8 — one of the \"CollectionType\" variants: \n    Accounts (0), Messages (1), Transactions(2). \n - queryFilter: bytes — utf-8 string with object query.\n - returnFilter: bytes — utf-8 string with object query.\n - limit: uint32 — maximum number of objects that can be returned in result array.\n - orderBy: QueryOrderBy — structure that defines sorting rules for returning objects.\n \n Returns:\n - status: uint8 — one of the \"QueryStatus\" variants.\n - objects: JsonLib.Value[] — array of json values. Every json value represents fields requested in \"returnFilter\" for certain \"CollectionType\" variant: message, transaction, account.\n"
             ]
         },
+        "QueryOrderBy": {
+            "prefix": "QueryOrderBy",
+            "body": "QueryOrderBy(${1:string F.E.:created_lt}, ${2: SortDirection});",
+            "description": [
+                "Example:\n",
+                "QueryOrderBy(\"created_lt\", SortDirection.Ascending));\n"
+            ]
+        },
+        "QueryCollection.Messages": {
+            "prefix": "QueryCollection.Messages",
+            "body": "QueryCollection.Messages",
+            "description": [
+                "Example:\n",
+                "function onGetter(Recipient[] recipients) public {    \n    m_limit = 3;\n    Query.collection(\n        tvm.functionId(setQueryResult), \n        QueryCollection.Messages, \n        format(\"{\"src\":{\"eq\":\"{}\"},\"msg_type\":{\"eq\":0}}\", address(this)),\n        \"created_lt value dst body\",\n        m_limit,\n        QueryOrderBy(\"created_lt\", SortDirection.Ascending)\n    );\n}\n\nfunction setQueryResult(QueryStatus status, JsonLib.Value[] objects) public {\n    if (status != QueryStatus.Success) {\n        Terminal.print(tvm.functionId(Debot.start), \"Messages query failed.\");\n        return;\n    }\n}    \n"
+            ]
+        },
+        "QueryCollection.Accounts": {
+            "prefix": "QueryCollection.Accounts",
+            "body": "QueryCollection.Accounts",
+            "description": ""
+        },
+        "QueryCollection.Transactions": {
+            "prefix": "QueryCollection.Transactions",
+            "body": "QueryCollection.Transactions",
+            "description": ""
+        },
         "Sdk.getBalance": {
             "prefix": "Sdk.getBalance",
             "body": "Sdk.getBalance(tvm.functionId(${1:callbackFunctionName}), ${2:address addr});",
-            "description": [
-                "Get account balance",
-                "\nArguments:",
-                " - answerId: uint32 — function id of result callback.\n - addr    : address — address of contract.\nReturns:\n- nanotokens: uint128 - account balance in nanotokens.\n"
-            ]
+            "description": ""
         },
         "Sdk.getAccountType": {
             "prefix": "Sdk.getAccountType",
@@ -2139,63 +2216,63 @@
                 " - answerId: uint32 — function id of result callback.\n - str: bytes — original string.\n - start: uint32 — index of byte in original string from which to start substring. 'start' must be less then length of original string.\n - count: uint32 — length in bytes of substring. Must be less or equal then ( 'str.legnth' - 'start' ).\nReturns:\nsubstr: bytes — substring of original string.\n "
             ]
         },
-        "SecurityCardManagemenet.getBlockHashes": {
-            "prefix": "SecurityCardManagemenet.getBlockHashes",
-            "body": "SecurityCardManagemenet.getBlockHashes(tvm.functionId(${1:callbackFunctionName}));",
+        "SecurityCardManagement.getBlockHashes": {
+            "prefix": "SecurityCardManagement.getBlockHashes",
+            "body": "SecurityCardManagement.getBlockHashes(tvm.functionId(${1:callbackFunctionName}));",
             "description": [
                 "Get H2, H3 hashes and serial number from security card. The browser should call getHashes function from the security card library to get H2, H3 and serial number.",
                 "\nArguments:",
                 " - answerId: uint32 — function id of result callback\nReturns:\n- h2: uint256 - H2 hash\n- h3: uint256 - H3 hash\n- sn: uint192 — card serial number\n"
             ]
         },
-        "SecurityCardManagemenet.turnOnWallet": {
-            "prefix": "SecurityCardManagemenet.turnOnWallet",
-            "body": "SecurityCardManagemenet.turnOnWallet(tvm.functionId(${1:callbackFunctionName}), ${2:uint192 sn}, ${3:bytes p1}, ${4:bytes iv}, ${5:bytes cs});",
+        "SecurityCardManagement.turnOnWallet": {
+            "prefix": "SecurityCardManagement.turnOnWallet",
+            "body": "SecurityCardManagement.turnOnWallet(tvm.functionId(${1:callbackFunctionName}), ${2:uint192 sn}, ${3:bytes p1}, ${4:bytes iv}, ${5:bytes cs});",
             "description": [
                 "Verify and setup security card initial data. Before forwarding the request to a security card, a browser must request a pin code and send it to the card with other data.",
                 "\nArguments:",
                 " - answerId: uint32 — function id of result callback\n - sn      : uint192 — card serial number\n - p1      : bytes — authentication password (128 bytes)\n - iv      : bytes — vector for AES128 CBC initialization for encrypting P1 (16 bytes)\n - cs      : bytes — common secret(32 bytes)\nReturns:\n- pubkey: uint256 - security card public key\n"
             ]
         },
-        "SecurityCardManagemenet.setRecoveryData": {
-            "prefix": "SecurityCardManagemenet.setRecoveryData",
-            "body": "SecurityCardManagemenet.setRecoveryData(tvm.functionId(${1:callbackFunctionName}), ${2:bytes recoveryData});",
+        "SecurityCardManagement.setRecoveryData": {
+            "prefix": "SecurityCardManagement.setRecoveryData",
+            "body": "SecurityCardManagement.setRecoveryData(tvm.functionId(${1:callbackFunctionName}), ${2:bytes recoveryData});",
             "description": [
                 "Set recovery data to security card",
                 "\nArguments:",
                 " - answerId: uint32 — function id of result callback\n - recoveryData : bytes — recovery data\nReturns:\n- result: bool - result of operation\n"
             ]
         },
-        "SecurityCardManagemenet.getRecoveryData": {
-            "prefix": "SecurityCardManagemenet.getRecoveryData",
-            "body": "SecurityCardManagemenet.getRecoveryData(tvm.functionId(${1:callbackFunctionName}));",
+        "SecurityCardManagement.getRecoveryData": {
+            "prefix": "SecurityCardManagement.getRecoveryData",
+            "body": "SecurityCardManagement.getRecoveryData(tvm.functionId(${1:callbackFunctionName}));",
             "description": [
                 "Get recovery data from security card",
                 "\nArguments:",
                 " - answerId: uint32 — function id of result callback.\nReturns:\n - recoveryData : bytes — recovery data.\n"
             ]
         },
-        "SecurityCardManagemenet.getSerialNumber": {
-            "prefix": "SecurityCardManagemenet.getSerialNumber",
-            "body": "SecurityCardManagemenet.getSerialNumber(tvm.functionId(${1:callbackFunctionName}));",
+        "SecurityCardManagement.getSerialNumber": {
+            "prefix": "SecurityCardManagement.getSerialNumber",
+            "body": "SecurityCardManagement.getSerialNumber(tvm.functionId(${1:callbackFunctionName}));",
             "description": [
                 "Get serial number of touched card",
                 "\nArguments:",
                 " - answerId: uint32 — function id of result callback.\nReturns:\n - serialNumber : uint192 — card serial number.\n"
             ]
         },
-        "SecurityCardManagemenet.getTonWalletAppletState": {
-            "prefix": "SecurityCardManagemenet.getTonWalletAppletState",
-            "body": "SecurityCardManagemenet.getTonWalletAppletState(tvm.functionId(${1:callbackFunctionName}));",
+        "SecurityCardManagement.getTonWalletAppletState": {
+            "prefix": "SecurityCardManagement.getTonWalletAppletState",
+            "body": "SecurityCardManagement.getTonWalletAppletState(tvm.functionId(${1:callbackFunctionName}));",
             "description": [
                 "Get card applet state.",
                 "\nArguments:",
                 " - answerId: uint32 — function id of result callback.\nReturns:\n - state : string — result of operation.\n"
             ]
         },
-        "SecurityCardManagemenet.createKeyForHmac": {
-            "prefix": "SecurityCardManagemenet.createKeyForHmac",
-            "body": "SecurityCardManagemenet.createKeyForHmac(tvm.functionId(${1:callbackFunctionName}), ${2:bytes p1}, ${3:bytes cs}, ${4:uint192 sn});",
+        "SecurityCardManagement.createKeyForHmac": {
+            "prefix": "SecurityCardManagement.createKeyForHmac",
+            "body": "SecurityCardManagement.createKeyForHmac(tvm.functionId(${1:callbackFunctionName}), ${2:bytes p1}, ${3:bytes cs}, ${4:uint192 sn});",
             "description": [
                 "Create secret key for HMAC SHA256. This key is saved into Android keystore or iOS keychain and then is used by the app to sign APDU commands data fields.",
                 "\nArguments:",
@@ -2364,6 +2441,21 @@
         "import UserInfo": {
             "prefix": "import UserInfo",
             "body": "import \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/UserInfo/UserInfo.sol\";",
+            "description": ""
+        },
+        "import Sdk": {
+            "prefix": "import Sdk",
+            "body": "import \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/Sdk/Sdk.sol\";",
+            "description": ""
+        },
+        "import Jsonlib": {
+            "prefix": "import Jsonlib",
+            "body": "import \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/1d587e2899c857572d94e6cf2468ccee6e98b7ac/libraries/JsonLib.sol\";",
+            "description": ""
+        },
+        "import Json": {
+            "prefix": "import Json",
+            "body": "import \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/JsonDeserialize/Json.sol\";",
             "description": ""
         },
         "function getDebotInfo": {

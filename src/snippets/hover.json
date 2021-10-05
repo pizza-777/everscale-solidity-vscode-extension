@@ -469,7 +469,7 @@
         },
         "<TvmBuilder>.storeTons": {
             "prefix": ".storeTons",
-            "body": ".storeTons(${1:uint128 value}})",
+            "body": ".storeTons(${1:uint128 value})",
             "description": [
                 "```\n<TvmBuilder>.storeTons(uint128 value);\n```\n",
                 "Stores (serializes) an integer value and stores it in the builder as VarUInteger 16. See TL-B scheme."
@@ -478,6 +478,14 @@
         "<optional(Type)>.get": {
             "prefix": ".get",
             "body": ".get()",
+            "description": [
+                "```\n<optional(Type)>.get() returns (Type);\n```\n",
+                "Returns the contained value, if the optional contains one. Otherwise, throws an exception."
+            ]
+        },
+        "optional": {
+            "prefix": "optional",
+            "body": "optional${(1:type) 2:name}",
             "description": [
                 "```\n<optional(Type)>.get() returns (Type);\n```\n",
                 "Returns the contained value, if the optional contains one. Otherwise, throws an exception."
@@ -667,7 +675,7 @@
         },
         "<string>.substr": {
             "prefix": ".substr",
-            "body": ".substr()",
+            "body": "substr(${1:uint from, uint count})",
             "description": [
                 "```\n<string>.substr(uint from[, uint count]) returns (string);\n```\n",
                 "Returns a substring starting from the\nbyte with number from with byte length count. Note: if count is not set, then the new string will be cut from the from byte to the end of the string.\n",
@@ -1196,7 +1204,15 @@
             "body": "tvm.rawConfigParam(${1:uint8 paramNumber});",
             "description": [
                 "```\ntvm.rawConfigParam(uint8 paramNumber) returns (TvmCell cell, bool status);\n```\n",
-                "Executes TVM instruction \"CONFIGPARAM\". This command returns the value of the global configuration parameter with integer index paramNumber. Argument should be an integer literal. Supported paramNumbers: 1, 15, 17, 34.\n"
+                "Executes TVM instruction \"CONFIGPARAM\" (TVM - A.11.4. - F832). Returns the value of the global configuration parameter with integer index paramNumber as a cell and a boolean status.\n"
+            ]
+        },
+        "tvm.configParam": {
+            "prefix": "tvm.configParam",
+            "body": "tvm.configParam(${1:uint8 paramNumber});",
+            "description": [
+                "```\ntvm.configParam(uint8 paramNumber) returns (TypeA a, TypeB b, ...);\n```\n",
+                "Executes TVM instruction \"CONFIGPARAM\" (TVM - A.11.4. - F832). This command returns the value of the global configuration parameter with integer index paramNumber. Argument should be an integer literal. Supported paramNumbers: 1, 15, 17, 34.\n"
             ]
         },
         "tvm.rawReserve": {
@@ -1236,6 +1252,15 @@
                 "Generates a StateInit (TBLKCH - 3.1.7.) from code and data.\n"
             ]
         },
+        "tvm.stateInitHash": {
+            "prefix": "tvm.stateInitHash",
+            "body": "stateInitHash(${1:uint256 codeHash}, ${2:uint256 dataHash}, ${3:uint16 codeDepth}, ${4:uint16 dataDepth})",
+            "description": [
+                "Calculates hash of the stateInit for given code and data specifications.\n",
+                "Example:\n",
+                "```\nTvmCell code = ...;\nTvmCell data = ...;\nuint codeHash = tvm.hash(code);\nuint dataHash = tvm.hash(data);\nuint16 codeDepth = code.depth();\nuint16 dataDepth = data.depth();\nuint256 hash = tvm.stateInitHash(codeHash, dataHash, codeDepth, dataDepth);\n```\n"
+            ]
+        },
         "tvm.buildEmptyData": {
             "prefix": "tvm.buildEmptyData",
             "body": "tvm.buildEmptyData(${1:uint256 publicKey})",
@@ -1266,6 +1291,14 @@
             "description": [
                 "```\ntvm.codeSalt(TvmCell code) returns (optional(TvmCell) optSalt);\n```\n",
                 "If code contains salt then optSalt contains one. Otherwise, optSalt doesn't contain any value.\n"
+            ]
+        },
+        "tvm.setCodeSalt": {
+            "prefix": "tvm.setCodeSalt",
+            "body": "setCodeSalt(${1:TvmCell code}, ${2:TvmCell salt})",
+            "description": [
+                "Inserts salt into code and returns new code newCode.\n",
+                "```\ntvm.setCodeSalt(TvmCell code, TvmCell salt) returns (TvmCell newCode);\n```\n"
             ]
         },
         "tvm.pubkey": {
@@ -2159,63 +2192,63 @@
                 " - answerId: uint32 — function id of result callback.\n - str: bytes — original string.\n - start: uint32 — index of byte in original string from which to start substring. 'start' must be less then length of original string.\n - count: uint32 — length in bytes of substring. Must be less or equal then ( 'str.legnth' - 'start' ).\n\nReturns:\n\nsubstr: bytes — substring of original string.\n "
             ]
         },
-        "SecurityCardManagemenet.getBlockHashes": {
-            "prefix": "SecurityCardManagemenet.getBlockHashes",
-            "body": "SecurityCardManagemenet.getBlockHashes(tvm.functionId(${1:callbackFunctionName}));",
+        "SecurityCardManagement.getBlockHashes": {
+            "prefix": "SecurityCardManagement.getBlockHashes",
+            "body": "SecurityCardManagement.getBlockHashes(tvm.functionId(${1:callbackFunctionName}));",
             "description": [
                 "Get H2, H3 hashes and serial number from security card. The browser should call getHashes function from the security card library to get H2, H3 and serial number.",
                 "\nArguments:",
                 " - answerId: uint32 — function id of result callback\n\nReturns:\n\n- h2: uint256 - H2 hash\n- h3: uint256 - H3 hash\n- sn: uint192 — card serial number\n"
             ]
         },
-        "SecurityCardManagemenet.turnOnWallet": {
-            "prefix": "SecurityCardManagemenet.turnOnWallet",
-            "body": "SecurityCardManagemenet.turnOnWallet(tvm.functionId(${1:callbackFunctionName}), ${2:uint192 sn}, ${3:bytes p1}, ${4:bytes iv}, ${5:bytes cs});",
+        "SecurityCardManagement.turnOnWallet": {
+            "prefix": "SecurityCardManagement.turnOnWallet",
+            "body": "SecurityCardManagement.turnOnWallet(tvm.functionId(${1:callbackFunctionName}), ${2:uint192 sn}, ${3:bytes p1}, ${4:bytes iv}, ${5:bytes cs});",
             "description": [
                 "Verify and setup security card initial data. Before forwarding the request to a security card, a browser must request a pin code and send it to the card with other data.",
                 "\nArguments:",
                 " - answerId: uint32 — function id of result callback\n - sn      : uint192 — card serial number\n - p1      : bytes — authentication password (128 bytes)\n - iv      : bytes — vector for AES128 CBC initialization for encrypting P1 (16 bytes)\n - cs      : bytes — common secret(32 bytes)\n\nReturns:\n\n- pubkey: uint256 - security card public key\n"
             ]
         },
-        "SecurityCardManagemenet.setRecoveryData": {
-            "prefix": "SecurityCardManagemenet.setRecoveryData",
-            "body": "SecurityCardManagemenet.setRecoveryData(tvm.functionId(${1:callbackFunctionName}), ${2:bytes recoveryData});",
+        "SecurityCardManagement.setRecoveryData": {
+            "prefix": "SecurityCardManagement.setRecoveryData",
+            "body": "SecurityCardManagement.setRecoveryData(tvm.functionId(${1:callbackFunctionName}), ${2:bytes recoveryData});",
             "description": [
                 "Set recovery data to security card",
                 "\nArguments:",
                 " - answerId: uint32 — function id of result callback\n - recoveryData : bytes — recovery data\n\nReturns:\n\n- result: bool - result of operation\n"
             ]
         },
-        "SecurityCardManagemenet.getRecoveryData": {
-            "prefix": "SecurityCardManagemenet.getRecoveryData",
-            "body": "SecurityCardManagemenet.getRecoveryData(tvm.functionId(${1:callbackFunctionName}));",
+        "SecurityCardManagement.getRecoveryData": {
+            "prefix": "SecurityCardManagement.getRecoveryData",
+            "body": "SecurityCardManagement.getRecoveryData(tvm.functionId(${1:callbackFunctionName}));",
             "description": [
                 "Get recovery data from security card",
                 "\nArguments:",
                 " - answerId: uint32 — function id of result callback.\n\nReturns:\n\n - recoveryData : bytes — recovery data.\n"
             ]
         },
-        "SecurityCardManagemenet.getSerialNumber": {
-            "prefix": "SecurityCardManagemenet.getSerialNumber",
-            "body": "SecurityCardManagemenet.getSerialNumber(tvm.functionId(${1:callbackFunctionName}));",
+        "SecurityCardManagement.getSerialNumber": {
+            "prefix": "SecurityCardManagement.getSerialNumber",
+            "body": "SecurityCardManagement.getSerialNumber(tvm.functionId(${1:callbackFunctionName}));",
             "description": [
                 "Get serial number of touched card",
                 "\nArguments:",
                 " - answerId: uint32 — function id of result callback.\n\nReturns:\n\n - serialNumber : uint192 — card serial number.\n"
             ]
         },
-        "SecurityCardManagemenet.getTonWalletAppletState": {
-            "prefix": "SecurityCardManagemenet.getTonWalletAppletState",
-            "body": "SecurityCardManagemenet.getTonWalletAppletState(tvm.functionId(${1:callbackFunctionName}));",
+        "SecurityCardManagement.getTonWalletAppletState": {
+            "prefix": "SecurityCardManagement.getTonWalletAppletState",
+            "body": "SecurityCardManagement.getTonWalletAppletState(tvm.functionId(${1:callbackFunctionName}));",
             "description": [
                 "Get card applet state.",
                 "\nArguments:",
                 " - answerId: uint32 — function id of result callback.\n\nReturns:\n\n - state : string — result of operation.\n"
             ]
         },
-        "SecurityCardManagemenet.createKeyForHmac": {
-            "prefix": "SecurityCardManagemenet.createKeyForHmac",
-            "body": "SecurityCardManagemenet.createKeyForHmac(tvm.functionId(${1:callbackFunctionName}), ${2:bytes p1}, ${3:bytes cs}, ${4:uint192 sn});",
+        "SecurityCardManagement.createKeyForHmac": {
+            "prefix": "SecurityCardManagement.createKeyForHmac",
+            "body": "SecurityCardManagement.createKeyForHmac(tvm.functionId(${1:callbackFunctionName}), ${2:bytes p1}, ${3:bytes cs}, ${4:uint192 sn});",
             "description": [
                 "Create secret key for HMAC SHA256. This key is saved into Android keystore or iOS keychain and then is used by the app to sign APDU commands data fields.",
                 "\nArguments:",

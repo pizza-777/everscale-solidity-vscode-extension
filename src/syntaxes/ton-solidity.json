@@ -435,9 +435,9 @@
             ]
         },
         "type-primitive": {
-            "patterns": [                
+            "patterns": [
                 {
-                    "match": "\\b(TvmCell|TvmSlice|TvmBuilder|ExtraCurrencyCollection|address|string\\d*|bytes\\d*|int\\d*|uint\\d*|bool|hash\\d*)\\b\\s*(\\w*)",
+                    "match": "\\b(TvmCell|TvmSlice|TvmBuilder|ExtraCurrencyCollection|address|array|vector|Type|string\\d*|bytes\\d*|bytes|byte|int\\d*|uint\\d*|bool|hash\\d*)\\b\\s*(\\w*)",
                     "captures": {
                         "1": {
                             "name": "support.type.primitive"
@@ -485,18 +485,7 @@
                     }
                 },
                 {
-                    "match": "\\b(msg)\\.(value)\\b",
-                    "captures": {
-                        "1": {
-                            "name": "entity.name.class"
-                        },
-                        "2": {
-                            "name": "constant.numeric"
-                        }
-                    }
-                },
-                {
-                    "match": "\\b(msg)\\.(data|sender|)\\b",
+                    "match": "\\b(msg)\\.(data|sender|value|currencies|isInternal|isExternal|isTickTock)\\b",
                     "captures": {
                         "1": {
                             "name": "entity.name.class"
@@ -529,7 +518,7 @@
                     }
                 },
                 {
-                    "match": "\\b(tvm)\\.(accept|pubkey|setPubkey|hash|getData|log|hexdump|bindupm|configParam|rawConfigParam|rawReserve|checkSign|insertPubkey|functionId|encodeBody|exit|exit1|buildExtMsg|buildIntMsg)\\b",
+                    "match": "\\b(tvm)\\.(accept|pubkey|setPubkey|hash|getData|log|hexdump|bindump|configParam|rawConfigParam|rawReserve|checkSign|insertPubkey|functionId|encodeBody|exit|exit1|buildExtMsg|buildIntMsg|sendrawmsg)\\b",
                     "captures": {
                         "1": {
                             "name": "entity.name.class"
@@ -540,7 +529,7 @@
                     }
                 },
                 {
-                    "match": "\\b(tvm)\\.(commit|rawCommit|setcode|setCurrentCode|resetStorage|setData|buildStateInit|buildEmptyData|deploy|code|codeSalt|setCodeSalt)\\b",
+                    "match": "\\b(tvm)\\.(stateInitHash|rawCommit|commit|setcode|setCurrentCode|resetStorage|setData|buildStateInit|buildEmptyData|deploy|code|codeSalt|setCodeSalt)\\b",
                     "captures": {
                         "1": {
                             "name": "entity.name.class"
@@ -595,13 +584,18 @@
                     }
                 },
                 {
-                    "match": "\\b([\\w]+)\\.(depth|dataSize|toSlicee|empty|size|dataSizeQ|bits|refs|bitsAndRefs|depth|hasNBits|hasNRefs|hasNBitsAndRefs|compare|loadRef|loadRefAsSlice|loadSigned|loadUnsigned|loadTons|loadSlice|decodeFunctionParams|skip|toSlice|toCell|bits|refs|bitsAndRefs|remBits|remRefs|remBitsAndRefs|unpack|length|append|byteLength|substr|find|findLast|decode|store|storeOnes|storeZeroes|storeSigned|storeUnsigned|storeRef|storeTons)\\b",
+                    "match": "\\.(getSet|getAdd|getReplace|nextOrEq|prevOrEq|depth|dataSizeQ|toSlicee|empty|size|dataSize|bits|refs|bitsAndRefs|depth|hasNBits|hasNRefs|hasNBitsAndRefs|compare|loadRef|loadRefAsSlice|loadSigned|loadUnsigned|loadTons|loadSlice|decodeFunctionParams|skip|toSlice|toCell|bits|refs|bitsAndRefs|remBits|remRefs|remBitsAndRefs|unpack|length|append|byteLength|substr|findLast|find|decode|storeOnes|storeZeroes|storeSigned|storeUnsigned|storeRef|storeTons|min|next|prev|nextOrEq|prevOrEq|delMin|delMax|fetch|exists|empty|replace|add|hasValue|makeAddrNone|makeAddrExtern|getType|max|store|transfer)",
                     "captures": {
                         "1": {
-                            "name": "variable.other.type"
-                        },
-                        "2": {
                             "name": "entity.name.function"
+                        }
+                    }
+                },
+                {
+                    "match": "\\.(currencies|balance|lenght)",
+                    "captures": {
+                        "1": {
+                            "name": "support.variable.property"
                         }
                     }
                 }
@@ -614,7 +608,7 @@
                     "name": "keyword.control.exceptions"
                 },
                 {
-                    "match": "\\b(selfdestruct|suicide|fallback|receive|onCodeUpgrade|constructor)\\b",
+                    "match": "\\b(selfdestruct|suicide|fallback|external|receive|onBounce|onTickTock|constructor)\\b",
                     "name": "keyword.control.contract"
                 },
                 {
@@ -626,7 +620,7 @@
                     "name": "support.function.string"
                 },
                 {
-                    "match": "\\b(logtvm|onBounce)\\b",
+                    "match": "\\b(logtvm)\\b",
                     "name": "entity.name.function"
                 },
                 {
@@ -641,7 +635,7 @@
         },
         "type-modifier-access": {
             "match": "\\b(internal|external|private|public|inline|externalMsg|internalMsg|functionID)\\b",
-            "name": "storage.modifier.access"
+            "name": "entity.name.function.modifier"
         },
         "type-modifier-payable": {
             "match": "\\b(nonpayable|payable)\\b",
@@ -725,7 +719,7 @@
                     "include": "#declaration-storage"
                 },
                 {
-                    "include":"#declaration-debot-interface"
+                    "include": "#declaration-debot-interface"
                 },
                 {
                     "include": "#declaration-error"
@@ -1134,6 +1128,28 @@
                             "name": "storage.type.function"
                         }
                     }
+                },
+                {
+                    "match": "(function)",
+                    "captures": {
+                        "1": {
+                            "name": "storage.type.function"
+                        }
+                    }
+                },
+                {
+                    "match": "([\\w]+)(\\()a\\, b(\\))",
+                    "captures": {
+                        "1": {
+                            "name": "storage.type.function"
+                        },
+                        "2": {
+                            "name": "punctuation.parameters.begin"
+                        },
+                        "3": {
+                            "name": "punctuation.parameters.end"
+                        }
+                    }
                 }
             ]
         },
@@ -1186,7 +1202,7 @@
                         }
                     ]
                 }
-            ]               
+            ]
         },
         "declaration-storage-mapping": {
             "patterns": [
@@ -1219,8 +1235,8 @@
                 }
             ]
         },
-        "declaration-debot-interface": { 
-            "patterns":[
+        "declaration-debot-interface": {
+            "patterns": [
                 {
                     "match": "\\b(SigningBoxInput|NumberInput|AddressInput|AmountInput|ConfirmInput|CountryInput)\\.(get)\\b",
                     "captures": {
@@ -1321,6 +1337,17 @@
                     }
                 },
                 {
+                    "match": "\\b(QueryCollection|SortDirection|QueryStatus)\\.(Ascending|DescendingMessages|Accounts|Transactions|Success|FilterError|NetworkError|UnknownError)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.enum"
+                        },
+                        "2": {
+                            "name": "variable.other.enummember"
+                        }
+                    }
+                },
+                {
                     "match": "\\b(Sdk)\\.(getBalance|getAccountType|getAccountCodeHash|encrypt|decrypt|signHash|genRandom|substring|mnemonicFromRandom|mnemonicVerify|mnemonicDeriveSignKeys|hdkeyXprvFromMnemonic|hdkeyDeriveFromXprv|hdkeyDeriveFromXprvPath|hdkeySecretFromXprv|hdkeyPublicFromXprv|naclSignKeypairFromSecretKey|naclBox|naclBoxOpen|naclKeypairFromSecret|chacha20)\\b",
                     "captures": {
                         "1": {
@@ -1332,7 +1359,7 @@
                     }
                 },
                 {
-                    "match": "\\b(SecurityCardManagemenet)\\.(getBlockHashes|turnOnWallet|setRecoveryData|getRecoveryData|getSerialNumber|getTonWalletAppletState|createKeyForHmac)\\b",
+                    "match": "\\b(SecurityCardManagement)\\.(getBlockHashes|turnOnWallet|setRecoveryData|getRecoveryData|getSerialNumber|getTonWalletAppletState|createKeyForHmac)\\b",
                     "captures": {
                         "1": {
                             "name": "entity.name.interface"
@@ -1385,7 +1412,7 @@
                             "name": "constant.numeric.hexadecimal"
                         }
                     }
-                }  
+                }
             ]
         },
         "declaration-error": {

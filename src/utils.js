@@ -26,10 +26,12 @@ function getSnippetType(body) {
     if (body.match(/(debot|AddressInput|AmountInput|Base64|ConfirmInput|CountryInput|DateTimeInput|EncryptionBoxInput|Hex|JsonDeserialize|Media|Menu|Network|NumberInput|QRCode|Query|Sdk|SecurityCardManagement|SigningBoxInput|Terminal|UserInfo)/)) {
         return vscode.CompletionItemKind.Interface;
     }
+    if (body.match(/QueryCollection|SortDirection|QueryStatus/)) { return vscode.CompletionItemKind.Enum; }
+    if (body.match(/QueryOrderBy/)) { return vscode.CompletionItemKind.Struct; }
+ 
     if (body.match(/\b(pragma|static|functionID|externalMsg|internalMsg|inline|constant|public|virtual|override)\b/)) {
         return vscode.CompletionItemKind.Keyword;
-    }
-
+    }    
     if (body.match(/\b(enum)\b/)) { return vscode.CompletionItemKind.Enum; }
     if (body.match(/\b(struct)\b/)) { return vscode.CompletionItemKind.Struct; }
     if (body.match(/\b(event)\b/)) { return vscode.CompletionItemKind.Struct; }
@@ -134,11 +136,29 @@ function getHoverItems(word, document) {
     }
     return suggestion;
 }
-
-function getSnippetItems(document) {
+function filterSnippets(word, completions){
+    let array = Object.entries(completions);
+    let filtered = array.filter((value)=>{
+        if(value[1].prefix.includes(word)){            
+            return true;
+        }  
+    })
+    filtered = filtered.map((value)=>{
+        if(word.match(/\./)){            
+            let search = `${word.split(".")[0]}.`;
+            value[1].body = value[1].body.replace(search, '');
+        }        
+        return value;
+    })
+    return Object.fromEntries(filtered);
+}
+function getSnippetItems(document, position) {
+    let wordRange = document.getWordRangeAtPosition(position, /[\.\w+]+/);
+    const word = document.getText(wordRange);
     let completions = { ...parseAbiFunctions(document), ...parsePrivateFunctions(document), ...wordsSetCompletion };
+    let filtered = filterSnippets(word, completions);
     let completionItems = [];
-    for (const [key, value] of Object.entries(completions)) {
+    for (const [key, value] of Object.entries(filtered)) {
         const completionItem = new vscode.CompletionItem(value.prefix, getSnippetType(value.body.split("\n")[0]));
         completionItem.detail = key;
         completionItem.documentation = formatDescription(value['description']);

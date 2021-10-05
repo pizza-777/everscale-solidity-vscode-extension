@@ -5,9 +5,6 @@ const { getErrors, getHoverItems, getSnippetItems, getSignatures } = require('./
 
 let _tondevTerminal;
 let t_out;
-let lastTime = 0;
-let counter = 0
-const TYPING_DELAY = 500;
 const MODE = { scheme: 'file', language: 'ton-solidity' }
 /**
  * @param {vscode.ExtensionContext} context
@@ -28,8 +25,8 @@ function activate(context) {
 	const completionProvider = vscode.languages.registerCompletionItemProvider(
 		MODE,
 		{
-			provideCompletionItems(document) {
-				return getSnippetItems(document);
+			provideCompletionItems(document, position) {
+				return getSnippetItems(document, position);
 			}
 		},
 		'.'
@@ -40,7 +37,7 @@ function activate(context) {
 		MODE,
 		{
 			provideHover(document, position) {
-				const wordRange = document.getWordRangeAtPosition(position, /[_a-zA-Z0-9\.]{1,30}/);
+				const wordRange = document.getWordRangeAtPosition(position, /[_a-zA-Z0-9\.]{1,100}/);
 				const word = document.getText(wordRange);
 				return new vscode.Hover(getHoverItems(word, document));
 			}
@@ -63,18 +60,10 @@ function activate(context) {
 		}
 	}));
 
-	context.subscriptions.push(vscode.workspace.onDidChangeTextDocument(async documentChangeEvent => {
-		let currTime = Date.now();
-		if ((currTime - lastTime) > TYPING_DELAY) {
-			counter = 0;
-		}
-		if (counter < 4) {//prevent when typing ...
+	context.subscriptions.push(vscode.workspace.onDidChangeTextDocument(async documentChangeEvent => {	
 			if (documentChangeEvent) {
-				updateDiagnostics(documentChangeEvent.document, collection);
-				lastTime = currTime;
-			}
-			counter++;
-		}
+				updateDiagnostics(documentChangeEvent.document, collection);				
+			}					
 	}));
 }
 

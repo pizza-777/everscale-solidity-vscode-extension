@@ -7,7 +7,6 @@ import "https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/Termi
 import "https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/UserInfo/UserInfo.sol";
 import "https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/SigningBoxInput/SigningBoxInput.sol";
 import "https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/SecurityCardManagement/SecurityCardManagement.sol";
-//import "https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/Query/Query.sol";
 import "https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/QRCode/QRCode.sol";
 import "https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/NumberInput/NumberInput.sol";
 import "https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/Network/Network.sol";
@@ -59,11 +58,11 @@ contract TestDebot is Debot{
         Sdk.encrypt(0, boxHandle, ''); 
         address addr;
         Sdk.getAccountCodeHash(0, addr);
-        Sdk.getAccountType(0, addr);
+            Sdk.getAccountType(0, addr);
         Sdk.getBalance(0, addr);
         uint32 limit;        
         Query.collection(0,  
-            QueryCollection.Messages,
+                 QueryCollection.Messages,
             format("{\"src\":{\"eq\":\"{}\"},\"msg_type\":{\"eq\":0}}", address(this)),
             "created_lt value dst body",
             limit,

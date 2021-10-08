@@ -29,6 +29,7 @@ contract Test {
 
     uint static a; // ok
     uint public static b;
+    uint constant c;
 
     struct Name {
         uint b;    

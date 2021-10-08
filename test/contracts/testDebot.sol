@@ -62,7 +62,7 @@ contract TestDebot is Debot{
         Sdk.getBalance(0, addr);
         uint32 limit;        
         Query.collection(0,  
-                 QueryCollection.Messages,
+            QueryCollection.Messages,
             format("{\"src\":{\"eq\":\"{}\"},\"msg_type\":{\"eq\":0}}", address(this)),
             "created_lt value dst body",
             limit,

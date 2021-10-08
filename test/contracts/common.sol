@@ -453,8 +453,9 @@ contract Test {
 
     function f2() public externalMsg { // this function receives only external messages 
     /*...*/
-    }        
- }
+    }    
 
-
- 
+    function test(uint b) public {
+        f1();
+    }    
+ } 

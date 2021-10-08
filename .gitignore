@@ -5,3 +5,5 @@ vsix
 helpers
 test/contracts/.solc_imports/*
 *vsix
+*abi.json
+*tvc

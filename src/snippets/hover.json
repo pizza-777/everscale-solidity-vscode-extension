@@ -1508,6 +1508,14 @@
                 "Returns the starting logical time of the current block."
             ]
         },
+        "now": {
+            "prefix": "now",
+            "body": "now",
+            "description": [
+                "Example:\n```\nuint start = now;\n```\n",
+                "It is the number of seconds since the Epoch.\n"
+            ]
+        },
         "rnd.next": {
             "prefix": "rnd.next",
             "body": "rnd.next(${1:[Type limit]})",

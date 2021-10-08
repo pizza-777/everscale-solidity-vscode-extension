@@ -1477,7 +1477,15 @@
             "body": "block.timestamp",
             "description": [
                 "block.timestamp returns (uint64);\n",
-                "Returns the starting logical time of the current block."
+                "Returns the starting logical time of the current block.\n"
+            ]
+        },
+        "now": {
+            "prefix": "now",
+            "body": "now",
+            "description": [
+                "Example:\nuint start = now;\n",
+                "It is the number of seconds since the Epoch.\n"
             ]
         },
         "rnd.next": {

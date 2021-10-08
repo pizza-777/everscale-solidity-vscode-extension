@@ -374,7 +374,7 @@
             "name": "constant.language.boolean"
         },
         "constant-time": {
-            "match": "\\b(seconds|minutes|hours|days|weeks|years)\\b",
+            "match": "\\b(seconds|minutes|hours|days|weeks|years|now)\\b",
             "name": "constant.language.time"
         },
         "constant-currency": {

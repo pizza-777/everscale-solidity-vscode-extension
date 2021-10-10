@@ -28,10 +28,10 @@ function getSnippetType(body) {
     }
     if (body.match(/QueryCollection|SortDirection|QueryStatus/)) { return vscode.CompletionItemKind.Enum; }
     if (body.match(/QueryOrderBy/)) { return vscode.CompletionItemKind.Struct; }
- 
+
     if (body.match(/\b(pragma|static|functionID|externalMsg|internalMsg|inline|constant|public|virtual|override|now)\b/)) {
         return vscode.CompletionItemKind.Keyword;
-    }    
+    }
     if (body.match(/\b(enum)\b/)) { return vscode.CompletionItemKind.Enum; }
     if (body.match(/\b(struct)\b/)) { return vscode.CompletionItemKind.Struct; }
     if (body.match(/\b(event)\b/)) { return vscode.CompletionItemKind.Struct; }
@@ -107,9 +107,9 @@ function getErrors(string) {
             errorLenght,
             severity,
             source
-            }
-        })
-    
+        }
+    })
+
 }
 
 function getHoverItems(word, document) {
@@ -136,22 +136,33 @@ function getHoverItems(word, document) {
     }
     return suggestion;
 }
-function filterSnippets(word, completions){
-    let array = Object.entries(completions);
-    let filtered = array.filter((value)=>{
-        if(value[1].prefix.includes(word)){            
+function compareSnippetItemsWithWord(snippets, word) {
+    return snippets.filter((value) => {
+        if (value[1].prefix.includes(word)) {
             return true;
-        }  
+        }
     })
-    filtered = filtered.map((value)=>{
-        if(word.match(/\./)){            
+}
+function filterSnippets(word, completions) {
+    let snippets = Object.entries(completions);
+    let filtered = compareSnippetItemsWithWord(snippets, word);
+    // try to find methods like variable.tonMethodName
+    if (filtered.length == 0) {
+        let method = word.match(/(.*)\.(.*)/);
+        if (method !== null) {
+            filtered = compareSnippetItemsWithWord(snippets, method[2]);
+        }
+    }
+    filtered = filtered.map((value) => {
+        if (word.match(/\./)) {
             let search = `${word.split(".")[0]}.`;
             value[1].body = value[1].body.replace(search, '');
-        }        
+        }
         return value;
     })
     return Object.fromEntries(filtered);
 }
+
 function getSnippetItems(document, position) {
     let wordRange = document.getWordRangeAtPosition(position, /[\.\w+]+/);
     const word = document.getText(wordRange);

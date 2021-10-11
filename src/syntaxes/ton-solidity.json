@@ -1127,7 +1127,7 @@
                     }
                 },
                 {
-                    "match": "(function)",
+                    "match": "\\b(function)\\b",
                     "captures": {
                         "1": {
                             "name": "storage.type.function"

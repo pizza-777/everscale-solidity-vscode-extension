@@ -98,8 +98,9 @@ function getErrors(string) {
         let position = !coord ? null : Number(coord[1]);
         let errorLenght = getErrorLenght(value[4]);
         let source = vscode.Uri.file(getErrorFilePath(value.join("\n")));
+        let info = value.join('\n').replaceAll(/\n[0-9]+/g,"\n");        
         return {
-            info: value.join('\r\n'),
+            info,
             coord: {
                 raw,
                 position

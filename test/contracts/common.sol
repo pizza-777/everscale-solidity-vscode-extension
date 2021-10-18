@@ -1,4 +1,18 @@
 pragma ton-solidity >= 0.47.0;
+pragma solidity 0.47.0;
+pragma solidity ^0.47.0;
+pragma solidity ~0.47.0;
+pragma solidity >0.47.0;
+pragma solidity >=0.47.0;
+pragma solidity <0.47.0;
+pragma solidity <=0.47.0;
+pragma solidity =0.47.0;
+pragma solidity 0.47.0;
+pragma solidity >=0.47.0 <0.50.0;
+pragma solidity ^0.47.0;
+pragma solidity ^0.47.0 || ^0.6.0;
+pragma solidity ^0.47.0 || ^0.48.0 || ^0.50.0;
+pragma ton-solidity >= 0.47.0;
 pragma AbiHeader time;
 pragma AbiHeader pubkey;
 pragma AbiHeader expire;
@@ -31,11 +45,9 @@ contract Test {
 
     uint static a; // ok
     uint public static b;
-    uint constant c;
-
     struct Name {
-        uint b;    
-    }    
+        uint b;
+    }
 
     constructor(uint a) public {}
 
@@ -44,7 +56,7 @@ contract Test {
 
          if (true) {
          } else {
-         }   
+         }
          //Name.unpack();
         uint[] arr;
         require(arr.empty());
@@ -55,17 +67,17 @@ contract Test {
     modifier testModifier() {
         _;
     }
-   
+
    function fview(uint b) view public returns (uint) {
        repeat(10) {
-           
+
        }
-       for ((uint256 key, string value) : testMapping) { // iteration over mapping 
-          
-       }      
+       for ((uint256 key, string value) : testMapping) { // iteration over mapping
+
+       }
        bytes byteArray = "Hello!";
        for (byte d : byteArray) {
-            
+
        }
 
        return b;
@@ -78,7 +90,7 @@ contract Test {
     uint32 key;
     uint256 value;
     function tvmcellfunc() public {
-        tcellvar.depth();       
+        tcellvar.depth();
         tcellvar.dataSize(10);
         tcellvar.dataSizeQ(1);
         tcellvar.toSlice();
@@ -87,12 +99,12 @@ contract Test {
     function optTest() public {
         optional(uint) opt;
         opt.set(11);
-        opt = 22; 
+        opt = 22;
         opt.get() = 33;
         opt.reset();
-        optional(uint) x = 123; 
-        opt.hasValue(); 
-        
+        optional(uint) x = 123;
+        opt.hasValue();
+
     }
 
     function vectorTest() public {
@@ -102,7 +114,7 @@ contract Test {
         vect.push(111);
         vect.pop();
         vect.length();
-        vect.empty();        
+        vect.empty();
     }
 
     function tonUnits() public {
@@ -127,7 +139,7 @@ contract Test {
          message.depth();
          message.dataSize(n);
          message.dataSizeQ(n);
-         TvmSlice s = message.toSlice();  
+         TvmSlice s = message.toSlice();
          s.empty();
          s.size();
          s.bits();
@@ -166,7 +178,7 @@ contract Test {
          builder.storeUnsigned(u8,u16);
          builder.storeRef(message);
          builder.storeTons(uint128(10));
-         
+
          ExtraCurrencyCollection curCol;
           optional(uint32, uint256) res = curCol.min();
          res = curCol.next(1);
@@ -180,7 +192,7 @@ contract Test {
         bool isEmpty = curCol.empty();
         bool success = curCol.replace(key, value);
         success = curCol.add(key, value);
-        bool index; 
+        bool index;
         //success = curCol[index];
     }
 
@@ -258,10 +270,10 @@ contract Test {
         uint bitCnt;
         address addrExtern = address.makeAddrExtern(addrNumber, bitCnt);
 
-        //addrr.wid(); 
+        //addrr.wid();
 
-        address(this).currencies; 
-        address(this).balance; 
+        address(this).currencies;
+        address(this).balance;
         address(this).getType();
 
         address dest = address(0);
@@ -276,12 +288,12 @@ contract Test {
         dest.transfer(m, bounce);
         dest.transfer(m, bounce, flag);
         dest.transfer(m, bounce, flag, body);
-        dest.transfer(m, bounce, flag, body, c); 
+        dest.transfer(m, bounce, flag, body, c);
         // using named parameters
         dest.transfer({value: m, bounce: false, flag: 128, body: body, currencies: c});
         dest.transfer({bounce: false, value: 1 ton, flag: 128, body: body});
         dest.transfer({value: 1 ton, bounce: false});
-        
+
         testMapping.min();
         testMapping.max();
         testMapping.next(1);
@@ -313,7 +325,7 @@ contract Test {
         } else if (mode == 1) {
             fun = getSub;
         }
-        return fun(a, b); // if `fun` isn't initialized then exception is thrown 
+        return fun(a, b); // if `fun` isn't initialized then exception is thrown
     }
 
     function re() public {
@@ -339,7 +351,7 @@ contract Test {
         msg.isInternal;
         msg.createdAt;
         msg.data;
-        
+
         tvm.accept();
         tvm.commit();
         tvm.rawCommit();
@@ -349,25 +361,25 @@ contract Test {
         tvm.log('log');
         TvmBuilder bld;
         bld.storeUnsigned(0x9876543210, 40);
-        c = bld.toCell(); 
+        c = bld.toCell();
         tvm.hexdump(a);
         tvm.bindump(c);
         a = 123;
         tvm.hexdump(a);
-        tvm.bindump(a); 
+        tvm.bindump(a);
         int b = -333;
         tvm.hexdump(b);
         tvm.bindump(b);
 
         tvm.setcode(c);
         tvm.configParam(a);
-        tvm.rawReserve(1, 2);     
+        tvm.rawReserve(1, 2);
         tvm.hash('string');
         tvm.insertPubkey(c, msg.pubkey());
         tvm.buildStateInit(c,c);
         tvm.stateInitHash(256, 256, 256, 16);
         tvm.buildEmptyData(msg.pubkey());
-        TvmCell code = tvm.code();        
+        TvmCell code = tvm.code();
         tvm.codeSalt(code);
         TvmCell salt;
         tvm.setCodeSalt(code, salt);
@@ -375,13 +387,13 @@ contract Test {
         tvm.setPubkey(msg.pubkey());
         tvm.setCurrentCode(code);
         tvm.resetStorage();
-        tvm.functionId(dst);  
+        tvm.functionId(dst);
         tvm.encodeBody(dst,dst, a);
         tvm.exit();
-        tvm.exit1();  
+        tvm.exit1();
         uint8 flag;
         TvmCell msg;
-        tvm.sendrawmsg(msg, flag); 
+        tvm.sendrawmsg(msg, flag);
         uint a = 1;
         uint b = 2;
         math.min(a, b);
@@ -425,7 +437,7 @@ contract Test {
             onErrorId:uint32,
             stateInit:TvmCell,
             signBoxHandle:optional(uint32)
-            });        
+            });
         tvm.buildIntMsg({
             dest:address,
             value:uint128,
@@ -433,19 +445,19 @@ contract Test {
             bounce:bool,
             currencies:ExtraCurrencyCollection
             });
-    }    
-    
-    fallback() external { 
-      
     }
-    
+
+    fallback() external {
+
+    }
+
     onBounce(TvmSlice body) external {
     /*...*/
-    } 
-    
+    }
+
     onTickTock(bool isTock) external {
     /*...*/
-    }   
+    }
     function onCodeUpgrade() private{
     /*...*/
     }
@@ -454,11 +466,11 @@ contract Test {
     /*...*/
     }
 
-    function f2() public externalMsg { // this function receives only external messages 
+    function f2() public externalMsg { // this function receives only external messages
     /*...*/
-    }    
+    }
 
     function test(uint b) public {
         f1();
-    }    
- } 
+    }
+ }

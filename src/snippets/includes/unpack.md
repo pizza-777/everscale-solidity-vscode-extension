@@ -1,11 +1,11 @@
 ##### .unpack
 
-1. Unpacks all members stored in the struct.
+1\. Unpacks all members stored in the struct.
 ```
 <struct>.unpack() returns (TypeA /a/, TypeB /b/, ...);
 ```
 
-2. Parses <address> containing a valid MsgAddressInt (addr_std or addr_var), applies rewriting from the anycast (if present) to the same-length prefix of the address, and returns both the workchain wid and the 256-bit address value. If the address value is not 256-bit, or if <address> is not a valid serialization of MsgAddressInt, throws a cell deserialization exception.
+2\. Parses <address> containing a valid MsgAddressInt (addr_std or addr_var), applies rewriting from the anycast (if present) to the same-length prefix of the address, and returns both the workchain wid and the 256-bit address value. If the address value is not 256-bit, or if <address> is not a valid serialization of MsgAddressInt, throws a cell deserialization exception.
 
 It's wrapper for opcode REWRITESTDADDR.
 

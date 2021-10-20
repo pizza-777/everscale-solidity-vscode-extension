@@ -1,0 +1,14 @@
+pragma ton-solidity >= 0.47.0;
+pragma solidity 0.47.0;
+pragma solidity ^0.47.0;
+pragma solidity ~0.47.0;
+pragma solidity >0.47.0;
+pragma solidity >=0.47.0;
+pragma solidity <0.47.0;
+pragma solidity <=0.47.0;
+pragma solidity =0.47.0;
+pragma solidity 0.47.0;
+pragma solidity >=0.47.0 <0.50.0;
+pragma solidity ^0.47.0;
+pragma solidity ^0.47.0 || ^0.6.0;
+pragma solidity ^0.47.0 || ^0.48.0 || ^0.50.0;

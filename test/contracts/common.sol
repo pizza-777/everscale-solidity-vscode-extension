@@ -1,18 +1,4 @@
 pragma ton-solidity >= 0.47.0;
-pragma solidity 0.47.0;
-pragma solidity ^0.47.0;
-pragma solidity ~0.47.0;
-pragma solidity >0.47.0;
-pragma solidity >=0.47.0;
-pragma solidity <0.47.0;
-pragma solidity <=0.47.0;
-pragma solidity =0.47.0;
-pragma solidity 0.47.0;
-pragma solidity >=0.47.0 <0.50.0;
-pragma solidity ^0.47.0;
-pragma solidity ^0.47.0 || ^0.6.0;
-pragma solidity ^0.47.0 || ^0.48.0 || ^0.50.0;
-pragma ton-solidity >= 0.47.0;
 pragma AbiHeader time;
 pragma AbiHeader pubkey;
 pragma AbiHeader expire;
@@ -26,6 +12,7 @@ library MathHelper {
     uint constant MAX_VALUE = 300;
 
     uint t = now;
+	uint a = 100000000000000_000;
 
     // Library function
     function sum(uint a, uint b) internal pure returns (uint) {

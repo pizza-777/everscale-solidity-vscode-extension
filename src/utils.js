@@ -120,8 +120,9 @@ function getHoverItems(word, document) {
     let wordsHover = { ...wordsSetHover, ...abiFunctions, ...privateFunctions };
     let suggestion = null;
     let counter = 0;
-    if (word.match(/AbiHeader|msgValue|pragma|(ton-)?solidity/)) {
-        return getSnippetsIncludes(word);
+    let name = word.match(/AbiHeader|msgValue|pragma|(ton-)?solidity|push/);
+    if (name) {
+        return getSnippetsIncludes(name[0]);
     }
     let prefixLength = 0;
     for (const [, value] of Object.entries(wordsHover)) {

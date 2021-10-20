@@ -1524,6 +1524,7 @@
             "body": "rnd.shuffle(${1:uint someNumber(optional)})",
             "description": [
                 "Randomizes the random seed.\n",
+                "\n//(1)\nrnd.shuffle(uint someNumber);\n//(2)\nrnd.shuffle();\n",
                 "1. Mixes the random seed and someNumber\nrnd.shuffle(uint someNumber);",
                 "2. Mixes the random seed and the logical time of the current transaction."
             ]

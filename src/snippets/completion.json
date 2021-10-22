@@ -1583,15 +1583,6 @@
                 "uint static b = 123; // error\n"
             ]
         },
-        "public": {
-            "prefix": "public",
-            "body": "public",
-            "description": [
-                "For each public state variable, a getter function is generated. Generated function has the same name and return type as the public variable. This function can be called only locally. Public state variables are useful, because you don't need to write functions that return a particular state variable manually.\n",
-                "Example:\n",
-                "contract C {\n    uint public a;\n    uint public static b; // it's ok. Variable is public and static.\n}\n"
-            ]
-        },
         "inline": {
             "prefix": "inline",
             "body": "inline",
@@ -2490,6 +2481,111 @@
         "debot template": {
             "prefix": "debot template",
             "body": "pragma ton-solidity >=0.46.0;\npragma AbiHeader expire;\npragma AbiHeader time;\npragma AbiHeader pubkey;\nimport \"https://raw.githubusercontent.com/tonlabs/debots/main/Debot.sol\";\nimport \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/Terminal/Terminal.sol\";\n\ncontract ${1:Name} is Debot{\n\n    function start() public override {       \n    }\n    \n    function getDebotInfo() public functionID(0xDEB) override view returns(\n        string name, string version, string publisher, string key, string author,\n        address support, string hello, string language, string dabi, bytes icon\n    ) {\n        name = \"Test DeBot\";\n        version = \"0.0.1\";\n        publisher = \"publisher name\";\n        key = \"How to use\";\n        author = \"Author name\";\n        support = address.makeAddrStd(0, 0x000000000000000000000000000000000000000000000000000000000000);\n        hello = \"Hello, i am an test DeBot.\";\n        language = \"en\";\n        dabi = m_debotAbi.get();\n        icon = '';\n    }\n    \n    function getRequiredInterfaces() public view override returns (uint256[] interfaces) {\n        return [ Terminal.ID ];\n    }     \n}\n",
+            "description": ""
+        },
+        "int": {
+            "prefix": "int",
+            "body": "int",
+            "description": ""
+        },
+        "int8": {
+            "prefix": "int8",
+            "body": "int8",
+            "description": ""
+        },
+        "int16": {
+            "prefix": "int16",
+            "body": "uint16",
+            "description": ""
+        },
+        "int32": {
+            "prefix": "int32",
+            "body": "int32",
+            "description": ""
+        },
+        "int64": {
+            "prefix": "int64",
+            "body": "uint64",
+            "description": ""
+        },
+        "int128": {
+            "prefix": "int128",
+            "body": "int128",
+            "description": ""
+        },
+        "int256": {
+            "prefix": "int256",
+            "body": "int256",
+            "description": ""
+        },
+        "uint": {
+            "prefix": "uint",
+            "body": "uint",
+            "description": ""
+        },
+        "uint8": {
+            "prefix": "uint8",
+            "body": "uint8",
+            "description": ""
+        },
+        "uint16": {
+            "prefix": "uint16",
+            "body": "uint16",
+            "description": ""
+        },
+        "uint32": {
+            "prefix": "uint32",
+            "body": "uint32",
+            "description": ""
+        },
+        "uint64": {
+            "prefix": "uint64",
+            "body": "uint64",
+            "description": ""
+        },
+        "uint128": {
+            "prefix": "uint128",
+            "body": "uint128",
+            "description": ""
+        },
+        "uint256": {
+            "prefix": "uint256",
+            "body": "uint256",
+            "description": ""
+        },
+        "ExtraCurrencyCollection": {
+            "prefix": "ExtraCurrencyCollection",
+            "body": "ExtraCurrencyCollection",
+            "description": ""
+        },
+        "array": {
+            "prefix": "array",
+            "body": "array",
+            "description": ""
+        },
+        "vector": {
+            "prefix": "vector(Type)",
+            "body": "vector(${1:Type}",
+            "description": ""
+        },
+        "string": {
+            "prefix": "string",
+            "body": "string",
+            "description": ""
+        },
+        "bool": {
+            "prefix": "bool",
+            "body": "bool",
+            "description": ""
+        },
+        "hash": {
+            "prefix": "hash",
+            "body": "hash",
+            "description": ""
+        },
+        "bytes2": {
+            "prefix": "bytes2",
+            "body": "bytes2",
             "description": ""
         }
     }

@@ -100,10 +100,9 @@ function getErrors(string) {
         let raw = !coord ? null : Number(coord[0]);
         let position = !coord ? null : Number(coord[1]);
         let errorLenght = getErrorLenght(value[4]);
-        let source = vscode.Uri.file(getErrorFilePath(value.join("\n")));
-        let info = value.join('\n').replaceAll(/\n[0-9]+/g,"\n");        
+        let source = vscode.Uri.file(getErrorFilePath(value.join("\n")));       
         return {
-            info,
+            info: value[0],
             coord: {
                 raw,
                 position

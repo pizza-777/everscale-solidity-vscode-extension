@@ -158,7 +158,7 @@ function filterSnippets(word, completions) {
         }
     }
     filtered = filtered.map((value) => {
-        if (word.match(/\./)) {
+        if (word.match(/\./) && value[1].body.match(/\./)) {
             let search = `${word.split(".")[0]}.`;
             value[1].body = value[1].body.replace(search, '');
         }

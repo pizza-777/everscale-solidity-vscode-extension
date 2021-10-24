@@ -28,7 +28,7 @@
         },
         "pragma msgValue": {
             "prefix": "pragma msgValue",
-            "body": "pragma msgValue ${1: value};",
+            "body": "pragma msgValue ${1:value};",
             "description": [
                 "pragma msgValue <value>;\n",
                 "Allows specifying default value in nanotons attached to the internal messages that contract sends to call another contract. If it's not specified, this value is set to 10 000 000 nanotons.\n",
@@ -683,7 +683,7 @@
         },
         "format": {
             "prefix": "format",
-            "body": "format(${1: string template}, ${2:TypeA a, TypeB b, ...})",
+            "body": "format(${1:string template}, ${2:TypeA a, TypeB b, ...})",
             "description": [
                 "format(string template, TypeA a, TypeB b, ...) returns (string);\n",
                 "Builds a string with arbitrary parameters.\n",
@@ -693,7 +693,7 @@
         },
         "stoi": {
             "prefix": "stoi",
-            "body": "stoi(${1: string inputStr})",
+            "body": "stoi(${1:string inputStr})",
             "description": [
                 "stoi(string inputStr) returns (uint result, bool status);\n",
                 "Converts a string into an integer. String is meant to be number in decimal format,\nonly if string starts with '0x' it will be converted from a hexadecimal format. Function returns the integer, that can\nbe converted from uint to int and boolean status,\nwhich is false in case of illegal characters\nin the string. Warning: this function consumes too much gas,\nthat's why it's better not to use it onchain. ",
@@ -703,7 +703,7 @@
         },
         "address": {
             "prefix": "address",
-            "body": "address(${1: address_value})",
+            "body": "address",
             "description": [
                 "Constructs an address of type addr_std with\nzero workchain id and given address value.\n",
                 "Example:\n",
@@ -712,7 +712,7 @@
         },
         "address.makeAddrStd": {
             "prefix": "address.makeAddrStd",
-            "body": "address.makeAddrStd(${1: workchainId}, ${2: address})",
+            "body": "address.makeAddrStd(${1:workchainId}, ${2:address})",
             "description": "Constructs an address of type addr_std\nwith given workchain id wid and value address_value.\n"
         },
         "address.makeAddrNone": {
@@ -722,7 +722,7 @@
         },
         "address.makeAddrExtern": {
             "prefix": "address.makeAddrExtern",
-            "body": "address.makeAddrExtern(${1: addrNumber}, ${2: bitCnt})",
+            "body": "address.makeAddrExtern(${1:addrNumber}, ${2:bitCnt})",
             "description": "Constructs an address of type addr_extern with given value with bitCnt bit length.\n"
         },
         "<address>.wid": {
@@ -2124,7 +2124,7 @@
         },
         "QueryOrderBy": {
             "prefix": "QueryOrderBy",
-            "body": "QueryOrderBy(${1:string F.E.:created_lt}, ${2: SortDirection});",
+            "body": "QueryOrderBy(${1:string F.E.:created_lt}, ${2:SortDirection});",
             "description": [
                 "Example:\n",
                 "QueryOrderBy(\"created_lt\", SortDirection.Ascending));\n"

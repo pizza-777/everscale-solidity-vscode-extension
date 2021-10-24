@@ -38,6 +38,7 @@ function activate(context) {
 		{
 			provideHover(document, position) {
 				const wordRange = document.getWordRangeAtPosition(position, /[_a-zA-Z0-9\.]{1,100}/);
+				if(typeof wordRange == 'undefined') return;
 				const word = document.getText(wordRange);
 				return new vscode.Hover(getHoverItems(word, document));
 			}

@@ -34,7 +34,7 @@
             "close": ")"
         },
         {
-            "open": "/**",
+            "open": "/*",
             "close": " */",
             "notIn": [
                 "string"

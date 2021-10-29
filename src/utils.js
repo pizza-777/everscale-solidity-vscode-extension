@@ -4,11 +4,14 @@ const { parseAbiFunctions, parsePrivateFunctions } = require("./parser");
 const snippetsJsonHover = require("./snippets/hover.json");
 const wordsSetHover = snippetsJsonHover['.source.ton-solidity'];
 
-const snippetsJsonCompletion = require("./snippets/completion.json");
-const wordsSetCompletion = snippetsJsonCompletion['.source.ton-solidity'];
-
 const fs = require("fs");
 const path = require('path');
+
+function wordsSetCompletion() {
+    let snippetsPath = path.resolve(__dirname, "snippets/completion.json");
+    let snippetsJsonCompletion = JSON.parse(fs.readFileSync(snippetsPath, "utf-8"));
+    return snippetsJsonCompletion['.source.ton-solidity'];
+}
 
 function formatDescription(description) {
     if (Array.isArray(description)) {
@@ -25,7 +28,7 @@ function getSnippetsIncludes(name) {
 function getSnippetType(body) {
     if (body.match(/(debot|AddressInput|AmountInput|Base64|ConfirmInput|CountryInput|DateTimeInput|EncryptionBoxInput|Hex|JsonDeserialize|Media|Menu|Network|NumberInput|QRCode|Query|Sdk|SecurityCardManagement|SigningBoxInput|Terminal|UserInfo)/)) {
         return vscode.CompletionItemKind.Interface;
-    } 
+    }
     if (body.match(/\b(TvmCell|TvmSlice|TvmBuilder|ExtraCurrencyCollection|address|array|vector|Type|string\d*|bytes\d*|bytes|byte|int\d*|uint\d*|bool|hash\d*)\b/)) {
         return vscode.CompletionItemKind.Variable;
     }
@@ -100,7 +103,7 @@ function getErrors(string) {
         let raw = !coord ? null : Number(coord[0]);
         let position = !coord ? null : Number(coord[1]);
         let errorLenght = getErrorLenght(value[4]);
-        let source = vscode.Uri.file(getErrorFilePath(value.join("\n")));       
+        let source = vscode.Uri.file(getErrorFilePath(value.join("\n")));
         return {
             info: value[0],
             coord: {
@@ -163,14 +166,14 @@ function filterSnippets(word, completions) {
             value[1].body = value[1].body.replace(search, '');
         }
         return value;
-    })
+    });
     return Object.fromEntries(filtered);
 }
 
 function getSnippetItems(document, position) {
     let wordRange = document.getWordRangeAtPosition(position, /[\.\w+]+/);
     const word = document.getText(wordRange);
-    let completions = { ...parseAbiFunctions(document), ...parsePrivateFunctions(document), ...wordsSetCompletion };
+    let completions = { ...parseAbiFunctions(document), ...parsePrivateFunctions(document), ...wordsSetCompletion() };
     let filtered = filterSnippets(word, completions);
     let completionItems = [];
     for (const [key, value] of Object.entries(filtered)) {
@@ -195,7 +198,7 @@ function getFuncData(funcName, funcs) {
 }
 
 function getSignatures(document, position) {
-    let funcs = { ...parseAbiFunctions(document), ...parsePrivateFunctions(document), ...wordsSetCompletion };
+    let funcs = { ...parseAbiFunctions(document), ...parsePrivateFunctions(document), ...wordsSetCompletion() };
     const wordRange = document.getWordRangeAtPosition(position, /[_a-zA-Z0-9\.\(\,]+/);;
     const funcName = document.getText(wordRange).replace(/\(.*/g, '');
     const data = getFuncData(funcName, funcs);

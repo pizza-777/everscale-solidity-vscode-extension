@@ -733,6 +733,7 @@
             "prefix": "address",
             "body": "address(${1: address_value})",
             "description": [
+                "Address represents different types of TVM addresses: addr_none, addr_extern, addr_std and addr_var.\n",
                 "Constructs an address of type addr_std with\nzero workchain id and given address value.\n",
                 "Example:\n",
                 "```\nuint address_value;\naddress addrStd = address(address_value);\n```\n"

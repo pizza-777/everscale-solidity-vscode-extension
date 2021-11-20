@@ -35,7 +35,7 @@ function getSnippetType(body) {
     if (body.match(/QueryCollection|SortDirection|QueryStatus/)) { return vscode.CompletionItemKind.Enum; }
     if (body.match(/QueryOrderBy/)) { return vscode.CompletionItemKind.Struct; }
 
-    if (body.match(/\b(pragma|static|functionID|externalMsg|internalMsg|inline|constant|public|virtual|override|now)\b/)) {
+    if (body.match(/\b(pragma|static|functionID|externalMsg|internalMsg|inline|constant|public|external|responsible|virtual|override|now)\b/)) {
         return vscode.CompletionItemKind.Keyword;
     }
     if (body.match(/\b(enum)\b/)) { return vscode.CompletionItemKind.Enum; }

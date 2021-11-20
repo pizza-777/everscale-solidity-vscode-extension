@@ -76,6 +76,6 @@
     },
     "dependencies": {  
         "strip-comments": "^2.0.1",
-        "tondev": "^0.10.4"
+        "tondev": "^0.10.5"
     }
 }

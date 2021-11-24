@@ -1,5 +1,5 @@
 const vscode = require('vscode');
-const { parseAbiFunctions, parsePrivateFunctions } = require("./parser");
+const { parseAbiFunctions, parsePrivateFunctions, parseAbiVaribles } = require("./parser");
 
 const snippetsJsonHover = require("./snippets/hover.json");
 const wordsSetHover = snippetsJsonHover['.source.ton-solidity'];
@@ -25,11 +25,14 @@ function getSnippetsIncludes(name) {
     return fs.readFileSync(snippetPath, "utf8");
 }
 
-function getSnippetType(body) {
+function getSnippetType(body, description) {
     if (body.match(/(debot|AddressInput|AmountInput|Base64|ConfirmInput|CountryInput|DateTimeInput|EncryptionBoxInput|Hex|JsonDeserialize|Media|Menu|Network|NumberInput|QRCode|Query|Sdk|SecurityCardManagement|SigningBoxInput|Terminal|UserInfo)/)) {
         return vscode.CompletionItemKind.Interface;
     }
     if (body.match(/\b(TvmCell|TvmSlice|TvmBuilder|ExtraCurrencyCollection|address|array|vector|Type|string\d*|bytes\d*|bytes|byte|int\d*|uint\d*|bool|hash\d*)\b/)) {
+        return vscode.CompletionItemKind.Variable;
+    }
+    if (description == 'variable') {
         return vscode.CompletionItemKind.Variable;
     }
     if (body.match(/QueryCollection|SortDirection|QueryStatus/)) { return vscode.CompletionItemKind.Enum; }
@@ -120,7 +123,7 @@ function getErrors(string) {
 
 function getHoverItems(word, document) {
     let abiFunctions = highliteIt(parseAbiFunctions(document));
-    let privateFunctions = highliteIt(parsePrivateFunctions(document))
+    let privateFunctions = highliteIt(parsePrivateFunctions(document));
 
     let wordsHover = { ...wordsSetHover, ...abiFunctions, ...privateFunctions };
     let suggestion = null;
@@ -173,11 +176,11 @@ function filterSnippets(word, completions) {
 function getSnippetItems(document, position) {
     let wordRange = document.getWordRangeAtPosition(position, /[\.\w+]+/);
     const word = document.getText(wordRange);
-    let completions = { ...parseAbiFunctions(document), ...parsePrivateFunctions(document), ...wordsSetCompletion() };
+    let completions = { ...parseAbiFunctions(document), ...parsePrivateFunctions(document), ...parseAbiVaribles(document), ...wordsSetCompletion() };
     let filtered = filterSnippets(word, completions);
     let completionItems = [];
     for (const [key, value] of Object.entries(filtered)) {
-        const completionItem = new vscode.CompletionItem(value.prefix, getSnippetType(value.body.split("\n")[0]));
+        const completionItem = new vscode.CompletionItem(value.prefix, getSnippetType(value.prefix, value.description));
         completionItem.detail = key;
         completionItem.documentation = formatDescription(value['description']);
         completionItem.insertText = new vscode.SnippetString(value.body);

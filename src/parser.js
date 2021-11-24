@@ -57,6 +57,28 @@ function parseAbiFunctions(document) {
     return completions;
 }
 
+function parseAbiVaribles(document) {
+    let abi = getAbi(document);
+    let completions = {};
+    for (const [, variableItem] of Object.entries(abi.functions)) {
+        if (variableItem.inputs.length > 0) {
+            for (let index = 0; index < variableItem.inputs.length; index++) {
+                let name = variableItem.inputs[index].name;
+                completions[name] = { prefix: name, body: name, description: 'variable' };
+            }
+        }
+
+        if (variableItem.outputs.length > 0) {
+            for (let index = 0; index < variableItem.outputs.length; index++) {
+                let name = variableItem.outputs[index].name;
+                completions[name] = { prefix: name, body: name, description: 'variable' };
+            }
+        }
+    }
+
+    return completions;
+}
+
 function parsePrivateFunctions(document) {
     let code = document.getText();
     code = strip(code);
@@ -79,5 +101,6 @@ function parsePrivateFunctions(document) {
 
 module.exports = {
     parseAbiFunctions,
-    parsePrivateFunctions
+    parsePrivateFunctions,
+    parseAbiVaribles
 }

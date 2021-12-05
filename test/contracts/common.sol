@@ -1,4 +1,4 @@
-pragma ton-solidity >= 0.47.0;
+pragma ton-solidity >= 0.52.0;
 pragma AbiHeader time;
 pragma AbiHeader pubkey;
 pragma AbiHeader expire;
@@ -91,7 +91,6 @@ contract Test {
         opt.reset();
         optional(uint) x = 123;
         opt.hasValue();
-
     }
 
     function vectorTest() public {
@@ -184,6 +183,7 @@ contract Test {
     }
 
     function other(string s, bytes b, uint i) public {
+        tvm.setGasLimit(100000);
         b.empty();
         bytes byteArray = "abba";
         int index = 0;

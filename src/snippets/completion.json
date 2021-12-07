@@ -2349,14 +2349,6 @@
                 "Arguments:\n\nanswerId: uint32 - function id of result callback\nreturns:\n\npubkey: uint256 - public key of the card\n"
             ]
         },
-        "SecurityCardManagement.isKeyForHmacExist": {
-            "prefix": "SecurityCardManagement.isKeyForHmacExist",
-            "body": "SecurityCardManagement.isKeyForHmacExist(tvm.functionId(${1:uint32 callbackFunctionId}),${2:uint192 sn});",
-            "description": [
-                "Function from the security card library to get operation execution status\n",
-                "Arguments:\n\nanswerId: uint32 - function id of result callback\nsn:       uint192 - serial number of the card for checking\nreturns:\n\nresult: bool - result of operation\n"
-            ]
-        },
         "SecurityCardManagement.isCardExists": {
             "prefix": "SecurityCardManagement.isCardExists",
             "body": "SecurityCardManagement.isCardExists(tvm.functionId(${1:uint32 callbackFunctionId}), ${2:uint192 sn});",

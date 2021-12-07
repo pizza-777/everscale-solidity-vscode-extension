@@ -1356,7 +1356,7 @@
                     }
                 },
                 {
-                    "match": "\\b(SecurityCardManagement)\\.(getBlockHashes|turnOnWallet|setRecoveryData|getRecoveryData|getSerialNumber|getTonWalletAppletState|createKeyForHmac)\\b",
+                    "match": "\\b(SecurityCardManagement)\\.(getBlockHashes|turnOnWallet|setRecoveryData|getRecoveryData|getSerialNumber|getTonWalletAppletState|createKeyForHmac|deleteCard|getCardList|isCardExists)\\b",
                     "captures": {
                         "1": {
                             "name": "entity.name.interface"

@@ -1,4 +1,4 @@
-pragma ton-solidity >=0.46.0;
+pragma ton-solidity >=0.47.0;
 pragma AbiHeader expire;
 pragma AbiHeader time;
 pragma AbiHeader pubkey;
@@ -20,10 +20,9 @@ import "https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/Amoun
 import "https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/AddressInput/AddressInput.sol";
 import "https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/SecurityCardManagement/SecurityCardManagement.sol";
 import "https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/Sdk/Sdk.sol";
-import "https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/JsonDeserialize/Json.sol";
+import "https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/Json/Json.sol";
 import "https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/Query/Query.sol";
-import "https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/Menu/Menu.sol";
-import "https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/JsonDeserialize/Json.sol";
+import "https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/Menu/Menu.sol"; 
 import "https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/ConfirmInput/ConfirmInput.sol";
 
 contract TestDebot is Debot{
@@ -47,11 +46,10 @@ contract TestDebot is Debot{
         bytes iv;
         SecurityCardManagement.turnOnWallet(0, sn, p1, iv, cs);
         SecurityCardManagement.getBlockHashes(0);
-        SecurityCardManagement.deleteCard(tvm.functionId(0, sn));
+        SecurityCardManagement.deleteCard(0, sn);
         SecurityCardManagement.getCardList(0);
-        SecurityCardManagement.isCardExists(0, sn);
-        SecurityCardManagement.isKeyForHmacExist(0, sn);        
-               
+        SecurityCardManagement.isCardExists(0, sn);                
+                
         uint32 s;
         uint32 count;
         Sdk.substring(0, '', s, count); 
@@ -132,7 +130,7 @@ contract TestDebot is Debot{
         uint128 max1;
         AmountInput.get(0, "bytes prompt", decimal, min1, max1);
         AddressInput.get(0, "bytes prompt");
-        int r = stoi("1");        
+        (uint r, bool a) = stoi("1");        
     }
     
     function getDebotInfo() public functionID(0xDEB) override view returns(
@@ -157,9 +155,9 @@ contract TestDebot is Debot{
 
     function getInvokeMessage(uint paramName) public pure
         returns(TvmCell message) {
-            TvmCell body = tvm.encodeBody(debotName.funcName, paramName);
+            //TvmCell body = tvm.encodeBody(debotName.funcName, paramName);
             TvmBuilder message_;
-            message_.store(false, true, true, false, address(0), address(this));
+            //message_.store(false, true, true, false, address(0), address(this));
             message_.storeTons(0);
             message_.storeUnsigned(0, 1);
             message_.storeTons(0);
@@ -168,7 +166,7 @@ contract TestDebot is Debot{
             message_.store(uint32(0));
             message_.storeUnsigned(0, 1);
             message_.storeUnsigned(1, 1);
-            message_.store(body);
+            //message_.store(body);
             message = message_.toCell();
     }
     

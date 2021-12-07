@@ -2024,6 +2024,21 @@
                 "Example:\nMedia.output(tvm.functionId(setResult), \"PNG image\", format(\"data:image/png;base64,{}\", m_pngBase64));\n//=>function setResult(MediaStatus result);"
             ]
         },
+        "MediaStatus.Success": {
+            "prefix": "MediaStatus.Success",
+            "body": "MediaStatus.Success",
+            "description": ""
+        },
+        "MediaStatus.UnsupportedMediaType": {
+            "prefix": "MediaStatus.UnsupportedMediaType",
+            "body": "MediaStatus.UnsupportedMediaType",
+            "description": ""
+        },
+        "MediaStatus.InvalidDataScheme": {
+            "prefix": "MediaStatus.InvalidDataScheme",
+            "body": "MediaStatus.InvalidDataScheme",
+            "description": ""
+        },
         "Media.getSupportedMediaTypes": {
             "prefix": "Media.getSupportedMediaTypes",
             "body": "Media.getSupportedMediaTypes(tvm.functionId(${1:uint32 callbackFunctionId}));",
@@ -2530,7 +2545,7 @@
         },
         "import Json": {
             "prefix": "import Json",
-            "body": "import \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/JsonDeserialize/Json.sol\";",
+            "body": "import \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/Json/Json.sol\";",
             "description": ""
         },
         "import JsonLib": {

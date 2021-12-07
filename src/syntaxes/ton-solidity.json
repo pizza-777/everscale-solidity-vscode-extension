@@ -515,7 +515,7 @@
                     }
                 },
                 {
-                    "match": "\\b(tvm)\\.(accept|pubkey|setPubkey|hash|getData|log|hexdump|bindump|configParam|rawConfigParam|rawReserve|checkSign|insertPubkey|functionId|encodeBody|exit|exit1|buildExtMsg|buildIntMsg|sendrawmsg)\\b",
+                    "match": "\\b(tvm)\\.(accept|setGasLimit|pubkey|setPubkey|hash|getData|log|hexdump|bindump|configParam|rawConfigParam|rawReserve|checkSign|insertPubkey|functionId|encodeBody|exit|exit1|buildExtMsg|buildIntMsg|sendrawmsg)\\b",
                     "captures": {
                         "1": {
                             "name": "entity.name.class"
@@ -1396,6 +1396,17 @@
                         },
                         "2": {
                             "name": "entity.name.function"
+                        }
+                    }
+                },
+                {
+                    "match": "\\b(MediaStatus)\\.(Success|UnsupportedMediaType|InvalidDataScheme)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.enum"
+                        },
+                        "2": {
+                            "name": "entity.name.enum"
                         }
                     }
                 },

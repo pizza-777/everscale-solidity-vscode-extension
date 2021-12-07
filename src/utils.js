@@ -41,7 +41,7 @@ function getSnippetType(body, description) {
     if (body.match(/\b(pragma|static|functionID|externalMsg|internalMsg|inline|constant|public|external|responsible|virtual|override|now)\b/)) {
         return vscode.CompletionItemKind.Keyword;
     }
-    if (body.match(/\b(enum)\b/)) { return vscode.CompletionItemKind.Enum; }
+    if (body.match(/\b(enum|MediaStatus)\b/)) { return vscode.CompletionItemKind.Enum; }
     if (body.match(/\b(struct)\b/)) { return vscode.CompletionItemKind.Struct; }
     if (body.match(/\b(event)\b/)) { return vscode.CompletionItemKind.Struct; }
     if (body.match(/\..*\(/)) return vscode.CompletionItemKind.Method;

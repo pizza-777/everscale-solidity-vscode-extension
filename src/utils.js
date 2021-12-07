@@ -77,7 +77,7 @@ function getErrorLenght(errorString) {
 }
 
 function getErrorFilePath(string) {
-    let filePath = string.match(/\s([\w\.\/]+\.sol):/);
+    let filePath = string.match(/([\w\/\.-]*?\.sol):/);
     if (filePath == null || !filePath[1]) return null;
 
     if (fs.existsSync(filePath[1])) {

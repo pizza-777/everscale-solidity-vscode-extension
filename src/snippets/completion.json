@@ -28,7 +28,7 @@
             "body": "pragma msgValue ${1:value};",
             "description": [
                 "pragma msgValue <value>;\n",
-                "Allows specifying default value in nanotons attached to the internal messages that contract sends to call another contract. If it's not specified, this value is set to 10 000 000 nanotons.\n",
+                "Allows specifying default value in nanoevers attached to the internal messages that contract sends to call another contract. If it's not specified, this value is set to 10 000 000 nanoevers.\n",
                 "Example:\n",
                 "pragma msgValue 123456789;\n",
                 "pragma msgValue 1 ton;"
@@ -316,7 +316,7 @@
             "description": [
                 "Decodes parameters of the function or constructor (if contract type is provided). This function is usually used in onBounce function.\n",
                 "Example:\n",
-                "Decode parameters of the public function which doesn't return values:\n",
+                "Decode parameters of the public/external function without \"responsible\" attribute:\n",
                 "<TvmSlice>.decodeFunctionParams(functionName) returns (TypeA a, TypeB b, ...);\n",
                 "Decode parameters of the public function which returns values:\n",
                 "<TvmSlice>.decodeFunctionParams(functionName) returns (uint32 callbackFunctionId, TypeA a, TypeB b, ...);\n",
@@ -754,7 +754,7 @@
             "body": ".balance",
             "description": [
                 "address(this).balance returns (uint128);\n",
-                "Returns the balance of this contract in nanotons.\n"
+                "Returns the balance of this contract in nanoevers.\n"
             ]
         },
         "<address>.currencies": {
@@ -1043,7 +1043,7 @@
             "body": "msg.value",
             "description": [
                 "msg.value returns (uint128);\n",
-                "Returns:\n\tBalance of the inbound message in nanotons for internal message.\n\t0 for external message.\n\tUndefined value for tick/tock transaction."
+                "Returns:\n\tBalance of the inbound message in nanoevers for internal message.\n\t0 for external message.\n\tUndefined value for tick/tock transaction."
             ]
         },
         "msg.currencies": {
@@ -1200,7 +1200,7 @@
             "body": "tvm.rawReserve(${1:uint value}, ${2:uint8 flag});",
             "description": [
                 "tvm.rawReserve(uint value, uint8 flag);\ntvm.rawReserve(uint value, ExtraCurrencyCollection currency, uint8 flag);\n",
-                "Creates an output action which reserves reserve nanotons. It is roughly equivalent to create an outbound message carrying reserve nanotons to oneself, so that the subsequent output actions would not be able to spend more money than the remainder. It's a wrapper for opcodes \"RAWRESERVE\" and \"RAWRESERVEX\".\n"
+                "Creates an output action which reserves reserve nanoevers. It is roughly equivalent to create an outbound message carrying reserve nanoevers to oneself, so that the subsequent output actions would not be able to spend more money than the remainder. It's a wrapper for opcodes \"RAWRESERVE\" and \"RAWRESERVEX\".\n"
             ]
         },
         "tvm.hash": {
@@ -1578,7 +1578,7 @@
             "body": "valueToGas(${1:uint128 value}, ${2:int8 wid})",
             "description": [
                 "gasToValue(uint128 value, int8 wid) returns (uint128 gas)\n",
-                "Returns how much gas could be bought on value nanotons in workchain wid. Throws an exception if wid doesn't equal 0 and -1.\n"
+                "Returns how much gas could be bought on value nanoevers in workchain wid. Throws an exception if wid doesn't equal 0 and -1.\n"
             ]
         },
         "constant": {
@@ -1639,9 +1639,93 @@
             "prefix": "nano",
             "body": "nano",
             "description": [
-                "1 nano = 0.000000001 ton or 1e-9ton\n"
+                "1 nano = 0.000000001 ever or 1e-9 ever\n"
             ]
         },
+        "nanoever": {
+            "prefix": "nanoever",
+            "body": "nanoever",
+            "description": [
+                "1 nanoever == 0.000000001 ever or 1e-9ton\n"
+            ]
+        },
+        "Ever": {
+            "prefix": "Ever",
+            "body": "Ever",
+            "description": [
+                "1 Ever == 1e9 nanoever\n"
+            ]
+        },
+        "micro": {
+            "prefix": "micro",
+            "body": "micro",
+            "description": [
+                "1 Ever == 1e-6 ever\n"
+            ]
+        },
+        "microever": {
+            "prefix": "microever",
+            "body": "microever",
+            "description": [
+                "1 microever == 1e-6 ever\n"
+            ]
+        },
+        "milli": {
+            "prefix": "milli",
+            "body": "milli",
+            "description": [
+                "1 milli == 1e-3 ever\n"
+            ]
+        },
+        "milliever": {
+            "prefix": "milliever",
+            "body": "milliever",
+            "description": [
+                "1 milliever == 1e-3 ever\n"
+            ]
+        },
+        "kiloever": {
+            "prefix": "kiloever",
+            "body": "kiloever",
+            "description": [
+                "1 kiloever == 1e3 ever\n"
+            ]
+        },
+        "kEver": {
+            "prefix": "kEver",
+            "body": "kEver",
+            "description": [
+                "1 kEver == 1e3 ever\n"
+            ]
+        },
+        "megaever": {
+            "prefix": "megaever",
+            "body": "megaever",
+            "description": [
+                "1 kEver == 1e6 ever\n"
+            ]
+        },
+        "MEver": {
+            "prefix": "MEver",
+            "body": "MEver",
+            "description": [
+                "1 MEver == 1e6 ever\n"
+            ]
+        },
+        "gigaever": {
+            "prefix": "gigaever",
+            "body": "gigaever",
+            "description": [
+                "1 gigaever == 1e6 ever\n"
+            ]
+        },
+        "GEver": {
+            "prefix": "GEver",
+            "body": "GEver",
+            "description": [
+                "1 GEver == 1e6 ever\n"
+            ]
+        },        
         "nanoton": {
             "prefix": "nanoton",
             "body": "nanoton",
@@ -1649,39 +1733,11 @@
                 "1 nanoton == 0.000000001 ton or 1e-9ton\n"
             ]
         },
-        "nTon": {
-            "prefix": "nTon",
-            "body": "nTon",
-            "description": [
-                "1 nTon == 0.000000001 ton or 1e-9ton\n"
-            ]
-        },
-        "Ton": {
-            "prefix": "Ton",
-            "body": "Ton",
-            "description": [
-                "1 Ton == 1e9 nanoton\n"
-            ]
-        },
-        "micro": {
-            "prefix": "micro",
-            "body": "micro",
-            "description": [
-                "1 Ton == 1e-6 ton\n"
-            ]
-        },
         "microton": {
             "prefix": "microton",
             "body": "microton",
             "description": [
                 "1 microton == 1e-6 ton\n"
-            ]
-        },
-        "milli": {
-            "prefix": "milli",
-            "body": "milli",
-            "description": [
-                "1 milli == 1e-3 ton\n"
             ]
         },
         "milliton": {
@@ -1852,7 +1908,7 @@
                 "Returns:",
                 " - { value: uint128 } - amount of tokens multiplied by `10^decimals`. To get the integer part of an amount debot should divide value by `10^decimals`.",
                 "\nExample:",
-                "function start() public override {\n    AmountInput.get(tvm.functionId(setAmount), \"Enter amount of tons:\",  9, 1e9, 100e9);\n}\nfunction setAmount(uint128 value) public pure {\n    // TODO: continue here\n}"
+                "function start() public override {\n    AmountInput.get(tvm.functionId(setAmount), \"Enter amount of evers:\",  9, 1e9, 100e9);\n}\nfunction setAmount(uint128 value) public pure {\n    // TODO: continue here\n}"
             ]
         },
         "Base64.encode": {
@@ -2403,7 +2459,7 @@
             "description": [
                 "Shows formatted string message to the user.",
                 "\nArguments:",
-                " - answerId: uint32 — function id of callback, can be 0.\n - fmt: bytes — utf8 string as byte array that must be printed to the user\n - fargs: cell - cell with serialized format arguments that must be inserted into 'format' string replacing format specifiers (subsequences between '{}' brackets).\nFormat specifier is one of ABI type like '{int32}', '{address}', '{cell}', '{uint256[]}' and so on or one of the following types:\n - '{utime}' - prints unixtime in UTC date time format. Format argument is an 'uint32' integer.\n    - '{ton}' - prints number of tons in 'decimal.float' format with 9 digits after '.'.\nReturns: void\n",
+                " - answerId: uint32 — function id of callback, can be 0.\n - fmt: bytes — utf8 string as byte array that must be printed to the user\n - fargs: cell - cell with serialized format arguments that must be inserted into 'format' string replacing format specifiers (subsequences between '{}' brackets).\nFormat specifier is one of ABI type like '{int32}', '{address}', '{cell}', '{uint256[]}' and so on or one of the following types:\n - '{utime}' - prints unixtime in UTC date time format. Format argument is an 'uint32' integer.\n    - '{ton}' - prints number of evers in 'decimal.float' format with 9 digits after '.'.\nReturns: void\n",
                 "Example:\n",
                 "function formatPrint() public {\n    TvmBuilder b;\n    b.store(int8(1), uint32(10));\n    Terminal.printf(0, \"Enter number beetween {int8} and {uint32}\", b.toCell());\n}\n"
             ]
@@ -2644,6 +2700,36 @@
             "prefix": "uint256",
             "body": "uint256",
             "description": ""
+        },
+        "varInt": {
+            "prefix": "uint256",
+            "body": "uint256",
+            "description": "Use this type if you want to store or send integers, and they usually have small size."
+        },
+        "varInt16": {
+            "prefix": "varInt16",
+            "body": "varInt16",
+            "description": "Use this type if you want to store or send integers, and they usually have small size."
+        },
+        "varInt32": {
+            "prefix": "varInt32",
+            "body": "varInt32",
+            "description": "Use this type if you want to store or send uintegers, and they usually have small size."
+        },
+        "varUint": {
+            "prefix": "varUint",
+            "body": "varUint",
+            "description": "Use this type if you want to store or send uintegers, and they usually have small size."
+        },
+        "varUint16": {
+            "prefix": "varUint16",
+            "body": "varUint16",
+            "description": "Use this type if you want to store or send uintegers, and they usually have small size."
+        },
+        "varUint32": {
+            "prefix": "varUint32",
+            "body": "varUint32",
+            "description": "Use this type if you want to store or send uintegers, and they usually have small size."
         },
         "ExtraCurrencyCollection": {
             "prefix": "ExtraCurrencyCollection",

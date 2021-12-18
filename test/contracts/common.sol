@@ -1,4 +1,4 @@
-pragma ton-solidity >= 0.52.0;
+pragma ton-solidity >= 0.53.0;
 pragma AbiHeader time;
 pragma AbiHeader pubkey;
 pragma AbiHeader expire;
@@ -329,7 +329,8 @@ contract Test {
 
     function re() public {
         uint a = 5;
-
+        TvmCell m_cell;
+        
         require(a == 5); // ok
         require(a == 6); // throws an exception with code 100
         require(a == 6, 101); // throws an exception with code 101
@@ -392,7 +393,7 @@ contract Test {
         tvm.exit1();
         uint8 flag;
         TvmCell msg;
-        tvm.sendrawmsg(msg, flag);
+        tvm.sendrawmsg(msg, flag); 
         uint a = 1;
         uint b = 2;
         math.min(a, b);
@@ -470,6 +471,7 @@ contract Test {
     }
 
     function test(uint b) public {
-        f1();
-    }
+        
+        f1();                
+    }    
  }

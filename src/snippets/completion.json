@@ -2765,6 +2765,11 @@
             "prefix": "bytes2",
             "body": "bytes2",
             "description": ""
+        },
+        "this": {
+            "prefix": "this",
+            "body": "this",
+            "description": "This is the refer to enum, struct or contract"
         }
     }
 }

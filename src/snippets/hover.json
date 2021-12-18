@@ -2434,6 +2434,11 @@
                 "\nArguments:",
                 " - answerId: uint32 — function id of callback.\n\nReturns:\n\n - handle: uint32 — handle to signing keypair, can be 0.\n"
             ]
+        },
+        "this": {
+            "prefix": "this",
+            "body": "this",
+            "description": "This is the refer to enum, struct or contract"
         }
     }
 }

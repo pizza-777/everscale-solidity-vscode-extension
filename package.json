@@ -1,14 +1,12 @@
 {
     "name": "ton-solidity",
-    "displayName": "TON Solidity Support",
-    "description": "TON Solidity Language for Visual Studio Code",
-    "version": "1.1.35",
+    "displayName": "Everscale(TON) Solidity Support",
+    "description": "Everscale Solidity Language for Visual Studio Code",
+    "version": "1.1.36",
     "keywords": [
         "solidity",
         "ton-solidity",
-        "TON",
-        "FreeTON",
-        "Free TON",
+        "Everscale",              
         "blockchain",
         "tondev",
         "highlighting"

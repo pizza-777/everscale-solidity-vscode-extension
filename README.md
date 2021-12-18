@@ -1,6 +1,6 @@
-# TON Solidity support for Visual Studio Code
+# Everscale Solidity support for Visual Studio Code
 
-[TON Solidity](https://github.com/tonlabs/TON-Solidity-Compiler/blob/master/API.md) is the language used in Free TON blockchain to create smart contracts. This extension provides:
+[Everscale (TON) Solidity](https://github.com/tonlabs/TON-Solidity-Compiler/blob/master/API.md) is the language used in Everscale blockchain to create smart contracts. This extension provides:
 
 * Syntax highlighting
 * Snippets with details

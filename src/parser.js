@@ -75,10 +75,12 @@ function parseAbiVaribles(document) {
             }
         }
     }
-  
-    for (const [, variableItem] of Object.entries(abi.fields)) {
-        completions[variableItem.name] = { prefix: variableItem.name, body: variableItem.name, description: 'variable' };
+    if (typeof abi.fields !== 'undefined') {
+        for (const [, variableItem] of Object.entries(abi.fields)) {
+            completions[variableItem.name] = { prefix: variableItem.name, body: variableItem.name, description: 'variable' };
+        }
     }
+
     return completions;
 }
 

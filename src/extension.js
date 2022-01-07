@@ -1,5 +1,5 @@
 const vscode = require('vscode');
-const { controllers } = require('tondev');
+const { controllers } = require('everdev');
 const path = require('path');
 const { getErrors, getHoverItems, getSnippetItems, getSignatures } = require('./utils');
 

@@ -35,6 +35,9 @@
             "include": "#declaration"
         },
         {
+            "include": "#function-type"
+        },
+        {
             "include": "#function-call"
         },
         {
@@ -111,7 +114,7 @@
             "name": "storage.type.dev.natspec"
         },
         "natspec-tag-param": {
-            "match": "(@param)(\\s+([A-Za-z_]\\w*))?\\b",
+            "match": "(@param)(\\s+([A-Za-z_\\d]\\w*))?\\b",
             "captures": {
                 "1": {
                     "name": "storage.type.param.natspec"
@@ -653,6 +656,9 @@
         "variable": {
             "patterns": [
                 {
+                    "include": "#function-type"
+                },
+                {
                     "match": "\\b(\\_\\w+)\\b",
                     "captures": {
                         "1": {
@@ -682,10 +688,6 @@
             "patterns": [
                 {
                     "include": "#function-call"
-                },
-                {
-                    "match": "\\b(\\w+)\\b",
-                    "name": "entity.name.function.modifier"
                 }
             ]
         },
@@ -852,7 +854,7 @@
             ]
         },
         "declaration-library": {
-            "match": "\\b(library)(\\s+([A-Za-z_]\\w*))?\\b",
+            "match": "\\b(library)(\\s+([A-Za-z_\\d]\\w*))?\\b",
             "captures": {
                 "1": {
                     "name": "storage.type.library"
@@ -865,7 +867,7 @@
         "declaration-struct": {
             "patterns": [
                 {
-                    "match": "\\b(struct)(\\s+([A-Za-z_]\\w*))?\\b",
+                    "match": "\\b(struct)(\\s+([A-Za-z_\\d]\\w*))?\\b",
                     "captures": {
                         "1": {
                             "name": "storage.type.struct"
@@ -937,7 +939,7 @@
                     ]
                 },
                 {
-                    "match": "\\b(event)(\\s+([A-Za-z_]\\w*))?\\b",
+                    "match": "\\b(event)(\\s+([A-Za-z_\\d]\\w*))?\\b",
                     "captures": {
                         "1": {
                             "name": "storage.type.event"
@@ -1017,7 +1019,7 @@
                     ]
                 },
                 {
-                    "match": "\\b(enum)(\\s+([A-Za-z_]\\w*))?\\b",
+                    "match": "\\b(enum)(\\s+([A-Za-z_\\d]\\w*))?\\b",
                     "captures": {
                         "1": {
                             "name": "storage.type.enum"
@@ -1061,7 +1063,7 @@
         "declaration-function": {
             "patterns": [
                 {
-                    "begin": "\\b(function)\\s+(\\w+)\\b",
+                    "begin": "\\b(function)\\s+([A-Za-z_\\d])\\b",
                     "beginCaptures": {
                         "1": {
                             "name": "storage.type.function"
@@ -1108,7 +1110,7 @@
                     ]
                 },
                 {
-                    "match": "\\b(function)\\s+([A-Za-z_]\\w*)\\b",
+                    "match": "\\b(function)\\s+([A-Za-z_\\d]\\w*)\\b",
                     "captures": {
                         "1": {
                             "name": "storage.type.function"
@@ -1120,14 +1122,6 @@
                 },
                 {
                     "match": "\\.(get|set|reset|push|pop)\\b",
-                    "captures": {
-                        "1": {
-                            "name": "storage.type.function"
-                        }
-                    }
-                },
-                {
-                    "match": "\\b(function)\\b",
                     "captures": {
                         "1": {
                             "name": "storage.type.function"
@@ -1424,7 +1418,7 @@
             ]
         },
         "declaration-error": {
-            "match": "\\b(error)(\\s+([A-Za-z_]\\w*))?\\b",
+            "match": "\\b(error)(\\s+([A-Za-z_\\d]\\w*))?\\b",
             "captures": {
                 "1": {
                     "name": "storage.type.error"
@@ -1434,8 +1428,22 @@
                 }
             }
         },
+        "function-type": {
+            "match": "\\b(function)\\b\\s*(\\()(\\))",
+            "captures": {
+                "1": {
+                    "name": "support.type.primitive"
+                },
+                "2": {
+                    "name": "punctuation.parameters.begin"
+                },
+                "3": {
+                    "name": "punctuation.parameters.end"
+                }
+            }
+        },
         "function-call": {
-            "match": "\\b([A-Za-z_]\\w*)\\s*(\\()",
+            "match": "\\b([A-Za-z_\\d]+)\\b\\s*(\\()",
             "captures": {
                 "1": {
                     "name": "entity.name.function"

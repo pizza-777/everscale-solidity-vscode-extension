@@ -121,10 +121,10 @@ contract Test {
         require(1 GTon == 1e9 ton);
                 
         require(1 nanoever == 1);        
-        require(1 ever == 1e9 nanoton);
-        require(1 Ever == 1e9 nanoton);        
-        require(1 microever == 1e-6 ton);        
-        require(1 milliever == 1e-3 ton);
+        require(1 ever == 1e9 nanoever);
+        require(1 Ever == 1e9 nanoever);        
+        require(1 microever == 1e-6 ever);        
+        require(1 milliever == 1e-3 ever);
         require(1 kiloever == 1e3 ton);
         require(1 kEver == 1e3 ton);
         require(1 megaever == 1e6 ton);

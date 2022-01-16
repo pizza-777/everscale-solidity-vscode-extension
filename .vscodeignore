@@ -10,3 +10,5 @@ vsc-extension-quickstart.md
 .github/**
 vsix/**
 helpers/**
+src/abi/*tvc
+src/abi/*json

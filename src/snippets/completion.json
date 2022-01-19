@@ -1226,10 +1226,17 @@
         },
         "tvm.buildStateInit": {
             "prefix": "tvm.buildStateInit",
-            "body": "tvm.buildStateInit(${1|TvmCell code\\, TvmCell data, TvmCell code\\, TvmCell data\\, uint8 splitDepth,{code: TvmCell code\\, data: TvmCell data\\, splitDepth: uint8 splitDepth\\,pubkey: uint256 pubkey\\, contr: contract Contract\\, varInit: {VarName0: varValue0\\, ...}}|})",
+            "body": "tvm.buildStateInit(${1|TvmCell code\\, TvmCell data, TvmCell code\\, TvmCell data\\, uint8 splitDepth\\, {code: TvmCell code\\, data: TvmCell data\\, splitDepth: uint8 splitDepth\\, pubkey: uint256 pubkey\\, contr: contract Contract\\, varInit: {VarName0: varValue0\\, ...}}|})",
             "description": [
                 "returns (TvmCell stateInit)\n",
                 "Generates a StateInit (TBLKCH - 3.1.7.) from code and data.\n"
+            ]
+        },
+        "tvm.buildDataInit": {
+            "prefix": "tvm.buildDataInit",           
+            "body": "tvm.buildDataInit({pubkey: uint256 pubkey, contr: contract Contract, varInit: {VarName0: varValue0, ...}})",
+            "description": [
+                "Generates data field of the StateInit (TBLKCH - 3.1.7.). Parameters are the same as in tvm.buildStateInit().\n"               
             ]
         },
         "tvm.stateInitHash": {
@@ -1239,14 +1246,6 @@
                 "Calculates hash of the stateInit for given code and data specifications.\n",
                 "Example:\n",
                 "TvmCell code = ...;\nTvmCell data = ...;\nuint codeHash = tvm.hash(code);\nuint dataHash = tvm.hash(data);\nuint16 codeDepth = code.depth();\nuint16 dataDepth = data.depth();\nuint256 hash = tvm.stateInitHash(codeHash, dataHash, codeDepth, dataDepth);\n"
-            ]
-        },
-        "tvm.buildEmptyData": {
-            "prefix": "tvm.buildEmptyData",
-            "body": "tvm.buildEmptyData(${1:uint256 publicKey})",
-            "description": [
-                "tvm.buildEmptyData(uint256 publicKey) returns (TvmCell);\n",
-                "Generates a persistent storage of the contract that contains only public key. data can be used to generate StateInit (TBLKCH - 3.1.7.).\n"
             ]
         },
         "tvm.deploy": {
@@ -1344,9 +1343,9 @@
         },
         "tvm.buildExtMsg": {
             "prefix": "tvm.buildExtMsg",
-            "body": "tvm.buildExtMsg({\n\tdest: ${1:address},\n\ttime:${2:uint64},\n\texpire:${3:uint64},\n\tcall:{${4:functionIdentifier[, list_of_function_arguments]}},\n\tsign:${5:bool},\n\tpubkey:${6:optional(uint256)},\n\tabiVer:${7:uint8},\n\tcallbackId:${8:uint32},\n\tonErrorId:${9:uint32},\n\tstateInit:${10:TvmCell},\n\tsignBoxHandle:${11:optional(uint32)}\n\t\\});",
+            "body": "tvm.buildExtMsg({\n\tdest: ${1:address},\n\ttime:${2:uint64},\n\texpire:${3:uint64},\n\tcall:{${4:functionIdentifier[, list_of_function_arguments]}},\n\tsign:${5:bool},\n\tpubkey:${6:optional(uint256)},\n\tcallbackId:${8:uint32},\n\tonErrorId:${9:uint32},\n\tstateInit:${10:TvmCell},\n\tsignBoxHandle:${11:optional(uint32)}\n\t\\});",
             "description": [
-                "tvm.buildExtMsg({\n    dest: address,\n    time: uint64,\n    expire: uint32,\n    call: {function, [callbackFunction,] arg0, arg1, arg2, ...},\n    sign: bool,\n    pubkey: optional(uint256),\n    abiVer: uint8,\n    callbackId: uint32,\n    onErrorId: uint32,\n    stateInit: TvmCell,\n    signBoxHandle: optional(uint32)\n})\nreturns (TvmCell);\n",
+                "tvm.buildExtMsg({\n    dest: address,\n    time: uint64,\n    expire: uint32,\n    call: {function, [callbackFunction,] arg0, arg1, arg2, ...},\n    sign: bool,\n    pubkey: optional(uint256),\n    callbackId: uint32,\n    onErrorId: uint32,\n    stateInit: TvmCell,\n    signBoxHandle: optional(uint32)\n})\nreturns (TvmCell);\n",
                 "Function should be used only offchain and intended to be used only in debot contracts. Allows creating an external inbound message, that calls the func function of the contract on address destination with specified function arguments.\n\nMandatory parameters that are used to form a src address field that is used for debots: \n - abiVer :  ABI version. \n - callbackId : identifier of the callback function.\n - onErrorId : identifier of the function that is called in case of error.\n - signBoxHandle : handle of the sign box entity, that engine will use to sign the message.\n\nThese parameters are stored in addr_extern and placed to the src field of the message. Message is of type ext_in_msg_info and src addr is of type addr_extern but stores special data:\n - callback id : 32 bits; \n - on error id : 32 bits;\n - abi version : 8 bits;\n - header mask : 3 bits in such order: time, expire, pubkey;\n - optional value signBoxHandle : 1 bit (whether value presents) + [32 bits].\n\nOther function parameters define fields of the message: \n - time : message creation timestamp. Used for replay attack protection, encoded as 64 bit Unix time in milliseconds.\n - expire : Unix time (in seconds, 32 bit) after that message should not be processed by contract.\n - pubkey : public key from key pair used for signing the message body. This parameter is optional and can be omitted.\n - sign : constant bool flag that shows whether message should contain signature. If set to true, message is generated with signature field filled with zeroes. This parameter is optional and can be omitted (in this case is equal to false).\nUser can also attach stateInit to the message using stateInit parameter.\n\nFunction throws an exception with code 64 if function is called with wrong parameters (pubkey is set and has value, but sign is false or omitted).\n"
             ]
         },
@@ -1606,6 +1605,15 @@
                 "Instructs the compiler to insert a copy of the function body into each place where the function is called. Keyword can be used only for private and internal functions.\n",
                 "Example:\n",
                 "// This function is called as usual function.\nfunction getSum(uint a, uint b) public returns (uint) {\n    return sum(a, b);\n}\n\n// Code of this function is inserted to the place of call.\nfunction sum(uint a, uint b) private inline returns (uint) {\n    return a + b;\n}\n"
+            ]
+        },
+        "emptyMap": {
+            "prefix": "emptyMap",
+            "body": "emptyMap",
+            "description": [
+                "Keyword emptyMap is a constant that is used to indicate a mapping of arbitrary type without values.\n",
+                "Example:\n",
+                "\nstruct Stakes {\n    uint total;\n    mapping(uint => uint) stakes;\n}\n\n// create struct with empty mapping 'stakes'\nStakes stakes = Stakes({stakes: emptyMap, total: 200});\n\n"
             ]
         },
         "functionID": {

@@ -130,7 +130,10 @@ contract TestDebot is Debot{
         uint128 max1;
         AmountInput.get(0, "bytes prompt", decimal, min1, max1);
         AddressInput.get(0, "bytes prompt");
-        (uint r, bool a) = stoi("1");        
+        (uint r, bool a) = stoi("1");   
+
+        tvm.buildDataInit({pubkey: uint256 pubkey, contr: contract Contract, varInit: {VarName0: varValue0, ...}});
+        tvm.buildStateInit( TvmCell code, TvmCell data, uint8 splitDepth, {code: TvmCell code, data: TvmCell data, splitDepth: uint8 splitDepth, pubkey: uint256 pubkey, contr: contract Contract, varInit: {VarName0: varValue0, ...}})     
     }
     
     function getDebotInfo() public functionID(0xDEB) override view returns(

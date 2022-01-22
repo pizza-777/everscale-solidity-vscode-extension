@@ -630,11 +630,15 @@
                 {
                     "match": "\\b(type)\\b",
                     "name": "variable.language.type"
+                },
+                {
+                    "match": "\\b(functionID)\\b",
+                    "name": "keyword.control"
                 }
             ]
         },
         "type-modifier-access": {
-            "match": "\\b(internal|external|private|public|inline|externalMsg|internalMsg|functionID)\\b",
+            "match": "\\b(internal|external|private|public|inline|externalMsg|internalMsg)\\b",
             "name": "entity.name.function.modifier"
         },
         "type-modifier-payable": {

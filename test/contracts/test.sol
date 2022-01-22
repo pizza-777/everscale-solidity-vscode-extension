@@ -10,7 +10,7 @@ contract Test {
         mapping(uint => uint) stakes;
     }
     
-    function a() public{
+    function a() public functionID(12345){
        Stakes stakes = Stakes({stakes: emptyMap, total: 200});
     }
     function test(function() a, bool b) private returns(function()) {

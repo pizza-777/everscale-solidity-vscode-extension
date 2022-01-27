@@ -1,17 +1,17 @@
 {
-    "name": "ton-solidity",
-    "displayName": "Everscale(TON) Solidity Support",
+    "name": "solidity-support",
+    "displayName": "Everscale Solidity Support",
     "description": "Everscale Solidity Language for Visual Studio Code",
-    "version": "1.1.44",
+    "version": "1.2.0",
     "keywords": [
         "solidity",
         "ton-solidity",
         "Everscale",
         "blockchain",
-        "tondev",
+        "everdev",
         "highlighting"
     ],
-    "publisher": "zfreeton",
+    "publisher": "everscale",
     "license": "Apache-2.0",
     "licenses": [
         {
@@ -24,7 +24,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/pizza-777/ton-highlight.git"
+        "url": "https://github.com/pizza-777/everscale-solidity-vscode-extension.git"
     },
     "categories": [
         "Programming Languages",

@@ -15,13 +15,13 @@
 
 Launch Quick Open, paste the following command, and press <kbd>Enter</kbd>
 
-`ext install zfreeton.ton-solidity`
+`ext install everscale.solidity-support`
 
 ### CLI
 
 With [shell commands](https://code.visualstudio.com/docs/editor/command-line) installed, you can use the following command to install the extension:
 
-`$ code --install-extension zfreeton.ton-solidity`
+`$ code --install-extension everscale.solidity-support`
 
 ## Features
 

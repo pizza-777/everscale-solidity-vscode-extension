@@ -2,6 +2,7 @@ const vscode = require('vscode');
 const { controllers } = require('everdev');
 const path = require('path');
 const { getErrors, getHoverItems, getSnippetItems, getSignatures } = require('./utils');
+const { setLanguageMode } = require("./languageMode")
 
 let _tondevTerminal;
 let t_out;
@@ -9,8 +10,8 @@ const MODE = { scheme: 'file', language: 'ton-solidity' }
 /**
  * @param {vscode.ExtensionContext} context
  */
-function activate(context) {
 
+function activate(context) {
 	const signatureProvider = vscode.languages.registerSignatureHelpProvider(
 		MODE,
 		{
@@ -38,7 +39,7 @@ function activate(context) {
 		{
 			provideHover(document, position) {
 				const wordRange = document.getWordRangeAtPosition(position, /[_a-zA-Z0-9\.]{1,100}/);
-				if(typeof wordRange == 'undefined') return;
+				if (typeof wordRange == 'undefined') return;
 				const word = document.getText(wordRange);
 				return new vscode.Hover(getHoverItems(word, document));
 			}
@@ -56,17 +57,19 @@ function activate(context) {
 		updateDiagnostics(vscode.window.activeTextEditor.document, collection)
 	}
 	context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(editor => {
+		setLanguageMode();
 		if (editor) {
 			updateDiagnostics(editor.document, collection);
 		}
 	}));
 
-	context.subscriptions.push(vscode.workspace.onDidChangeTextDocument(async documentChangeEvent => {	
-			if (documentChangeEvent) {
-				updateDiagnostics(documentChangeEvent.document, collection);				
-			}					
+	context.subscriptions.push(vscode.workspace.onDidChangeTextDocument(async documentChangeEvent => {
+		if (documentChangeEvent) {
+			updateDiagnostics(documentChangeEvent.document, collection);
+		}
 	}));
 }
+
 
 async function updateDiagnostics(document, collection) {
 	if (document.languageId != MODE.language) return;

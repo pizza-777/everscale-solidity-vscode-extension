@@ -603,7 +603,7 @@
                     }
                 },
                 {
-                    "match": "\\.(currencies|balance|lenght)",
+                    "match": "\\.(currencies|balance|lenght|extMsg)",
                     "captures": {
                         "1": {
                             "name": "support.variable.property"
@@ -799,36 +799,21 @@
         "declaration-contract": {
             "patterns": [
                 {
-                    "match": "\\b(contract)\\b\\s+(\\w+)\\b",
+                    "match": "\\b(contract)\\b\\s+(\\w+)\\b(\\s+(is)\\s+(\\w+))?",
                     "captures": {
                         "1": {
                             "name": "storage.type.contract"
                         },
                         "2": {
                             "name": "entity.name.contract"
+                        },
+                        "4": {
+                            "name": "storage.modifier.is"
+                        },
+                        "5": {
+                            "name": "entity.name.contract"
                         }
                     }
-                },
-                {
-                    "begin": "\\b(contract)\\b\\s+(\\w+)\\b\\s+\\b(is)\\b\\s+",
-                    "end": "(?=\\{)",
-                    "beginCaptures": {
-                        "1": {
-                            "name": "storage.type.contract"
-                        },
-                        "2": {
-                            "name": "entity.name.contract"
-                        },
-                        "3": {
-                            "name": "storage.modifier.is"
-                        }
-                    },
-                    "patterns": [
-                        {
-                            "match": "\\b(\\w+)\\b",
-                            "name": "entity.name.contract.extend"
-                        }
-                    ]
                 }
             ]
         },

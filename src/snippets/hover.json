@@ -1560,6 +1560,26 @@
                 "2. Mixes the random seed and the logical time of the current transaction."
             ]
         },
+        "abi.encode": {
+            "prefix": "abi.encode",
+            "body": "abi.encode(${1:TypeA a}, ${2:TypeB b})",
+            "description": [
+                "Creates cell from the values.\n",
+                "```\nabi.encode(TypeA a, TypeB b, ...) returns (TvmCell /*cell*/);\n```\n",
+                "Example:\n",
+                "```\nTvmCell cell = abi.encode(uint(1), uint(2), uint(3), uint(4));\n```\n"
+            ]
+        },
+        "abi.decode": {
+            "prefix": "abi.decode",
+            "body": "abi.decode(${1:TvmCell}, (${2:TypeA}, ${3:TypeB}))",
+            "description": [
+                "```\nabi.decode(TvmCell cell, (TypeA, TypeB, ...)) returns (TypeA /*a*/, TypeB /*b*/, ...);\n```\n",
+                "Decodes the cell and returns the values. Note: all types must be set in abi.decode. Otherwise, abi.decode throws an exception.",                
+                "Example:\n",
+                "```\n(uint a, uint b, uint c, uint d) = abi.decode(cell, (uint, uint, uint, uint));\n```\n"
+            ]
+        },
         "selfdestruct": {
             "prefix": "selfdestruct",
             "body": "selfdestruct(${1:address dest_addr})",

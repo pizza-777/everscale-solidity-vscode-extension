@@ -799,7 +799,7 @@
         "declaration-contract": {
             "patterns": [
                 {
-                    "match": "\\b(contract)\\b\\s+(\\w+)\\b(\\s+(is)\\s+(\\w+))?",
+                    "match": "\\b(contract)\\b\\s+(\\w+)\\b(\\s+(is)\\s+(.+))?",
                     "captures": {
                         "1": {
                             "name": "storage.type.contract"

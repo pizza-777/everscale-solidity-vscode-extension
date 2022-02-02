@@ -6,9 +6,9 @@
             "description": [
                 "It's used to reject compilation source file with some versions of the compiler.\n",
                 "Example:\n",
-                "```\npragma ton-solidity >= 0.35.5; // Check compiler version is at least 0.35.5\n```",
-                "```\npragma ton-solidity ^ 0.35.5; // Check compiler version is at least 0.35.5 and less 0.36.0\n```",
-                "```\npragma ton-solidity \\< 0.35.5; // Check compiler version is less 0.35.5\n```\n"
+                "```\npragma ton-solidity >= 0.57.0; // Check compiler version is at least 0.57.0\n```",
+                "```\npragma ton-solidity ^ 0.57.0; // Check compiler version is at least 0.57.0 and less 0.57.0\n```",
+                "```\npragma ton-solidity \\< 0.57.0; // Check compiler version is less 0.57.0\n```\n"
             ]
         },
         "ignoreIntOverflow": {
@@ -41,7 +41,7 @@
                 "TON Solidity compiler allows user to import remote files using link starting with http. If import file name starts with http, then compiler tries to download the file using this link and saves it to the folder .solc_imports. If compiler fails to create this folder of to download the file, then an error is emitted.\n",
                 "** Note: **to import file from GitHub, one should use link to the raw version of the file.\n",
                 "Example:\n",
-                "```\npragma ton-solidity >=0.35.0;\n```\n",
+                "```\npragma ton-solidity >=0.57.0;\n```\n",
                 "```\npragma AbiHeader expire;\n```\n",
                 "```\npragma AbiHeader time;\n```\n",
                 "```\npragma AbiHeader pubkey;\n```\n",
@@ -2467,6 +2467,11 @@
             "prefix": "this",
             "body": "this",
             "description": "This is the refer to enum, struct or contract"
+        },
+        "extMsg": {
+            "prefix": ".extMsg",
+            "body": "extMsg",
+            "description": "Call options similar to buildExtMsg function call. Note: this type of call should be used only offchain in debot contracts.\n"
         }
     }
 }

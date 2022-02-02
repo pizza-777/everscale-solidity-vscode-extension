@@ -6,9 +6,9 @@
             "description": [
                 "It's used to reject compilation source file with some versions of the compiler.\n",
                 "Example:\n",
-                "pragma ton-solidity >= 0.35.5; // Check compiler version is at least 0.35.5",
-                "pragma ton-solidity ^ 0.35.5; // Check compiler version is at least 0.35.5 and less 0.36.0",
-                "pragma ton-solidity < 0.35.5; // Check compiler version is less 0.35.5"
+                "pragma ton-solidity >= 0.57.0; // Check compiler version is at least 0.57.0",
+                "pragma ton-solidity ^ 0.57.0; // Check compiler version is at least 0.57.0 and less 0.57.0",
+                "pragma ton-solidity < 0.57.0; // Check compiler version is less 0.57.0"
             ]
         },
         "ignoreIntOverflow": {
@@ -93,6 +93,10 @@
         "external": {
             "prefix": "external",
             "body": "external"
+        },
+        "override": {
+            "prefix": "override",
+            "body": "override"
         },
         "event declaration": {
             "prefix": "event",
@@ -2656,7 +2660,7 @@
         },
         "debot template": {
             "prefix": "debot template",
-            "body": "pragma ton-solidity >=0.46.0;\npragma AbiHeader expire;\npragma AbiHeader time;\npragma AbiHeader pubkey;\nimport \"https://raw.githubusercontent.com/tonlabs/debots/main/Debot.sol\";\nimport \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/Terminal/Terminal.sol\";\n\ncontract ${1:Name} is Debot{\n\n    function start() public override {       \n    }\n    \n    function getDebotInfo() public functionID(0xDEB) override view returns(\n        string name, string version, string publisher, string key, string author,\n        address support, string hello, string language, string dabi, bytes icon\n    ) {\n        name = \"Test DeBot\";\n        version = \"0.0.1\";\n        publisher = \"publisher name\";\n        key = \"How to use\";\n        author = \"Author name\";\n        support = address.makeAddrStd(0, 0x000000000000000000000000000000000000000000000000000000000000);\n        hello = \"Hello, i am an test DeBot.\";\n        language = \"en\";\n        dabi = m_debotAbi.get();\n        icon = '';\n    }\n    \n    function getRequiredInterfaces() public view override returns (uint256[] interfaces) {\n        return [ Terminal.ID ];\n    }     \n}\n",
+            "body": "pragma ton-solidity >=0.57.0;\npragma AbiHeader expire;\npragma AbiHeader time;\npragma AbiHeader pubkey;\nimport \"https://raw.githubusercontent.com/tonlabs/debots/main/Debot.sol\";\nimport \"https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/Terminal/Terminal.sol\";\n\ncontract ${1:Name} is Debot{\n\n    function start() public override {       \n    }\n    \n    function getDebotInfo() public functionID(0xDEB) override view returns(\n        string name, string version, string publisher, string key, string author,\n        address support, string hello, string language, string dabi, bytes icon\n    ) {\n        name = \"Test DeBot\";\n        version = \"0.0.1\";\n        publisher = \"publisher name\";\n        key = \"How to use\";\n        author = \"Author name\";\n        support = address.makeAddrStd(0, 0x000000000000000000000000000000000000000000000000000000000000);\n        hello = \"Hello, i am an test DeBot.\";\n        language = \"en\";\n        dabi = m_debotAbi.get();\n        icon = '';\n    }\n    \n    function getRequiredInterfaces() public view override returns (uint256[] interfaces) {\n        return [ Terminal.ID ];\n    }     \n}\n",
             "description": ""
         },
         "int": {
@@ -2798,6 +2802,11 @@
             "prefix": "this",
             "body": "this",
             "description": "This is the refer to enum, struct or contract"
+        },
+        "extMsg": {
+            "prefix": ".extMsg",
+            "body": "extMsg",
+            "description": "Call options similar to buildExtMsg function call. Note: this type of call should be used only offchain in debot contracts.\n"
         }
     }
 }

@@ -75,8 +75,7 @@ async function updateDiagnostics(document, collection) {
 	if (document.languageId != MODE.language) return;
 	collection.clear();
 	vscode.workspace.saveAll();
-	t_out = [];
-	_tondevTerminal = null;
+	t_out = [];	
 	let filePath = document.uri.fsPath;
 	if (path.extname(document.uri.fsPath) !== '.sol') {
 		return;

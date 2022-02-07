@@ -182,7 +182,7 @@
             ]
         },
         "operator-logic": {
-            "match": "(==|<(?!<)|<=|>(?!>)|>=|\\&\\&|\\|\\||\\:(?!=)|\\?)",
+            "match": "(\\!=|==|<(?!<)|<=|>(?!>)|>=|\\&\\&|\\|\\||\\:(?!=)|\\?)",
             "name": "keyword.operator.logic"
         },
         "operator-mapping": {
@@ -619,7 +619,7 @@
                     "name": "keyword.control.exceptions"
                 },
                 {
-                    "match": "\\b(selfdestruct|suicide|fallback|external|receive|onBounce|onTickTock|constructor)\\b",
+                    "match": "\\b(selfdestruct|suicide|fallback|receive|onBounce|onTickTock|constructor)\\b",
                     "name": "keyword.control.contract"
                 },
                 {
@@ -649,7 +649,7 @@
             ]
         },
         "type-modifier-access": {
-            "match": "\\b(internal|external|private|public|inline|externalMsg|internalMsg)\\b",
+            "match": "\\b(internal|external|private|public|inline|externalMsg|internalMsg|responsible)\\b",
             "name": "entity.name.function.modifier"
         },
         "type-modifier-payable": {

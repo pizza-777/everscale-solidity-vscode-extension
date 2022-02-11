@@ -2,7 +2,9 @@ const vscode = require('vscode');
 const { controllers } = require('everdev');
 const path = require('path');
 const { getErrors, getHoverItems, getSnippetItems, getSignatures } = require('./utils');
-const { setLanguageMode } = require("./languageMode")
+const { setLanguageMode } = require("./languageMode");
+const fs = require('fs');
+const { astParser } = require("./ast");
 
 let _tondevTerminal;
 let t_out;
@@ -63,6 +65,21 @@ function activate(context) {
 		}
 	}));
 
+	context.subscriptions.push(vscode.languages.registerDefinitionProvider(MODE, {
+		async provideDefinition(document, position) {
+			const wordRange = document.getWordRangeAtPosition(position, /[_a-zA-Z0-9\.]{1,100}/);
+			if (typeof wordRange == 'undefined') return;
+			const code = await getAst(document);
+			const data = astParser(code, document, wordRange);
+			if (data !== null && typeof data !== 'undefined') {
+				return new vscode.Location(
+					document.uri.with({ path: data.path }),
+					new vscode.Position(data.position.line, data.position.character)
+				);
+			}
+		}
+	}))
+
 	context.subscriptions.push(vscode.workspace.onDidChangeTextDocument(async documentChangeEvent => {
 		if (documentChangeEvent) {
 			updateDiagnostics(documentChangeEvent.document, collection);
@@ -75,7 +92,7 @@ async function updateDiagnostics(document, collection) {
 	if (document.languageId != MODE.language) return;
 	collection.clear();
 	vscode.workspace.saveAll();
-	t_out = [];	
+	t_out = [];
 	let filePath = document.uri.fsPath;
 	if (path.extname(document.uri.fsPath) !== '.sol') {
 		return;
@@ -104,6 +121,29 @@ async function updateDiagnostics(document, collection) {
 		}
 	})
 	collection.set(document.uri, collectionSet);
+}
+
+async function getAst(document) {
+	const compileCommand = controllers[1].commands[2];
+	const args = [];
+	args['file'] = document.uri.fsPath;;
+	args['outputDir'] = path.resolve(__dirname, 'abi');
+	args['format'] = 'compact-json';
+	let r = await runCommand(compileCommand, args);
+	if (r !== undefined) {
+		return;//some error happened
+	}
+	const astFilePath = path.resolve(args['outputDir'], `${path.parse(args.file).name}.ast.json`);
+	if (fs.existsSync(astFilePath) == true) {
+		const dirtyAst = fs.readFileSync(astFilePath, { encoding: 'utf-8' });
+		const cleanAst = dirtyAst.replace(/(.*)/, '[$1').replace(/(,)/, '$1{');;
+		try {
+			const obj = JSON.parse(cleanAst);
+			return obj;
+		} catch (e) {
+			return;
+		}
+	}
 }
 
 async function runCommand(command, args) {

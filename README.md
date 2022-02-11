@@ -7,6 +7,7 @@
 * Checking for errors, warnings and highlighting it
 * Display an information popup on hover
 * Suggesting function params when typing
+* Search of definition
 * [DeBots interfaces](https://github.com/tonlabs/DeBot-IS-consortium) highlighting, autocompletion, support for imports
 
 ## Installation
@@ -56,6 +57,10 @@ This extension only working with TON Solidity language. If You are using Ethereu
 You have quick switch between two solidity languages:
 
 ![language-switcher](https://user-images.githubusercontent.com/26024499/138431534-41d648c2-6770-44eb-a523-2404cf481015.gif)
+
+### Search of definition
+
+![go-to-definition](https://user-images.githubusercontent.com/26024499/153677773-f5954bab-e9e0-43be-9279-66e203c93242.gif)
 
 ## How to contribute
 

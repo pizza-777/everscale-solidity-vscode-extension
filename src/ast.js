@@ -3,14 +3,13 @@ const { findNodeById } = require("./ast/findNodeById");
 const fs = require('fs');
 
 function astParser(ast, document, position) {
-    if (typeof ast == 'undefined') return;
-    ast[1].absolutePath = document.uri.fsPath;
+    if (typeof ast == 'undefined') return;    
     const astPosition = convertPositionDocToAst(document, position)
     const node = findNodeByPosition(ast, astPosition);
     if (node !== null && typeof node !== 'undefined' && typeof node.referencedDeclaration !== 'undefined') {
         const referencedNode = findNodeById(ast, node.referencedDeclaration);
         const src = Number(referencedNode.src.split(":")[2]);
-        const solPath = ast[src + 1].absolutePath;
+        const solPath = ast[src].absolutePath;
         const docPosition = convertPositionAstToDoc(solPath, referencedNode.src);
         return {
             path: solPath,

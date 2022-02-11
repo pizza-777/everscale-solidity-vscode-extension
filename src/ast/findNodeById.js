@@ -36,11 +36,6 @@ function objectIterator(obj, id) {
     }
 }
 
-function getCoords(ast, node){
-    
-}
-
-
 module.exports = {
     findNodeById
 }

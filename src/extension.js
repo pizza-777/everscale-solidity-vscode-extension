@@ -135,10 +135,9 @@ async function getAst(document) {
 	}
 	const astFilePath = path.resolve(args['outputDir'], `${path.parse(args.file).name}.ast.json`);
 	if (fs.existsSync(astFilePath) == true) {
-		const dirtyAst = fs.readFileSync(astFilePath, { encoding: 'utf-8' });
-		const cleanAst = dirtyAst.replace(/(.*)/, '[$1').replace(/(,)/, '$1{');;
+		const ast = fs.readFileSync(astFilePath, { encoding: 'utf-8' });		
 		try {
-			const obj = JSON.parse(cleanAst);
+			const obj = JSON.parse(ast);
 			return obj;
 		} catch (e) {
 			return;

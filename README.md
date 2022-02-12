@@ -60,7 +60,7 @@ You have quick switch between two solidity languages:
 
 ### Search of definition
 
-![go-to-definition](https://user-images.githubusercontent.com/26024499/153677773-f5954bab-e9e0-43be-9279-66e203c93242.gif)
+![go-to-definition](https://user-images.githubusercontent.com/26024499/153705051-cf890bdc-2250-4278-a299-21d00452475f.gif)
 
 ## How to contribute
 

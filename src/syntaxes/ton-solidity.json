@@ -799,24 +799,36 @@
         "declaration-contract": {
             "patterns": [
                 {
-                    "match": "\\b(contract)\\b\\s+(\\w+)\\b(\\s+(is)\\s+(.+))?(\\{)",
+                    "match": "\\b(contract)\\b\\s+(\\w+)\\b\\s*(?=\\{)",
                     "captures": {
                         "1": {
                             "name": "storage.type.contract"
                         },
                         "2": {
-                            "name": "entity.name.contract"
-                        },
-                        "4": {
-                            "name": "storage.modifier.is"
-                        },
-                        "5": {
-                            "name": "entity.name.contract"
-                        },
-                        "6": {
-                            "name": "punctuation.brace.curly.begin"
+                            "name": "entity.name.type.contract"
                         }
                     }
+                },
+                {
+                    "begin": "\\b(contract)\\b\\s+(\\w+)\\b\\s+\\b(is)\\b\\s+",
+                    "end": "(?=\\{)",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "storage.type.contract"
+                        },
+                        "2": {
+                            "name": "entity.name.type.contract"
+                        },
+                        "3": {
+                            "name": "storage.modifier.is"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "match": "\\b(\\w+)\\b",
+                            "name": "entity.name.type.contract.extend"
+                        }
+                    ]
                 }
             ]
         },

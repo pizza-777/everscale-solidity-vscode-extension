@@ -69,8 +69,8 @@ function activate(context) {
 		async provideDefinition(document, position) {
 			const wordRange = document.getWordRangeAtPosition(position, /[_a-zA-Z0-9\.]{1,100}/);
 			if (typeof wordRange == 'undefined') return;
-			const code = await getAst(document);
-			const data = astParser(code, document, wordRange);
+			const ast = await getAst(document);
+			const data = astParser(ast, document, wordRange);
 			if (data !== null && typeof data !== 'undefined') {
 				return new vscode.Location(
 					document.uri.with({ path: data.path }),

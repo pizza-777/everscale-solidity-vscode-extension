@@ -799,7 +799,7 @@
         "declaration-contract": {
             "patterns": [
                 {
-                    "match": "\\b(contract)\\b\\s+(\\w+)\\b(\\s+(is)\\s+(.+))?",
+                    "match": "\\b(contract)\\b\\s+(\\w+)\\b(\\s+(is)\\s+(.+))?(\\{)",
                     "captures": {
                         "1": {
                             "name": "storage.type.contract"
@@ -812,6 +812,9 @@
                         },
                         "5": {
                             "name": "entity.name.contract"
+                        },
+                        "6": {
+                            "name": "punctuation.brace.curly.begin"
                         }
                     }
                 }

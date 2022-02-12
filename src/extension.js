@@ -130,7 +130,7 @@ async function getAst(document) {
 	args['outputDir'] = path.resolve(__dirname, 'abi');
 	args['format'] = 'compact-json';
 	let r = await runCommand(compileCommand, args);
-	if (r !== undefined) {
+	if ((Array.isArray(r) && r.lenght > 0)) {
 		return;//some error happened
 	}
 	const astFilePath = path.resolve(args['outputDir'], `${path.parse(args.file).name}.ast.json`);

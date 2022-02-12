@@ -5,7 +5,7 @@ const fs = require('fs');
 function astParser(ast, document, position) {
     if (typeof ast == 'undefined') return;    
     const astPosition = convertPositionDocToAst(document, position)
-    const node = findNodeByPosition(ast, astPosition);
+    const node = findNodeByPosition(ast, astPosition, document);
     if (node !== null && typeof node !== 'undefined' && typeof node.referencedDeclaration !== 'undefined') {
         const referencedNode = findNodeById(ast, node.referencedDeclaration);
         const src = Number(referencedNode.src.split(":")[2]);

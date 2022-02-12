@@ -1,6 +1,8 @@
-function findNodeByPosition(ast, position) {
-    if (Array.isArray(ast)) {
-        return arrayIterator(ast, position)
+function findNodeByPosition(ast, position, document) {
+    for (let i = 0; i < ast.length; i++) {
+        if (ast[i].absolutePath == document.uri.fsPath) {
+            return objectIterator(ast[i], position);
+        }
     }
 }
 

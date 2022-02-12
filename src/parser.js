@@ -90,6 +90,7 @@ function parsePrivateFunctions(document) {
     let privateFunctions = {};
     let matches = [...code.matchAll(/((function\s+([a-z_A-Z0-9]+))\((.*)\)(.*private.*)){/gm)];
     for (let item of matches) {
+        if(item[3].match(/onCodeUpgrade|constructor/)) continue;
         let params = item[4].split(",");
         let fparams = params.map((value, index) => {
             return `\${${Number(index + 1)}:${value}}`;

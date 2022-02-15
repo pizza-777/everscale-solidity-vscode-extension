@@ -109,10 +109,14 @@ async function updateDiagnostics(document, collection) {
 	let collectionSet = r.map(value => {
 		let line = Math.abs(value.coord.raw - 1);
 		let character = Math.abs(value.coord.position - 1);
+		let range = new vscode.Range(new vscode.Position(line, character), new vscode.Position(line, character + value.errorLenght)); 
+		if(value.source.fsPath !== document.uri.fsPath){
+			range = null;
+		}
 		return {
 			code: '',
 			message: value.info,
-			range: new vscode.Range(new vscode.Position(line, character), new vscode.Position(line, character + value.errorLenght)),
+			range,
 			severity: value.severity == 'Error' ? vscode.DiagnosticSeverity.Error : vscode.DiagnosticSeverity.Warning,
 			source: value.source.fsPath,
 			relatedInformation: [
@@ -135,7 +139,7 @@ async function getAst(document) {
 	}
 	const astFilePath = path.resolve(args['outputDir'], `${path.parse(args.file).name}.ast.json`);
 	if (fs.existsSync(astFilePath) == true) {
-		const ast = fs.readFileSync(astFilePath, { encoding: 'utf-8' });		
+		const ast = fs.readFileSync(astFilePath, { encoding: 'utf-8' });
 		try {
 			const obj = JSON.parse(ast);
 			return obj;

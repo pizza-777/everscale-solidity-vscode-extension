@@ -32,7 +32,7 @@ function activate(context) {
 				return getSnippetItems(document, position);
 			}
 		},
-		''
+		['','.']
 	);
 	context.subscriptions.push(completionProvider);
 

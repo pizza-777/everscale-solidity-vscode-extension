@@ -9,6 +9,7 @@ const { astParser } = require("./ast");
 let _tondevTerminal;
 let t_out;
 const MODE = { scheme: 'file', language: 'ton-solidity' }
+let ast;
 /**
  * @param {vscode.ExtensionContext} context
  */
@@ -32,7 +33,7 @@ function activate(context) {
 				return getSnippetItems(document, position);
 			}
 		},
-		['','.']
+		['', '.']
 	);
 	context.subscriptions.push(completionProvider);
 
@@ -69,7 +70,7 @@ function activate(context) {
 		async provideDefinition(document, position) {
 			const wordRange = document.getWordRangeAtPosition(position, /[_a-zA-Z0-9\.]{1,100}/);
 			if (typeof wordRange == 'undefined') return;
-			const ast = await getAst(document);
+			ast = await getAst(document);
 			const data = astParser(ast, document, wordRange);
 			if (data !== null && typeof data !== 'undefined') {
 				return new vscode.Location(
@@ -104,13 +105,14 @@ async function updateDiagnostics(document, collection) {
 	let r = await runCommand(compileCommand, args);
 
 	if (r == undefined) {
+		ast = getAst(document);
 		return;
 	}
 	let collectionSet = r.map(value => {
 		let line = Math.abs(value.coord.raw - 1);
 		let character = Math.abs(value.coord.position - 1);
-		let range = new vscode.Range(new vscode.Position(line, character), new vscode.Position(line, character + value.errorLenght)); 
-		if(value.source.fsPath !== document.uri.fsPath){
+		let range = new vscode.Range(new vscode.Position(line, character), new vscode.Position(line, character + value.errorLenght));
+		if (value.source.fsPath !== document.uri.fsPath) {
 			range = null;
 		}
 		return {

@@ -1,5 +1,5 @@
 const vscode = require('vscode');
-const { parseAbiFunctions, parsePrivateFunctions, parseAbiVaribles } = require("./parser");
+const { parseAstData } = require("./parser");
 
 const snippetsJsonHover = require("./snippets/hover.json");
 const wordsSetHover = snippetsJsonHover['.source.ton-solidity'];
@@ -21,11 +21,25 @@ function formatDescription(description) {
 }
 
 function getSnippetsIncludes(name) {
-    let snippetPath = path.resolve(__dirname, `snippets/includes/${name}.md`);
+    const snippetPath = path.resolve(__dirname, `snippets/includes/${name}.md`);
     return fs.readFileSync(snippetPath, "utf8");
 }
 
-function getSnippetType(body, description) {
+function getSnippetType(body, description, CompletionItemKind = null) {
+    if (CompletionItemKind !== null) {
+        switch (CompletionItemKind) {
+            case 'contract':
+                return vscode.CompletionItemKind.Class;
+            case 'interface':
+                return vscode.CompletionItemKind.Interface;
+            case 'variable':
+                return vscode.CompletionItemKind.Variable;
+            case 'constant':
+                return vscode.CompletionItemKind.Constant;
+            case 'function':
+                return vscode.CompletionItemKind.Function;
+        }
+    }
     if (body.match(/(debot|AddressInput|AmountInput|Base64|ConfirmInput|CountryInput|DateTimeInput|EncryptionBoxInput|Hex|JsonDeserialize|Media|Menu|Network|NumberInput|QRCode|Query|Sdk|SecurityCardManagement|SigningBoxInput|Terminal|UserInfo)/)) {
         return vscode.CompletionItemKind.Interface;
     }
@@ -69,7 +83,7 @@ function checkParam(find, str) {
 function getErrorLenght(errorString) {
     if (!errorString) return null;
 
-    let errorStringCounter = errorString.match(/[\^]/g);
+    const errorStringCounter = errorString.match(/[\^]/g);
     if (errorStringCounter == null) {
         return null;
     }
@@ -77,7 +91,7 @@ function getErrorLenght(errorString) {
 }
 
 function getErrorFilePath(string) {
-    let filePath = string.match(/([\w\/\.-]*?\.sol):/);
+    const filePath = string.match(/([\w\/\.-]*?\.sol):/);
     if (filePath == null || !filePath[1]) return null;
 
     if (fs.existsSync(filePath[1])) {
@@ -122,28 +136,36 @@ function getErrors(string) {
 }
 
 function getHoverItems(word, document) {
-    let abiFunctions = highliteIt(parseAbiFunctions(document));
-    let privateFunctions = highliteIt(parsePrivateFunctions(document));
-
-    let wordsHover = { ...wordsSetHover, ...abiFunctions, ...privateFunctions };
     let suggestion = null;
     let counter = 0;
     let name = word.match(/AbiHeader|msgValue|pragma|(ton-)?solidity|push/);
     if (name) {
         return getSnippetsIncludes(name[0]);
-    }
-    let prefixLength = 0;
-    for (const [, value] of Object.entries(wordsHover)) {
-        if (!checkParam(value.prefix, word)) continue;
-        //take the most matched value
-        if (value.prefix.length < prefixLength) continue;
-        if (value.prefix.length == prefixLength) counter++;
-        prefixLength = value.prefix.length;
+    } 
+   
+    function getSuggestions(wordsHover) {
+        let prefixLength = 0;
+        for (const [, value] of Object.entries(wordsHover)) {
+            if (!checkParam(value.prefix, word)) continue;
+            //take the most matched value
+            if (value.prefix.length < prefixLength) continue;
+            if (value.prefix.length == prefixLength) counter++;
+            prefixLength = value.prefix.length;
 
-        suggestion = formatDescription(value.description);
-        if (counter > 0) return getSnippetsIncludes(value.prefix.replace(/^\./, ''));
-
+            suggestion = formatDescription(value.description);
+            if (counter > 0) return getSnippetsIncludes(value.prefix.replace(/^\./, ''));
+        }
+        return suggestion;
     }
+    
+    suggestion = getSuggestions(wordsSetHover);
+
+    if (suggestion !== null) return suggestion;
+
+    const ast = highliteIt(parseAstData(document));
+    //TODO make like definition provider
+    suggestion = getSuggestions(ast);
+
     return suggestion;
 }
 function compareSnippetItemsWithWord(snippets, word) {
@@ -176,11 +198,11 @@ function filterSnippets(word, completions) {
 function getSnippetItems(document, position) {
     let wordRange = document.getWordRangeAtPosition(position, /[\.\w+]+/);
     const word = document.getText(wordRange);
-    let completions = { ...parseAbiFunctions(document), ...parsePrivateFunctions(document), ...parseAbiVaribles(document), ...wordsSetCompletion() };
+    let completions = { ...parseAstData(document), ...wordsSetCompletion() };
     let filtered = filterSnippets(word, completions);
     let completionItems = [];
     for (const [key, value] of Object.entries(filtered)) {
-        const completionItem = new vscode.CompletionItem(value.prefix, getSnippetType(value.prefix, value.description));
+        const completionItem = new vscode.CompletionItem(value.prefix, getSnippetType(value.prefix, value.description, value.CompletionItemKind ? value.CompletionItemKind : null));
         completionItem.detail = key;
         completionItem.documentation = formatDescription(value['description']);
         completionItem.insertText = new vscode.SnippetString(value.body);
@@ -201,7 +223,8 @@ function getFuncData(funcName, funcs) {
 }
 
 function getSignatures(document, position) {
-    let funcs = { ...parseAbiFunctions(document), ...parsePrivateFunctions(document), ...wordsSetCompletion() };
+    const astData = parseAstData(document);
+    let funcs = { ...astData, ...wordsSetCompletion() };
     const wordRange = document.getWordRangeAtPosition(position, /[_a-zA-Z0-9\.\(\,]+/);;
     const funcName = document.getText(wordRange).replace(/\(.*/g, '');
     const data = getFuncData(funcName, funcs);

@@ -44,7 +44,11 @@
                 "extensions": [
                     ".sol"
                 ],
-                "configuration": "./ton-solidity.configuration.json"
+                "configuration": "./ton-solidity.configuration.json",
+                "icon": {
+                    "light": "assets/everscale_icon_main_square.svg",
+                    "dark": "assets/everscale_icon_main_square.svg"
+                  }
             }
         ],
         "grammars": [

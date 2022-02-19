@@ -1,5 +1,7 @@
 const vscode = require('vscode');
-const { parseAstData } = require("./parser");
+const { parseAstData, getAst } = require("./parser");
+const { findHoverNode } = require("./ast");
+const { astHoverMarkdown } = require("./ast/astHoverMarkdown")
 
 const snippetsJsonHover = require("./snippets/hover.json");
 const wordsSetHover = snippetsJsonHover['.source.ton-solidity'];
@@ -135,14 +137,14 @@ function getErrors(string) {
 
 }
 
-function getHoverItems(word, document) {
+function getHoverItems(word, document, position) {
     let suggestion = null;
     let counter = 0;
     let name = word.match(/AbiHeader|msgValue|pragma|(ton-)?solidity|push/);
     if (name) {
         return getSnippetsIncludes(name[0]);
-    } 
-   
+    }
+
     function getSuggestions(wordsHover) {
         let prefixLength = 0;
         for (const [, value] of Object.entries(wordsHover)) {
@@ -157,16 +159,16 @@ function getHoverItems(word, document) {
         }
         return suggestion;
     }
-    
+
     suggestion = getSuggestions(wordsSetHover);
 
     if (suggestion !== null) return suggestion;
 
-    const ast = highliteIt(parseAstData(document));
-    //TODO make like definition provider
-    suggestion = getSuggestions(ast);
 
-    return suggestion;
+    //like definition provider
+    const ast = getAst(document);
+    const node = findHoverNode(ast, document, position);
+    if (node) return astHoverMarkdown(node);
 }
 function compareSnippetItemsWithWord(snippets, word) {
     return snippets.filter((value) => {

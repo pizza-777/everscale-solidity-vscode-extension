@@ -3,7 +3,7 @@ const { findNodeById } = require("./ast/findNodeById");
 const fs = require('fs');
 
 function astParser(ast, document, position) {
-    if (typeof ast == 'undefined') return;    
+    if (typeof ast == 'undefined') return;
     const astPosition = convertPositionDocToAst(document, position)
     const node = findNodeByPosition(ast, astPosition, document);
     if (node !== null && typeof node !== 'undefined' && typeof node.referencedDeclaration !== 'undefined') {
@@ -15,6 +15,22 @@ function astParser(ast, document, position) {
             path: solPath,
             position: docPosition
         }
+    }
+}
+
+function findHoverNode(ast, document, position) {
+    if (typeof ast == 'undefined') return;
+    position = {
+        start: {
+            line: position.line,
+            character: position.character
+        }
+    }
+    const astPosition = convertPositionDocToAst(document, position)
+    const node = findNodeByPosition(ast, astPosition, document);
+    if (node !== null && typeof node !== 'undefined' && typeof node.referencedDeclaration !== 'undefined') {
+        const refNode = findNodeById(ast, node.referencedDeclaration);
+        return refNode;
     }
 }
 
@@ -51,5 +67,6 @@ function convertPositionAstToDoc(solPath, astPosition) {
 }
 
 module.exports = {
-    astParser
+    astParser,
+    findHoverNode
 }

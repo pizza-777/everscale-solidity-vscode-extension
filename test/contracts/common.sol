@@ -471,7 +471,7 @@ contract Test {
     }
 
     function test(uint b) public {
-        
+        Foo(address(this)).bar{expire: 0x12345, time: 0x123}(123, 45).extMsg;
         f1();                
     }    
  }

@@ -1244,7 +1244,7 @@
             "prefix": "tvm.buildStateInit",
             "body": "tvm.buildStateInit(${1|TvmCell code\\, TvmCell data, TvmCell code\\, TvmCell data\\, uint8 splitDepth\\, {code: TvmCell code\\, data: TvmCell data\\, splitDepth: uint8 splitDepth\\, pubkey: uint256 pubkey\\, contr: contract Contract\\, varInit: {VarName0: varValue0\\, ...}}|})",
             "description": [
-                "returns (TvmCell stateInit)\n",
+                "```\nreturns (TvmCell stateInit)\n```\n",
                 "Generates a StateInit (TBLKCH - 3.1.7.) from code and data.\n"
             ]
         },

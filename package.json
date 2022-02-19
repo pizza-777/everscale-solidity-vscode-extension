@@ -73,6 +73,6 @@
         "vscode-test": "^1.5.2"
     },
     "dependencies": {
-        "everdev": "^1.1.0"
+        "everdev": "^1.1.1"
     }
 }

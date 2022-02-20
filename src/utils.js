@@ -168,7 +168,7 @@ function getHoverItems(word, document, position) {
     //like definition provider
     const ast = getAst(document);
     const node = findHoverNode(ast, document, position);
-    if (node) return astHoverMarkdown(node);
+    if (node) return astHoverMarkdown(node, ast);
 }
 function compareSnippetItemsWithWord(snippets, word) {
     return snippets.filter((value) => {

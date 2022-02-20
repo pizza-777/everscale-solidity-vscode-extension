@@ -1,7 +1,12 @@
 const { contractFilter } = require("./parser/parseContracts")
 const { functionFilter } = require("./parser/parseFunctions")
 
-function astHoverMarkdown(node) {
+var contractName = '';
+
+function astHoverMarkdown(node, ast) {
+    // get element source contract or interface name
+    contractName = getContractName(node, ast);
+
     let markdown = '';
     //variable
     const v = variableFilter(node);
@@ -29,9 +34,23 @@ function astHoverMarkdown(node) {
     return markdown;
 }
 
+function getContractName(node, ast = undefined){
+    if(typeof ast == 'undefined'){
+        return '';
+    }
+    let contractId = node.src.split(":")[2];
+    for(let i = 0; i < ast[contractId].nodes.length; i++){
+        node = ast[contractId].nodes[i];
+        const c = contractFilter(node);
+        if (c !== null && typeof node.contractKind !== 'undefined' && node.contractKind !== null) {
+            return  '\n//' + c.kind +' ' + c.name + '\n';
+        }
+    }
+}
+
 function variableMarkdown(node) {
     let md = '```\n';
-    md += node.documentation !== null ? '/*' + node.documentation + '*/\n' : '';
+    md += typeof node.documentation !== 'undefined' && node.documentation !== null ? '/*' + node.documentation + '*/\n' : '';
     md += node.typeDescriptions.typeString + ' ';
     md += node.constant ? 'constant ' : '';
     md += node.stateVariable ? 'static ' : '';
@@ -39,6 +58,7 @@ function variableMarkdown(node) {
     if (node.value !== null) {
         md += typeof node.value.value !== 'undefined' && node.value.value !== null ? '//' + node.value.value : '';
     }
+    md += contractName;
     md += '\n```';
 
     return md;
@@ -68,7 +88,7 @@ function functionMarkdown(node) {
     md += ')';
     md += '{}';
     md += '\n```';
-
+    md += contractName;
     return md;
 }
 function contractMarkdown(node) {
@@ -102,8 +122,8 @@ function modifierMarkdown(node) {
     md += input.join(", ");
     md += ') ';
     md += '{}';
-    md += '\n```';
-
+    md += contractName;
+    md += '\n```';    
     return md;
 }
 

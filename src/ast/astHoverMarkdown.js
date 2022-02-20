@@ -1,5 +1,4 @@
 const { contractFilter } = require("./parser/parseContracts")
-const { functionFilter } = require("./parser/parseFunctions")
 
 var contractName = '';
 
@@ -34,16 +33,16 @@ function astHoverMarkdown(node, ast) {
     return markdown;
 }
 
-function getContractName(node, ast = undefined){
-    if(typeof ast == 'undefined'){
+function getContractName(node, ast = undefined) {
+    if (typeof ast == 'undefined') {
         return '';
     }
     let contractId = node.src.split(":")[2];
-    for(let i = 0; i < ast[contractId].nodes.length; i++){
+    for (let i = 0; i < ast[contractId].nodes.length; i++) {
         node = ast[contractId].nodes[i];
         const c = contractFilter(node);
         if (c !== null && typeof node.contractKind !== 'undefined' && node.contractKind !== null) {
-            return  '\n//' + c.kind +' ' + c.name + '\n';
+            return '\n//' + c.kind + ' ' + c.name + '\n';
         }
     }
 }
@@ -66,7 +65,7 @@ function variableMarkdown(node) {
 function functionMarkdown(node) {
     let md = '```\n';
     md += node.documentation !== null ? '/*' + node.documentation + '*/\n' : '';
-    md += 'function ';
+    md += node.name == '' ? 'contstructor' : 'function ';
     md += node.name;
     md += '(';
     let params = node.parameters.parameters;
@@ -123,7 +122,7 @@ function modifierMarkdown(node) {
     md += ') ';
     md += '{}';
     md += contractName;
-    md += '\n```';    
+    md += '\n```';
     return md;
 }
 
@@ -147,6 +146,17 @@ function modifierFilter(obj) {
         obj.nodeType == 'ModifierDefinition'
     ) {
         if (obj.name !== '') return obj;
+    }
+    return null;
+}
+
+function functionFilter(obj) {
+    if (
+        obj !== null
+        && typeof obj.nodeType !== 'undefined'
+        && obj.nodeType == 'FunctionDefinition'
+    ) {
+        return obj;
     }
     return null;
 }

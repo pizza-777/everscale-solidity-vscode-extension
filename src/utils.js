@@ -232,13 +232,34 @@ function getSignatures(document, position) {
     const data = getFuncData(funcName, funcs);
     if (!data) return;
 
+    //get wrote params
+    const wordRangeParams = document.getWordRangeAtPosition(position, /\(.*/);;
+    const currentParams = document.getText(wordRangeParams);
+
     const signatureHelp = new vscode.SignatureHelp();
+
+    //get signature params
+    const paramsString = parseParams(data.label);
+
+    signatureHelp.activeParameter = currentParams.split(",").length - 1;
+
     const signatureInformation = new vscode.SignatureInformation(data.label);
+    signatureInformation.parameters = paramsString.map(param => {
+        return { label: param }
+    })
 
     signatureHelp.signatures = [
         signatureInformation
     ]
     return signatureHelp;
+}
+
+function parseParams(label) {
+    let paramsString = label.match(/\((.*)\)/);
+    if (paramsString !== null & typeof paramsString[1] !== 'undefined') {
+        return paramsString[1].split(",");
+    }
+    return [];
 }
 module.exports = {
     getErrors,

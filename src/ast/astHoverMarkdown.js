@@ -43,9 +43,9 @@ function functionMarkdown(node) {
     let params = node.parameters.parameters;
     let input = [];
     for (let index = 0; index < params.length; index++) {
-        input.push(params[index].typeDescriptions.typeString);
+        input.push(`${params[index].typeDescriptions.typeString} ${params[index].name}`);
     }
-    md += input.join(",");
+    md += input.join(", ");
     md += ') ';
     md += node.visibility;
     md += node.virtual ? 'virtual' : '';

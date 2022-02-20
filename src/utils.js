@@ -226,14 +226,16 @@ function getFuncData(funcName, funcs) {
 
 function getSignatures(document, position) {
     const astData = parseAstData(document);
-    let funcs = { ...astData, ...wordsSetCompletion() };
-    const wordRange = document.getWordRangeAtPosition(position, /[_a-zA-Z0-9\.\(\,]+/);;
-    const funcName = document.getText(wordRange).replace(/\(.*/g, '');
+    const funcs = { ...astData, ...wordsSetCompletion() };
+    const line = document.getText(new vscode.Range(new vscode.Position(position.line, 0), new vscode.Position(position.line, position.character)));
+    let funcName = line.match(/[_a-zA-Z0-9\.]+(?!.*([_a-zA-Z0-9\.]+)\(){1}/);
+    if (funcName == null) return;
+    funcName = funcName[0];
     const data = getFuncData(funcName, funcs);
     if (!data) return;
 
     //get wrote params
-    const wordRangeParams = document.getWordRangeAtPosition(position, /\(.*/);;
+    const wordRangeParams = document.getWordRangeAtPosition(position, /\(.*/);
     const currentParams = document.getText(wordRangeParams);
 
     const signatureHelp = new vscode.SignatureHelp();

@@ -19,11 +19,19 @@ function astHoverMarkdown(node) {
     if (c !== null) {
         markdown = contractMarkdown(node);
     }
+
+    //modifier
+    const m = modifierFilter(node);
+    if (m !== null) {
+        markdown = modifierMarkdown(node);
+    }
+
     return markdown;
 }
 
 function variableMarkdown(node) {
     let md = '```\n';
+    md += node.documentation !== null ? '/*' + node.documentation + '*/\n' : '';
     md += node.typeDescriptions.typeString + ' ';
     md += node.constant ? 'constant ' : '';
     md += node.stateVariable ? 'static ' : '';
@@ -37,6 +45,7 @@ function variableMarkdown(node) {
 }
 function functionMarkdown(node) {
     let md = '```\n';
+    md += node.documentation !== null ? '/*' + node.documentation + '*/\n' : '';
     md += 'function ';
     md += node.name;
     md += '(';
@@ -64,7 +73,7 @@ function functionMarkdown(node) {
 }
 function contractMarkdown(node) {
     let md = '```\n';
-    md += node.documentation !== null ? '/*' + node.documentation + '*/' : '';
+    md += node.documentation !== null ? '/*' + node.documentation + '*/\n' : '';
     md += node.abstract ? 'abstract ' : '';
     md += node.contractKind + ' ';
     md += node.name;
@@ -79,6 +88,25 @@ function contractMarkdown(node) {
     return md;
 }
 
+function modifierMarkdown(node) {
+    let md = '```\n';
+    md += node.documentation !== null ? '/*' + node.documentation + '*/\n' : '';
+    md += 'modifier ';
+    md += node.name;
+    md += '(';
+    let params = node.parameters.parameters;
+    let input = [];
+    for (let index = 0; index < params.length; index++) {
+        input.push(`${params[index].typeDescriptions.typeString} ${params[index].name}`);
+    }
+    md += input.join(", ");
+    md += ') ';
+    md += '{}';
+    md += '\n```';
+
+    return md;
+}
+
 
 function variableFilter(obj) {
     if (
@@ -86,6 +114,17 @@ function variableFilter(obj) {
         typeof obj.nodeType !== 'undefined' &&
         obj.nodeType == 'VariableDeclaration' &&
         typeof obj.scope !== 'undefined'
+    ) {
+        if (obj.name !== '') return obj;
+    }
+    return null;
+}
+
+function modifierFilter(obj) {
+    if (
+        obj !== null &&
+        typeof obj.nodeType !== 'undefined' &&
+        obj.nodeType == 'ModifierDefinition'
     ) {
         if (obj.name !== '') return obj;
     }

@@ -1,6 +1,7 @@
 const { findNodeByPosition } = require("./ast/findNodeByPosition");
 const { findNodeById } = require("./ast/findNodeById");
 const fs = require('fs');
+const vscode = require("vscode")
 
 function astParser(ast, document, position) {
     if (typeof ast == 'undefined') return;
@@ -34,16 +35,8 @@ function findHoverNode(ast, document, position) {
     }
 }
 
-function convertPositionDocToAst(document, position) {
-    const txt = document.getText().split("\n");
-
-    let astPosition = 0;
-    for (let index = 0; index < position.start.line; index++) {
-        astPosition += txt[index].length + 1;
-    }
-
-    astPosition += position.start.character;
-    return astPosition;
+function convertPositionDocToAst(document, position) {   
+    return document.offsetAt(new vscode.Position(position.start.line, position.start.character));   
 }
 
 function convertPositionAstToDoc(solPath, astPosition) {

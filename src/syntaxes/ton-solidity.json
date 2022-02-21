@@ -797,18 +797,7 @@
             ]
         },
         "declaration-contract": {
-            "patterns": [
-                {
-                    "match": "\\b(contract)\\b\\s+(\\w+)\\b\\s*(?=\\{)",
-                    "captures": {
-                        "1": {
-                            "name": "storage.type.contract"
-                        },
-                        "2": {
-                            "name": "entity.name.type.contract"
-                        }
-                    }
-                },
+            "patterns": [               
                 {
                     "begin": "\\b(contract)\\b\\s+(\\w+)\\b\\s+\\b(is)\\b\\s+",
                     "end": "(?=\\{)",
@@ -829,6 +818,18 @@
                             "name": "entity.name.type.contract.extend"
                         }
                     ]
+                },
+                {
+                    "begin": "\\b(contract)\\b\\s+(\\w+)\\b\\s*",
+                    "end": "(?=\\{)",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "storage.type.contract"
+                        },
+                        "2": {
+                            "name": "entity.name.type.contract"
+                        }
+                    }
                 }
             ]
         },

@@ -14,7 +14,7 @@ function documentLinks(document){
             newPath = path.resolve(dir, url);
         } 
         const start = text.indexOf(url);
-        const end = start + url.length - 1;
+        const end = start + url.length;
         const positionStart = document.positionAt(start);
         const positionEnd = document.positionAt(end);
         const uri = Uri.parse(newPath);

@@ -5,6 +5,7 @@ const { getErrors, getHoverItems, getSnippetItems, getSignatures } = require('./
 const { setLanguageMode } = require("./languageMode");
 const fs = require('fs');
 const { astParser } = require("./ast");
+const { documentLinks } = require("./documentLinks");
 
 let _tondevTerminal;
 let t_out;
@@ -66,6 +67,15 @@ function activate(context) {
 			updateDiagnostics(editor.document, collection);
 		}
 	}));
+
+	context.subscriptions.push(vscode.languages.registerDocumentLinkProvider(
+		MODE,
+		{
+			provideDocumentLinks(document, token){
+				return documentLinks(document);
+			}
+		}
+	))
 
 	context.subscriptions.push(vscode.languages.registerDefinitionProvider(MODE, {
 		async provideDefinition(document, position) {

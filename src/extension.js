@@ -15,6 +15,7 @@ let ast;
  */
 
 function activate(context) {
+	setLanguageMode();
 	const signatureProvider = vscode.languages.registerSignatureHelpProvider(
 		MODE,
 		{
@@ -83,6 +84,7 @@ function activate(context) {
 
 	context.subscriptions.push(vscode.workspace.onDidChangeTextDocument(async documentChangeEvent => {
 		if (documentChangeEvent) {
+			setLanguageMode();
 			updateDiagnostics(documentChangeEvent.document, collection);
 		}
 	}));

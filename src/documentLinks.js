@@ -36,7 +36,7 @@ function documentLinks(document) {
     return links;
 }
 
-//for searching broxus locklift contracts in node_modules folder
+//for find broxus locklift contracts in node_modules folder
 function searchLinks(url) {
     const file_path = path.resolve(workspace.workspaceFolders[0].uri.path, "node_modules", url);
     if (fs.existsSync(file_path)) {

@@ -38,8 +38,8 @@
             "prefix": "import",
             "body": "import \"${1:contract}\";",
             "description": [
-                "TON Solidity compiler allows user to import remote files using link starting with http. If import file name starts with http, then compiler tries to download the file using this link and saves it to the folder .solc_imports. If compiler fails to create this folder of to download the file, then an error is emitted.\n",
-                "** Note: **to import file from GitHub, one should use link to the raw version of the file.\n",
+                "TON Solidity compiler allows user to import local and remote files using link starting with http. If import file name starts with http, then compiler tries to download the file using this link and saves it to the folder .solc_imports. If compiler fails to create this folder of to download the file, then an error is emitted.\n",
+                "Note: to import file from GitHub, one should use link to the raw version of the file.\n",
                 "Example:\n",
                 "```\npragma ton-solidity >=0.57.0;\n```\n",
                 "```\npragma AbiHeader expire;\n```\n",

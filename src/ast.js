@@ -7,6 +7,20 @@ function astParser(ast, document, position) {
     if (typeof ast == 'undefined') return;
     const astPosition = convertPositionDocToAst(document, position)
     const node = findNodeByPosition(ast, astPosition, document);
+
+    //override node searcher
+    const word = document.getText(position);
+    if (word.match(/\boverride\b/) !== null && typeof node.name !== 'undefined') {
+        let el = findOverrideNodeByName(node.name, ast);
+        const src = Number(el.src.split(":")[2]);
+        const solPath = ast[src].absolutePath;
+        const docPosition = convertPositionAstToDoc(solPath, el.src);
+        return {
+            path: solPath,
+            position: docPosition
+        }
+    }
+    //other
     if (node !== null && typeof node !== 'undefined' && typeof node.referencedDeclaration !== 'undefined') {
         const referencedNode = findNodeById(ast, node.referencedDeclaration);
         const src = Number(referencedNode.src.split(":")[2]);
@@ -17,6 +31,46 @@ function astParser(ast, document, position) {
             position: docPosition
         }
     }
+}
+
+function findOverrideNodeByName(functionName, currentNode) {
+    const searchedElement = function (currentNode, functionName) {
+        if (typeof currentNode.name !== 'undefined'
+            && currentNode.name == functionName
+            && typeof currentNode.implemented !== 'undefined'
+            && currentNode.implemented == false
+        ) {
+            return currentNode;
+        }
+        return null;
+    }
+
+    if (Array.isArray(currentNode)) {
+        for (let i = 0; i < currentNode.length; i++) {
+            if (currentNode[i] !== null && typeof currentNode[i] === 'object') {
+                let r = findOverrideNodeByName(functionName, currentNode[i]);
+                if (r !== null) {
+                    return r;
+                }
+            }
+        }
+    }
+    if (currentNode !== null && typeof currentNode === 'object' && !Array.isArray(currentNode)) {
+        for (var index in currentNode) {
+            let r = searchedElement(currentNode, functionName);
+            if (r !== null) {
+                return r;
+            }
+
+            r = findOverrideNodeByName(functionName, currentNode[index]);
+            if (r !== null) {
+                return r;
+            }
+
+        }
+    }
+
+    return null;
 }
 
 function findHoverNode(ast, document, position) {
@@ -35,8 +89,8 @@ function findHoverNode(ast, document, position) {
     }
 }
 
-function convertPositionDocToAst(document, position) {   
-    return document.offsetAt(new vscode.Position(position.start.line, position.start.character));   
+function convertPositionDocToAst(document, position) {
+    return document.offsetAt(new vscode.Position(position.start.line, position.start.character));
 }
 
 function convertPositionAstToDoc(solPath, astPosition) {

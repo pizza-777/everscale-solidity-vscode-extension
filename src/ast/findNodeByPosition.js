@@ -24,6 +24,14 @@ function objectIterator(obj, position) {
     if (typeof obj.referencedDeclaration !== 'undefined') {
         return obj;
     }
+    if (obj !== null
+        && typeof obj.overrides !== 'undefined'
+        && typeof obj.overrides.src !== 'undefined'
+        && obj.overrides.src !== null
+        && inRange(obj.overrides.src, position) == true) {
+        obj.referencedDeclaration = obj.overrides.id
+        return obj;
+    }
     for (let k in obj) {
         if (obj[k] !== null && typeof obj[k] === 'object' && !Array.isArray(obj[k])) {
             let node = objectIterator(obj[k], position);

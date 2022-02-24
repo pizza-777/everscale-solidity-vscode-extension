@@ -5,11 +5,11 @@ const fs = require("fs");
 function documentLinks(document) {
 
     const text = document.getText();
-    const imports = text.match(/import\s+"(.*)"/gm);
+    const imports = text.match(/import\s+["'](.*)["']/gm);
     if (imports == null) return;
     const dir = path.dirname(document.uri.fsPath);
     let links = imports.map(i => {
-        const url = i.split("\"")[1];
+        const url = i.split(/['"]/)[1];
         let newPath = url;
         if (url.match(/https?:\/\//) == null) {
             newPath = path.resolve(dir, url);

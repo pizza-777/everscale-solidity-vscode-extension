@@ -26,6 +26,7 @@ function objectIterator(obj, position) {
     }
     if (obj !== null
         && typeof obj.overrides !== 'undefined'
+        && obj.overrides !== null
         && typeof obj.overrides.src !== 'undefined'
         && obj.overrides.src !== null
         && inRange(obj.overrides.src, position) == true) {

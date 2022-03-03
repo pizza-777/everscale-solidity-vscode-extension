@@ -2,7 +2,7 @@
     "name": "solidity-support",
     "displayName": "Everscale Solidity Support",
     "description": "Everscale Solidity Language for Visual Studio Code",
-    "version": "1.2.36",
+    "version": "1.2.37",
     "keywords": [
         "solidity",
         "ton-solidity",
@@ -31,7 +31,8 @@
         "Snippets"
     ],
     "activationEvents": [
-        "onLanguage:ton-solidity"
+        "onLanguage:ton-solidity",
+        "onLanguage:solidity"  
     ],
     "main": "./src/extension.js",
     "contributes": {

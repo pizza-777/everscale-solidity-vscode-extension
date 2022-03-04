@@ -1051,7 +1051,7 @@
             "body": "msg.sender",
             "description": [
                 "```\nmsg.sender returns (address);\n```\n",
-                "Returns:\n\n\t* sender of the message for internal message.\n\n\t* address(0) for external message.\n\n\t* address(0) for tick/tock transaction."
+                "Returns:\n * sender of the message for internal message.\n* address(0) for external message.\n* address(0) for tick/tock transaction."
             ]
         },
         "msg.value": {
@@ -1059,7 +1059,7 @@
             "body": "msg.value",
             "description": [
                 "```\nmsg.value returns (uint128);\n```\n",
-                "Returns:\n\tBalance of the inbound message in nanotons for internal message.\n\t0 for external message.\n\tUndefined value for tick/tock transaction."
+                "Returns:\n * Balance of the inbound message in nanotons for internal message.\n * 0 for external message.\n * Undefined value for tick/tock transaction."
             ]
         },
         "msg.currencies": {
@@ -1492,7 +1492,7 @@
             "body": "math.sign(${1:int val});",
             "description": [
                 "```\nmath.sign(int val) returns (int8);\n```\n",
-                "Returns number in case of sign of the argument value val:\n\t-1 if val is negative;\n\t0 if val is zero;\n\t1 if val is positive.\n"
+                "Returns number in case of sign of the argument value val:\n * -1 if val is negative;\n * 0 if val is zero;\n * 1 if val is positive.\n"
             ]
         },
         "tx.timestamp": {

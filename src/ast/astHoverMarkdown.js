@@ -52,7 +52,7 @@ function variableMarkdown(node) {
     md += typeof node.documentation !== 'undefined' && node.documentation !== null ? '/*' + node.documentation + '*/\n' : '';
     md += node.typeDescriptions.typeString + ' ';
     md += node.constant ? 'constant ' : '';
-    md += node.stateVariable ? 'static ' : '';
+    md += node.stateVariable ? 'state ' : '';
     md += node.name;
     if (node.value !== null) {
         md += typeof node.value.value !== 'undefined' && node.value.value !== null ? '//' + node.value.value : '';

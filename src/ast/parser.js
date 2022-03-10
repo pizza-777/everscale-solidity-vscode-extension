@@ -16,17 +16,22 @@ function ifExistsInContracts(contract) {
     }
     return false;
 }
+function getContractScope(ast, i) {
+    contract = Object.keys(ast[i].exportedSymbols)[0];
+    if (typeof contract == 'undefined') return null;
+    contractScope = ast[i].exportedSymbols[contract][0];
+    return contractScope;
+}
 
 function parseData(ast) {
     for (let i = 0; i < ast.length; i++) {
-        contract = Object.keys(ast[i].exportedSymbols)[0];
-        contractScope = ast[i].exportedSymbols[contract][0];
-        try{
-            let obj = objectIterator(ast[i]);
-        }catch(e){
+        getContractScope(ast, i);
+        try {
+            objectIterator(ast[i]);
+        } catch (e) {
             console.log(e)
         }
-        
+
         if (typeof obj == 'undefined') continue;
     }
     contractOrInterfaceToFunctions(contracts, functions);

@@ -2737,11 +2737,6 @@
             "body": "uint256",
             "description": ""
         },
-        "varInt": {
-            "prefix": "uint256",
-            "body": "uint256",
-            "description": "Use this type if you want to store or send integers, and they usually have small size."
-        },
         "varInt16": {
             "prefix": "varInt16",
             "body": "varInt16",

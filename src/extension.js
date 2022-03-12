@@ -71,7 +71,7 @@ function activate(context) {
 	context.subscriptions.push(vscode.languages.registerDocumentLinkProvider(
 		MODE,
 		{
-			provideDocumentLinks(document, token){
+			provideDocumentLinks(document, token) {
 				return documentLinks(document);
 			}
 		}
@@ -123,10 +123,21 @@ async function updateDiagnostics(document, collection) {
 	let collectionSet = r.map(value => {
 		let line = Math.abs(value.coord.raw - 1);
 		let character = Math.abs(value.coord.position - 1);
-		let range = new vscode.Range(new vscode.Position(line, character), new vscode.Position(line, character + value.errorLenght));
+		let range;
 		if (value.source.fsPath !== document.uri.fsPath) {
 			range = null;
+			//maybe its import so find it and underline
+			const text = document.getText();
+			const errorFileName = path.basename(value.source.fsPath);
+			const start = text.indexOf(errorFileName);
+			if (start !== -1) {
+				const end = start + errorFileName.length;
+				range = new vscode.Range(document.positionAt(start), document.positionAt(end));
+			}
+		} else {
+			range = new vscode.Range(new vscode.Position(line, character), new vscode.Position(line, character + value.errorLenght));
 		}
+
 		return {
 			code: '',
 			message: value.info,

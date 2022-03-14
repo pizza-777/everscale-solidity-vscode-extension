@@ -124,11 +124,12 @@ async function updateDiagnostics(document, collection) {
 		let line = Math.abs(value.coord.raw - 1);
 		let character = Math.abs(value.coord.position - 1);
 		let range;
-		if (value.source.fsPath !== document.uri.fsPath) {
+		let errorFilePath = value.source.fsPath;
+		if (errorFilePath !== document.uri.fsPath) {
 			range = null;
 			//maybe its import so find it and underline
 			const text = document.getText();
-			const errorFileName = path.basename(value.source.fsPath);
+			const errorFileName = path.basename(errorFilePath);
 			const start = text.indexOf(errorFileName);
 			if (start !== -1) {
 				const end = start + errorFileName.length;

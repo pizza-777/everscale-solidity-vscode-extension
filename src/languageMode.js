@@ -12,7 +12,7 @@ async function setLanguageMode() {
 		return;
 	}
 
-	if (doc.getText().match(/(pragma) (ton-solidity)\s?([0-9a-zA-Z_\.\s\~|^<>=]+)?\s?(;)/gm)) {
+	if (doc.getText().match(/ton-solidity|tvm\.|Tvm(cell|slice|builder)/gm)) {
 		if (doc.languageId !== "ton-solidity") await vscode.languages.setTextDocumentLanguage(vscode.window.activeTextEditor.document, 'ton-solidity');
 	} else {
 		try {

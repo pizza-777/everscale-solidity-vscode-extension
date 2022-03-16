@@ -46,7 +46,9 @@ function activate(context) {
 				const wordRange = document.getWordRangeAtPosition(position, /[_a-zA-Z0-9\.]{1,100}/);
 				if (typeof wordRange == 'undefined') return;
 				const word = document.getText(wordRange);
-				return new vscode.Hover(getHoverItems(word, document, position));
+				const hoverItems = getHoverItems(word, document, position)
+				if(typeof hoverItems == 'undefined') return;
+				return new vscode.Hover(hoverItems);
 			}
 		});
 
@@ -182,7 +184,7 @@ async function runCommand(command, args) {
 	} catch (err) {
 		terminal.writeError(err.toString());
 	}
-	return getErrors(t_out[0]);
+	if(typeof t_out !== 'undefined' && typeof t_out[0] !== 'undefined') return getErrors(t_out[0]);
 }
 
 function tondevTerminal() {

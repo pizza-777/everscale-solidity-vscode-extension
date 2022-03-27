@@ -6,6 +6,7 @@ const { setLanguageMode } = require("./languageMode");
 const fs = require('fs');
 const { astParser } = require("./ast");
 const { documentLinks } = require("./documentLinks");
+const { formatter } = require("./formatter");
 
 let _tondevTerminal;
 let t_out;
@@ -47,7 +48,7 @@ function activate(context) {
 				if (typeof wordRange == 'undefined') return;
 				const word = document.getText(wordRange);
 				const hoverItems = getHoverItems(word, document, position)
-				if(typeof hoverItems == 'undefined') return;
+				if (typeof hoverItems == 'undefined') return;
 				return new vscode.Hover(hoverItems);
 			}
 		});
@@ -100,8 +101,13 @@ function activate(context) {
 			updateDiagnostics(documentChangeEvent.document, collection);
 		}
 	}));
-}
 
+	context.subscriptions.push(vscode.languages.registerDocumentFormattingEditProvider(MODE, {
+		provideDocumentFormattingEdits(document) {
+			return formatter(document, context);
+		}
+	}));
+}
 
 async function updateDiagnostics(document, collection) {
 	if (document.languageId != MODE.language) return;
@@ -184,7 +190,7 @@ async function runCommand(command, args) {
 	} catch (err) {
 		terminal.writeError(err.toString());
 	}
-	if(typeof t_out !== 'undefined' && typeof t_out[0] !== 'undefined') return getErrors(t_out[0]);
+	if (typeof t_out !== 'undefined' && typeof t_out[0] !== 'undefined') return getErrors(t_out[0]);
 }
 
 function tondevTerminal() {

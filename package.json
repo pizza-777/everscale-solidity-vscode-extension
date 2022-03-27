@@ -2,14 +2,15 @@
     "name": "solidity-support",
     "displayName": "Everscale Solidity Support",
     "description": "Everscale Solidity Language for Visual Studio Code",
-    "version": "1.2.41",
+    "version": "1.3.0",
     "keywords": [
         "solidity",
         "ton-solidity",
         "Everscale",
         "blockchain",
         "everdev",
-        "highlighting"
+        "highlighting",
+        "code formatter"
     ],
     "publisher": "everscale",
     "license": "Apache-2.0",
@@ -32,7 +33,7 @@
     ],
     "activationEvents": [
         "onLanguage:ton-solidity",
-        "onLanguage:solidity"  
+        "onLanguage:solidity"
     ],
     "main": "./src/extension.js",
     "contributes": {
@@ -49,7 +50,7 @@
                 "icon": {
                     "light": "assets/everscale_icon_dark.svg",
                     "dark": "assets/everscale_icon_light.svg"
-                  }
+                }
             }
         ],
         "grammars": [
@@ -78,6 +79,8 @@
         "vscode-test": "^1.5.2"
     },
     "dependencies": {
-        "everdev": "^1.1.1"
+        "everdev": "^1.1.1",
+        "prettier": "^2.6.0",
+        "prettier-plugin-solidity": "github:pizza-777/prettier-plugin-solidity"
     }
 }

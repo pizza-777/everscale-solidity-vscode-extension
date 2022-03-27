@@ -8,6 +8,7 @@
 * Display an information popup on hover
 * Suggesting function params when typing
 * Search of definition
+* Code formatter
 * [DeBots interfaces](https://github.com/tonlabs/DeBot-IS-consortium) highlighting, autocompletion, support for imports
 
 ## Installation
@@ -62,6 +63,10 @@ You have quick switch between two solidity languages:
 
 ![go-to-definition](https://user-images.githubusercontent.com/26024499/153705051-cf890bdc-2250-4278-a299-21d00452475f.gif)
 
+### Code formatter
+
+![formatter](https://user-images.githubusercontent.com/26024499/160268893-c7459259-cce0-4448-bc32-1fbfd9b53484.gif)
+
 ## How to contribute
 
 If You found a typo or want to improve something, a pull request is welcome.
@@ -75,4 +80,4 @@ Some files meaning and locations:
 
 ## Contacts
 
-Telegram: ```@tg2020ukraine```
+Telegram: ```@pizzza777```

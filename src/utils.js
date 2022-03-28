@@ -67,17 +67,6 @@ function getSnippetType(body, description, CompletionItemKind = null) {
     return vscode.CompletionItemKind.Snippet;
 }
 
-function highliteIt(functionSet) {
-    Object.keys(functionSet).map((k) => {
-        functionSet[k] = {
-            prefix: functionSet[k].prefix,
-            body: functionSet[k].body,
-            description: "```\n" + functionSet[k].description + "\n```"//enable highliting for code
-        }
-    });
-    return functionSet;
-}
-
 function checkParam(find, str) {
     const re = new RegExp(`${find}$`);
     return str.match(re);

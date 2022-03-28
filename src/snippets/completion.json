@@ -78,9 +78,9 @@
             "prefix": "funcr",
             "body": "function ${1:name}(${2:type} ${3:name}) ${4|public,private,internal,external|} returns (${5:type}) {\n\t$0\n}"
         },
-        "function return in resonsible functions": {
-            "prefix": "return{ value: uint128, bounce: bool, flag: uint8 }",
-            "body": "return{ value: ${1:uint128}, bounce: ${2:bool}, flag: ${3:uint8} }"
+        "function return in responsible functions": {
+            "prefix": "return { value: uint128, bounce: bool, flag: uint8 }",
+            "body": "return { value: ${1:uint128}, bounce: ${2:bool}, flag: ${3:uint8} }"
         },
         "function view declaration": {
             "prefix": "funcrview",

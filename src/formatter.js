@@ -63,21 +63,19 @@ function getCurrentWorkspaceRootFolder() {
 function defaultConfig() {
     return {
         printWidth: 80,
-        tabWidth: 4,
-        useTabs: false,
+        useTabs: true,
         singleQuote: false,
         bracketSpacing: false,
-        explicitTypes: "preserve",
+        explicitTypes: "always",
         overrides: [
             {
                 files: "*.sol",
                 options: {
                     printWidth: 80,
-                    tabWidth: 4,
-                    useTabs: false,
+                    useTabs: true,
                     singleQuote: false,
                     bracketSpacing: false,
-                    explicitTypes: "preserve",
+                    explicitTypes: "always",
                 },
             },
         ],

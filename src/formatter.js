@@ -75,11 +75,11 @@ function defaultConfig() {
                     useTabs: true,
                     singleQuote: false,
                     bracketSpacing: false,
-                    explicitTypes: "always",
-                },
-            },
-        ],
-    };
+                    explicitTypes: "always"
+                }
+            }
+        ]
+    }
 }
 
 module.exports = {

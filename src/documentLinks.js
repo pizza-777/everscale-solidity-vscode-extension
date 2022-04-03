@@ -1,4 +1,4 @@
-const { DocumentLink, Range, Uri, workspace } = require("vscode");
+const { DocumentLink, Range, Uri } = require("vscode");
 const path = require("path");
 const fs = require("fs");
 
@@ -10,15 +10,15 @@ function documentLinks(document) {
     let links = imports.map(i => {
         const url = i.split(/['"]/)[1];
         let newPath = url;
-        if (url.match(/https?:\/\//) !== null) {           
+        if (url.match(/https?:\/\//) !== null) {
             return;
-        }        
+        }
 
         newPath = searchLinks(url, dir);
         if (!newPath) {
             return;
         }
-        
+
         const start = text.indexOf(url, document);
         const end = start + url.length;
         let positionStart = document.positionAt(start);
@@ -30,7 +30,7 @@ function documentLinks(document) {
     return links;
 }
 
-function searchLinks(url, dir) {    
+function searchLinks(url, dir) {
     if (fs.existsSync(path.resolve(dir, url))) {
         return path.resolve(dir, url);
     }

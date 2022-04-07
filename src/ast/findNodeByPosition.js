@@ -1,6 +1,8 @@
+const path = require("path");
+
 function findNodeByPosition(ast, position, document) {
     for (let i = 0; i < ast.length; i++) {
-        if (ast[i].absolutePath == document.uri.fsPath) {
+        if (pathsAreEqual(ast[i].absolutePath, document.uri.fsPath)) {
             return objectIterator(ast[i], position);
         }
     }
@@ -58,6 +60,14 @@ function inRange(astPosition, position) {
     }
 
     return false;
+}
+
+function pathsAreEqual(path1, path2) {
+    path1 = path.resolve(path1);
+    path2 = path.resolve(path2);
+    if (process.platform == "win32")
+        return path1.toLowerCase() === path2.toLowerCase();
+    return path1 === path2;
 }
 
 module.exports = {

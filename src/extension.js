@@ -107,6 +107,73 @@ function activate(context) {
 			return formatter(document, context);
 		}
 	}));
+
+	// editor/context menu for everdev commands
+
+	//window doesnt support docker (se container)
+	if (process.platform !== "win32") {
+		const currentFile = () => {
+			return path.resolve(vscode.window.activeTextEditor.document.uri.fsPath).replace(path.resolve(vscode.workspace.workspaceFolders[0].uri.path), '.');
+		}
+		const currentFolder = () => {
+			return path.dirname(path.resolve(vscode.window.activeTextEditor.document.uri.fsPath)).replace(path.resolve(vscode.workspace.workspaceFolders[0].uri.path), '.');
+		}
+		const currentAbi = () => {
+			return currentFile().replace('.sol', '.abi.json');
+		}
+
+		let commandsTerminal;
+		function createTerminal() {
+			if (vscode.window.activeTerminal) {
+				commandsTerminal = vscode.window.activeTerminal;
+			}
+			if (vscode.window.terminals.length > 0) {
+				commandsTerminal = vscode.window.terminals[0];
+			} else {
+				commandsTerminal = vscode.window.createTerminal();
+				commandsTerminal.show();
+			}
+			return commandsTerminal;
+		}
+		context.subscriptions.push(vscode.commands.registerCommand('deploy.contract', () => {
+			if (!commandsTerminal) commandsTerminal = createTerminal();
+
+			commandsTerminal.show();
+			commandsTerminal.sendText("npx everdev sol compile " + currentFile() + ' --output-dir ' + currentFolder());
+			commandsTerminal.sendText("npx everdev contract deploy " + currentFile() + " --value 10000000000 --network se");
+			const content = vscode.window.activeTextEditor.document.getText();
+			if (content.match(/is Debot/g)) {
+				commandsTerminal.sendText("everdev contract run " + currentFile() + " setABI --input \"dabi:'$(cat " + currentAbi() + " | xxd -ps -c 20000)'\"");
+				commandsTerminal.sendText("debotAddress=$(everdev contract info " + currentFile() + " | grep Address | cut -d':' -f3 | cut -d' ' -f1)");
+				commandsTerminal.sendText("tonos-cli --url http://localhost debot --debug fetch 0:$debotAddress");
+			}
+		}));
+		context.subscriptions.push(vscode.commands.registerCommand('network.reset', () => {
+			if (!commandsTerminal) commandsTerminal = createTerminal();
+
+			commandsTerminal.show();
+			commandsTerminal.sendText("npx everdev se reset ");
+		}));
+		context.subscriptions.push(vscode.commands.registerCommand('contract.run', () => {
+			if (!commandsTerminal) commandsTerminal = createTerminal();
+
+			commandsTerminal.show();
+			commandsTerminal.sendText("npx everdev contract run " + currentFile().replace('.sol', '.abi.json'));
+		}));
+		context.subscriptions.push(vscode.commands.registerCommand('contract.runLocal', () => {
+			if (!commandsTerminal) commandsTerminal = createTerminal();
+
+			commandsTerminal.show();
+			commandsTerminal.sendText("npx everdev contract run-local " + currentFile().replace('.sol', '.abi.json'));
+		}));
+
+		vscode.window.onDidCloseTerminal(closedTerminal => {
+			if (commandsTerminal == closedTerminal) {
+				commandsTerminal = undefined;
+			}
+		})
+	}
+
 }
 
 async function updateDiagnostics(document, collection) {

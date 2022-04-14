@@ -37,6 +37,58 @@
     ],
     "main": "./src/extension.js",
     "contributes": {
+        "commands": [            
+            {
+                "command": "deploy.contract",
+                "title": "Deploy contract locally",
+                "category": "everdev-solidity"
+            },
+            {
+                "command": "network.reset",
+                "title": "Reset/Start local network",
+                "category": "everdev-solidity"
+            },
+            {
+                "command": "contract.run",
+                "title": "Run function",
+                "category": "everdev-solidity"
+            },
+            {
+                "command": "contract.runLocal",
+                "title": "RunLocal function",
+                "category": "everdev-solidity"
+            }
+        ],
+        "keybindings": [{
+          "command": "network.reset",
+          "key": "ctrl+r",
+          "mac": "cmd+r cmd+r",
+          "when": "resourceLangId == ton-solidity"
+        }],
+        "menus": {
+            "editor/context": [
+                {
+                    "when": "resourceLangId == ton-solidity",
+                    "command": "deploy.contract",
+                    "group": "everdev-solidity"
+                },
+                {
+                    "when": "resourceLangId == ton-solidity",
+                    "command": "network.reset",
+                    "group": "everdev-solidity"
+                },
+                {
+                    "when": "resourceLangId == ton-solidity",
+                    "command": "contract.run",
+                    "group": "everdev-solidity"
+                },
+                {
+                    "when": "resourceLangId == ton-solidity",
+                    "command": "contract.runLocal",
+                    "group": "everdev-solidity"
+                }
+            ]
+        },
         "languages": [
             {
                 "id": "ton-solidity",

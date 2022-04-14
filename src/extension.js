@@ -107,6 +107,49 @@ function activate(context) {
 			return formatter(document, context);
 		}
 	}));
+
+	// editor/context menu for everdev commands
+	const currentFile = () => {
+		return path.resolve(vscode.window.activeTextEditor.document.uri.fsPath).replace(path.resolve(vscode.workspace.workspaceFolders[0].uri.path), '.');
+	}
+	let commandsTerminal;
+	context.subscriptions.push(vscode.commands.registerCommand('deploy.contract', () => {
+		if (!commandsTerminal) commandsTerminal = vscode.window.createTerminal(`everdev terminal`);
+
+		commandsTerminal.show();
+		commandsTerminal.sendText("npx everdev sol compile " + currentFile());
+		commandsTerminal.sendText("npx everdev contract deploy " + currentFile() + " --value 10000000000 --network se");
+	}));
+	context.subscriptions.push(vscode.commands.registerCommand('network.reset', () => {
+		if (!commandsTerminal) commandsTerminal = vscode.window.createTerminal(`everdev terminal`);
+
+		commandsTerminal.show();
+		commandsTerminal.sendText("npx everdev se reset ");
+	}));
+	context.subscriptions.push(vscode.commands.registerCommand('contract.run', () => {
+		if (!commandsTerminal) commandsTerminal = vscode.window.createTerminal(`everdev terminal`);
+
+		commandsTerminal.show();
+		commandsTerminal.sendText("npx everdev contract run " + currentFile().replace('.sol', '.abi.json'));
+	}));
+	context.subscriptions.push(vscode.commands.registerCommand('contract.runLocal', () => {
+		if (!commandsTerminal) commandsTerminal = vscode.window.createTerminal(`everdev terminal`);
+
+		commandsTerminal.show();
+		commandsTerminal.sendText("npx everdev contract run-local " + currentFile().replace('.sol', '.abi.json'));
+	}));
+	context.subscriptions.push(vscode.commands.registerCommand('contract.runLocal', () => {
+		if (!commandsTerminal) commandsTerminal = vscode.window.createTerminal(`everdev terminal`);
+
+		commandsTerminal.show();
+		commandsTerminal.sendText("npx everdev contract run-local " + currentFile().replace('.sol', '.abi.json'));
+	}));
+
+	vscode.window.onDidCloseTerminal(closedTerminal => {
+		if (commandsTerminal == closedTerminal) {
+			commandsTerminal = undefined;
+		}
+	})
 }
 
 async function updateDiagnostics(document, collection) {

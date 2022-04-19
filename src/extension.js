@@ -135,18 +135,24 @@ function activate(context) {
 			}
 			return commandsTerminal;
 		}
+
 		context.subscriptions.push(vscode.commands.registerCommand('deploy.contract', () => {
 			if (!commandsTerminal) commandsTerminal = createTerminal();
 
 			commandsTerminal.show();
 			commandsTerminal.sendText("npx everdev sol compile " + currentFile() + ' --output-dir ' + currentFolder());
 			commandsTerminal.sendText("npx everdev contract deploy " + currentFile() + " --value 10000000000 --network se");
-			const content = vscode.window.activeTextEditor.document.getText();
-			if (content.match(/is Debot/g)) {
-				commandsTerminal.sendText("everdev contract run " + currentFile() + " setABI --input \"dabi:'$(cat " + currentAbi() + " | xxd -ps -c 20000)'\"");
-				commandsTerminal.sendText("debotAddress=$(everdev contract info " + currentFile() + " | grep Address | cut -d':' -f3 | cut -d' ' -f1)");
-				commandsTerminal.sendText("tonos-cli --url http://localhost debot --debug fetch 0:$debotAddress");
-			}
+			commandsTerminal.sendText("echo 0:$(everdev contract info " + currentFile() + " | grep Address | cut -d':' -f3 | cut -d' ' -f1)");
+		}));
+
+		context.subscriptions.push(vscode.commands.registerCommand('deploy.debot', () => {
+			if (!commandsTerminal) commandsTerminal = createTerminal();
+
+			commandsTerminal.show();
+			commandsTerminal.sendText("npx everdev sol compile " + currentFile() + ' --output-dir ' + currentFolder());
+			commandsTerminal.sendText("npx everdev contract deploy " + currentFile() + " --value 10000000000 --network se");
+			commandsTerminal.sendText("everdev contract run " + currentFile() + " setABI --input \"dabi:'$(cat " + currentAbi() + " | xxd -ps -c 20000)'\"");
+			commandsTerminal.sendText("echo 0:$(everdev contract info " + currentFile() + " | grep Address | cut -d':' -f3 | cut -d' ' -f1)");
 		}));
 		context.subscriptions.push(vscode.commands.registerCommand('network.reset', () => {
 			if (!commandsTerminal) commandsTerminal = createTerminal();
@@ -167,16 +173,32 @@ function activate(context) {
 			commandsTerminal.sendText("npx everdev contract run-local " + currentFile().replace('.sol', '.abi.json'));
 		}));
 
+		context.subscriptions.push(vscode.commands.registerCommand('contract.startDebot', () => {
+			if (!commandsTerminal) commandsTerminal = createTerminal();
+
+			commandsTerminal.show();
+			commandsTerminal.sendText("debotAddress=$(everdev contract info " + currentFile() + " | grep Address | cut -d':' -f3 | cut -d' ' -f1)");
+			commandsTerminal.sendText("tonos-cli --url http://localhost debot fetch 0:$debotAddress");
+		}));
+
 		vscode.window.onDidCloseTerminal(closedTerminal => {
 			if (commandsTerminal == closedTerminal) {
 				commandsTerminal = undefined;
 			}
 		})
 	}
+}
 
+function isDebot() {
+	const content = vscode.window.activeTextEditor.document.getText();
+	if (content.match(/is Debot/g) == null) {
+		return false;
+	}
+	return true;
 }
 
 async function updateDiagnostics(document, collection) {
+	vscode.commands.executeCommand('setContext', 'solidity-support.isDebot', isDebot());//for context menu
 	if (document.languageId != MODE.language) return;
 	collection.clear();
 	vscode.workspace.saveAll();

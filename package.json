@@ -37,7 +37,7 @@
     ],
     "main": "./src/extension.js",
     "contributes": {
-        "commands": [            
+        "commands": [
             {
                 "command": "deploy.contract",
                 "title": "Deploy contract locally",
@@ -69,12 +69,14 @@
                 "category": "everdev-solidity"
             }
         ],
-        "keybindings": [{
-          "command": "network.reset",
-          "key": "ctrl+r",
-          "mac": "cmd+r cmd+r",
-          "when": "resourceLangId == ton-solidity"
-        }],
+        "keybindings": [
+            {
+                "command": "network.reset",
+                "key": "ctrl+r",
+                "mac": "cmd+r cmd+r",
+                "when": "resourceLangId == ton-solidity"
+            }
+        ],
         "menus": {
             "editor/context": [
                 {
@@ -153,6 +155,7 @@
     "dependencies": {
         "everdev": "^1.1.1",
         "prettier": "^2.6.0",
-        "prettier-plugin-solidity": "github:pizza-777/prettier-plugin-solidity"
+        "prettier-plugin-solidity": "github:pizza-777/prettier-plugin-solidity",
+        "solhint": "github:pizza-777/solhint#ton-solidity"
     }
 }

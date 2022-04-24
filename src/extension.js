@@ -7,6 +7,7 @@ const fs = require('fs');
 const { astParser } = require("./ast");
 const { documentLinks } = require("./documentLinks");
 const { formatter } = require("./formatter");
+const { hints } = require("./solhint");
 
 let _tondevTerminal;
 let t_out;
@@ -85,7 +86,7 @@ function activate(context) {
 			const wordRange = document.getWordRangeAtPosition(position, /[_a-zA-Z0-9\.]{1,100}/);
 			if (typeof wordRange == 'undefined') return;
 			ast = await getAst(document);
-			if(typeof ast == 'undefined') return;
+			if (typeof ast == 'undefined') return;
 			const data = astParser(ast, document, wordRange);
 			if (data !== null && typeof data !== 'undefined') {
 				return new vscode.Location(
@@ -197,6 +198,7 @@ function isDebot() {
 	}
 	return true;
 }
+//// end of everdev commands
 
 async function updateDiagnostics(document, collection) {
 	vscode.commands.executeCommand('setContext', 'solidity-support.isDebot', isDebot());//for context menu
@@ -213,42 +215,65 @@ async function updateDiagnostics(document, collection) {
 	args['file'] = filePath;
 	args['outputDir'] = path.resolve(__dirname, 'abi');
 	let r = await runCommand(compileCommand, args);
+	let h = hints(document);
 
 	if (r == undefined) {
 		ast = getAst(document);
-		return;
-	}
-	let collectionSet = r.map(value => {
-		let line = Math.abs(value.coord.raw - 1);
-		let character = Math.abs(value.coord.position - 1);
-		let range;
-		let errorFilePath = value.source.fsPath;
-		if (errorFilePath !== document.uri.fsPath) {
-			range = null;
-			//maybe its import so find it and underline
-			const text = document.getText();
-			const errorFileName = path.basename(errorFilePath);
-			const start = text.indexOf(errorFileName);
-			if (start !== -1) {
-				const end = start + errorFileName.length;
-				range = new vscode.Range(document.positionAt(start), document.positionAt(end));
-			}
-		} else {
-			range = new vscode.Range(new vscode.Position(line, character), new vscode.Position(line, character + value.errorLenght));
-		}
+	}	
 
-		return {
-			code: '',
-			message: value.info,
-			range,
-			severity: value.severity == 'Error' ? vscode.DiagnosticSeverity.Error : vscode.DiagnosticSeverity.Warning,
-			source: value.source.fsPath,
-			relatedInformation: [
-				new vscode.DiagnosticRelatedInformation(new vscode.Location(value.source, new vscode.Range(new vscode.Position(line, character), new vscode.Position(line, character + value.errorLenght))), null)
-			]
-		}
-	})
-	collection.set(document.uri, collectionSet);
+	let collectionSetErrors = [];
+	if (typeof r !== 'undefined') {
+		collectionSetErrors = r.map(value => {
+			let line = Math.abs(value.coord.raw - 1);
+			let character = Math.abs(value.coord.position - 1);
+			let range;
+			let errorFilePath = value.source.fsPath;
+			if (errorFilePath !== document.uri.fsPath) {
+				range = null;
+				//maybe its import so find it and underline
+				const text = document.getText();
+				const errorFileName = path.basename(errorFilePath);
+				const start = text.indexOf(errorFileName);
+				if (start !== -1) {
+					const end = start + errorFileName.length;
+					range = new vscode.Range(document.positionAt(start), document.positionAt(end));
+				}
+			} else {
+				range = new vscode.Range(new vscode.Position(line, character), new vscode.Position(line, character + value.errorLenght));
+			}
+
+			return {
+				code: '',
+				message: value.info,
+				range,
+				severity: value.severity == 'Error' ? vscode.DiagnosticSeverity.Error : vscode.DiagnosticSeverity.Warning,
+				source: value.source.fsPath,
+				relatedInformation: [
+					new vscode.DiagnosticRelatedInformation(new vscode.Location(value.source, new vscode.Range(new vscode.Position(line, character), new vscode.Position(line, character + value.errorLenght))), null)
+				]
+			}
+		})
+	}
+
+	let collectionSetHints = [];
+	if (typeof h !== 'undefined') {
+		collectionSetHints = h.reports.map(value => {
+			let lastChar = document.lineAt(value.line - 1).text.trim().length;
+			range = new vscode.Range(
+				new vscode.Position(value.line - 1, value.column - 1),
+				new vscode.Position(value.line - 1, value.column - 1 + lastChar)
+			);
+			return {
+				code: '',
+				message: value.message,
+				range,
+				severity: vscode.DiagnosticSeverity.Information,
+				source: ''
+			}
+		})
+	}
+	let con = [...collectionSetErrors, ...collectionSetHints];
+	collection.set(document.uri, con);
 }
 
 async function getAst(document) {

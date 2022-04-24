@@ -111,6 +111,7 @@ function getErrors(string) {
         let raw = !coord ? null : Number(coord[0]);
         let position = !coord ? null : Number(coord[1]);
         let errorLenght = getErrorLenght(value[4]);
+        if(errorLenght == null) throw "some technical errors, maybe compiller";
         let source = vscode.Uri.file(getErrorFilePath(value.join("\n")));
         return {
             info: value[0],

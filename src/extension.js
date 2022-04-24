@@ -85,6 +85,7 @@ function activate(context) {
 			const wordRange = document.getWordRangeAtPosition(position, /[_a-zA-Z0-9\.]{1,100}/);
 			if (typeof wordRange == 'undefined') return;
 			ast = await getAst(document);
+			if(typeof ast == 'undefined') return;
 			const data = astParser(ast, document, wordRange);
 			if (data !== null && typeof data !== 'undefined') {
 				return new vscode.Location(

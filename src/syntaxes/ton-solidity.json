@@ -847,6 +847,27 @@
                     }
                 },
                 {
+                    "begin": "\\b(interface)\\b\\s+(\\w+)\\b\\s+",
+                    "end": "(?=\\{)",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "storage.type.interface"
+                        },
+                        "2": {
+                            "name": "entity.name.interface"
+                        },
+                        "3": {
+                            "name": "storage.modifier.is"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "match": "\\b(\\w+)\\b",
+                            "name": "entity.name.interface.extend"
+                        }
+                    ]
+                },
+                {
                     "begin": "\\b(interface)\\b\\s+(\\w+)\\b\\s+\\b(is)\\b\\s+",
                     "end": "(?=\\{)",
                     "beginCaptures": {

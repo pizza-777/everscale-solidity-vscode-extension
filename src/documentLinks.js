@@ -1,4 +1,4 @@
-const { DocumentLink, Range, Uri } = require("vscode");
+const { DocumentLink, Range, Uri, workspace } = require("vscode");
 const path = require("path");
 const fs = require("fs");
 
@@ -23,7 +23,7 @@ function documentLinks(document) {
         const end = start + url.length;
         let positionStart = document.positionAt(start);
         let positionEnd = document.positionAt(end);
-        return new DocumentLink(new Range(positionStart, positionEnd), Uri.parse('file://' + newPath, true));
+        return new DocumentLink(new Range(positionStart, positionEnd), Uri.file(newPath));
     })
 
     links = links.filter(link => typeof link !== 'undefined');
@@ -40,7 +40,8 @@ function searchLinks(url, dir) {
     }
 
     //find broxus locklift contracts in node_modules folder
-    const file_path = path.resolve(dir, "node_modules", url);
+    const workspaceRoot = workspace.workspaceFolders[0].uri.fsPath;
+    const file_path = path.resolve(workspaceRoot, "node_modules", url);
     if (fs.existsSync(file_path)) {
         return file_path;
     }

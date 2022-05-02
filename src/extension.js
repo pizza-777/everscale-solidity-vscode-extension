@@ -17,6 +17,7 @@ let ast;
  */
 
 function activate(context) {
+	cleanAbiDir();
 	setLanguageMode();
 	const signatureProvider = vscode.languages.registerSignatureHelpProvider(
 		MODE,
@@ -302,6 +303,17 @@ function tondevTerminal() {
 	return _tondevTerminal;
 }
 
+function cleanAbiDir(){
+	//remove all from directory
+	const abiDir = path.resolve(__dirname, 'abi');
+	if (fs.existsSync(abiDir)) {
+		fs.readdirSync(abiDir).forEach(file => {
+			if(file == '.gitkeep') return;
+			const curPath = path.resolve(abiDir, file);
+			fs.unlinkSync(curPath);
+		});
+	}
+}
 function deactivate() { }
 
 module.exports = {

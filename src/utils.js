@@ -93,7 +93,7 @@ function getErrorFilePath(string) {
 
 function getErrors(string) {
     if (!string) return;
-
+    string = string.replaceAll("\r\n", "\n");
     let arr = string.split("\n\n");
 
     let a = arr.map(value => {

@@ -85,7 +85,7 @@ function activate(context) {
 			const wordRange = document.getWordRangeAtPosition(position, /[_a-zA-Z0-9\.]{1,100}/);
 			if (typeof wordRange == 'undefined') return;
 			ast = await getAst(document);
-			if(typeof ast == 'undefined') return;
+			if (typeof ast == 'undefined') return;
 			const data = astParser(ast, document, wordRange);
 			if (data !== null && typeof data !== 'undefined') {
 				return new vscode.Location(
@@ -289,7 +289,8 @@ function tondevTerminal() {
 		_tondevTerminal = {
 			output,
 			log: (...args) => {
-				output.appendLine(args.map((x) => `${x}`).join(""));
+				if (args.length > 0)
+					t_out.push(args.join(""));
 			},
 			writeError: (text) => {
 				!t_out.includes(text) && t_out.push(text);

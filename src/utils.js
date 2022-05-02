@@ -106,11 +106,13 @@ function getErrors(string) {
     })
 
     //broxus links filter if it exists in node modules
-    a = a.filter(value => {
-        const matches = value[0].match(/Source \"(.*sol)/);
-        if (matches == null || typeof matches[1] == 'undefined') return true; //error
-        return ifBroxus(matches[1]) == false; //error if link not valid
-    })
+    //currently error is supressed
+    //but I think it should be shown as information in future
+    // a = a.filter(value => {
+    //     const matches = value[0].match(/Source \"(.*sol)/);
+    //     if (matches == null || typeof matches[1] == 'undefined') return true; //error
+    //     return ifBroxus(matches[1]) == false; //error if link not valid
+    // })
     return a.map((value) => {
         let coord = value[1] ? value[1].match(/\d+:\d+/) : null;
         if (coord !== null) coord = coord[0].split(":");

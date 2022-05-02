@@ -40,6 +40,10 @@ function searchLinks(url, dir) {
     }
 
     //find broxus locklift contracts in node_modules folder
+    return ifBroxus(url);
+}
+//find broxus locklift contracts in node_modules folder
+const ifBroxus = (url) => {
     const workspaceRoot = workspace.workspaceFolders[0].uri.fsPath;
     const file_path = path.resolve(workspaceRoot, "node_modules", url);
     if (fs.existsSync(file_path)) {
@@ -49,5 +53,6 @@ function searchLinks(url, dir) {
 }
 
 module.exports = {
-    documentLinks
+    documentLinks,
+    ifBroxus
 }

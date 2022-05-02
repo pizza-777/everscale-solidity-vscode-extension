@@ -2,7 +2,7 @@ const vscode = require('vscode');
 const { parseAstData, getAst } = require("./parser");
 const { findHoverNode } = require("./ast");
 const { astHoverMarkdown } = require("./ast/astHoverMarkdown")
-
+const { ifBroxus } = require("./documentLinks");
 const snippetsJsonHover = require("./snippets/hover.json");
 const wordsSetHover = snippetsJsonHover['.source.ton-solidity'];
 
@@ -104,6 +104,13 @@ function getErrors(string) {
         if (value.length < 5) return false;
         return true;
     })
+
+    //broxus links filter if it exists in node modules
+    a = a.filter(value => {
+        const matches = value[0].match(/Source \"(.*sol)/);
+        if (matches == null || typeof matches[1] == 'undefined') return true; //error
+        return ifBroxus(matches[1]) == false; //error if link not valid
+    })
     return a.map((value) => {
         let coord = value[1] ? value[1].match(/\d+:\d+/) : null;
         if (coord !== null) coord = coord[0].split(":");
@@ -124,8 +131,8 @@ function getErrors(string) {
             source
         }
     })
-
 }
+
 
 function getHoverItems(word, document, position) {
     let suggestion = null;

@@ -603,7 +603,7 @@
                     }
                 },
                 {
-                    "match": "\\.(currencies|balance|lenght|extMsg)",
+                    "match": "\\.(currencies|balance|length|extMsg)",
                     "captures": {
                         "1": {
                             "name": "support.variable.property"

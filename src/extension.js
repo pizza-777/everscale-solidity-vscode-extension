@@ -235,7 +235,7 @@ async function updateDiagnostics(document, collection) {
 				range = new vscode.Range(document.positionAt(start), document.positionAt(end));
 			}
 		} else {
-			range = new vscode.Range(new vscode.Position(line, character), new vscode.Position(line, character + value.errorLenght));
+			range = new vscode.Range(new vscode.Position(line, character), new vscode.Position(line, character + value.errorLength));
 		}
 
 		return {
@@ -245,7 +245,7 @@ async function updateDiagnostics(document, collection) {
 			severity: value.severity == 'Error' ? vscode.DiagnosticSeverity.Error : vscode.DiagnosticSeverity.Warning,
 			source: value.source.fsPath,
 			relatedInformation: [
-				new vscode.DiagnosticRelatedInformation(new vscode.Location(value.source, new vscode.Range(new vscode.Position(line, character), new vscode.Position(line, character + value.errorLenght))), null)
+				new vscode.DiagnosticRelatedInformation(new vscode.Location(value.source, new vscode.Range(new vscode.Position(line, character), new vscode.Position(line, character + value.errorLength))), null)
 			]
 		}
 	})
@@ -259,7 +259,7 @@ async function getAst(document) {
 	args['outputDir'] = path.resolve(__dirname, 'abi');
 	args['format'] = 'compact-json';
 	let r = await runCommand(compileCommand, args);
-	if ((Array.isArray(r) && r.lenght > 0)) {
+	if ((Array.isArray(r) && r.length > 0)) {
 		return;//some error happened
 	}
 	const astFilePath = path.resolve(args['outputDir'], `${path.parse(args.file).name}.ast.json`);

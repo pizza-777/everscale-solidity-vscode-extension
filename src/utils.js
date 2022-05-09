@@ -71,7 +71,7 @@ function checkParam(find, str) {
     const re = new RegExp(`${find}$`);
     return str.match(re);
 }
-function getErrorLenght(errorString) {
+function geterrorLength(errorString) {
     if (!errorString) return null;
 
     const errorStringCounter = errorString.match(/[\^]/g);
@@ -119,8 +119,8 @@ function getErrors(string) {
         let severity = value[0].match(/Warning/) ? 'Warning' : 'Error';
         let raw = !coord ? null : Number(coord[0]);
         let position = !coord ? null : Number(coord[1]);
-        let errorLenght = getErrorLenght(value[4]);
-        if(errorLenght == null) throw "some technical errors, maybe compiller";
+        let errorLength = geterrorLength(value[4]);
+        if(errorLength == null) throw "some technical errors, maybe compiller";
         let source = vscode.Uri.file(getErrorFilePath(value.join("\n")));
         return {
             info: value[0],
@@ -128,7 +128,7 @@ function getErrors(string) {
                 raw,
                 position
             },
-            errorLenght,
+            errorLength,
             severity,
             source
         }

@@ -260,7 +260,12 @@ async function getAst(document) {
 	args['format'] = 'compact-json';
 	let r = await runCommand(compileCommand, args);
 	if ((Array.isArray(r) && r.length > 0)) {
-		return;//some error happened
+		for(let i = 0; i < r.length; i++) {
+			// if error
+			if (r[i].severity == 'Error') {
+				return;
+			}
+		}		
 	}
 	const astFilePath = path.resolve(args['outputDir'], `${path.parse(args.file).name}.ast.json`);
 	if (fs.existsSync(astFilePath) == true) {

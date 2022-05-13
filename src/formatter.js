@@ -1,7 +1,7 @@
 const vscode = require('vscode');
 const prettier = require("prettier");
 
-const prettierPluginSolidity = require("prettier-plugin-solidity");
+const prettierPluginSolidity = require("prettier-plugin-tvmsolidity");
 const path = require("path");
 
 function formatter(document, context) {

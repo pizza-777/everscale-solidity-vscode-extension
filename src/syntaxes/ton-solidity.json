@@ -319,7 +319,7 @@
         "control-pragma": {
             "patterns": [
                 {
-                    "match": "(pragma) (msgValue|AbiHeader|solidity|ton-solidity|experimental)\\s?([0-9a-zA-Z_\\.\\s\\~|^<>=]+)?\\s?(;)",
+                    "match": "(pragma)\\s+(msgValue|AbiHeader|solidity|ton-solidity|experimental|copyleft)\\s?([0-9a-zA-Z,_\\.\\s\\~|^<>=]+)?\\s?(;)",
                     "captures": {
                         "1": {
                             "name": "keyword.control.pragma"
@@ -336,7 +336,7 @@
                     }
                 },
                 {
-                    "match": "(pragma) (ignoreIntOverflow)(;)",
+                    "match": "(pragma)\\s+(ignoreIntOverflow)(;)",
                     "captures": {
                         "1": {
                             "name": "keyword.control.pragma"
@@ -595,7 +595,7 @@
                     }
                 },
                 {
-                    "match": "\\.\\b(getSet|getAdd|getReplace|nextOrEq|prevOrEq|depth|dataSizeQ|toSlicee|empty|size|dataSize|depth|hasNBits|hasNRefs|hasNBitsAndRefs|compare|loadRef|loadRefAsSlice|loadSigned|loadUnsigned|loadTons|loadSlice|decodeFunctionParams|skip|toSlice|toCell|remBitsAndRefs|unpack|length|append|byteLength|substr|findLast|find|decode|storeOnes|storeZeroes|storeSigned|storeUnsigned|storeRef|storeTons|min|next|prev|nextOrEq|prevOrEq|delMin|delMax|fetch|exists|empty|replace|add|hasValue|makeAddrNone|makeAddrExtern|getType|max|store|transfer|bitsAndRefs|remBits|remRefs|refs|bits)\\b",
+                    "match": "\\.\\b(getSet|getAdd|getReplace|nextOrEq|prevOrEq|depth|dataSizeQ|toSlicee|empty|size|dataSize|depth|hasNBits|hasNRefs|hasNBitsAndRefs|compare|loadRef|loadRefAsSlice|loadSigned|loadUnsigned|loadTons|loadSlice|decodeFunctionParams|skip|toSlice|toCell|remBitsAndRefs|unpack|length|append|byteLength|substr|findLast|find|decodeQ|decode|storeOnes|storeZeroes|storeSigned|storeUnsigned|storeRef|storeTons|min|next|prev|nextOrEq|prevOrEq|delMin|delMax|fetch|exists|empty|replace|add|hasValue|makeAddrNone|makeAddrExtern|getType|max|store|transfer|bitsAndRefs|remBits|remRefs|refs|bits|keys|values)\\b",
                     "captures": {
                         "1": {
                             "name": "entity.name.function"

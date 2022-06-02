@@ -34,6 +34,17 @@
                 "pragma msgValue 1 ton;"
             ]
         },
+        "pragma copyleft": {
+            "prefix": "pragma copyleft",
+            "body": "pragma copyleft ${1:type}, ${2:walletAddress};",
+            "description": [
+                "It is an experimental feature available only in certain blockchain deployments.\n",
+                "Parameters:\n\n<type> (uint8) - copyleft type.\n<wallet_address> (uint256) - author's wallet address in masterchain.\n",
+                "If contract has the copyleft pragma, it means that after each transaction some part of validator's fee is transferred to <wallet_address> according to the <type> rule.\n",
+                "For example:\n",
+                "```\npragma copyleft 0, 0x2cfbdc31c9c4478b61472c72615182e9567595b857b1bba9e0c31cd9942f6ca41;\n```"                
+            ]
+        },
         "import contract": {
             "prefix": "import",
             "body": "import '${1:contract}';"
@@ -970,6 +981,22 @@
                 "Sets the value associated with key, but only if key presents in the mapping. On success, returns an optional with the old value associated with the key. Otherwise, returns an empty optional.\n"
             ]
         },
+        "<mapping>.keys": {
+            "prefix": ".keys",
+            "body": "keys()",
+            "description": [
+                "<map>.keys() returns (KeyType[]);\n",
+                "Returns all mapping's keys. Note: these functions iterate over the whole mapping, thus the cost is proportional to the mapping's size.\n"
+            ]
+        },
+        "<mapping>.values": {
+            "prefix": ".values",
+            "body": "values()",
+            "description": [
+                "<map>.values() returns (ValueType[]);\n",
+                "Returns all mapping's values. Note: these functions iterate over the whole mapping, thus the cost is proportional to the mapping's size.\n"
+            ]
+        },
         "require": {
             "prefix": "require",
             "body": "require(${1:bool condition}, ${2:uint errorCode}, ${3:Type exceptionArgument});",
@@ -1157,6 +1184,16 @@
                 "Dumps log string. This function is wrapper for TVM instructions PRINTSTR (for constant literal strings shorter than 16 symbols) and STRDUMP (for other strings). logtvm is an alias for tvm.log(string).\nNote: For long strings dumps only the first 127 symbols.\n",
                 "Example:\n",
                 "tvm.log(\"Hello,world!\");\n"
+            ]
+        },        
+        "logtvm": {
+            "prefix": "logtvm",
+            "body": "logtvm(${1:string log});",
+            "description": [
+                "```\nlogtvm(string log);\n```\n",
+                "Dumps log string. This function is wrapper for TVM instructions PRINTSTR (for constant literal strings shorter than 16 symbols) and STRDUMP (for other strings). \nNote: For long strings dumps only the first 127 symbols.\n",
+                "Example:\n",
+                "```\nlogtvm(\"Hello,world!\");\n```\n"
             ]
         },
         "tvm.hexdump": {
@@ -1851,6 +1888,18 @@
                 "TvmSlice slice = ...;\n",
                 "(uint8 a, uint16 b) = slice.decode(uint8, uint16);\n",
                 "(uint16 num0, uint32 num1, address addr) = slice.decode(uint16, uint32, address);"
+            ]
+        },
+        "<TvmSlice>.decodeQ": {
+            "prefix": ".decodeQ",
+            "body": "decodeQ(${1:TypeA}, ${2:TypeB} ...)",
+            "description": [
+                "<TvmSlice>.decodeQ(TypeA, TypeB, ...) returns (optional(TypeA, TypeB, ...));\n",
+                "Supported types: `uintN`, `intN`, `bytesN`, `bool`, `ufixedMxN`, `fixedMxN`, `address`, `contract`, `TvmCell`, `bytes`, `string`, `mapping`, `ExtraCurrencyCollection`, `array`\n",
+                "Example:\n",
+                "TvmSlice slice = ...;\n",
+                "optional(uint) a = slice.decodeQ(uint);\n",
+                "optional(uint8, uint16) b = slice.decodeQ(uint8, uint16);"
             ]
         },
         "TvmCell": {

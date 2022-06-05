@@ -54,7 +54,7 @@ function getSnippetType(body, description, CompletionItemKind = null) {
     if (body.match(/QueryCollection|SortDirection|QueryStatus/)) { return vscode.CompletionItemKind.Enum; }
     if (body.match(/QueryOrderBy/)) { return vscode.CompletionItemKind.Struct; }
 
-    if (body.match(/\b(pragma|static|functionID|externalMsg|internalMsg|inline|constant|public|external|responsible|virtual|override|now)\b/)) {
+    if (body.match(/\b(pragma|AbiHeader|static|functionID|externalMsg|internalMsg|inline|constant|public|external|responsible|virtual|override|now)\b/)) {
         return vscode.CompletionItemKind.Keyword;
     }
     if (body.match(/\b(enum|MediaStatus)\b/)) { return vscode.CompletionItemKind.Enum; }
@@ -142,7 +142,7 @@ function getErrors(string) {
 function getHoverItems(word, document, position) {
     let suggestion = null;
     let counter = 0;
-    let name = word.match(/AbiHeader|msgValue|pragma|(ton-)?solidity|push/);
+    let name = word.match(/AbiHeader|msgValue|pragma|(ton-)?solidity|push|copyleft/);
     if (name) {
         return getSnippetsIncludes(name[0]);
     }

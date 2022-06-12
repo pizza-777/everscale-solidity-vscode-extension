@@ -37,14 +37,21 @@ function getContractName(node, ast = undefined) {
     if (typeof ast == 'undefined') {
         return '';
     }
-    let contractId = node.src.split(":")[2];
+    const contractId = node.src.split(":")[2];
+    const nodeStart = Number(node.src.split(":")[0]);
+    const nodeEnd = Number(nodeStart) + Number(node.src.split(":")[1]);
     for (let i = 0; i < ast[contractId].nodes.length; i++) {
-        node = ast[contractId].nodes[i];
-        const c = contractFilter(node);
-        if (c !== null && typeof node.contractKind !== 'undefined' && node.contractKind !== null) {
+        let subNode = ast[contractId].nodes[i];
+        const c = contractFilter(subNode);
+        if (c !== null && typeof subNode.contractKind !== 'undefined' && subNode.contractKind !== null) {
+            //check position
+            if (typeof subNode.src == 'undefined') continue;
+            if (nodeStart < Number(subNode.src.split(":")[0])) continue;
+            if (nodeEnd > (Number(subNode.src.split(":")[0]) + Number(subNode.src.split(":")[1]))) continue;
             return '\n//' + c.kind + ' ' + c.name + '\n';
         }
     }
+    return '';
 }
 
 function variableMarkdown(node) {

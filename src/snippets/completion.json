@@ -11,6 +11,17 @@
                 "pragma ton-solidity < 0.57.0; // Check compiler version is less 0.57.0"
             ]
         },
+        "pragma ever-solidity": {
+            "prefix": "pragma ever-solidity",
+            "body": "pragma ever-solidity >= ${1:version};",
+            "description": [
+                "It's used to reject compilation source file with some versions of the compiler.\n",
+                "Example:\n",
+                "pragma ever-solidity >= 0.57.0; // Check compiler version is at least 0.57.0",
+                "pragma ever-solidity ^ 0.57.0; // Check compiler version is at least 0.57.0 and less 0.57.0",
+                "pragma ever-solidity < 0.57.0; // Check compiler version is less 0.57.0"
+            ]
+        },
         "ignoreIntOverflow": {
             "prefix": "ignoreIntOverflow",
             "body": "ignoreIntOverflow;",

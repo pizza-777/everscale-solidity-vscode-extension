@@ -2199,8 +2199,11 @@
             "description": [
                 "Prints prompt message to the user and returns string entered by user.",
                 "\nArguments:",
-                " - title: bytes — utf8 string with menu title.\n - description: bytes — utf8 string with a description of a menu. Optional, can be `\"\"` (empty string).\n - items: MenuItem[] - array of menu items.\n\nReturns:\n\nindex: uint32 — index of selected menu item starting from 0.",
-                "MenuItem { title: bytes — utf8 string with a short name of menu item. description: string — utf8 string describing details of menu item. Optional, can be \"\" (empty string). handlerId: uint32 — id of a callback function to be called when this item is selected. }",
+                " - title: bytes — utf8 string with menu title.\n - description: bytes — utf8 string with a description of a menu. Optional, can be `\"\"` (empty string).\n - items: MenuItem[] - array of menu items.\n",
+                "Returns:",
+                " - index: uint32 — index of selected menu item starting from 0.\n",
+                "MenuItem\n",
+                " - title: bytes — utf8 string with a short name of menu item. \n - description: string — utf8 string describing details of menu item. Optional, can be \"\" (empty string). \n - handlerId: uint32 — id of a callback function to be called when this item is selected.\n",
                 "Example:\n```\nfunction _menu() private inline {\n    Menu.select(\"Main menu\", \"description for menu\", [\n        MenuItem(\"menu 1\", \"\", tvm.functionId(handleMenu1)),\n        MenuItem(\"menu 2\", \"desc for menu 2\", tvm.functionId(handleMenu2))\n    ]);\n}\n```\n"
             ]
         },
@@ -2208,7 +2211,7 @@
             "prefix": "MenuItem",
             "body": "MenuItem(${1:bytes title}, ${2:string description}, tvm.functionId(${3:handleMenu1}));",
             "description": [
-                "MenuItem { title: bytes — utf8 string with a short name of menu item. description: string — utf8 string describing details of menu item. Optional, can be \"\" (empty string). handlerId: uint32 — id of a callback function to be called when this item is selected. }"
+                "MenuItem \n - title: bytes — utf8 string with a short name of menu item.  \n - description: string — utf8 string describing details of menu item. Optional, can be \"\" (empty string).  \n - handlerId: uint32 — id of a callback function to be called when this item is selected.  \n\t"
             ]
         },
         "Network.get": {

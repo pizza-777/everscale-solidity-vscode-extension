@@ -274,38 +274,7 @@
             ]
         },
         "control-import": {
-            "patterns": [
-                {
-                    "begin": "\\b(import)\\b",
-                    "beginCaptures": {
-                        "1": {
-                            "name": "keyword.control.import"
-                        }
-                    },
-                    "end": "(?=\\;)",
-                    "patterns": [
-                        {
-                            "begin": "((?=\\{))",
-                            "end": "((?=\\}))",
-                            "patterns": [
-                                {
-                                    "match": "\\b(\\w+)\\b",
-                                    "name": "entity.name.interface"
-                                }
-                            ]
-                        },
-                        {
-                            "match": "\\b(from)\\b",
-                            "name": "keyword.control.import.from"
-                        },
-                        {
-                            "include": "#string"
-                        },
-                        {
-                            "include": "#punctuation"
-                        }
-                    ]
-                },
+            "patterns": [                
                 {
                     "match": "\\b(import)\\b",
                     "name": "keyword.control.import"

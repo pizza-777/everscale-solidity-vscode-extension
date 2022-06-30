@@ -115,10 +115,10 @@ function activate(context) {
 	//window doesnt support docker (se container)
 	if (process.platform !== "win32") {
 		const currentFile = () => {
-			return path.resolve(vscode.window.activeTextEditor.document.uri.fsPath).replace(path.resolve(vscode.workspace.workspaceFolders[0].uri.path), '.');
+			return vscode.window.activeTextEditor.document.uri.fsPath;
 		}
 		const currentFolder = () => {
-			return path.dirname(path.resolve(vscode.window.activeTextEditor.document.uri.fsPath)).replace(path.resolve(vscode.workspace.workspaceFolders[0].uri.path), '.');
+			return path.dirname(vscode.window.activeTextEditor.document.uri.path);
 		}
 		const currentAbi = () => {
 			return currentFile().replace('.sol', '.abi.json');

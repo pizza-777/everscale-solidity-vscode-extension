@@ -1576,8 +1576,8 @@
                 "1. Returns uint256 number.",
                 "2. If the first argument limit > 0 then function returns the value in the range 0..limit-1. Else if limit < 0 then the returned value lies in range limit..-1. Else if limit == 0 then it returns 0.\n",
                 "Example:\n",
-                "```\n uint256 r0 = rnd.next(); // 0..2^256-1\n```",
-                "```\n uint8 r1 = rnd.next(100);  // 0..991\n```",
+                "```\nuint256 r0 = rnd.next(); // 0..2^256-1\n```",
+                "```\nuint8 r1 = rnd.next(100);  // 0..991\n```",
                 "```\nint8 r2 = rnd.next(int8(100));  // 0..991\n```",
                 "```\nint8 r3 = rnd.next(int8(-100)); // -100..-11\n```\n"
             ]
@@ -2535,6 +2535,136 @@
             "prefix": ".extMsg",
             "body": "extMsg",
             "description": "Call options similar to buildExtMsg function call. Note: this type of call should be used only offchain in debot contracts.\n"
+        },
+        "int": {
+            "prefix": "int",
+            "body": "int",
+            "description": ""
+        },
+        "int8": {
+            "prefix": "int8",
+            "body": "int8",
+            "description": "Range: [-128 : 127]"
+        },
+        "int16": {
+            "prefix": "int16",
+            "body": "uint16",
+            "description": "Range: [-32768 : 32767]"
+        },
+        "int32": {
+            "prefix": "int32",
+            "body": "int32",
+            "description": "Range: [-2147483648 : 2147483647]"
+        },
+        "int64": {
+            "prefix": "int64",
+            "body": "uint64",
+            "description": "Range: [-9223372036854775808 : 9223372036854775807]"
+        },
+        "int128": {
+            "prefix": "int128",
+            "body": "int128",
+            "description": ""
+        },
+        "int256": {
+            "prefix": "int256",
+            "body": "int256",
+            "description": ""
+        },
+        "uint": {
+            "prefix": "uint",
+            "body": "uint",
+            "description": ""
+        },
+        "uint8": {
+            "prefix": "uint8",
+            "body": "uint8",
+            "description": "Range: [0 : 255]"
+        },
+        "uint16": {
+            "prefix": "uint16",
+            "body": "uint16",
+            "description": "```Range: [0 : 65535```]"
+        },
+        "uint32": {
+            "prefix": "uint32",
+            "body": "uint32",
+            "description": "Range: [0 : 4294967295]"
+        },
+        "uint64": {
+            "prefix": "uint64",
+            "body": "uint64",
+            "description": "Range: [0 : 18446744073709551615]"
+        },
+        "uint128": {
+            "prefix": "uint128",
+            "body": "uint128",
+            "description": "Range: [0 : 340282366920938463463374607431768211455]"
+        },
+        "uint256": {
+            "prefix": "uint256",
+            "body": "uint256",
+            "description": ""
+        },
+        "varInt16": {
+            "prefix": "varInt16",
+            "body": "varInt16",
+            "description": "Use this type if you want to store or send integers, and they usually have small size."
+        },
+        "varInt32": {
+            "prefix": "varInt32",
+            "body": "varInt32",
+            "description": "Use this type if you want to store or send uintegers, and they usually have small size."
+        },
+        "varUint": {
+            "prefix": "varUint",
+            "body": "varUint",
+            "description": "Use this type if you want to store or send uintegers, and they usually have small size."
+        },
+        "varUint16": {
+            "prefix": "varUint16",
+            "body": "varUint16",
+            "description": "Use this type if you want to store or send uintegers, and they usually have small size."
+        },
+        "varUint32": {
+            "prefix": "varUint32",
+            "body": "varUint32",
+            "description": "Use this type if you want to store or send uintegers, and they usually have small size."
+        },
+        "ExtraCurrencyCollection": {
+            "prefix": "ExtraCurrencyCollection",
+            "body": "ExtraCurrencyCollection",
+            "description": ""
+        },
+        "array": {
+            "prefix": "array",
+            "body": "array",
+            "description": ""
+        },
+        "vector": {
+            "prefix": "vector",
+            "body": "vector(${1:Type}",
+            "description": "vector(Type) is a template container type capable of storing an arbitrary set of values of a single type, pretty much like dynamic-sized array. \nTwo major differences are that vector(Type):\n1) is much more efficient than a dynamic-sized array;\n2) has a lifespan of a smart-contract execution, so it can't be neither passed nor returned as an external function call parameter, nor stored in a state variable.\n\nNote: vector implementation based on TVM Tuple type, and it has a limited length of 255 * 255 = 65025 values.\n"
+        },
+        "string": {
+            "prefix": "string",
+            "body": "string",
+            "description": ""
+        },
+        "bool": {
+            "prefix": "bool",
+            "body": "bool",
+            "description": ""
+        },
+        "hash": {
+            "prefix": "hash",
+            "body": "hash",
+            "description": ""
+        },
+        "bytes2": {
+            "prefix": "bytes2",
+            "body": "bytes2",
+            "description": ""
         }
     }
 }

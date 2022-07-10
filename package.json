@@ -2,7 +2,7 @@
     "name": "solidity-support",
     "displayName": "Everscale Solidity Support",
     "description": "Everscale Solidity Language for Visual Studio Code",
-    "version": "1.3.44",
+    "version": "1.3.45",
     "keywords": [
         "solidity",
         "ton-solidity",
@@ -67,6 +67,11 @@
                 "command": "deploy.debot",
                 "title": "Deploy debot locally",
                 "category": "everdev-solidity"
+            },
+            {
+                "command": "js.wrap",
+                "title": "Get ABI, Code, TVC and Code Hash into the JS file",
+                "category": "everdev-solidity"
             }
         ],
         "keybindings": [
@@ -108,6 +113,11 @@
                     "when": "resourceLangId == ton-solidity && isLinux && solidity-support.isDebot",
                     "command": "deploy.debot",
                     "group": "everdev-solidity"
+                },
+                {
+                    "when": "resourceLangId == ton-solidity && isLinux",
+                    "command": "js.wrap",
+                    "group": "everdev-code"
                 }
             ]
         },

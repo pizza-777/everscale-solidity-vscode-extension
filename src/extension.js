@@ -183,6 +183,13 @@ function activate(context) {
 			commandsTerminal.sendText("tonos-cli --url http://localhost debot fetch 0:$debotAddress");
 		}));
 
+		context.subscriptions.push(vscode.commands.registerCommand('js.wrap', () => {
+			if (!commandsTerminal) commandsTerminal = createTerminal();
+
+			commandsTerminal.show();			
+			commandsTerminal.sendText("npx everdev js wrap " + currentFile());
+		}));
+
 		vscode.window.onDidCloseTerminal(closedTerminal => {
 			if (commandsTerminal == closedTerminal) {
 				commandsTerminal = undefined;

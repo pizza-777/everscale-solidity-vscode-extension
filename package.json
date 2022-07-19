@@ -163,7 +163,7 @@
         "vscode-test": "^1.5.2"
     },
     "dependencies": {
-        "everdev": "^1.2.1",
+        "everdev": "^1.2.2",
         "prettier": "^2.6.0",
         "prettier-plugin-tvmsolidity": "^1.0.0-beta.22"
     }

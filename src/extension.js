@@ -187,6 +187,7 @@ function activate(context) {
 			if (!commandsTerminal) commandsTerminal = createTerminal();
 
 			commandsTerminal.show();			
+			commandsTerminal.sendText("npx everdev sol compile " + currentFile() + ' --output-dir ' + currentFolder());
 			commandsTerminal.sendText("npx everdev js wrap " + currentFile());
 		}));
 

@@ -116,6 +116,10 @@
             "prefix": "event",
             "body": "event ${1:name}(${2:type} ${3:name} $0);"
         },
+        "emit declaration": {
+            "prefix": "emit",
+            "body": "emit ${1:event_name}(${2:var});"
+        },
         "error declaration": {
             "prefix": "error",
             "body": "error ${1:name}(${2:type} ${3:name} $0);"

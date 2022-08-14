@@ -196,6 +196,7 @@ contract Test {
 
     function other(string s, bytes b, uint i) public {
         tvm.setGasLimit(100000);
+        tvm.buyGas(100000);
         b.empty();
         bytes byteArray = "abba";
         int index = 0;
@@ -474,4 +475,15 @@ contract Test {
         Foo(address(this)).bar{expire: 0x12345, time: 0x123}(123, 45).extMsg;
         f1();                
     }    
+    	function gosh() public {
+		string oldText;
+		string patch;
+		string newText;		
+		gosh.applyPatch(oldText, patch);
+		gosh.applyPatchQ(oldText, patch);
+		gosh.applyZipPatch(oldText, patch);
+		gosh.applyZipPatchQ(oldText, patch);
+		gosh.diff(oldText, newText);
+		gosh.zipDiff(oldText, newText);
+	}
  }

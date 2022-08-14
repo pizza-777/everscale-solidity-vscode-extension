@@ -53,7 +53,7 @@
                 "Parameters:\n\n<type> (uint8) - copyleft type.\n<wallet_address> (uint256) - author's wallet address in masterchain.\n",
                 "If contract has the copyleft pragma, it means that after each transaction some part of validator's fee is transferred to <wallet_address> according to the <type> rule.\n",
                 "For example:\n",
-                "```\npragma copyleft 0, 0x2cfbdc31c9c4478b61472c72615182e9567595b857b1bba9e0c31cd9942f6ca41;\n```"                
+                "pragma copyleft 0, 0x2cfbdc31c9c4478b61472c72615182e9567595b857b1bba9e0c31cd9942f6ca41;\n"                
             ]
         },
         "import contract": {
@@ -739,7 +739,7 @@
             "body": "stoi(${1:string inputStr})",
             "description": [
                 "stoi(string inputStr) returns (optional(int) result);\n",
-                "\nConverts a string into an integer. If string starts with '0x' it will be converted from a hexadecimal format, otherwise it is meant to be number in decimal format. Function returns the optional value containing integer, which can be empty in case of illegal characters in the string.\n\nWarning: this function consumes too much gas, that's why it's better not to use it onchain. Example:\n\noptional(int) res;\nres = stoi(\"123\"); // res ==123\nstring hexstr = \"0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF123456789ABCDE\";\nres = stoi(hexstr); // res == 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF123456789ABCDE\nres = stoi(\"0xag\"); // res == null\n"
+                "\nConverts a string into an integer. If string starts with '0x' it will be converted from a hexadecimal format, otherwise it is meant to be number in decimal format. Function returns the optional value containing integer, which can be empty in case of illegal characters in the string.\n\nWarning: this function consumes too much gas, that's why it's better not to use it onchain. Example:\n\noptional(int) res;\n\nres = stoi(\"123\"); // res ==123\n\nstring hexstr = \"0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF123456789ABCDE\";\n\nres = stoi(hexstr); // res == 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF123456789ABCDE\n\nres = stoi(\"0xag\"); // res == null\n"
             ]
         },
         "address": {
@@ -1215,10 +1215,10 @@
             "prefix": "logtvm",
             "body": "logtvm(${1:string log});",
             "description": [
-                "```\nlogtvm(string log);\n```\n",
+                "logtvm(string log);\n",
                 "Dumps log string. This function is wrapper for TVM instructions PRINTSTR (for constant literal strings shorter than 16 symbols) and STRDUMP (for other strings). \nNote: For long strings dumps only the first 127 symbols.\n",
                 "Example:\n",
-                "```\nlogtvm(\"Hello,world!\");\n```\n"
+                "logtvm(\"Hello,world!\");\n"
             ]
         },
         "tvm.hexdump": {
@@ -1467,8 +1467,16 @@
             "prefix": "tvm.setGasLimit",
             "body": "tvm.setGasLimit(${1:uint g});",
             "description": [
-                "tvm.setGasLimit(uint g);\n",
+                "tvm.setGasLimit(${1:uint g});\n",
                 "\nExecutes TVM instruction \"SETGASLIMIT\" (TVM - A.11.2).\nSets current gas limit gl to the minimum of g and gm, and resets the gas credit gc to zero. If the gas consumed so far (including the present instruction) exceeds the resulting value of gl, an (unhandled) out of gas exception is thrown before setting new gas limits. Notice that tvm.setGasLimit(...) with an argument g ≥ 263 − 1 is equivalent to tvm.accept().\ntvm.setGasLimit() is similar to tvm.accept(). tvm.accept() sets gas limit gl to the maximum possible value (depends on the network configuration parameters, usually is equal to 1_000_000 units of gas). tvm.setGasLimit() is generally used for accepting external messages and restricting max possible gas consumption. It may be used to protect from flood by \"bad\" owner in a contract that is used by multiple users. \nLet's consider some scenario:\n\n - Check whether msg.pubkey() != 0 and msg.pubkey() belongs to the list of trusted public keys;\n - Check whether m_floodCounter[msg.pubkey()] < 5 where m_floodCounter is count of pending operations of msg.pubkey() user.\n - tvm.setGasLimit(75_000); accept external message and set gas limit to 75_000.\n - ++m_floodCounter[msg.pubkey()]; increase count of pending operations for current users.\n - tvm.commit(); save current state if it needs\n - Do other things.\n\nSo if some user's public key will be stolen, then a hacker can spam with external messages and burn at most 5 * 75_000 units of gas instead of 5 * 1_000_000, because we use tvm.setGasLimit() instead of tvm.accept().\n"
+            ]
+        },
+        "tvm.buyGas(uint value);": {
+            "prefix": "tvm.buyGas",
+            "body": "tvm.buyGas(${1:uint value});",
+            "description": [
+                "tvm.buyGas(uint value);\n",
+                "Computes the amount of gas that can be bought for value nanotons, and sets gas limit accordingly in the same way as tvm.setGasLimit().\n"
             ]
         },
         "math.min": {
@@ -1662,6 +1670,82 @@
                 "(uint a, uint b, uint c, uint d) = abi.decode(cell, (uint, uint, uint, uint));"
             ]
         },
+        "gosh.diff": {
+            "prefix": "gosh.diff",
+            "body": "gosh.diff(${1:string oldText}, ${2:string newText})",
+            "description": [
+                "gosh.diff(string oldText, string newText) returns (string patch);\n",
+                "Calculates patch between oldText and newText.\n",
+                "Example:\n",
+                "string oldText = ...;\n",
+                "string newText = ...;\n",
+                "string patch = gosh.diff(oldText, newText);\n"
+            ]            
+        },
+        "gosh.applyPatchQ": {
+            "prefix": "gosh.applyPatchQ",
+            "body": "gosh.applyPatchQ(${1:string oldText}, ${2:string patch})",
+            "description": [
+                "gosh.applyPatchQ(string oldText, string patch) returns (optional(string) newText);\n",
+                "Applies patch to the oldText. If it's impossible (bad patch), gosh.applyPatchQ returns null.\n",
+                "Example:\n",
+                "string oldText = ...;\n",
+                "string patch = ...;\n",
+                "optional(string) newText = gosh.applyPatch(oldText, patch);\n"
+            ]            
+        },
+        "gosh.applyPatch": {
+            "prefix": "gosh.applyPatch",
+            "body": "gosh.applyPatch(${1:string oldText}, ${2:string patch})",
+            "description": [
+                "gosh.applyPatch(string oldText, string patch) returns (string newText);\n",
+                "Applies patch to the oldText. If it's impossible (bad patch), gosh.applyPatch throws an exception with type check error code (-8).\n",
+                "Example:\n",
+                "string oldText = ...;\n",
+                "string patch = ...;\n",
+                "string newText = gosh.applyPatch(oldText, patch);\n"
+            ]            
+        },
+        "gosh.unzip": {
+            "prefix": "gosh.unzip",
+            "body": "gosh.unzip(${1:bytes zip})",
+            "description": [
+                "gosh.unzip(bytes zip) returns (optional(string) text);\n",
+                "Revert zip compression\n"                
+            ]            
+        },
+        "gosh.zipDiff": {
+            "prefix": "gosh.zipDiff",
+            "body": "gosh.zipDiff(${1:bytes oldText}, ${2:bytes newText})",
+            "description": [
+                "gosh.zipDiff(bytes oldText, bytes newText) returns (bytes patch);\n",               
+                "It's the same as gosh.diff but it calculates patch between compressed string.\n"                
+            ]            
+        },
+        "gosh.zip": {
+            "prefix": "gosh.zip",
+            "body": "gosh.zip(${1:string text})",
+            "description": [
+                "gosh.zip(string text) returns (bytes zip);\n",
+                "Converts the text to compressed bytes\n"                
+            ]            
+        },
+        "gosh.applyZipPatchQ": {
+            "prefix": "gosh.applyZipPatchQ",
+            "body": "gosh.applyZipPatchQ(${1:bytes oldText}, ${2:bytes patch})",
+            "description": [
+                "gosh.applyZipPatchQ(bytes oldText, bytes patch) returns (optional(bytes) newText);\n",                
+                "These are the same as gosh.applyPatchQ but this functions is applied to compressed string.\n"                
+            ]            
+        },   
+        "gosh.applyZipPatch": {
+            "prefix": "gosh.applyZipPatch",
+            "body": "gosh.applyZipPatch(${1:bytes oldText}, ${2:bytes patch})",
+            "description": [
+                "gosh.applyZipPatch(bytes oldText, bytes patch) returns (bytes newText);\n",                
+                "These are the same as gosh.applyPatch but this function is applied to compressed string.\n"                
+            ]            
+        },
         "selfdestruct": {
             "prefix": "selfdestruct",
             "body": "selfdestruct(${1:address dest_addr})",
@@ -1684,17 +1768,19 @@
         },
         "gasToValue": {
             "prefix": "gasToValue",
-            "body": "gasToValue(${1:uint128 gas}, ${2:int8 wid})",
+            "body": "gasToValue(${1:uint128 gas}, ${2:int8 wid(optional)})",
             "description": [
+                "gasToValue(uint128 gas) returns (uint128 value);\n",
                 "gasToValue(uint128 gas, int8 wid) returns (uint128 value)\n",
                 "Returns worth of gas in workchain wid. Throws an exception if wid doesn't equal 0 and -1.\n"
             ]
         },
         "valueToGas": {
             "prefix": "valueToGas",
-            "body": "valueToGas(${1:uint128 value}, ${2:int8 wid})",
-            "description": [
-                "gasToValue(uint128 value, int8 wid) returns (uint128 gas)\n",
+            "body": "valueToGas(${1:uint128 value}, ${2:int8 wid(optional})",
+            "description": [                
+                "valueToGas(uint128 value) returns (uint128 gas);\n",                 
+                "valueToGas(uint128 value, int8 wid) returns (uint128 gas)\n",
                 "Returns how much gas could be bought on value nanoevers in workchain wid. Throws an exception if wid doesn't equal 0 and -1.\n"
             ]
         },
@@ -2253,7 +2339,7 @@
                 " - index: uint32 — index of selected menu item starting from 0.\n",
                 "MenuItem \n",
                 " - title: bytes — utf8 string with a short name of menu item. \n - description: string — utf8 string describing details of menu item. Optional, can be \"\" (empty string). \n - handlerId: uint32 — id of a callback function to be called when this item is selected.\n",
-                "Example:\n```\nfunction _menu() private inline {\n    Menu.select(\"Main menu\", \"description for menu\", [\n        MenuItem(\"menu 1\", \"\", tvm.functionId(handleMenu1)),\n        MenuItem(\"menu 2\", \"desc for menu 2\", tvm.functionId(handleMenu2))\n    ]);\n}\n```\n"
+                "Example:\n\nfunction _menu() private inline {\n    Menu.select(\"Main menu\", \"description for menu\", [\n        MenuItem(\"menu 1\", \"\", tvm.functionId(handleMenu1)),\n        MenuItem(\"menu 2\", \"desc for menu 2\", tvm.functionId(handleMenu2))\n    ]);\n}\n"
             ]
         },
         "MenuItem": {
@@ -2784,7 +2870,7 @@
         },
         "int16": {
             "prefix": "int16",
-            "body": "uint16",
+            "body": "int16",
             "description": "Range: [-32768 : 32767]"
         },
         "int32": {
@@ -2820,7 +2906,7 @@
         "uint16": {
             "prefix": "uint16",
             "body": "uint16",
-            "description": "```Range: [0 : 65535```]"
+            "description": "Range: [0 : 65535]"
         },
         "uint32": {
             "prefix": "uint32",

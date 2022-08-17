@@ -166,13 +166,13 @@ function activate(context) {
 			if (!commandsTerminal) commandsTerminal = createTerminal();
 
 			commandsTerminal.show();
-			commandsTerminal.sendText("npx everdev contract run " + currentFile().replace('.sol', '.abi.json'));
+			commandsTerminal.sendText("npx everdev contract run " + currentFile().replace('.sol', '.abi.json') + " --network se");
 		}));
 		context.subscriptions.push(vscode.commands.registerCommand('contract.runLocal', () => {
 			if (!commandsTerminal) commandsTerminal = createTerminal();
 
 			commandsTerminal.show();
-			commandsTerminal.sendText("npx everdev contract run-local " + currentFile().replace('.sol', '.abi.json'));
+			commandsTerminal.sendText("npx everdev contract run-local " + currentFile().replace('.sol', '.abi.json') + " --network se");
 		}));
 
 		context.subscriptions.push(vscode.commands.registerCommand('contract.startDebot', () => {

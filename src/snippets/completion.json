@@ -1664,7 +1664,7 @@
             "prefix": "abi.decode",
             "body": "abi.decode(${1:TvmCell}, (${2:TypeA}, ${3:TypeB}))",
             "description": [
-                "abi.decode(TvmCell cell, (TypeA, TypeB, ...)) returns (TypeA /*a*/, TypeB /*b*/, ...);",
+                "abi.decode(TvmCell cell, (TypeA, TypeB, ...)) returns (TypeA a, TypeB b, ...);",
                 "Decodes the cell and returns the values. Note: all types must be set in abi.decode. Otherwise, abi.decode throws an exception.\n",                
                 "Example:\n",
                 "(uint a, uint b, uint c, uint d) = abi.decode(cell, (uint, uint, uint, uint));"

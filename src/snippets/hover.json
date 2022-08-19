@@ -172,7 +172,7 @@
             "prefix": ".dataSize",
             "body": ".dataSize(${uint n})",
             "description": [
-                "```\n<TvmCell>.dataSize(uint n) returns (uint /\\*cells\\*/, uint /\\*bits\\*/, uint /\\*refs\\*/);\n```\n",
+                "```\n<TvmCell>.dataSize(uint n) returns (uint cells, uint bits, uint refs);\n```\n",
                 "Returns the count of distinct cells, data bits in the distinct cells and cell references in the distinct cells. If count of the distinct cells exceeds n+1 then a cell overflow exception (8) is thrown. This function is a wrapper for opcode \"CDATASIZE\" "
             ]
         },
@@ -180,7 +180,7 @@
             "prefix": ".dataSizeQ",
             "body": ".dataSizeQ(${uint n})",
             "description": [
-                "```\n<TvmCell>.dataSizeQ(uint n) returns (optional(uint /\\*cells\\*/, uint /\\*bits\\*/, uint /\\*refs\\*/));\n```\n",
+                "```\n<TvmCell>.dataSizeQ(uint n) returns (optional(uint cells, uint bits, uint refs));\n```\n",
                 "Returns the count of distinct cells, data bits in the distinct cells and cell references in the distinct cells. If count of the distinct cells exceeds n+1 then this function returns an optional that has no value. This function is a wrapper for opcode \"CDATASIZEQ\" "
             ]
         },
@@ -204,7 +204,7 @@
             "prefix": ".size",
             "body": ".size()",
             "description": [
-                "```\n<TvmSlice>.size() returns (uint16 /\\*bits\\*/, uint8 /\\*refs\\*/);\n```\n",
+                "```\n<TvmSlice>.size() returns (uint16 bits, uint8 refs);\n```\n",
                 "Returns number of data bits and references in the slice."
             ]
         },
@@ -212,7 +212,7 @@
             "prefix": ".dataSize",
             "body": ".dataSize(${uint n})",
             "description": [
-                "```\n<TvmSlice>.dataSize(uint n) returns (uint /\\*cells\\*/, uint /\\*bits\\*/, uint /\\*refs\\*/);\n```\n",
+                "```\n<TvmSlice>.dataSize(uint n) returns (uint cells, uint bits, uint refs);\n```\n",
                 "Returns the count of distinct cells, data bits in the distinct cells and cell references in the distinct cells. If count of the distinct cells exceeds n+1 then a cell overflow exception (8) is thrown. Note that the returned count of distinct cells does not take into account the cell that contains the slice itself. This function is a wrapper for opcode SDATASIZE"
             ]
         },
@@ -220,7 +220,7 @@
             "prefix": ".dataSizeQ",
             "body": ".dataSizeQ(${uint n})",
             "description": [
-                "```\n<TvmSlice>.dataSizeQ(uint n) returns (optional(uint /\\*cells\\*/, uint /\\*bits\\*/, uint /\\*refs\\*/));\n```\n",
+                "```\n<TvmSlice>.dataSizeQ(uint n) returns (optional(uint cells, uint bits, uint refs));\n```\n",
                 "Returns the count of distinct cells, data bits in the distinct cells and cell references in the distinct cells. If count of the distinct cells exceeds n+1 then this function returns an optional that has no value. Note that the returned count of distinct cells does not take into account the cell that contains the slice itself. This function is a wrapper for opcode SDATASIZEQ"
             ]
         },
@@ -347,11 +347,11 @@
                 "Decodes parameters of the function or constructor (if contract type is provided). This function is usually used in onBounce function.\n",
                 "Example:\n",
                 "Decode parameters of the public/external function without \"responsible\" attribute:\n",
-                "```\n<TvmSlice>.decodeFunctionParams(functionName) returns (TypeA /\\*a\\*/, TypeB /\\*b\\*/, ...);\n```\n",
+                "```\n<TvmSlice>.decodeFunctionParams(functionName) returns (TypeA a, TypeB b, ...);\n```\n",
                 "Decode parameters of the public function which returns values:\n",
-                "```\n<TvmSlice>.decodeFunctionParams(functionName) returns (uint32 callbackFunctionId, TypeA /\\*a\\*/, TypeB /\\*b\\*/, ...);\n```\n",
+                "```\n<TvmSlice>.decodeFunctionParams(functionName) returns (uint32 callbackFunctionId, TypeA a, TypeB b, ...);\n```\n",
                 "Decode constructor parameters:\n",
-                "```\n\\<TvmSlice>.decodeFunctionParams(ContractName) returns (TypeA /\\*a\\*/, TypeB /\\*b\\*/, ...);\n```\n"
+                "```\n<TvmSlice>.decodeFunctionParams(ContractName) returns (TypeA a, TypeB b, ...);\n```\n"
             ]
         },
         "<TvmSlice>.skip": {
@@ -399,7 +399,7 @@
             "prefix": ".bitsAndRefs",
             "body": ".bitsAndRefs()",
             "description": [
-                "```\n<TvmBuilder>.bitsAndRefs() returns (uint16 /\\*bits\\*/, uint8 /\\*refs\\*/);\n```\n",
+                "```\n<TvmBuilder>.bitsAndRefs() returns (uint16 bits, uint8 refs);\n```\n",
                 "Returns the number of data bits and references already stored in the builder."
             ]
         },
@@ -423,7 +423,7 @@
             "prefix": ".remBitsAndRefs",
             "body": ".remBitsAndRefs()",
             "description": [
-                "```\n<TvmBuilder>.remBitsAndRefs() returns (uint16 /\\*bits\\*/, uint8 /\\*refs\\*/);\n```\n",
+                "```\n<TvmBuilder>.remBitsAndRefs() returns (uint16 bits, uint8 refs);\n```\n",
                 "Returns the number of data bits and references that can still be stored in the builder."
             ]
         },
@@ -616,7 +616,7 @@
             "prefix": ".unpack",
             "body": ".unpack()",
             "description": [
-                "```\n<struct>.unpack() returns (TypeA /\\*a\\*/, TypeB /\\*b\\\\*/, ...);\n```\n",
+                "```\n<struct>.unpack() returns (TypeA a, TypeB b\\, ...);\n```\n",
                 "Unpacks all members stored in the struct.\n",
                 "Example:\n",
                 "```\nstruct MyStruct {\n\tuint a;\n\tint b;\n\taddress c;\n}\n```",
@@ -662,14 +662,14 @@
             "prefix": ".dataSize",
             "body": ".dataSize(${1:uint n})",
             "description": [
-                "```\n\\<bytes>.dataSize(uint n) returns (uint /\\*cells\\*/, uint /\\*bits\\*/, uint /\\*refs\\*/);\n```\n"
+                "```\n<bytes>.dataSize(uint n) returns (uint cells, uint bits, uint refs);\n```\n"
             ]
         },
         "<bytes>.dataSizeQ": {
             "prefix": ".dataSizeQ",
             "body": ".dataSizeQ(${1:uint n})",
             "description": [
-                "```\n\\<bytes>.dataSizeQ(uint n) returns (optional(uint /\\*cells\\*/, uint /\\*bits\\*/, uint /\\*refs\\*/));\n```\n"
+                "```\n<bytes>.dataSizeQ(uint n) returns (optional(uint cells, uint bits, uint refs));\n```\n"
             ]
         },
         "<bytes>.append": {
@@ -851,7 +851,7 @@
             "prefix": ".unpack",
             "body": ".unpack()",
             "description": [
-                "```\n<address>.unpack() returns (int8 /\\*wid\\*/, uint256 /\\*value\\*/);\n```\n",
+                "```\n<address>.unpack() returns (int8 wid, uint256 value);\n```\n",
                 "Parses \\<address> containing a valid MsgAddressInt (addr_std or addr_var), applies rewriting from the anycast (if present) to the same-length prefix of the address, and returns both the workchain wid and the 256-bit address value. If the address value is not 256-bit, or if \\<address> is not a valid serialization of MsgAddressInt, throws a cell deserialization exception.\n",
                 "It's wrapper for opcode REWRITESTDADDR.\n",
                 "Example:\n",
@@ -1508,7 +1508,7 @@
             "prefix": "math.minmax",
             "body": "math.minmax(${1:T a, T b, ...});",
             "description": [
-                "```\nmath.minmax(T a, T b) returns (T /\\*min\\*/, T /\\*max\\*/);\n```\n",
+                "```\nmath.minmax(T a, T b) returns (T min, T max);\n```\n",
                 "Returns minimal and maximal values of the passed arguments. T should be an integer or fixed point type\n",
                 "Example:\n",
                 "```\n(uint a, uint b) = math.minmax(20, 10); // (10, 20)\n```"
@@ -1574,7 +1574,7 @@
             "prefix": "math.muldivmod",
             "body": "math.muldivmod(${1:T a}, ${2:T b}, ${3:T c});",
             "description": [
-                "```\nmath.muldivmod(T a, T b, T c) (T /\\*result\\*/, T /\\*remainder\\*/);\n```\n",
+                "```\nmath.muldivmod(T a, T b, T c) (T result, T remainder);\n```\n",
                 "This instruction multiplies first two arguments, divides the result by third argument and returns the result and the remainder. Intermediate result is stored in the 514 bit buffer, and the final result is rounded to the floor.\n"
             ]
         },
@@ -1582,7 +1582,7 @@
             "prefix": "math.divmod",
             "body": "math.divmod(${1:T a}, ${2:T b});",
             "description": [
-                "```\nmath.divmod(T a, T b) returns (T /\\*result\\*/, T /\\*remainder\\*/);\n```\n",
+                "```\nmath.divmod(T a, T b) returns (T result, T remainder);\n```\n",
                 "This instruction divides the first number by the second one and returns the result\nand the remainder. Result is rounded to the floor. T is integer type.\n"
             ]
         },
@@ -2030,7 +2030,7 @@
             "prefix": ".decode",
             "body": ".decode(${1:TypeA}, ${2:TypeB} ...)",
             "description": [
-                "```\n<TvmSlice>.decode(TypeA, TypeB, ...) returns (TypeA /\\*a\\*/, TypeB /\\*b\\*/, ...);\n```\n",
+                "```\n<TvmSlice>.decode(TypeA, TypeB, ...) returns (TypeA a, TypeB b, ...);\n```\n",
                 "Supported types: `uintN`, `intN`, `bytesN`, `bool`, `ufixedMxN`, `fixedMxN`, `address`, `contract`, `TvmCell`, `bytes`, `string`, `mapping`, `ExtraCurrencyCollection`, `array`, `optional` and `struct`\n",
                 "Example:\n",
                 "```\nTvmSlice slice = ...;\n```\n",

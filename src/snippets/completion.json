@@ -2997,6 +2997,21 @@
             "prefix": ".extMsg",
             "body": "extMsg",
             "description": "Call options similar to buildExtMsg function call. Note: this type of call should be used only offchain in debot contracts.\n"
+        },
+        "<variant>.isUint":{
+            "prefix": ".isUint",
+            "body":"isUint()",
+            "description": [
+                "<variant>.isUint() returns (bool)\n",
+                "Checks whether <variant> holds uint type."
+            ]
+        },
+        "<variant>.toUint":{
+            "prefix": ".toUint",
+            "body":"toUint()",
+            "description": [
+                "Converts <variant> to uint type if it's possible. Otherwise, throws an exception with code 77.\n"                
+            ]
         }
     }
 }

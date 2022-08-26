@@ -53,7 +53,7 @@
                 "Parameters:\n\n<type> (uint8) - copyleft type.\n<wallet_address> (uint256) - author's wallet address in masterchain.\n",
                 "If contract has the copyleft pragma, it means that after each transaction some part of validator's fee is transferred to <wallet_address> according to the <type> rule.\n",
                 "For example:\n",
-                "```\npragma copyleft 0, 0x2cfbdc31c9c4478b61472c72615182e9567595b857b1bba9e0c31cd9942f6ca41;\n```"                
+                "```\npragma copyleft 0, 0x2cfbdc31c9c4478b61472c72615182e9567595b857b1bba9e0c31cd9942f6ca41;\n```"
             ]
         },
         "import contract": {
@@ -877,10 +877,10 @@
                 " * 128 - message carries all the remaining balance of the current smart contract. Parameter value is ignored. The contract's balance will be equal to zero after the message processing.",
                 " * 64 - carries funds equal to the value parameter plus all the remaining value of the inbound message (that initiated the contract execution).\n",
                 "--------\n",
-                "Parameter flag can also be modified:\n",                
+                "Parameter flag can also be modified:\n",
                 " * flag + 1 - means that the sender wants to pay transfer fees separately from contract's balance.",
                 " * flag + 2 - means that any errors arising while processing this message during the action phase should be ignored. But if the message has wrong format, then the transaction fails and + 2 has no effect.",
-                " * flag + 32 - means that the current account must be destroyed if its resulting balance is zero. For example, flag: 128 + 32 is used to send all balance and destroy the contract."                
+                " * flag + 32 - means that the current account must be destroyed if its resulting balance is zero. For example, flag: 128 + 32 is used to send all balance and destroy the contract."
             ]
         },
         "<mapping>.min": {
@@ -1297,7 +1297,7 @@
                 "12 = 8 + 4 -> reserve = original_balance - value nanotons.\n",
                 "13 = 8 + 4 + 1 -> reserve = remaining_balance - (original_balance - value) nanotons.\n",
                 "14 = 8 + 4 + 2 -> reserve = min(original_balance - value, remaining_balance) nanotons.\n",
-                "15 = 8 + 4 + 2 + 1 -> reserve = remaining_balance - min(original_balance - value, remaining_balance) nanotons."            
+                "15 = 8 + 4 + 2 + 1 -> reserve = remaining_balance - min(original_balance - value, remaining_balance) nanotons."
             ]
         },
         "tvm.hash": {
@@ -1339,10 +1339,10 @@
             ]
         },
         "tvm.buildDataInit": {
-            "prefix": "tvm.buildDataInit",           
+            "prefix": "tvm.buildDataInit",
             "body": "tvm.buildDataInit({pubkey: uint256 pubkey, contr: contract Contract, varInit: {VarName0: varValue0, ...}})",
             "description": [
-                "Generates data field of the StateInit (TBLKCH - 3.1.7.). Parameters are the same as in tvm.buildStateInit().\n"               
+                "Generates data field of the StateInit (TBLKCH - 3.1.7.). Parameters are the same as in tvm.buildStateInit().\n"
             ]
         },
         "tvm.deploy": {
@@ -1466,10 +1466,10 @@
                 " * 128 - message carries all the remaining balance of the current smart contract. Parameter value is ignored. The contract's balance will be equal to zero after the message processing.",
                 " * 64 - carries funds equal to the value parameter plus all the remaining value of the inbound message (that initiated the contract execution).\n",
                 "--------\n",
-                "Parameter flag can also be modified:\n",                
+                "Parameter flag can also be modified:\n",
                 " * flag + 1 - means that the sender wants to pay transfer fees separately from contract's balance.",
                 " * flag + 2 - means that any errors arising while processing this message during the action phase should be ignored. But if the message has wrong format, then the transaction fails and + 2 has no effect.",
-                " * flag + 32 - means that the current account must be destroyed if its resulting balance is zero. For example, flag: 128 + 32 is used to send all balance and destroy the contract."                            
+                " * flag + 32 - means that the current account must be destroyed if its resulting balance is zero. For example, flag: 128 + 32 is used to send all balance and destroy the contract."
             ]
         },
         "tvm.setGasLimit": {
@@ -1674,7 +1674,7 @@
             "body": "abi.decode(${1:TvmCell}, (${2:TypeA}, ${3:TypeB}))",
             "description": [
                 "```\nabi.decode(TvmCell cell, (TypeA, TypeB, ...)) returns (TypeA /*a*/, TypeB /*b*/, ...);\n```\n",
-                "Decodes the cell and returns the values. Note: all types must be set in abi.decode. Otherwise, abi.decode throws an exception.",                
+                "Decodes the cell and returns the values. Note: all types must be set in abi.decode. Otherwise, abi.decode throws an exception.",
                 "Example:\n",
                 "```\n(uint a, uint b, uint c, uint d) = abi.decode(cell, (uint, uint, uint, uint));\n```\n"
             ]
@@ -1689,7 +1689,7 @@
                 "```\nstring oldText = ...;\n```\n",
                 "```\nstring newText = ...;\n```\n",
                 "```\nstring patch = gosh.diff(oldText, newText);\n```\n"
-            ]            
+            ]
         },
         "gosh.applyPatchQ": {
             "prefix": "gosh.applyPatchQ",
@@ -1701,7 +1701,7 @@
                 "```\nstring oldText = ...;\n```\n",
                 "```\nstring patch = ...;\n```\n",
                 "```\noptional(string) newText = gosh.applyPatch(oldText, patch);\n```\n"
-            ]            
+            ]
         },
         "gosh.applyPatch": {
             "prefix": "gosh.applyPatch",
@@ -1713,48 +1713,48 @@
                 "```\nstring oldText = ...;\n```\n",
                 "```\nstring patch = ...;\n```\n",
                 "```\nstring newText = gosh.applyPatch(oldText, patch);\n```\n"
-            ]            
+            ]
         },
         "gosh.unzip": {
             "prefix": "gosh.unzip",
             "body": "gosh.unzip(${1:bytes zip})",
             "description": [
                 "```\ngosh.unzip(bytes zip) returns (optional(string) text);\n```\n",
-                "Revert zip compression\n"                
-            ]            
+                "Revert zip compression\n"
+            ]
         },
         "gosh.zipDiff": {
             "prefix": "gosh.zipDiff",
             "body": "gosh.zipDiff(${1:bytes oldText}, ${2:bytes newText})",
             "description": [
-                "```\ngosh.zipDiff(bytes oldText, bytes newText) returns (bytes patch);\n```\n",               
-                "It's the same as gosh.diff but it calculates patch between compressed string.\n"                
-            ]            
+                "```\ngosh.zipDiff(bytes oldText, bytes newText) returns (bytes patch);\n```\n",
+                "It's the same as gosh.diff but it calculates patch between compressed string.\n"
+            ]
         },
         "gosh.zip": {
             "prefix": "gosh.zip",
             "body": "gosh.zip(${1:string text})",
             "description": [
                 "```\ngosh.zip(string text) returns (bytes zip);\n```\n",
-                "Converts the text to compressed bytes\n"                
-            ]            
+                "Converts the text to compressed bytes\n"
+            ]
         },
         "gosh.applyZipPatchQ": {
             "prefix": "gosh.applyZipPatchQ",
             "body": "gosh.applyZipPatchQ(${1:bytes oldText}, ${2:bytes patch})",
             "description": [
-                "```\ngosh.applyZipPatchQ(bytes oldText, bytes patch) returns (optional(bytes) newText);\n```\n",                
-                "These are the same as gosh.applyPatchQ but this functions is applied to compressed string.\n"                
-            ]            
-        },   
+                "```\ngosh.applyZipPatchQ(bytes oldText, bytes patch) returns (optional(bytes) newText);\n```\n",
+                "These are the same as gosh.applyPatchQ but this functions is applied to compressed string.\n"
+            ]
+        },
         "gosh.applyZipPatch": {
             "prefix": "gosh.applyZipPatch",
             "body": "gosh.applyZipPatch(${1:bytes oldText}, ${2:bytes patch})",
             "description": [
-                "```\ngosh.applyZipPatch(bytes oldText, bytes patch) returns (bytes newText);\n```\n",                
-                "These are the same as gosh.applyPatch but this function is applied to compressed string.\n"                
-            ]            
-        },     
+                "```\ngosh.applyZipPatch(bytes oldText, bytes patch) returns (bytes newText);\n```\n",
+                "These are the same as gosh.applyPatch but this function is applied to compressed string.\n"
+            ]
+        },
         "selfdestruct": {
             "prefix": "selfdestruct",
             "body": "selfdestruct(${1:address dest_addr})",
@@ -1819,7 +1819,7 @@
                 "Example:\n",
                 "```\n// This function is called as usual function.\nfunction getSum(uint a, uint b) public returns (uint) {\n    return sum(a, b);\n}\n\n// Code of this function is inserted to the place of call.\nfunction sum(uint a, uint b) private inline returns (uint) {\n    return a + b;\n}\n```\n"
             ]
-        },        
+        },
         "emptyMap": {
             "prefix": "emptyMap",
             "body": "emptyMap",
@@ -1946,7 +1946,7 @@
             "description": [
                 "1 GEver == 1e6 ever\n"
             ]
-        },        
+        },
         "nanoton": {
             "prefix": "nanoton",
             "body": "nanoton",
@@ -2794,6 +2794,21 @@
             "prefix": "bytes2",
             "body": "bytes2",
             "description": ""
+        },
+        "<variant>.isUint": {
+            "prefix": ".isUint",
+            "body": "isUint()",
+            "description": [
+                "```\n<variant>.isUint() returns (bool)\n```\n",
+                "Checks whether \\<variant\\> holds uint type."
+            ]
+        },
+        "<variant>.toUint": {
+            "prefix": ".toUint",
+            "body": "toUint()",
+            "description": [
+                "Converts \\<variant\\> to uint type if it's possible. Otherwise, throws an exception with code 77.\n"
+            ]
         }
     }
 }

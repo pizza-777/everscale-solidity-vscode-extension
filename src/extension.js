@@ -144,7 +144,7 @@ function activate(context) {
 			commandsTerminal.show();
 			commandsTerminal.sendText("npx everdev sol compile " + currentFile() + ' --output-dir ' + currentFolder());
 			commandsTerminal.sendText("npx everdev contract deploy " + currentFile() + " --value 10000000000 --network se");
-			commandsTerminal.sendText("echo 0:$(everdev contract info " + currentFile() + " | grep Address | cut -d':' -f3 | cut -d' ' -f1)");
+			commandsTerminal.sendText("echo 0:$(everdev contract info " + currentFile() + " --network se | grep Address | cut -d':' -f3 | cut -d' ' -f1)");
 		}));
 
 		context.subscriptions.push(vscode.commands.registerCommand('deploy.debot', () => {
@@ -153,8 +153,8 @@ function activate(context) {
 			commandsTerminal.show();
 			commandsTerminal.sendText("npx everdev sol compile " + currentFile() + ' --output-dir ' + currentFolder());
 			commandsTerminal.sendText("npx everdev contract deploy " + currentFile() + " --value 10000000000 --network se");
-			commandsTerminal.sendText("everdev contract run " + currentFile() + " setABI --input \"dabi:'$(cat " + currentAbi() + " | xxd -ps -c 20000)'\"");
-			commandsTerminal.sendText("echo 0:$(everdev contract info " + currentFile() + " | grep Address | cut -d':' -f3 | cut -d' ' -f1)");
+			commandsTerminal.sendText("everdev contract run " + currentFile() + " setABI --input \"dabi:'$(cat " + currentAbi() + " | xxd -ps -c 20000)'\" --network se");
+			commandsTerminal.sendText("echo 0:$(everdev contract info " + currentFile() + " --network se | grep Address | cut -d':' -f3 | cut -d' ' -f1)");
 		}));
 		context.subscriptions.push(vscode.commands.registerCommand('network.reset', () => {
 			if (!commandsTerminal) commandsTerminal = createTerminal();
@@ -179,7 +179,7 @@ function activate(context) {
 			if (!commandsTerminal) commandsTerminal = createTerminal();
 
 			commandsTerminal.show();
-			commandsTerminal.sendText("debotAddress=$(everdev contract info " + currentFile() + " | grep Address | cut -d':' -f3 | cut -d' ' -f1)");
+			commandsTerminal.sendText("debotAddress=$(everdev contract info " + currentFile() + " --network se | grep Address | cut -d':' -f3 | cut -d' ' -f1)");
 			commandsTerminal.sendText("tonos-cli --url http://localhost debot fetch 0:$debotAddress");
 		}));
 

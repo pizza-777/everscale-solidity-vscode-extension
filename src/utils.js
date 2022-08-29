@@ -126,7 +126,7 @@ function getErrors(string) {
         }
         let source = vscode.Uri.file(getErrorFilePath(value.join("\n")));
         return {
-            info: value[0],
+            info: changeErrorInfo(value[0]),
             coord: {
                 raw,
                 position
@@ -136,6 +136,13 @@ function getErrors(string) {
             source
         }
     })
+}
+
+function changeErrorInfo(value){
+    if(value.includes('Error: Source file requires different compiler version (current compiler is')){
+        value += '\n\n' + 'Hint. To install needed compiler version run in a command line: `npx everdev sol set --compiler COMPILER_VERSION`'        
+    }
+    return value;
 }
 
 

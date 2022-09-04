@@ -2809,6 +2809,13 @@
             "description": [
                 "Converts \\<variant\\> to uint type if it's possible. Otherwise, throws an exception with code 77.\n"
             ]
+        },
+        "try-catch": {
+            "prefix": "try",
+            "body": "try {\n\n}catch(variant value, uint number) { \n\n}",
+            "description": [
+                "The try statement allows you to define a block of code to be tested for errors while it is executed. The catch statement allows you to define a block of code to be executed, if an error occurs in the try block. catch block gets two parameters of type variant and uint, whick contain exception argument and code respectively. \n"                
+            ]
         }
     }
 }

@@ -267,7 +267,7 @@ function getSignatures(document, position) {
 
 function parseParams(label) {
     let paramsString = label.match(/\((.*)\)/);
-    if (paramsString !== null & typeof paramsString[1] !== 'undefined') {
+    if (paramsString !== null && typeof paramsString[1] !== 'undefined') {
         return paramsString[1].split(",");
     }
     return [];

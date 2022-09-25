@@ -11,4 +11,6 @@ updates:
       interval: "daily"
     allow: 
       - dependency-name: "everdev"
+      - dependency-name: "prettier"
+      - dependency-name: "prettier-plugin-tvmsolidity"
     

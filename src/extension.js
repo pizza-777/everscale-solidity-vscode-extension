@@ -221,6 +221,7 @@ async function updateDiagnostics(document, collection) {
 	let args = [];
 	args['file'] = filePath;
 	args['outputDir'] = path.resolve(__dirname, 'abi');
+	args['includePath'] = path.resolve(vscode.workspace.workspaceFolders[0].uri.fsPath, "node_modules");
 	let r = await runCommand(compileCommand, args);
 
 	if (r == undefined) {
@@ -266,6 +267,7 @@ async function getAst(document) {
 	args['file'] = document.uri.fsPath;;
 	args['outputDir'] = path.resolve(__dirname, 'abi');
 	args['format'] = 'compact-json';
+	args['includePath'] = path.resolve(vscode.workspace.workspaceFolders[0].uri.fsPath, "node_modules");
 	let r = await runCommand(compileCommand, args);
 	if ((Array.isArray(r) && r.length > 0)) {
 		for(let i = 0; i < r.length; i++) {

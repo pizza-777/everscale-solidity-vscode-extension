@@ -4,6 +4,8 @@ pragma AbiHeader pubkey;
 pragma AbiHeader expire;
 pragma ignoreIntOverflow;
 pragma msgValue 1e10;
+pragma upgrade func;
+pragma upgrade oldsol;
 //import './import.sol';
 
 
@@ -485,5 +487,9 @@ contract Test {
 		gosh.applyZipPatchQ(oldText, patch);
 		gosh.diff(oldText, newText);
 		gosh.zipDiff(oldText, newText);
+        gosh.applyBinPatch(oldText, newText);
+        gosh.applyBinPatchQ(oldText, newText);
+        gosh.applyZipBinPatch(oldText, newText);
+        gosh.applyZipBinPatchQ(oldText, newText);
 	}
  }

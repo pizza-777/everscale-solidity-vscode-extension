@@ -56,6 +56,20 @@
                 "pragma copyleft 0, 0x2cfbdc31c9c4478b61472c72615182e9567595b857b1bba9e0c31cd9942f6ca41;\n"                
             ]
         },
+        "pragma upgrade func": {
+            "prefix": "pragma upgrade func",
+            "body": "pragma upgrade func;",
+            "description": [
+                "Defines that code is compiled with special selector that is needed to upgrade func/solidity contracts.\n"                
+            ]
+        },
+        "pragma upgrade oldsol": {
+            "prefix": "pragma upgrade oldsol",
+            "body": "pragma upgrade oldsol;",
+            "description": [
+                "Defines that code is compiled with special selector that is needed to upgrade func/solidity contracts.\n"                
+            ]
+        },
         "import contract": {
             "prefix": "import",
             "body": "import '${1:contract}';"
@@ -1670,16 +1684,16 @@
                 "(uint a, uint b, uint c, uint d) = abi.decode(cell, (uint, uint, uint, uint));"
             ]
         },
-        "gosh.diff": {
-            "prefix": "gosh.diff",
-            "body": "gosh.diff(${1:string oldText}, ${2:string newText})",
+        "gosh.applyBinPatchQ": {
+            "prefix": "gosh.applyBinPatchQ",
+            "body": "gosh.applyBinPatchQ(${1:bytes oldText}, ${2:bytes patch})",
             "description": [
-                "gosh.diff(string oldText, string newText) returns (string patch);\n",
-                "Calculates patch between oldText and newText.\n",
+                "gosh.applyBinPatchQ(bytes oldText, bytes patch) returns (optional(bytes) newText);\n",
+                "Applies patch to compressed strings. If it's impossible (bad patch), gosh.applyBinPatchQ returns null.\n",
                 "Example:\n",
-                "string oldText = ...;\n",
-                "string newText = ...;\n",
-                "string patch = gosh.diff(oldText, newText);\n"
+                "bytes oldText = ...;\n",
+                "bytes patch = ...;\n",
+                "optional(bytes) newText = gosh.applyBinPatch(oldText, patch);\n"
             ]            
         },
         "gosh.applyPatchQ": {
@@ -1694,7 +1708,18 @@
                 "optional(string) newText = gosh.applyPatch(oldText, patch);\n"
             ]            
         },
-        "gosh.applyPatch": {
+        "gosh.applyBinPatch": {
+            "prefix": "gosh.applyBinPatch",
+            "body": "gosh.applyBinPatch(${1:bytes oldText}, ${2:bytes patch})",
+            "description": [
+                "gosh.applyBinPatch(bytes oldText, bytes patch) returns (bytes newText);\n",
+                "Applies patch to compressed binary arrays. If it's impossible (bad patch), gosh.applyBinPatch throws an exception with type check error code (-8).\n",
+                "Example:\n",
+                "bytes oldText = ...;\n",
+                "bytes patch = ...;\n",
+                "bytes newText = gosh.applyBinPatch(oldText, patch);\n"
+            ]            
+        },"gosh.applyPatch": {
             "prefix": "gosh.applyPatch",
             "body": "gosh.applyPatch(${1:string oldText}, ${2:string patch})",
             "description": [
@@ -1722,12 +1747,12 @@
                 "It's the same as gosh.diff but it calculates patch between compressed string.\n"                
             ]            
         },
-        "gosh.zip": {
-            "prefix": "gosh.zip",
-            "body": "gosh.zip(${1:string text})",
+        "gosh.applyZipBinPatchQ": {
+            "prefix": "gosh.applyZipBinPatchQ",
+            "body": "gosh.applyZipBinPatchQ(${1:bytes oldText}, ${2:bytes patch})",
             "description": [
-                "gosh.zip(string text) returns (bytes zip);\n",
-                "Converts the text to compressed bytes\n"                
+                "gosh.applyZipBinPatchQ(bytes oldText, bytes patch) returns (optional(bytes) newText);\n",                
+                "These are the same as gosh.applyPatchQ but this functions is applied patch to compressed binary arrays.\n"                
             ]            
         },
         "gosh.applyZipPatchQ": {
@@ -1738,12 +1763,40 @@
                 "These are the same as gosh.applyPatchQ but this functions is applied to compressed string.\n"                
             ]            
         },   
+        "gosh.applyZipBinPatch": {
+            "prefix": "gosh.applyZipBinPatch",
+            "body": "gosh.applyZipBinPatch(${1:bytes oldText}, ${2:bytes patch})",
+            "description": [
+                "gosh.applyZipBinPatch(bytes oldText, bytes patch) returns (bytes newText);\n",                
+                "These are the same as gosh.applyPatch but this function is applied patch to compressed binary arrays.\n"                
+            ]            
+        },   
         "gosh.applyZipPatch": {
             "prefix": "gosh.applyZipPatch",
             "body": "gosh.applyZipPatch(${1:bytes oldText}, ${2:bytes patch})",
             "description": [
                 "gosh.applyZipPatch(bytes oldText, bytes patch) returns (bytes newText);\n",                
                 "These are the same as gosh.applyPatch but this function is applied to compressed string.\n"                
+            ]            
+        },
+        "gosh.diff": {
+            "prefix": "gosh.diff",
+            "body": "gosh.diff(${1:string oldText}, ${2:string newText})",
+            "description": [
+                "gosh.diff(string oldText, string newText) returns (string patch);\n",
+                "Calculates patch between oldText and newText.\n",
+                "Example:\n",
+                "string oldText = ...;\n",
+                "string newText = ...;\n",
+                "string patch = gosh.diff(oldText, newText);\n"
+            ]            
+        },
+        "gosh.zip": {
+            "prefix": "gosh.zip",
+            "body": "gosh.zip(${1:string text})",
+            "description": [
+                "gosh.zip(string text) returns (bytes zip);\n",
+                "Converts the text to compressed bytes\n"                
             ]            
         },
         "selfdestruct": {

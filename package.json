@@ -2,7 +2,7 @@
     "name": "solidity-support",
     "displayName": "Everscale Solidity Support",
     "description": "Everscale Solidity Language for Visual Studio Code",
-    "version": "1.3.60",
+    "version": "1.3.61",
     "keywords": [
         "solidity",
         "ton-solidity",
@@ -20,6 +20,10 @@
             "url": "http://www.apache.org/licenses/LICENSE-2.0"
         }
     ],
+    "author": {
+        "name": "Nikolai",
+        "url": "https://t.me/pizzza777"
+    },
     "engines": {
         "vscode": "^1.62.0"
     },
@@ -165,6 +169,6 @@
     "dependencies": {
         "everdev": "github:pizza-777/tondev#vsmodule",
         "prettier": "^2.6.0",
-        "prettier-plugin-tvmsolidity": "^1.0.0-beta.25"
+        "prettier-plugin-tvmsolidity": "^1.0.0-beta.28"
     }
 }

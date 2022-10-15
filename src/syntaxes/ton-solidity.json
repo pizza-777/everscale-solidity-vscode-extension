@@ -305,7 +305,7 @@
                     }
                 },
                 {
-                    "match": "(pragma)\\s+(ignoreIntOverflow)(;)",
+                    "match": "(pragma)\\s+(ignoreIntOverflow|upgrade\\s+func|upgrade\\s+oldsol)(;)",
                     "captures": {
                         "1": {
                             "name": "keyword.control.pragma"
@@ -505,7 +505,7 @@
                     }
                 },
                 {
-                    "match": "\\b(gosh)\\.(diff|applyPatchQ|applyPatch|zipDiff|unzip|zip|applyZipPatchQ|applyZipPatch)\\b",
+                    "match": "\\b(gosh)\\.(applyZipBinPatchQ|applyZipPatchQ|applyZipBinPatch|applyZipPatch|applyBinPatchQ|applyBinPatch|applyPatchQ|applyPatch|zipDiff|unzip|zip|diff)\\b",
                     "captures": {
                         "1": {
                             "name": "entity.name.class"

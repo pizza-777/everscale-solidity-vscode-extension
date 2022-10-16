@@ -149,7 +149,7 @@ function changeErrorInfo(value){
 function getHoverItems(word, document, position) {
     let suggestion = null;
     let counter = 0;
-    let name = word.match(/AbiHeader|msgValue|pragma|(ton-)?solidity|push|copyleft/);
+    let name = word.match(/AbiHeader|msgValue|pragma|(ever-|ton-)?solidity|push|copyleft|oldsol|func(?!tion)/);
     if (name) {
         return getSnippetsIncludes(name[0]);
     }

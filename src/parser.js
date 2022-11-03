@@ -3,18 +3,14 @@ const fs = require('fs');
 const { parseData } = require('./ast/parser');
 
 function parseAstData(document) {
-    const astPath = path.resolve(__dirname, 'abi', `${path.parse(document.uri.fsPath).name}.ast.json`);
-    if (fs.existsSync(astPath)) {
-        const ast = JSON.parse(fs.readFileSync(astPath, { encoding: 'utf-8' }));
-        return parseData(ast);
-    }
+    const ast = getAst(document)
+    if (typeof ast !== 'undefined') return parseData(ast);
 }
 
 function getAst(document) {
     const astPath = path.resolve(__dirname, 'abi', `${path.parse(document.uri.fsPath).name}.ast.json`);
     if (fs.existsSync(astPath)) {
-        const ast = JSON.parse(fs.readFileSync(astPath, { encoding: 'utf-8' }));
-        return ast;
+        return JSON.parse(fs.readFileSync(astPath, { encoding: 'utf-8' }));        
     }
 }
 

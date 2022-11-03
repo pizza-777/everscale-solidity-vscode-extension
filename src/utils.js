@@ -82,11 +82,11 @@ function geterrorLength(errorString) {
 }
 
 function getErrorFilePath(string) {
-    const filePath = string.match(/([\w\/\.-]*?\.sol):/);
+    const filePath = string.match(/--> (.+?\.sol)/);
     if (filePath == null || !filePath[1]) return null;
 
     if (fs.existsSync(filePath[1])) {
-        return filePath[1];
+        return path.normalize(filePath[1]);
     }
     return vscode.window.activeTextEditor.document.uri.fsPath;
 }
@@ -105,14 +105,6 @@ function getErrors(string) {
         return true;
     })
 
-    //broxus links filter if it exists in node modules
-    //currently error is supressed
-    //but I think it should be shown as information in future
-    // a = a.filter(value => {
-    //     const matches = value[0].match(/Source \"(.*sol)/);
-    //     if (matches == null || typeof matches[1] == 'undefined') return true; //error
-    //     return ifBroxus(matches[1]) == false; //error if link not valid
-    // })
     return a.map((value) => {
         let coord = value[1] ? value[1].match(/\d+:\d+/) : null;
         if (coord !== null) coord = coord[0].split(":");

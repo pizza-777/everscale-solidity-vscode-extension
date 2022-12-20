@@ -200,6 +200,7 @@ function activate(context) {
 }
 
 function isDebot() {
+	if(!vscode.window.activeTextEditor.document) return false
 	const content = vscode.window.activeTextEditor.document.getText();
 	if (content.match(/is Debot/g) == null) {
 		return false;

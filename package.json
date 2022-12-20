@@ -2,7 +2,7 @@
     "name": "solidity-support",
     "displayName": "Everscale Solidity Support",
     "description": "Everscale Solidity Language for Visual Studio Code",
-    "version": "1.3.63",
+    "version": "1.3.66",
     "keywords": [
         "solidity",
         "ton-solidity",
@@ -132,7 +132,8 @@
                     "ton-solidity"
                 ],
                 "extensions": [
-                    ".sol"
+                    ".sol",
+                    ".tsol"
                 ],
                 "configuration": "./ton-solidity.configuration.json",
                 "icon": {

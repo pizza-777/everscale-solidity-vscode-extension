@@ -82,7 +82,7 @@ function geterrorLength(errorString) {
 }
 
 function getErrorFilePath(string) {
-    const filePath = string.match(/--> (.+?\.sol)/);
+    const filePath = string.match(/--> (.+?\.t?sol)/);
     if (filePath == null || !filePath[1]) return null;
 
     if (fs.existsSync(filePath[1])) {

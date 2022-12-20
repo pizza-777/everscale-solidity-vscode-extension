@@ -121,7 +121,7 @@ function activate(context) {
 			return path.dirname(vscode.window.activeTextEditor.document.uri.path);
 		}
 		const currentAbi = () => {
-			return currentFile().replace('.sol', '.abi.json');
+			return currentFile().replace(/\.t?sol/, '.abi.json');
 		}
 
 		let commandsTerminal;
@@ -166,13 +166,13 @@ function activate(context) {
 			if (!commandsTerminal) commandsTerminal = createTerminal();
 
 			commandsTerminal.show();
-			commandsTerminal.sendText("npx everdev contract run " + currentFile().replace('.sol', '.abi.json') + " --network se");
+			commandsTerminal.sendText("npx everdev contract run " + currentFile().replace(/\.t?sol/, '.abi.json') + " --network se");
 		}));
 		context.subscriptions.push(vscode.commands.registerCommand('contract.runLocal', () => {
 			if (!commandsTerminal) commandsTerminal = createTerminal();
 
 			commandsTerminal.show();
-			commandsTerminal.sendText("npx everdev contract run-local " + currentFile().replace('.sol', '.abi.json') + " --network se");
+			commandsTerminal.sendText("npx everdev contract run-local " + currentFile().replace(/\.t?sol/, '.abi.json') + " --network se");
 		}));
 
 		context.subscriptions.push(vscode.commands.registerCommand('contract.startDebot', () => {
@@ -214,7 +214,7 @@ async function updateDiagnostics(document, collection) {
 	vscode.workspace.saveAll();
 	t_out = [];
 	let filePath = document.uri.fsPath;
-	if (path.extname(document.uri.fsPath) !== '.sol') {
+	if (path.extname(document.uri.fsPath) !== '.sol' && path.extname(document.uri.fsPath) !== '.tsol') {
 		return;
 	}
 	const compileCommand = controllers[1].commands[1];

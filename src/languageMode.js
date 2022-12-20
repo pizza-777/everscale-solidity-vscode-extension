@@ -9,11 +9,11 @@ async function setLanguageMode() {
 	const doc = editor.document;
 	
 	const ext = path.extname(doc.fileName);
-	if(ext !== '.sol'){
+	if(ext !== '.sol' && ext !== '.tsol'){
 		return;
 	}
 
-	if (doc.getText().match(/ton-solidity|tvm\.|Tvm(cell|slice|builder)/m)) {
+	if (doc.getText().match(/ton-solidity|ever-solidity|tvm\.|Tvm(cell|slice|builder)/m)) {
 		if (doc.languageId !== "ton-solidity") await vscode.languages.setTextDocumentLanguage(doc, 'ton-solidity');
 	} else {
 		try {

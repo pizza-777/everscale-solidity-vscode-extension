@@ -69,7 +69,7 @@ function defaultConfig() {
         explicitTypes: "always",
         overrides: [
             {
-                files: "*.sol",
+                files: ["*.sol","*.tsol"],
                 options: {
                     printWidth: 80,
                     useTabs: true,

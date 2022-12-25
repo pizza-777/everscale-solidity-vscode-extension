@@ -118,7 +118,7 @@ function activate(context) {
 			return vscode.window.activeTextEditor.document.uri.fsPath;
 		}
 		const currentFolder = () => {
-			return path.dirname(vscode.window.activeTextEditor.document.uri.path);
+			return path.dirname(currentFile());
 		}
 		const currentAbi = () => {
 			return currentFile().replace(/\.t?sol/, '.abi.json');
@@ -143,8 +143,8 @@ function activate(context) {
 
 			commandsTerminal.show();
 			commandsTerminal.sendText("npx everdev sol compile " + currentFile() + ' --output-dir ' + currentFolder());
-			commandsTerminal.sendText("npx everdev contract deploy " + currentFile() + " --value 10000000000 --network se");
-			commandsTerminal.sendText("echo 0:$(everdev contract info " + currentFile() + " --network se | grep Address | cut -d':' -f3 | cut -d' ' -f1)");
+			commandsTerminal.sendText("npx everdev contract deploy " + currentAbi() + " --value 10000000000 --network se");
+			commandsTerminal.sendText("echo 0:$(everdev contract info " + currentAbi() + " --network se | grep Address | cut -d':' -f3 | cut -d' ' -f1)");
 		}));
 
 		context.subscriptions.push(vscode.commands.registerCommand('deploy.debot', () => {
@@ -152,9 +152,9 @@ function activate(context) {
 
 			commandsTerminal.show();
 			commandsTerminal.sendText("npx everdev sol compile " + currentFile() + ' --output-dir ' + currentFolder());
-			commandsTerminal.sendText("npx everdev contract deploy " + currentFile() + " --value 10000000000 --network se");
-			commandsTerminal.sendText("everdev contract run " + currentFile() + " setABI --input \"dabi:'$(cat " + currentAbi() + " | xxd -ps -c 20000)'\" --network se");
-			commandsTerminal.sendText("echo 0:$(everdev contract info " + currentFile() + " --network se | grep Address | cut -d':' -f3 | cut -d' ' -f1)");
+			commandsTerminal.sendText("npx everdev contract deploy " + currentAbi() + " --value 10000000000 --network se");
+			commandsTerminal.sendText("everdev contract run " + currentAbi() + " setABI --input \"dabi:'$(cat " + currentAbi() + " | xxd -ps -c 20000)'\" --network se");
+			commandsTerminal.sendText("echo 0:$(everdev contract info " + currentAbi() + " --network se | grep Address | cut -d':' -f3 | cut -d' ' -f1)");
 		}));
 		context.subscriptions.push(vscode.commands.registerCommand('network.reset', () => {
 			if (!commandsTerminal) commandsTerminal = createTerminal();
@@ -166,27 +166,27 @@ function activate(context) {
 			if (!commandsTerminal) commandsTerminal = createTerminal();
 
 			commandsTerminal.show();
-			commandsTerminal.sendText("npx everdev contract run " + currentFile().replace(/\.t?sol/, '.abi.json') + " --network se");
+			commandsTerminal.sendText("npx everdev contract run " + currentAbi() + " --network se");
 		}));
 		context.subscriptions.push(vscode.commands.registerCommand('contract.runLocal', () => {
 			if (!commandsTerminal) commandsTerminal = createTerminal();
 
 			commandsTerminal.show();
-			commandsTerminal.sendText("npx everdev contract run-local " + currentFile().replace(/\.t?sol/, '.abi.json') + " --network se");
+			commandsTerminal.sendText("npx everdev contract run-local " + currentAbi() + " --network se");
 		}));
 
 		context.subscriptions.push(vscode.commands.registerCommand('contract.startDebot', () => {
 			if (!commandsTerminal) commandsTerminal = createTerminal();
 
 			commandsTerminal.show();
-			commandsTerminal.sendText("debotAddress=$(everdev contract info " + currentFile() + " --network se | grep Address | cut -d':' -f3 | cut -d' ' -f1)");
+			commandsTerminal.sendText("debotAddress=$(everdev contract info " + currentAbi() + " --network se | grep Address | cut -d':' -f3 | cut -d' ' -f1)");
 			commandsTerminal.sendText("tonos-cli --url http://localhost debot fetch 0:$debotAddress");
 		}));
 
 		context.subscriptions.push(vscode.commands.registerCommand('js.wrap', () => {
 			if (!commandsTerminal) commandsTerminal = createTerminal();
 
-			commandsTerminal.show();			
+			commandsTerminal.show();
 			commandsTerminal.sendText("npx everdev sol compile " + currentFile() + ' --output-dir ' + currentFolder());
 			commandsTerminal.sendText("npx everdev js wrap " + currentFile());
 		}));
@@ -200,7 +200,7 @@ function activate(context) {
 }
 
 function isDebot() {
-	if(!vscode.window.activeTextEditor.document) return false
+	if (!vscode.window.activeTextEditor.document) return false
 	const content = vscode.window.activeTextEditor.document.getText();
 	if (content.match(/is Debot/g) == null) {
 		return false;
@@ -271,12 +271,12 @@ async function getAst(document) {
 	args['includePath'] = path.resolve(vscode.workspace.workspaceFolders[0].uri.fsPath, "node_modules");
 	let r = await runCommand(compileCommand, args);
 	if ((Array.isArray(r) && r.length > 0)) {
-		for(let i = 0; i < r.length; i++) {
+		for (let i = 0; i < r.length; i++) {
 			// if error
 			if (r[i].severity == 'Error') {
 				return;
 			}
-		}		
+		}
 	}
 	const astFilePath = path.resolve(args['outputDir'], `${path.parse(args.file).name}.ast.json`);
 	if (fs.existsSync(astFilePath) == true) {
@@ -319,12 +319,12 @@ function tondevTerminal() {
 	return _tondevTerminal;
 }
 
-function cleanAbiDir(){
+function cleanAbiDir() {
 	//remove all from directory
 	const abiDir = path.resolve(__dirname, 'abi');
 	if (fs.existsSync(abiDir)) {
 		fs.readdirSync(abiDir).forEach(file => {
-			if(file == '.gitkeep') return;
+			if (file == '.gitkeep') return;
 			const curPath = path.resolve(abiDir, file);
 			fs.unlinkSync(curPath);
 		});

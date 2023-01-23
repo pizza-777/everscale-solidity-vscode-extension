@@ -1,5 +1,10 @@
 {
     ".source.ton-solidity": {
+        "spdx license": {
+			"prefix": "spdx", 
+			"body": "// SPDX-License-Identifier: MIT",
+			"description": "SPDX License"
+		},
         "pragma ton-solidity": {
             "prefix": "pragma ton-solidity",
             "body": "pragma ton-solidity >= ${1:version};",

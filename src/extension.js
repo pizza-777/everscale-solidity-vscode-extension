@@ -138,12 +138,17 @@ function activate(context) {
 			return commandsTerminal;
 		}
 
-		context.subscriptions.push(vscode.commands.registerCommand('deploy.contract', () => {
+		context.subscriptions.push(vscode.commands.registerCommand('deploy.contract', async () => {
 			if (!commandsTerminal) commandsTerminal = createTerminal();
 
 			commandsTerminal.show();
 			commandsTerminal.sendText("npx everdev sol compile " + currentFile() + ' --output-dir ' + currentFolder());
 			commandsTerminal.sendText("npx everdev contract deploy " + currentAbi() + " --value 10000000000 --network se");
+			const abi = require(currentAbi());
+			//if init or data present - read it from user
+			if (abi.data.length > 0 || abi.functions.find(v => v.name == 'constructor') !== undefined) {
+				await vscode.env.terminal.readLine();
+			}
 			commandsTerminal.sendText("echo 0:$(everdev contract info " + currentAbi() + " --network se | grep Address | cut -d':' -f3 | cut -d' ' -f1)");
 		}));
 

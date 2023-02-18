@@ -2,7 +2,7 @@
     "name": "solidity-support",
     "displayName": "Everscale Solidity Support",
     "description": "Everscale Solidity Language for Visual Studio Code",
-    "version": "1.3.71",
+    "version": "1.3.74",
     "keywords": [
         "solidity",
         "ton-solidity",
@@ -41,6 +41,16 @@
     ],
     "main": "./src/extension.js",
     "contributes": {
+        "configurationDefaults": {
+            "[ton-solidity]": {
+                "editor.defaultFormatter": "everscale.solidity-support",
+                "files.trimFinalNewlines": false,
+                "files.trimTrailingWhitespace": false,
+                "editor.formatOnSave": false,
+                "editor.formatOnType": false,
+                "editor.formatOnPaste": false              
+            }
+        },
         "commands": [
             {
                 "command": "deploy.contract",

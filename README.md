@@ -15,7 +15,9 @@
 
 ### Extension Marketplace
 
-Launch Quick Open, paste the following command, and press <kbd>Enter</kbd>
+Extension can be installed from the [Visual Studio Code Marketplace](https://marketplace.visualstudio.com/items?itemName=everscale.solidity-support).
+
+Also You can launch Quick Open, paste the following command, and press <kbd>Enter</kbd>
 
 `ext install everscale.solidity-support`
 
@@ -24,6 +26,34 @@ Launch Quick Open, paste the following command, and press <kbd>Enter</kbd>
 With [shell commands](https://code.visualstudio.com/docs/editor/command-line) installed, you can use the following command to install the extension:
 
 `$ code --install-extension everscale.solidity-support`
+
+### Configuration
+
+You can add the following to your `settings.json`:
+
+```json
+{
+  "files.associations": {
+    "*.sol": "ton-solidity",
+    "*.tsol": "ton-solidity"
+  }
+}
+```
+
+```json
+{
+  "[ton-solidity]": {
+    "editor.defaultFormatter": "everscale.solidity-support",
+
+    "files.trimTrailingWhitespace": false,
+    "files.trimFinalNewlines": false,
+
+    "editor.formatOnSave": false,
+    "editor.formatOnPaste": false,
+    "editor.formatOnType": false    
+  }
+}
+```
 
 ## Features
 

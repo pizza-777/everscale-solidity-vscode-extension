@@ -1017,7 +1017,7 @@
                             "name": "storage.type.enum"
                         },
                         "2": {
-                            "name": "entity.name.enum"
+                            "name": "entity.name.type.enum"
                         }
                     },
                     "end": "(?=\\})",
@@ -1038,7 +1038,7 @@
                             "name": "storage.type.enum"
                         },
                         "3": {
-                            "name": "entity.name.enum"
+                            "name": "entity.name.type.enum"
                         }
                     }
                 }

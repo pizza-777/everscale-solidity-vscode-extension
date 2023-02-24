@@ -1028,6 +1028,9 @@
                         },
                         {
                             "include": "#punctuation"
+                        },
+                        {
+                            "include": "#comment"
                         }
                     ]
                 },

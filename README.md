@@ -27,6 +27,20 @@ With [shell commands](https://code.visualstudio.com/docs/editor/command-line) in
 
 `$ code --install-extension everscale.solidity-support`
 
+### Build from source
+
+```bash
+git clone https://github.com/pizza-777/everscale-solidity-vscode-extension.git
+npm install
+npm install -g vsce
+vsce package
+```
+
+Then go to Extensions tab and click on the three dots on the top and select "Install from VSIX". 
+Choose generated the .vsix file.
+
+![Screenshot 2023-03-01 22:54:37](https://user-images.githubusercontent.com/26024499/222262942-4ca713bd-c3b2-4089-af30-967ce8cfb7a7.png)
+
 ### Configuration
 
 You can add the following to your `settings.json`:

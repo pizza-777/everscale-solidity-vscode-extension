@@ -1,3 +1,8 @@
+
+<p align="center">
+  <img src="https://github.com/pizza-777/developer-program/raw/main/vf-dev-program.png" alt="" width="300px">
+</p>
+
 # Everscale Solidity support for Visual Studio Code
 
 [Everscale (TON) Solidity](https://github.com/tonlabs/TON-Solidity-Compiler/blob/master/API.md) is the language used in Everscale blockchain to create smart contracts. This extension provides:
@@ -36,7 +41,7 @@ npm install -g vsce
 vsce package
 ```
 
-Then go to Extensions tab and click on the three dots on the top and select "Install from VSIX". 
+Then go to Extensions tab and click on the three dots on the top and select "Install from VSIX".
 Choose generated the .vsix file.
 
 ![Screenshot 2023-03-01 22:54:37](https://user-images.githubusercontent.com/26024499/222262942-4ca713bd-c3b2-4089-af30-967ce8cfb7a7.png)

@@ -74,6 +74,28 @@ You can add the following to your `settings.json`:
 }
 ```
 
+To configure code formatting you can use standart [prettier.io rules](https://prettier.io/docs/en/configuration.html).
+
+For example:
+
+```json
+{
+  "overrides": [
+    {
+     "files": ["*.sol","*.tsol"],
+      "options": {
+        "printWidth": 60,
+        "tabWidth": 2,
+        "useTabs": false,
+        "singleQuote": false,
+        "bracketSpacing": false,
+        "explicitTypes": "always"
+      }
+    }
+  ]
+}
+```
+
 ## Features
 
 ### Highlighting

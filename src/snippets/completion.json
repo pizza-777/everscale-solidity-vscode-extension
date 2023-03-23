@@ -743,6 +743,30 @@
                 "Looks for symbol (or substring) in the string and returns index of the last (findLast) occurrence. If there is no such symbol in the string, empty optional is returned."
             ]
         },
+        "<string>.toSlice": {
+            "prefix": ".toSlice",
+            "body": "toSlice()",
+            "description": [
+                "<string>.toSlice() returns (TvmSlice);\n",
+                "Converts string to TvmSlice."                
+            ]
+        },
+        "<string>.dataSize": {
+            "prefix": ".dataSize",
+            "body": "dataSize(${1:uint n})",
+            "description": [
+                "<string>.dataSize(uint n) returns (uint /*cells*/, uint /*bits*/, uint /*refs*/);\n",
+                "Same as <TvmCell>.dataSize(uint n)\nReturns the count of distinct cells, data bits in the distinct cells and cell references in the distinct cells. If count of the distinct cells exceeds n+1 then a cell overflow exception (8) is thrown. This function is a wrapper for opcode \"CDATASIZE\" "                
+            ]
+        },
+        "<string>.dataSizeQ": {
+            "prefix": ".dataSizeQ",
+            "body": "dataSizeQ(${1:uint n})",
+            "description": [
+                "<string>.dataSizeQ(uint n) returns (optional(uint /*cells*/, uint /*bits*/, uint /*refs*/));\n",
+                "Same as <TvmCell>.dataSizeQ(uint n)\nReturns the count of distinct cells, data bits in the distinct cells and cell references in the distinct cells. If count of the distinct cells exceeds n+1 then this function returns an optional that has no value. This function is a wrapper for opcode \"CDATASIZEQ\" "                
+            ]
+        },
         "format": {
             "prefix": "format",
             "body": "format(${1:string template}, ${2:TypeA a, TypeB b, ...})",

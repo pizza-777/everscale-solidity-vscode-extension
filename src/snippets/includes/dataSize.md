@@ -7,6 +7,11 @@
 <TvmSlice>.dataSize(uint n) returns (uint cells, uint bits, uint refs);
 ```
 
+```
+ <TvmCell>.dataSize(uint n) returns (uint cells, uint bits, uint refs);
+<TvmSlice>.dataSize(uint n) returns (uint cells, uint bits, uint refs);
+```
+
  Note that the returned count of distinct cells does not take into account the cell that contains the slice itself. 
 
 ```

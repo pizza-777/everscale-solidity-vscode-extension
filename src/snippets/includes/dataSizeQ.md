@@ -7,6 +7,11 @@ Returns the count of distinct cells, data bits in the distinct cells and cell re
 <TvmSlice>**.dataSizeQ(uint n) returns (optional(uint cells, uint bits, uint refs));
 ```
 
+```
+<string>.dataSizeQ(uint n) returns (optional(uint cells, uint bits, uint refs));
+<string>**.dataSizeQ(uint n) returns (optional(uint cells, uint bits, uint refs));
+```
+
 Note that the returned count of distinct cells does not take into account the cell that contains the slice itself. This function is a wrapper for opcode SDATASIZEQ
 
 ```

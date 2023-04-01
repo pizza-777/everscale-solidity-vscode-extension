@@ -86,7 +86,7 @@ function getErrorFilePath(string) {
     if (filePath == null || !filePath[1]) return null;
 
     if (fs.existsSync(filePath[1])) {
-        return path.normalize(filePath[1]);
+        return path.resolve(filePath[1]);
     }
     return vscode.window.activeTextEditor.document.uri.fsPath;
 }
@@ -112,9 +112,9 @@ function getErrors(string) {
         let raw = !coord ? null : Number(coord[0]);
         let position = !coord ? null : Number(coord[1]);
         let errorLength = geterrorLength(value[4]);
-        if(errorLength == null) {
-         //   throw "some technical errors, maybe compiller";
-         errorLength = 1;
+        if (errorLength == null) {
+            //   throw "some technical errors, maybe compiller";
+            errorLength = 1;
         }
         let source = vscode.Uri.file(getErrorFilePath(value.join("\n")));
         return {
@@ -130,9 +130,9 @@ function getErrors(string) {
     })
 }
 
-function changeErrorInfo(value){
-    if(value.includes('Error: Source file requires different compiler version (current compiler is')){
-        value += '\n\n' + 'Hint. To install needed compiler version run in a command line: `npx everdev sol set --compiler COMPILER_VERSION`'        
+function changeErrorInfo(value) {
+    if (value.includes('Error: Source file requires different compiler version (current compiler is')) {
+        value += '\n\n' + 'Hint. To install needed compiler version run in a command line: `npx everdev sol set --compiler COMPILER_VERSION`'
     }
     return value;
 }
@@ -168,8 +168,10 @@ function getHoverItems(word, document, position) {
 
     //like definition provider
     const ast = getAst(document);
-    const node = findHoverNode(ast, document, position);
-    if (node) return astHoverMarkdown(node, ast);
+    if (ast) {
+        const node = findHoverNode(ast, document, position);
+        if (node) return astHoverMarkdown(node, ast);
+    }
 }
 function compareSnippetItemsWithWord(snippets, word) {
     return snippets.filter((value) => {

@@ -2,7 +2,6 @@ const vscode = require('vscode');
 const { parseAstData, getAst } = require("./parser");
 const { findHoverNode } = require("./ast");
 const { astHoverMarkdown } = require("./ast/astHoverMarkdown")
-const { ifBroxus } = require("./documentLinks");
 const snippetsJsonHover = require("./snippets/hover.json");
 const wordsSetHover = snippetsJsonHover['.source.ton-solidity'];
 

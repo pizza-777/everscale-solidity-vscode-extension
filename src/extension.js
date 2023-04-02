@@ -75,7 +75,7 @@ function activate(context) {
 	context.subscriptions.push(vscode.languages.registerDocumentLinkProvider(
 		MODE,
 		{
-			provideDocumentLinks(document, token) {
+			provideDocumentLinks(document) {
 				return documentLinks(document);
 			}
 		}
@@ -363,7 +363,6 @@ function cleanDir(dir) {
 			const curPath = path.resolve(abiDir, file);
 			fs.rmSync(curPath, { recursive: true });
 		});
-		console.log('folder deleted')
 	}
 }
 function deactivate() { }

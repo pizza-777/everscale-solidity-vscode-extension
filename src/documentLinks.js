@@ -53,6 +53,5 @@ const ifBroxus = (url) => {
 }
 
 module.exports = {
-    documentLinks,
-    ifBroxus
+    documentLinks, 
 }

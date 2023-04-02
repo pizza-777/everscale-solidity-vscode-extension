@@ -2,6 +2,7 @@ const { findNodeByPosition } = require("./ast/findNodeByPosition");
 const { findNodeById } = require("./ast/findNodeById");
 const fs = require('fs');
 const vscode = require("vscode")
+const path = require("path")
 
 function astParser(ast, document, position) {
     if (typeof ast == 'undefined') return;
@@ -24,7 +25,7 @@ function astParser(ast, document, position) {
     if (node !== null && typeof node !== 'undefined' && typeof node.referencedDeclaration !== 'undefined') {
         const referencedNode = findNodeById(ast, node.referencedDeclaration);
         const src = Number(referencedNode.src.split(":")[2]);
-        const solPath = ast[src].absolutePath;
+        const solPath = path.resolve(ast[src].absolutePath);
         const docPosition = convertPositionAstToDoc(solPath, referencedNode.src);
         return {
             path: solPath,

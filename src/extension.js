@@ -17,7 +17,7 @@ let ast;
  */
 
 function activate(context) {
-	cleanAbiDir();
+	cleanDir('abi');
 	setLanguageMode();
 	const signatureProvider = vscode.languages.registerSignatureHelpProvider(
 		MODE,
@@ -270,8 +270,15 @@ async function updateDiagnostics(document, collection) {
 async function getAst(document) {
 	const compileCommand = controllers[1].commands[2];
 	const args = [];
-	args['file'] = document.uri.fsPath;;
-	args['outputDir'] = path.resolve(__dirname, 'abi');
+	args['file'] = document.uri.fsPath;
+	const outputDir = path.resolve(__dirname, `abi/${path.parse(document.uri.fsPath).name}`);
+	cleanDir(outputDir);
+
+	if (!fs.existsSync(outputDir)) {
+		fs.mkdirSync(outputDir);
+	}
+
+	args['outputDir'] = outputDir;
 	args['format'] = 'compact-json';
 	args['includePath'] = path.resolve(vscode.workspace.workspaceFolders[0].uri.fsPath, "node_modules");
 	let r = await runCommand(compileCommand, args);
@@ -284,10 +291,33 @@ async function getAst(document) {
 		}
 	}
 	const astFilePath = path.resolve(args['outputDir'], `${path.parse(args.file).name}.ast.json`);
+	//67 mean 0.67.0 Because in this version ast is not in the single but was splited to multiple files
+	//so need to assemble it together again
+	const astFilePath67 = path.resolve(args['outputDir'], `${path.basename(args.file)}_json.ast`);
+
 	if (fs.existsSync(astFilePath) == true) {
 		const ast = fs.readFileSync(astFilePath, { encoding: 'utf-8' });
 		try {
 			const obj = JSON.parse(ast);
+			return obj;
+		} catch (e) {
+			return;
+		}
+	} else if (fs.existsSync(astFilePath67) == true) {
+		//const ast = fs.readFileSync(astFilePath67, { encoding: 'utf-8' });
+		try {
+			let obj = [];
+			fs.readdirSync(outputDir).forEach((file) => {
+				if (path.extname(file) == '.ast')
+					obj.push(JSON.parse(fs.readFileSync(path.resolve(outputDir, file), { encoding: 'utf-8' })))
+			})
+
+			obj = obj.sort(function (a, b) {
+				const srcA = Number(a.src.split(":")[2]);
+				const srcB = Number(b.src.split(":")[2]);
+				return srcA - srcB;
+			});
+
 			return obj;
 		} catch (e) {
 			return;
@@ -324,15 +354,16 @@ function tondevTerminal() {
 	return _tondevTerminal;
 }
 
-function cleanAbiDir() {
+function cleanDir(dir) {
 	//remove all from directory
-	const abiDir = path.resolve(__dirname, 'abi');
+	const abiDir = path.resolve(__dirname, dir);
 	if (fs.existsSync(abiDir)) {
 		fs.readdirSync(abiDir).forEach(file => {
 			if (file == '.gitkeep') return;
 			const curPath = path.resolve(abiDir, file);
-			fs.unlinkSync(curPath);
+			fs.rmSync(curPath, { recursive: true });
 		});
+		console.log('folder deleted')
 	}
 }
 function deactivate() { }

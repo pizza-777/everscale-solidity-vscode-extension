@@ -1124,7 +1124,7 @@
         },
         "onTickTock": {
             "prefix": "onTickTock",
-            "body": "onTickTock (TvmSlice isTock) external {\n\t$0\n}",
+            "body": "onTickTock (bool isTock) external {\n\t$0\n}",
             "description": "onTickTock function is executed on tick/tock transaction. That transactions are automatically invoked for certain special accounts. For tick transactions isTock is false, for tock transactions - true.\n"
         },
         "onCodeUpgrade": {

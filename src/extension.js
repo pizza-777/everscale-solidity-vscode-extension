@@ -89,9 +89,14 @@ function activate(context) {
 			if (typeof ast == 'undefined') return;
 			const data = astParser(ast, document, wordRange);
 			if (data !== null && typeof data !== 'undefined') {
+				const lines = fs.readFileSync(data.path, { encoding: "utf-8" }).split(/\r?\n/);
 				return new vscode.Location(
 					document.uri.with({ path: data.path }),
-					new vscode.Position(data.position.line, data.position.character)
+					//new vscode.Position(data.position.line, data.position.character)					
+					new vscode.Range(
+						new vscode.Position(data.position.line, data.position.character),
+						new vscode.Position(data.position.line, lines[data.position.line].length)
+					)
 				);
 			}
 		}

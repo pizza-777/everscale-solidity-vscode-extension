@@ -12,3 +12,4 @@ vsix/**
 helpers/**
 src/abi/*tvc
 src/abi/*json
+src/abi/*ast

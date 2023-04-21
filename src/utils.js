@@ -96,7 +96,7 @@ function getErrors(string) {
     let arr = string.split("\n\n");
 
     let a = arr.map(value => {
-        return value.split("\n")
+        return value.split(/\r?\n/)
     })
 
     a = a.filter(value => {

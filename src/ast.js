@@ -97,7 +97,7 @@ function convertPositionDocToAst(document, position) {
 
 function convertPositionAstToDoc(solPath, astPosition) {
     let character = Number(astPosition.split(":")[0]);
-    const lines = fs.readFileSync(solPath, { encoding: "utf-8" }).split("\n");
+    const lines = fs.readFileSync(solPath, { encoding: "utf-8" }).split(/\r?\n/);
 
     let line = 0;
 
@@ -115,12 +115,12 @@ function convertPositionAstToDoc(solPath, astPosition) {
     }
 }
 
-function searchPath(absolutePath) {  
+function searchPath(absolutePath) {
     let _path = path.resolve(absolutePath);
     if (fs.existsSync(_path)) {
         return _path;
     }
-    return ifBroxus(absolutePath);    
+    return ifBroxus(absolutePath);
 }
 
 module.exports = {

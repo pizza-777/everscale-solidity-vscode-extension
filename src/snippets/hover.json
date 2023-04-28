@@ -377,6 +377,30 @@
                 "Skips the first length bits and refs references from the slice."
             ]
         },
+        "<TvmSlice>.loadZeroes": {
+            "prefix": ".loadZeroes",
+            "body": "loadZeroes()",
+            "description": [
+                "```\n<TvmSlice>.loadZeroes() returns (uint10 n);\n```\n",
+                " Returns the count n of leading zero bits in TvmSlice, and removes these bits from TvmSlice."
+            ]
+        },
+        "<TvmSlice.loadOnes": {
+            "prefix": ".loadOnes",
+            "body": "loadOnes()",
+            "description": [
+                "```\n<TvmSlice>.loadOnes() returns (uint10 n);\n```\n",
+                "Returns the count n of leading one bits in TvmSlice, and removes these bits from TvmSlice."
+            ]
+        },
+        "<TvmSlice>.loadSame": {
+            "prefix": ".loadSame",
+            "body": "loadSame()",
+            "description": [
+                "```\n<TvmSlice>.loadSame() returns (uint10 n);\n```\n",
+                "Returns the count n of leading bits equal to 0 ≤ value ≤ 1 in TvmSlice, and removes these bits from TvmSlice."
+            ]
+        },
         "<TvmBuilder>.toSlice": {
             "prefix": ".toSlice",
             "body": ".toSlice()",
@@ -464,18 +488,26 @@
         },
         "<TvmBuilder>.storeOnes": {
             "prefix": ".storeOnes",
-            "body": ".storeOnes(${1:uint n})",
+            "body": ".storeOnes(${1:uint10 n})",
             "description": [
-                "```\n<TvmBuilder>.storeOnes(uint n);\n```\n",
-                "Stores n binary ones into Builder."
+                "```\n<TvmBuilder>.storeOnes(uint10 n);\n```\n",
+                "Stores n binary ones into the Builder."
             ]
         },
         "<TvmBuilder>.storeZeroes": {
             "prefix": ".storeZeroes",
-            "body": ".storeZeroes(${1:uint n})",
+            "body": ".storeZeroes(${1:uint10 n})",
             "description": [
-                "```\n<TvmBuilder>.storeZeroes(uint n);\n```\n",
-                "Stores n binary zeroes into Builder."
+                "```\n<TvmBuilder>.storeZeroes(uint10 n);\n```\n",
+                "Stores n binary zeroes into the Builder."
+            ]
+        },
+        "<TvmBuilder>.storeSame": {
+            "prefix": ".storeSame",
+            "body": "storeSame(${1:uint10 n, uint1 value})",
+            "description": [
+                "<TvmBuilder>.storeSame(uint10 n, uint1 value);\n",
+                "Stores n binary values (0 ≤ value ≤ 1) into the TvmBuilder."
             ]
         },
         "<TvmBuilder>.storeSigned": {
@@ -1645,7 +1677,15 @@
             "body": "block.timestamp",
             "description": [
                 "```\nblock.timestamp returns (uint64);\n```\n",
-                "Returns the starting logical time of the current block."
+                "Returns the current Unix time. Unix time is the same for the all transactions from one block.\n"
+            ]
+        },
+        "block.logicaltime": {
+            "prefix": "block.logicaltime",
+            "body": "block.logicaltime",
+            "description": [
+                "```\nblock.logicaltime returns (uint64);\n```\n",
+                "Returns the starting logical time of the current block.\n"
             ]
         },
         "now": {
@@ -2136,10 +2176,10 @@
                 "Operators:\n",
                 " * Comparisons: ==, != (evaluate to bool)\n",
                 "Methods:\n",
-                " * ```\n <TvmCell>.depth() \n```",
-                " * ```\n <TvmCell>.dataSize() \n```",
-                " * ```\n <TvmCell>.dataSizeQ() \n```",
-                " * ```\n <TvmCell>.toSlice() \n```"
+                " ```\n <TvmCell>.depth() \n```",
+                " ```\n <TvmCell>.dataSize() \n```",
+                " ```\n <TvmCell>.dataSizeQ() \n```",
+                " ```\n <TvmCell>.toSlice() \n```"
             ]
         },
         "TvmSlice": {
@@ -2150,26 +2190,29 @@
                 "Operators:\n",
                 " * Comparisons: <=, <, ==, !=, >=, > (evaluate to bool). Note: only bit data from the root cells are compared, references are ignored.\n",
                 "Methods:\n",
-                " * ```\n <TvmSlice>.empty() \n```",
-                " * ```\n <TvmSlice>.size() \n```",
-                " * ```\n <TvmSlice>.dataSize \n```",
-                " * ```\n <TvmSlice>.dataSizeQ() \n```",
-                " * ```\n <TvmSlice>.bits() \n```",
-                " * ```\n <TvmSlice>.refs() \n```",
-                " * ```\n <TvmSlice>.bitsAndRefs() \n```",
-                " * ```\n <TvmSlice>.depth() \n```",
-                " * ```\n <TvmSlice>.hasNBits(), <TvmSlice>.hasNRefs() and <TvmSlice>.hasNBitsAndRefs() \n```",
-                " * ```\n <TvmSlice>.compare()\n ```",
+                " ```\n <TvmSlice>.empty() \n```",
+                " ```\n <TvmSlice>.size() \n```",
+                " ```\n <TvmSlice>.dataSize \n```",
+                " ```\n <TvmSlice>.dataSizeQ() \n```",
+                " ```\n <TvmSlice>.bits() \n```",
+                " ```\n <TvmSlice>.refs() \n```",
+                " ```\n <TvmSlice>.bitsAndRefs() \n```",
+                " ```\n <TvmSlice>.depth() \n```",
+                " ```\n <TvmSlice>.hasNBits(), <TvmSlice>.hasNRefs() and <TvmSlice>.hasNBitsAndRefs() \n```",
+                " ```\n <TvmSlice>.compare()\n ```",
                 "TvmSlice load primitives:\n",
-                " * ```\n<TvmSlice>.decode() \n```",
-                " * ```\n<TvmSlice>.loadRef() \n```",
-                " * ```\n<TvmSlice>.loadRefAsSlice() \n```",
-                " * ```\n<TvmSlice>.loadSigned() \n```",
-                " * ```\n<TvmSlice>.loadUnsigned() \n```",
-                " * ```\n<TvmSlice>.loadTons() \n```",
-                " * ```\n<TvmSlice>.loadSlice() \n```",
-                " * ```\n<TvmSlice>.decodeFunctionParams() \n```",
-                " * ```\n<TvmSlice>.skip() \n```"
+                " ```\n<TvmSlice>.decode() \n```",
+                " ```\n<TvmSlice>.loadRef() \n```",
+                " ```\n<TvmSlice>.loadRefAsSlice() \n```",
+                " ```\n<TvmSlice>.loadSigned() \n```",
+                " ```\n<TvmSlice>.loadUnsigned() \n```",
+                " ```\n<TvmSlice>.loadTons() \n```",
+                " ```\n<TvmSlice>.loadSlice() \n```",
+                " ```\n<TvmSlice>.decodeFunctionParams() \n```",
+                " ```\n<TvmSlice>.skip() \n```",
+                " ```\n<TvmSlice>.loadZeroes() \n```",
+                " ```\n<TvmSlice>.loadOnes() \n```",
+                " ```\n<TvmSlice>.loadSame() \n```"
             ]
         },
         "TvmBuilder": {
@@ -2177,22 +2220,23 @@
             "body": "TvmBuilder ${1:name}",
             "description": [
                 "TvmBuilder represents TTVM cell builder ([TVM](https://ton.org/tvm.pdf) - 1.1.3). The compiler defines the following functions to work with this type:\n",
-                " * ```\n <TvmBuilder>.toSlice() \n```",
-                " * ```\n <TvmBuilder>.toCell() \n```",
-                " * ```\n <TvmBuilder>.bits() \n```",
-                " * ```\n <TvmBuilder>.refs() \n```",
-                " * ```\n <TvmBuilder>.bitsAndRefs() \n```",
-                " * ```\n <TvmBuilder>.remBits() \n```",
-                " * ```\n <TvmBuilder>.remRefs() \n```",
-                " * ```\n <TvmBuilder>.remBitsAndRefs() \n```",
-                " * ```\n <TvmBuilder>.depth() \n```",
-                " * ```\n <TvmBuilder>.store() \n```",
-                " * ```\n <TvmBuilder>.storeOnes() \n```",
-                " * ```\n <TvmBuilder>.storeZeroes() \n```",
-                " * ```\n <TvmBuilder>.storeSigned() \n```",
-                " * ```\n <TvmBuilder>.storeUnsigned() \n```",
-                " * ```\n <TvmBuilder>.storeRef() \n```",
-                " * ```\n <TvmBuilder>.storeTons() \n```"
+                " ```\n <TvmBuilder>.toSlice() \n```",
+                " ```\n <TvmBuilder>.toCell() \n```",
+                " ```\n <TvmBuilder>.bits() \n```",
+                " ```\n <TvmBuilder>.refs() \n```",
+                " ```\n <TvmBuilder>.bitsAndRefs() \n```",
+                " ```\n <TvmBuilder>.remBits() \n```",
+                " ```\n <TvmBuilder>.remRefs() \n```",
+                " ```\n <TvmBuilder>.remBitsAndRefs() \n```",
+                " ```\n <TvmBuilder>.depth() \n```",
+                " ```\n <TvmBuilder>.store() \n```",
+                " ```\n <TvmBuilder>.storeOnes() \n```",
+                " ```\n <TvmBuilder>.storeZeroes() \n```",
+                " ```\n <TvmBuilder>.storeSame() \n```",
+                " ```\n <TvmBuilder>.storeSigned() \n```",
+                " ```\n <TvmBuilder>.storeUnsigned() \n```",
+                " ```\n <TvmBuilder>.storeRef() \n```",
+                " ```\n <TvmBuilder>.storeTons() \n```"
             ]
         },
         "AddressInput.get": {
@@ -2893,6 +2937,13 @@
             "body": "try {\n\n}catch(variant value, uint number) { \n\n}",
             "description": [
                 "The try statement allows you to define a block of code to be tested for errors while it is executed. The catch statement allows you to define a block of code to be executed, if an error occurs in the try block. catch block gets two parameters of type variant and uint, whick contain exception argument and code respectively. \n"                
+            ]
+        },        
+        "using ... for":{
+            "prefix": "using",
+            "body": "using ${1:Type} for ${2:Type};",
+            "description": [
+                "The directive `using A for B;` can be used to attach library functions (from the library `A`) to any type (`B`) in the context of the contract. These functions will receive the object they were called for as their first parameter. The effect of `using A for *;` is that the functions from the library `A` are attached to all types.\n"                
             ]
         }
     }

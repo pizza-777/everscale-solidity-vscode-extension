@@ -386,6 +386,30 @@
                 "Skips the first length bits and refs references from the slice."
             ]
         },
+        "<TvmSlice>.loadZeroes": {
+            "prefix": ".loadZeroes",
+            "body": "loadZeroes()",
+            "description": [
+                "<TvmSlice>.loadZeroes() returns (uint10 n);\n",
+                " Returns the count n of leading zero bits in TvmSlice, and removes these bits from TvmSlice."
+            ]
+        },
+        "<TvmSlice.loadOnes": {
+            "prefix": ".loadOnes",
+            "body": "loadOnes()",
+            "description": [
+                "<TvmSlice>.loadOnes() returns (uint10 n);\n",
+                "Returns the count n of leading one bits in TvmSlice, and removes these bits from TvmSlice."
+            ]
+        },
+        "<TvmSlice>.loadSame": {
+            "prefix": ".loadSame",
+            "body": "loadSame()",
+            "description": [
+                "<TvmSlice>.loadSame() returns (uint10 n);\n",
+                "Returns the count n of leading bits equal to 0 ≤ value ≤ 1 in TvmSlice, and removes these bits from TvmSlice."
+            ]
+        },
         "<TvmBuilder>.toSlice": {
             "prefix": ".toSlice",
             "body": "toSlice()",
@@ -473,18 +497,26 @@
         },
         "<TvmBuilder>.storeOnes": {
             "prefix": ".storeOnes",
-            "body": "storeOnes(${1:uint n})",
+            "body": "storeOnes(${1:uint10 n})",
             "description": [
-                "<TvmBuilder>.storeOnes(uint n);\n",
+                "<TvmBuilder>.storeOnes(uint10 n);\n",
                 "Stores n binary ones into Builder."
             ]
         },
         "<TvmBuilder>.storeZeroes": {
             "prefix": ".storeZeroes",
-            "body": "storeZeroes(${1:uint n})",
+            "body": "storeZeroes(${1:uint10 n})",
             "description": [
-                "<TvmBuilder>.storeZeroes(uint n);\n",
-                "Stores n binary zeroes into Builder."
+                "<TvmBuilder>.storeZeroes(uint10 n);\n",
+                "Stores n binary zeroes into the Builder."
+            ]
+        },
+        "<TvmBuilder>.storeSame": {
+            "prefix": ".storeSame",
+            "body": "storeSame(${1:uint10 n, uint1 value})",
+            "description": [
+                "<TvmBuilder>.storeSame(uint10 n, uint1 value);\n",
+                "Stores n binary values (0 ≤ value ≤ 1) into the TvmBuilder."
             ]
         },
         "<TvmBuilder>.storeSigned": {
@@ -1641,6 +1673,14 @@
             "body": "block.timestamp",
             "description": [
                 "block.timestamp returns (uint64);\n",
+                "Returns the current Unix time. Unix time is the same for the all transactions from one block.\n"
+            ]
+        },
+        "block.logicaltime": {
+            "prefix": "block.logicaltime",
+            "body": "block.logicaltime",
+            "description": [
+                "block.logicaltime returns (uint64);\n",
                 "Returns the starting logical time of the current block.\n"
             ]
         },
@@ -2164,7 +2204,10 @@
                 " * \t<TvmSlice>.loadTons()",
                 " * \t<TvmSlice>.loadSlice()",
                 " * \t<TvmSlice>.decodeFunctionParams()",
-                " * \t<TvmSlice>.skip()"
+                " * \t<TvmSlice>.skip()",
+                " * \t<TvmSlice>.loadZeroes()",
+                " * \t<TvmSlice>.loadOnes()",
+                " * \t<TvmSlice>.loadSame()"
             ]
         },
         "TvmBuilder": {
@@ -2184,6 +2227,7 @@
                 " * <TvmBuilder>.store()",
                 " * <TvmBuilder>.storeOnes()",
                 " * <TvmBuilder>.storeZeroes()",
+                " * <TvmBuilder>.storeSame()",
                 " * <TvmBuilder>.storeSigned()",
                 " * <TvmBuilder>.storeUnsigned()",
                 " * <TvmBuilder>.storeRef()",
@@ -3101,6 +3145,13 @@
             "description": [
                 "The try statement allows you to define a block of code to be tested for errors while it is executed. The catch statement allows you to define a block of code to be executed, if an error occurs in the try block. catch block gets two parameters of type variant and uint, whick contain exception argument and code respectively. \n"                
             ]
-        }
+        },
+        "using ... for":{
+            "prefix": "using",
+            "body": "using ${1:Type} for ${2:Type};",
+            "description": [
+                "The directive `using A for B;` can be used to attach library functions (from the library `A`) to any type (`B`) in the context of the contract. These functions will receive the object they were called for as their first parameter. The effect of `using A for *;` is that the functions from the library `A` are attached to all types.\n"                
+            ]
+        }        
     }
 }

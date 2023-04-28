@@ -65,7 +65,7 @@ contract Test {
 
        }
        bytes byteArray = "Hello!";
-       for (byte d : byteArray) {
+       for (bytes d : byteArray) {
 
        }
 
@@ -202,7 +202,7 @@ contract Test {
         b.empty();
         bytes byteArray = "abba";
         int index = 0;
-        byte a0 = byteArray[i];
+        bytes a0 = byteArray[i];
         byteArray = "01234567890123456789";
         bytes slice = byteArray[5:10];
         bytes etalon = "56789";
@@ -397,8 +397,8 @@ contract Test {
         uint8 flag;
         TvmCell msg;
         tvm.sendrawmsg(msg, flag); 
-        uint a = 1;
-        uint b = 2;
+        uint a1 = 1;
+        uint b2 = 2;
         math.min(a, b);
         math.max(a, b);
         math.minmax(a, b);
@@ -417,7 +417,7 @@ contract Test {
         rnd.setSeed(a);
         rnd.shuffle();
 
-        uint b = 3;
+        uint b3 = 3;
         uint32 p = 4;
         uint res = b ** p;
         require(res == 81);
@@ -472,7 +472,7 @@ contract Test {
     function f2() public externalMsg { // this function receives only external messages
     /*...*/
     }
-
+function Foo() public {}
     function test(uint b) public {
         Foo(address(this)).bar{expire: 0x12345, time: 0x123}(123, 45).extMsg;
         f1();                
@@ -492,4 +492,18 @@ contract Test {
         gosh.applyZipBinPatch(oldText, newText);
         gosh.applyZipBinPatchQ(oldText, newText);
 	}
+
+    function storeSomething() public{
+             TvmSlice a;
+        a.loadZeroes();
+        a.loadOnes();
+        a.empty();
+        a.loadSame(0);
+
+        TvmBuilder b;
+        b.storeZeroes(5);
+        b.storeOnes(1);
+        block.logicaltime;
+        block.timestamp;
+    }
  }

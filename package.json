@@ -2,15 +2,18 @@
     "name": "solidity-support",
     "displayName": "Everscale Solidity Support",
     "description": "Everscale Solidity Language for Visual Studio Code",
-    "version": "1.4.3",
+    "version": "1.4.32",
     "keywords": [
         "solidity",
         "ton-solidity",
         "Everscale",
         "blockchain",
+        "Ton",
+        "TVM",
+        "Venom",
         "everdev",
         "highlighting",
-        "code formatter"
+        "formatter"
     ],
     "publisher": "everscale",
     "license": "Apache-2.0",
@@ -48,7 +51,7 @@
                 "files.trimTrailingWhitespace": false,
                 "editor.formatOnSave": false,
                 "editor.formatOnType": false,
-                "editor.formatOnPaste": false              
+                "editor.formatOnPaste": false
             }
         },
         "commands": [
@@ -173,13 +176,13 @@
         "@types/vscode": "^1.59.0",
         "eslint": "^7.32.0",
         "glob": "^7.1.7",
-        "mocha": "^8.4.0",
+        "mocha": "^10.2.0",
         "typescript": "^4.3.2",
         "vscode-test": "^1.5.2"
     },
     "dependencies": {
         "everdev": "^1.6.1",
-        "prettier": "^2.8.7",
+        "prettier": "^2.8.8",
         "prettier-plugin-tvmsolidity": "^1.0.0-beta.43"
     }
 }

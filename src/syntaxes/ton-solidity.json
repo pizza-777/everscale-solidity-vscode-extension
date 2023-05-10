@@ -288,7 +288,7 @@
         "control-pragma": {
             "patterns": [
                 {
-                    "match": "(pragma)\\s+(msgValue|AbiHeader|ton-solidity|ever-solidity|solidity|experimental|copyleft)\\s?([0-9a-zA-Z,_\\.\\s\\~|^<>=]+)?\\s?(;)",
+                    "match": "(pragma)\\s+(msgValue|AbiHeader|ton-solidity|ever-solidity|solidity|experimental|copyleft)\\s?([0-9a-zA-Z,_\\*\\.\\s\\~|^<>=]+)?\\s?(;)",
                     "captures": {
                         "1": {
                             "name": "keyword.control.pragma"

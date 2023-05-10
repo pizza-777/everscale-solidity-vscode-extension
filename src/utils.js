@@ -115,7 +115,12 @@ function getErrors(string) {
             //   throw "some technical errors, maybe compiller";
             errorLength = 1;
         }
-        let source = vscode.Uri.file(getErrorFilePath(value.join("\n")));
+        const filePath = getErrorFilePath(value.join("\n"));
+        if (filePath == null) {
+             //   throw "some technical errors, maybe compiller";
+            return;
+        }
+        let source = vscode.Uri.file(filePath);
         return {
             info: changeErrorInfo(value[0]),
             coord: {

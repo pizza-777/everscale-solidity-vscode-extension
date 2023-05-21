@@ -29,7 +29,7 @@
         },
         "pragma AbiHeader": {
             "prefix": "pragmа AbiHeader",
-            "body": "pragma AbiHeader ${1|time,pubkey,expire|};",
+            "body": "pragma AbiHeader ${1|time,notime,pubkey,expire|};",
             "description": [
                 "\n - pubkey (uint256) - optional public key that the message can be signed with.\n - time (uint64) - local time when message was created. Used for replay protection.\n - expire (uint32) - time when the message should be meant as expired.\n\nNote:\n\n - time presents in external messages if pragma AbiHeader time is used OR there is no afterSignatureCheck function defined in the contract.\n - time doesn't present in external messages if pragma AbiHeader time isn't used AND there is afterSignatureCheck function defined in the contract.\nDefined headers are listed in *.abi.json file in header section.\n"
             ]

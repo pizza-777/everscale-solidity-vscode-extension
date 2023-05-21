@@ -2,6 +2,7 @@ Force message forming utility to fill an appropriate field(s) in the header of t
 
 * **pubkey** - public key by which the message can be signed;
 * **time** - local time at what message was created;
+* **notime** - disables `time` abi header, which is enabled by default. Abi header `time` – `uint64` local time when message was created, used for replay protection
 * **expire** - time at which message should be meant as expired.
 
 **pubkey** field is optional. Let's consider some cases:

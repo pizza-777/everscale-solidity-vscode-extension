@@ -36,6 +36,7 @@
             "prefix": "pragmа AbiHeader",
             "body": "pragma AbiHeader ${1|time,notime,pubkey,expire|};",
             "description": [
+                "Note. AbiHeader time is DEPRECATED",
                 "\n - pubkey (uint256) - optional public key that the message can be signed with.\n - time (uint64) - local time when message was created. Used for replay protection.\n - expire (uint32) - time when the message should be meant as expired.\n\nNote:\n\n - time presents in external messages if pragma AbiHeader time is used OR there is no afterSignatureCheck function defined in the contract.\n - time doesn't present in external messages if pragma AbiHeader time isn't used AND there is afterSignatureCheck function defined in the contract.\nDefined headers are listed in *.abi.json file in header section.\n"
             ]
         },
@@ -281,25 +282,25 @@
         },
         "<TvmSlice>.hasNBits": {
             "prefix": ".hasNBits",
-            "body": "hasNBits(${1:uint16 bits})",
+            "body": "hasNBits(${1:uint10 bits})",
             "description": [
-                "<TvmSlice>.hasNBits(uint16 bits) returns (bool);\n",
+                "<TvmSlice>.hasNBits(uint10 bits) returns (bool);\n",
                 "Checks whether the slice contains the specified amount of data bits."
             ]
         },
         "<TvmSlice>.hasNRefs": {
             "prefix": ".hasNRefs",
-            "body": "hasNRefs(${1:uint8 bits})",
+            "body": "hasNRefs(${1:uint2 bits})",
             "description": [
-                "<TvmSlice>.hasNRefs(uint8 bits) returns (bool);\n",
+                "<TvmSlice>.hasNRefs(uint2 bits) returns (bool);\n",
                 "Checks whether the slice contains the specified amount of references."
             ]
         },
         "<TvmSlice>.hasNBitsAndRefs": {
             "prefix": ".hasNBitsAndRefs",
-            "body": "hasNBitsAndRefs(${1:uint16 bits}, ${2:uint8 refs})",
+            "body": "hasNBitsAndRefs(${1:uint10 bits}, ${2:uint2 refs})",
             "description": [
-                "<TvmSlice>.hasNBitsAndRefs(uint16 bits, uint8 refs) returns (bool);\n",
+                "<TvmSlice>.hasNBitsAndRefs(uint10 bits, uint2 refs) returns (bool);\n",
                 "Checks whether the slice contains the specified amount of data bits and references."
             ]
         },
@@ -307,7 +308,7 @@
             "prefix": ".compare",
             "body": "compare(${1:TvmSlice other})",
             "description": [
-                "<TvmSlice>.compare(TvmSlice other) returns (int8);\n",
+                "<TvmSlice>.compare(TvmSlice other) returns (int2);\n",
                 "Lexicographically compares the slice and other data bits of the root slice and returns result as an integer:\n",
                 " * 1 - slice > other",
                 " * 0 - slice == other",
@@ -338,6 +339,38 @@
                 "Loads a signed integer with the given bitSize from the slice."
             ]
         },
+        "<TvmSlice>.loadInt": {
+            "prefix": ".loadInt",
+            "body": "loadInt(${1:int9 bitSize})",
+            "description": [
+                "<TvmSlice>.loadInt(int9 bitSize) returns (int);\n",
+                "Loads a signed integer with the given **bitSize** from the `TvmSlice`."
+            ]
+        },
+        "<TvmSlice>.loadIntQ": {
+            "prefix": ".loadIntQ",
+            "body": "loadIntQ(${1:int9 bitSize})",
+            "description": [
+                "<TvmSlice>.loadIntQ(int9 bitSize) returns (optional(int));\n",
+                "Loads a signed integer with the given **bitSize** from the `TvmSlice` if `TvmSlice` contains it. Otherwise, returns `null`"
+            ]
+        },
+        "<TvmSlice>.loadUint": {
+            "prefix": ".loadUint",
+            "body": "loadUint(${1:uint9 bitSize})",
+            "description": [
+                "<TvmSlice>.loadUint(uint9 bitSize) returns (uint);\n",
+                "Loads an unsigned integer with the given **bitSize** from the `TvmSlice`."
+            ]
+        },
+        "<TvmSlice>.loadUintQ": {
+            "prefix": ".loadUintQ",
+            "body": "loadUintQ(${1:uint9 bitSize})",
+            "description": [
+                "<TvmSlice>.loadUintQ(uint9 bitSize) returns (optional(uint));\n",
+                "Loads an unsigned integer with the given **bitSize** from the `TvmSlice` if `TvmSlice` contains it. Otherwise, returns `null`"
+            ]
+        },
         "<TvmSlice>.loadUnsigned": {
             "prefix": ".loadUnsigned",
             "body": "loadUnsigned(${1:uint16 bitSize})",
@@ -356,11 +389,20 @@
         },
         "<TvmSlice>.loadSlice": {
             "prefix": ".loadSlice",
-            "body": "loadSlice()",
+            "body": "loadSlice(${1:uint10 bits})",
             "description": [
-                "<TvmSlice>.loadSlice(uint length) returns (TvmSlice);\n",
-                "<TvmSlice>.loadSlice(uint length, uint refs) returns (TvmSlice);\n",
-                "Loads the first length bits and refs references from the slice into a separate slice."
+                "<TvmSlice>.loadSlice(uint10 bits) returns (TvmSlice);\n",
+                "<TvmSlice>.loadSlice(uint10 bits, uint refs) returns (TvmSlice);\n",
+                "Loads the first bits and `refs` references from `TvmSlice`"
+            ]
+        },
+        "<TvmSlice>.loadSliceQ": {
+            "prefix": ".loadSliceQ",
+            "body": "loadSliceQ(${1:uint10 bits})",
+            "description": [
+                "<TvmSlice>.loadSliceQ(uint10 bits) returns (optional(TvmSlice));\n",
+                "<TvmSlice>.loadSliceQ(uint10 bits, uint2 refs) returns (optional(TvmSlice));\n",
+                "Loads the first `bits` bits and `refs` references from `TvmSlice`"
             ]
         },
         "<TvmSlice>.decodeFunctionParams": {
@@ -377,13 +419,44 @@
                 "<TvmSlice>.decodeFunctionParams(ContractName) returns (TypeA a, TypeB b, ...);"
             ]
         },
+        "<TvmSlice>.loadFunctionParams": {
+            "prefix": ".loadFunctionParams",
+            "body": "loadFunctionParams(${1:functionName})",
+            "description": [
+                "Loads parameters of the function or constructor (if contract type is provided). This function is usually used in onBounce function.\n",
+                "Example:\n",
+                "Load parameters of the public/external function without \"responsible\" attribute:\n",
+                "<TvmSlice>.loadFunctionParams(functionName) returns (TypeA a, TypeB b, ...);\n",
+                "Loads parameters of the public function which returns values:\n",
+                "<TvmSlice>.loadFunctionParams(functionName) returns (uint32 callbackFunctionId, TypeA a, TypeB b, ...);\n",
+                "Loads constructor parameters:\n",
+                "<TvmSlice>.loadFunctionParams(ContractName) returns (TypeA a, TypeB b, ...);"
+            ]
+        },     
+        "<TvmSlice>.loadStateVars()": {
+            "prefix": ".loadStateVars",
+            "body": "loadStateVars(${1:ContractName})",
+            "description": [
+                "<TvmSlice>.loadStateVars(ContractName) returns (uint256 /*pubkey*/, uint64 /*timestamp*/, bool /*constructorFlag*/, Type1 /*var1*/, Type2 /*var2*/, ...);\n",
+                "Loads state variables from slice that is obtained from the field data of stateInit\n"                
+            ]
+        },
+        "<TvmSlice>.decodeStateVars()": {
+            "prefix": ".decodeStateVars",
+            "body": "decodeStateVars(${1:ContractName})",
+            "description": [
+                "DEPRECATED\n",
+                "<TvmSlice>.decodeStateVars(ContractName) returns (uint256 /*pubkey*/, uint64 /*timestamp*/, bool /*constructorFlag*/, Type1 /*var1*/, Type2 /*var2*/, ...);\n",
+                "Decode state variables from slice that is obtained from the field data of stateInit\n"                
+            ]
+        },
         "<TvmSlice>.skip": {
             "prefix": ".skip",
-            "body": "skip(${1:uint length},${2:uint refs})",
+            "body": "skip(${1:uint10 bits},${2:uint2 refs})",
             "description": [
-                "<TvmSlice>.skip(uint length);\n",
-                "<TvmSlice>.skip(uint length, uint refs);\n",
-                "Skips the first length bits and refs references from the slice."
+                "<TvmSlice>.skip(uint10 bits);\n",
+                "<TvmSlice>.skip(uint10 bits, uint2 refs);\n",
+                "Skips the first bits and refs references from the TvmSlice."
             ]
         },
         "<TvmSlice>.loadZeroes": {
@@ -408,6 +481,82 @@
             "description": [
                 "<TvmSlice>.loadSame() returns (uint10 n);\n",
                 "Returns the count n of leading bits equal to 0 ≤ value ≤ 1 in TvmSlice, and removes these bits from TvmSlice."
+            ]
+        },
+        "<TvmSlice>.preload": {
+            "prefix": ".preload",
+            "body": "preload()",
+            "description": [
+                "<TvmSlice>.preload(TypeA, TypeB, ...) returns (TypeA /*a*/, TypeB /*b*/, ...);\n",
+                "Same as <TvmSlice>.load() but doesn't modify TvmSlice."
+            ]
+        },
+        "<TvmSlice>.preloadQ": {
+            "prefix": ".preloadQ",
+            "body": "preloadQ()",
+            "description": [
+                "<TvmSlice>.preloadQ(TypeA, TypeB, ...) returns (optional(TypeA, TypeB, ...));\n",
+                "Same as <TvmSlice>.loadQ() but doesn't modify TvmSlice."
+            ]
+        },
+        "<TvmSlice>.preloadRef": {
+            "prefix": ".preloadRef",
+            "body": "preloadRef()",
+            "description": [
+                "Returns the first cell reference of TvmSlice.\n",
+                "<TvmSlice>.preloadRef() returns (TvmCell);\n",          
+                "Returns the index cell reference of TvmSlice, where 0 ≤ index ≤ 3.\n",      
+                "<TvmSlice>.preloadRef(uint2 index) returns (TvmCell);\n"                
+            ]
+        },
+        "<TvmSlice>.preloadInt": {
+            "prefix": ".preloadInt",
+            "body": "preloadInt(${1:uint9 bitSize})",
+            "description": [
+                "Same as <TvmSlice>.loadInt() but doesn't modify TvmSlice.\n",
+                "<TvmSlice>.preloadInt(uint9 bitSize) returns (int);\n"
+            ]
+        },
+        "<TvmSlice>.preloadIntQ": {
+            "prefix": ".preloadIntQ",
+            "body": "preloadIntQ(${1:uint9 bitSize})",
+            "description": [
+                "Same as <TvmSlice>.loadIntQ() but doesn't modify TvmSlice.\n",
+                "<TvmSlice>.preloadIntQ(uint9 bitSize) returns (optional(int));\n"
+            ]
+        },
+        "<TvmSlice>.preloadUint": {
+            "prefix": ".preloadUint",
+            "body": "preloadUint(${1:uint9 bitSize})",
+            "description": [
+                "Same as <TvmSlice>.loadUint() but doesn't modify TvmSlice.\n",
+                "<TvmSlice>.preloadUint(uint9 bitSize) returns (uint);\n"
+            ]
+        },
+        "<TvmSlice>.preloadUintQ": {
+            "prefix": ".preloadUintQ",
+            "body": "preloadUintQ(${1:uint9 bitSize})",
+            "description": [
+                "Same as <TvmSlice>.loadUintQ() but doesn't modify TvmSlice.\n",
+                "<TvmSlice>.preloadUintQ(uint9 bitSize) returns (optional(uint));\n"
+            ]
+        },
+        "<TvmSlice>.preloadSlice": {
+            "prefix": ".preloadSlice",
+            "body": "preloadSlice(${1:uint10 bits})",
+            "description": [
+                "Same as <TvmSlice>.loadSlice() but doesn't modify TvmSlice.\n",
+                "<TvmSlice>.preloadSlice(uint10 bits) returns (TvmSlice);\n",
+                "<TvmSlice>.preloadSlice(uint10 bits, uint refs) returns (TvmSlice);\n"
+            ]
+        },
+        "<TvmSlice>.preloadSliceQ": {
+            "prefix": ".preloadSliceQ",
+            "body": "preloadSliceQ(${1:uint10 bits})",
+            "description": [
+                "Same as <TvmSlice>.loadSliceQ() but doesn't modify TvmSlice.\n",
+                "<TvmSlice>.preloadSliceQ(uint10 bits) returns (optional(TvmSlice));\n",
+                "<TvmSlice>.preloadSliceQ(uint10 bits, uint4 refs) returns (optional(TvmSlice));\n"
             ]
         },
         "<TvmBuilder>.toSlice": {
@@ -527,12 +676,28 @@
                 "Stores a signed integer value with given bitSize in the builder."
             ]
         },
+        "<TvmBuilder>.storeInt": {
+            "prefix": ".storeInt",
+            "body": "storeInt(${1:int256 value}, ${2:uint9 bitSize})",
+            "description": [
+                "<TvmBuilder>.storeInt(int256 value, uint9 bitSize);\n",
+                "Stores a signed integer value with given bitSize in the TvmBuilder."
+            ]
+        },
         "<TvmBuilder>.storeUnsigned": {
             "prefix": ".storeUnsigned",
             "body": "storeUnsigned(${1:uint256 value}, ${2:uint16 bitSize})",
             "description": [
                 "<TvmBuilder>.storeUnsigned(uint256 value, uint16 bitSize);\n",
                 "Stores an unsigned integer value with given bitSize in the builder."
+            ]
+        },
+        "<TvmBuilder>.storeUint": {
+            "prefix": ".storeUint",
+            "body": "storeUint(${1:uint256 value}, ${2:uint9 bitSize})",
+            "description": [
+                "<TvmBuilder>.storeUint(uint256 value, uint9 bitSize);\n",
+                "Stores an unsigned integer value with given bitSize in the TvmBuilder."
             ]
         },
         "<TvmBuilder>.storeRef": {
@@ -1559,7 +1724,7 @@
             "body": "math.min(${1:T a, T b, ...});",
             "description": [
                 "math.min(T a, T b, ...) returns (T);\n",
-                "Returns the minimal value of the passed arguments. T should be an integer or fixed point type\n"
+                "Returns the minimal value of the passed arguments. \n"
             ]
         },
         "math.max": {
@@ -1567,7 +1732,7 @@
             "body": "math.max(${1:T a, T b, ...});",
             "description": [
                 "math.max(T a, T b, ...) returns (T);\n",
-                "Returns the maximal value of the passed arguments. T should be an integer or fixed point type\n"
+                "Returns the maximal value of the passed arguments. \n"
             ]
         },
         "math.minmax": {
@@ -1593,7 +1758,9 @@
             "body": "math.modpow2(${1:uint value}, ${2:uint power});",
             "description": [
                 "math.modpow2(uint value, uint power) returns (uint);\n",
-                "Computes the value modulo 2^power. Note that power should be a constant integer.\n"
+                "Computes the value modulo 2^power. Note that power should be a constant integer.\n",
+                "Example:\n",
+                "uint a = math.modpow2(10, 3); // a = 2\n"
             ]
         },
         "math.divc": {
@@ -1617,7 +1784,7 @@
             "body": "math.muldiv(${1:T a}, ${2:T b}, ${3:T c});",
             "description": [
                 "math.muldiv(T a, T b, T c) returns (T);\n",
-                "Multiplies two values and then divides the result by a third value. T is integer type. The return value is rounded(floor).\n"
+                "Multiplies two values and then divides the result by a third value. The return value is rounded (nearest).\n"
             ]
         },
         "math.muldivr": {
@@ -1625,7 +1792,7 @@
             "body": "math.muldivr(${1:T a}, ${2:T b}, ${3:T c});",
             "description": [
                 "math.muldivr(T a, T b, T c) returns (T);\n",
-                "Multiplies two values and then divides the result by a third value. T is integer type. The return value is rounded(nearest).\n"
+                "Multiplies two values and then divides the result by a third value. The return value is rounded (floor),\n"
             ]
         },
         "math.muldivc": {
@@ -1654,9 +1821,9 @@
         },
         "math.sign": {
             "prefix": "math.sign",
-            "body": "math.sign(${1:int val});",
+            "body": "math.sign(${1:T val});",
             "description": [
-                "math.sign(int val) returns (int8);\n",
+                "math.sign(T val) returns (int2);\n",
                 "Returns number in case of sign of the argument value val:\n\t-1 if val is negative;\n\t0 if val is zero;\n\t1 if val is positive.\n"
             ]
         },
@@ -1666,6 +1833,22 @@
             "description": [
                 "tx.timestamp returns (uint64);\n",
                 "Returns the logical time of the current transaction.\n"
+            ]
+        },
+        "tx.logicaltime": {
+            "prefix": "tx.logicaltime",
+            "body": "tx.logicaltime",
+            "description": [
+                "tx.logicaltime returns (uint64);\n",
+                "Returns the logical time of the current transaction.\n"
+            ]
+        },
+        "tx.storageFee": {
+            "prefix": "tx.storageFee",
+            "body": "tx.storageFee",
+            "description": [
+                "tx.storageFee returns (uint120);\n",
+                "Returns the storage fee paid in the current transaction.\n"
             ]
         },
         "block.timestamp": {
@@ -2143,6 +2326,7 @@
             "prefix": ".decode",
             "body": "decode(${1:TypeA}, ${2:TypeB} ...)",
             "description": [
+                "DEPRECATED. Use <TvmSlice>.load instead.\n",
                 "<TvmSlice>.decode(TypeA, TypeB, ...) returns (TypeA a, TypeB b, ...);\n",
                 "Supported types: `uintN`, `intN`, `bytesN`, `bool`, `ufixedMxN`, `fixedMxN`, `address`, `contract`, `TvmCell`, `bytes`, `string`, `mapping`, `ExtraCurrencyCollection`, `array`, `optional` and `struct`\n",
                 "Example:\n",
@@ -2155,12 +2339,38 @@
             "prefix": ".decodeQ",
             "body": "decodeQ(${1:TypeA}, ${2:TypeB} ...)",
             "description": [
+                "DEPRECATED. Use <TvmSlice>.loadQ instead.\n",
                 "<TvmSlice>.decodeQ(TypeA, TypeB, ...) returns (optional(TypeA, TypeB, ...));\n",
                 "Supported types: `uintN`, `intN`, `bytesN`, `bool`, `ufixedMxN`, `fixedMxN`, `address`, `contract`, `TvmCell`, `bytes`, `string`, `mapping`, `ExtraCurrencyCollection`, `array`\n",
                 "Example:\n",
                 "TvmSlice slice = ...;\n",
                 "optional(uint) a = slice.decodeQ(uint);\n",
                 "optional(uint8, uint16) b = slice.decodeQ(uint8, uint16);"
+            ]
+        },
+        "<TvmSlice>.load": {
+            "prefix": ".load",
+            "body": "load(${1:TypeA}, ${2:TypeB} ...)",
+            "description": [
+                "<TvmSlice>.load(TypeA, TypeB, ...) returns (TypeA a, TypeB b, ...);\n",
+                "Sequentially loads values of the specified types from the `TvmSlice`. Supported types: `uintN`, `intN`, `bytesN`, `bool`, `ufixedMxN`, `fixedMxN`, `address`, `contract`, `TvmCell`, `bytes`, `string`, `mapping`, `ExtraCurrencyCollection`, `array`, `optional` and `struct`\n",
+                "Note: if all the argument types can't be loaded from the slice a cell underflow exception is thrown.\n",
+                "Example:\n",
+                "TvmSlice slice = ...;\n",
+                "(uint8 a, uint16 b) = slice.load(uint8, uint16);\n",
+                "(uint16 num0, uint32 num1, address addr) = slice.load(uint16, uint32, address);"
+            ]
+        },
+        "<TvmSlice>.loadQ": {
+            "prefix": ".loadQ",
+            "body": "loadQ(${1:TypeA}, ${2:TypeB} ...)",
+            "description": [
+                "<TvmSlice>.loadQ(TypeA, TypeB, ...) returns (optional(TypeA, TypeB, ...));\n",
+                "Sequentially decodes values of the specified types from the `TvmSlice` if the `TvmSlice` holds sufficient data for all specified types. Otherwise, returns `null`.\n",
+                "Example:\n",
+                "TvmSlice slice = ...;\n",
+                "optional(uint) a = slice.loadQ(uint);\n",
+                "optional(uint8, uint16) b = slice.loadQ(uint8, uint16);"
             ]
         },
         "TvmCell": {
@@ -3143,7 +3353,7 @@
             "prefix": "try",
             "body": "try {\n\n}catch(variant value, uint number) { \n\n}",
             "description": [
-                "The try statement allows you to define a block of code to be tested for errors while it is executed. The catch statement allows you to define a block of code to be executed, if an error occurs in the try block. catch block gets two parameters of type variant and uint, whick contain exception argument and code respectively. \n"                
+                "The try statement allows you to define a block of code to be tested for errors while it is executed. The catch statement allows you to define a block of code to be executed, if an error occurs in the try block. catch block gets two parameters of type variant and uint, which contain exception argument and code respectively. \n"                
             ]
         },
         "using ... for":{
@@ -3152,6 +3362,20 @@
             "description": [
                 "The directive `using A for B;` can be used to attach library functions (from the library `A`) to any type (`B`) in the context of the contract. These functions will receive the object they were called for as their first parameter. The effect of `using A for *;` is that the functions from the library `A` are attached to all types.\n"                
             ]
-        }        
+        },
+        "type(T).max":{
+            "prefix": "type(T).max",
+            "body": "type(${1:T}).max",
+            "description": [
+                "Returns the largest value representable by the type T. \n"                
+            ]
+        }, 
+        "type(T).min":{
+            "prefix": "type(T).min",
+            "body": "type(${1:T}).min",
+            "description": [
+                "Returns the smallest value representable by the type T. \n"                
+            ]
+        }
     }
 }

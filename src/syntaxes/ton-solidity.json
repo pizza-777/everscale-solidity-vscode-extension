@@ -483,6 +483,17 @@
                     }
                 },
                 {
+                    "match": "\\b(tx)\\.(storageFee)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.class"
+                        },
+                        "2": {
+                            "name": "constant.numeric"
+                        }
+                    }
+                },
+                {
                     "match": "\\b(tvm)\\.(accept|setGasLimit|buyGas|pubkey|setPubkey|hash|getData|log|hexdump|bindump|configParam|rawConfigParam|rawReserve|checkSign|insertPubkey|functionID|encodeBody|exit|exit1|buildExtMsg|buildIntMsg|sendrawmsg)\\b",
                     "captures": {
                         "1": {

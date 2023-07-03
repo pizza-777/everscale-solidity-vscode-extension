@@ -378,6 +378,110 @@
                 "Loads (deserializes) VarUInteger 16 and returns an unsigned 128-bit integer."
             ]
         },
+        "<TvmSlice>.loadIntLE2": {
+            "prefix": ".loadIntLE2",
+            "body": ".loadIntLE2()",
+            "description": [
+                "```\n<TvmSlice>.loadIntLE2() returns (int16);\n```\n",
+                "Loads the little-endian integer from TvmSlice.\n"
+            ]
+        },
+        "<TvmSlice>.loadIntLE4": {
+            "prefix": ".loadIntLE4",
+            "body": ".loadIntLE4()",
+            "description": [
+                "```\n<TvmSlice>.loadIntLE4() returns (int32);\n```\n",
+                "Loads the little-endian integer from TvmSlice.\n"
+            ]
+        },
+        "<TvmSlice>.loadIntLE8": {
+            "prefix": ".loadIntLE8",
+            "body": ".loadIntLE8()",
+            "description": [
+                "```\n<TvmSlice>.loadIntLE8() returns (int64);\n```\n",
+                "Loads the little-endian integer from TvmSlice.\n"
+            ]
+        },
+        "<TvmSlice>.loadIntLE4Q": {
+            "prefix": ".loadIntLE4Q",
+            "body": "loadIntLE4Q()",
+            "description": [
+                "```\n<TvmSlice>.loadIntLE4Q() returns (optional(int32));\n```\n",
+                "Loads the little-endian integer from TvmSlice. Returns null if it's impossible to load the integer.\n"
+            ]
+        },
+        "<TvmSlice>.loadIntLE8Q": {
+            "prefix": ".loadIntLE8Q",
+            "body": "loadIntLE8Q()",
+            "description": [
+                "```\n<TvmSlice>.loadIntLE8Q() returns (optional(int64));\n```\n",
+                "Loads the little-endian integer from TvmSlice. Returns null if it's impossible to load the integer.\n"
+            ]
+        },        
+        "<TvmSlice>.preloadIntLE4()": {
+            "prefix": ".preloadIntLE4",
+            "body": "preloadIntLE4()",
+            "description": [
+                "```\n<TvmSlice>.preloadIntLE4() returns (int32);\n```\n",
+                "Loads the little-endian integer from TvmSlice, but doesn't modify TvmSlice.\n"
+            ]
+        },
+        "<TvmSlice>.preloadIntLE4Q()": {
+            "prefix": ".preloadIntLE4Q",
+            "body": "preloadIntLE4Q()",
+            "description": [
+                "```\n<TvmSlice>.preloadIntLE4Q() returns (optional(int32));\n```\n",
+                "Loads the little-endian integer from TvmSlice, but doesn't modify TvmSlice. Returns null if it's impossible to load the integer.\n"
+            ]
+        },
+        "<TvmSlice>.preloadIntLE8()": {
+            "prefix": ".preloadIntLE8",
+            "body": "preloadIntLE8()",
+            "description": [
+                "```\n<TvmSlice>.preloadIntLE8() returns (int64);\n```\n",
+                "Loads the little-endian integer from TvmSlice, but doesn't modify TvmSlice.\n"
+            ]
+        },
+        "<TvmSlice>.preloadIntLE8Q()": {
+            "prefix": ".preloadIntLE8Q",
+            "body": "preloadIntLE8Q()",
+            "description": [
+                "```\n<TvmSlice>.preloadIntLE8Q() returns (optional(int64));\n```\n",
+                "Loads the little-endian integer from TvmSlice, but doesn't modify TvmSlice. Returns null if it's impossible to load the integer.\n"
+            ]
+        },
+        "<TvmSlice>.preloadUintLE4()":{
+            "prefix": ".preloadUintLE4",
+            "body": "preloadUintLE4()",
+            "description": [
+                "```\n<TvmSlice>.preloadUintLE4() returns (uint32);\n```\n",
+                "Loads the little-endian unsigned integer from TvmSlice, but doesn't modify TvmSlice.\n"
+            ]
+        },
+        "<TvmSlice>.preloadUintLE4Q()":{
+            "prefix": ".preloadUintLE4Q",
+            "body": "preloadUintLE4Q()",
+            "description": [
+                "```\n<TvmSlice>.preloadUintLE4Q() returns (optional(uint32));\n```\n",
+                "Loads the little-endian unsigned integer from TvmSlice, but doesn't modify TvmSlice. Returns null if it's impossible to load the integer.\n"
+            ]
+        },
+        "<TvmSlice>.preloadUintLE8()":{
+            "prefix": ".preloadUintLE8",
+            "body": "preloadUintLE8()",
+            "description": [
+                "```\n<TvmSlice>.preloadUintLE8() returns (uint64);\n```\n",
+                "Loads the little-endian unsigned integer from TvmSlice, but doesn't modify TvmSlice.\n"
+            ]
+        },
+        "<TvmSlice>.preloadUintLE8Q()":{
+            "prefix": ".preloadUintLE8Q",
+            "body": "preloadUintLE8Q()",
+            "description": [
+                "```\n<TvmSlice>.preloadUintLE8Q() returns (optional(uint64));\n```\n",
+                "Loads the little-endian unsigned integer from TvmSlice, but doesn't modify TvmSlice. Returns null if it's impossible to load the integer.\n"
+            ]
+        },
         "<TvmSlice>.loadSlice": {
             "prefix": ".loadSlice",
             "body": ".loadSlice(${1:uint10 bits})",
@@ -669,7 +773,7 @@
         },
         "<TvmBuilder>.storeSigned": {
             "prefix": ".storeSigned",
-            "body": ".storeSigned(${1:int256 value}, ${2:uint16 bitSize})",
+            "body": "storeSigned(${1:int256 value}, ${2:uint16 bitSize})",
             "description": [
                 "```\n<TvmBuilder>.storeSigned(int256 value, uint16 bitSize);\n```\n",
                 "Stores a signed integer value with given bitSize in the builder."
@@ -677,7 +781,7 @@
         },
         "<TvmBuilder>.storeUnsigned": {
             "prefix": ".storeUnsigned",
-            "body": ".storeUnsigned(${1:uint256 value}, ${2:uint16 bitSize})",
+            "body": "storeUnsigned(${1:uint256 value}, ${2:uint16 bitSize})",
             "description": [
                 "```\n<TvmBuilder>.storeUnsigned(uint256 value, uint16 bitSize);\n```\n",
                 "Stores an unsigned integer value with given bitSize in the builder."
@@ -689,6 +793,55 @@
             "description": [
                 "```\n<TvmBuilder>.storeUint(uint256 value, uint9 bitSize);\n```\n",
                 "Stores an unsigned integer value with given bitSize in the TvmBuilder."
+            ]
+        },
+        "<TvmBuilder>.storeIntLE2": {
+            "prefix": ".storeIntLE2",
+            "body": "storeIntLE2(${1:int16 value})",
+            "description": [
+                "```\n<TvmBuilder>.storeIntLE2(int16 value);\n```\n",
+                "Stores the little-endian integer."
+            ]
+        },
+        "<TvmBuilder>.storeIntLE4": {
+            "prefix": ".storeIntLE4",
+            "body": "storeIntLE4(${1:int32 value})",
+            "description": [
+                "```\n<TvmBuilder>.storeIntLE4(int32 value);\n```\n",
+                "Stores the little-endian integer."
+            ]
+        },
+        "<TvmBuilder>.storeIntLE8": {
+            "prefix": ".storeIntLE8",
+            "body": "storeIntLE8(${1:int64 value})",
+            "description": [
+                "```\n<TvmBuilder>.storeIntLE8(int64 value);\n```\n",
+                "Stores the little-endian integer."
+            ]
+        },
+        "<TvmBuilder>.storeUintLE2(uint16)":
+        {
+            "prefix": ".storeUintLE2",
+            "body": "storeUintLE2(${1:uint16 value})",
+            "description": [
+                "```\n<TvmBuilder>.storeUintLE2(uint16 value);\n```\n",
+                "Stores the little-endian unsigned integer."
+            ]
+        },
+        "<TvmBuilder>.storeUintLE4": {
+            "prefix": ".storeUintLE4",
+            "body": "storeUintLE4(${1:uint32 value})",
+            "description": [
+                "```\n<TvmBuilder>.storeUintLE4(uint32 value);\n```\n",
+                "Stores the little-endian unsigned integer."
+            ]
+        },
+        "<TvmBuilder>.storeUintLE8": {
+            "prefix": ".storeUintLE8",
+            "body": "storeUintLE8(${1:uint64 value})",
+            "description": [
+                "```\n<TvmBuilder>.storeUintLE8(uint64 value);\n```\n",
+                "Stores the little-endian unsigned integer."
             ]
         },
         "<TvmBuilder>.storeRef": {
@@ -1027,16 +1180,16 @@
             ]
         },
         "<address>.balance": {
-            "prefix": "address(this).balance",
-            "body": "address(this).balance",
+            "prefix": ".balance",
+            "body": "balance",
             "description": [
                 "```\naddress(this).balance returns (uint128);\n```\n",
                 "Returns the balance of this contract in nanotons.\n"
             ]
         },
         "<address>.currencies": {
-            "prefix": "address(this).currencies",
-            "body": "address(this).currencies",
+            "prefix": ".currencies",
+            "body": "currencies",
             "description": [
                 "```\naddress(this).currencies returns (ExtraCurrencyCollection);\n```\n",
                 "Returns currencies on the balance of this contract.\n"
@@ -2415,6 +2568,8 @@
                 " ```\n<TvmSlice>.decodeQ() //DEPRECATED\n```",
                 " ```\n<TvmSlice>.load() \n```",
                 " ```\n<TvmSlice>.loadQ() \n```",
+                " ```\n<TvmSlice>.loadIntLEN()\n```",
+                " ```\n<TvmSlice>.loadIntLENQ()\n```",
                 " ```\n<TvmSlice>.loadRef() \n```",
                 " ```\n<TvmSlice>.loadRefAsSlice() \n```",
                 " ```\n<TvmSlice>.loadSigned() \n```",
@@ -2448,6 +2603,8 @@
                 " ```\n <TvmBuilder>.storeSame() \n```",
                 " ```\n <TvmBuilder>.storeSigned() \n```",
                 " ```\n <TvmBuilder>.storeUnsigned() \n```",
+                " ```\n <TvmBuilder>.storeIntLEN \n```",                
+                " ```\n <TvmBuilder>.storeUintLEN \n```",                
                 " ```\n <TvmBuilder>.storeRef() \n```",
                 " ```\n <TvmBuilder>.storeTons() \n```",
                 " ```\n <TvmBuilder>.storeUint() \n```",

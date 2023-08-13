@@ -450,7 +450,7 @@
                     }
                 },
                 {
-                    "match": "\\b(msg)\\.(data|sender|value|currencies|isInternal|isExternal|isTickTock)\\b",
+                    "match": "\\b(msg)\\.(data|body|forwardFee|importFee|hasStateInit|sender|value|currencies|isInternal|isExternal|isTickTock)\\b",
                     "captures": {
                         "1": {
                             "name": "entity.name.class"
@@ -614,7 +614,7 @@
                     "name": "support.function.math"
                 },
                 {
-                    "match": "\\b(unicode|format|stoi|gasToValue|valueToGas|optional|repeat|QueryOrderBy)\\b",
+                    "match": "\\b(unicode|format|stoi|gasToValue|valueToGas|gasLeft|optional|repeat|QueryOrderBy)\\b",
                     "name": "support.function.string"
                 },
                 {

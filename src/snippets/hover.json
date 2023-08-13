@@ -870,6 +870,22 @@
                 "Returns the contained value, if the optional contains one. Otherwise, throws an exception."
             ]
         },
+        "<optional(T)>.getOr()": {
+            "prefix": ".getOr",
+            "body": "getOr(T default)",
+            "description": [
+                "```\n<optional(Type)>.getOr(${1:T default}) returns (T);\n```\n",
+                "Returns the contained value, if the optional contains one. Otherwise, returns default."
+            ]
+        },
+        "<optional(T)>.getOrDefault()": {
+            "prefix": ".getOrDefault",
+            "body": "getOrDefault()",
+            "description": [
+                "```\n<optional(T)>.getOrDefault() returns (T);\n```\n",
+                "Returns the contained value, if the optional contains one. Otherwise, returns the default value for T type."
+            ]
+        },
         "optional": {
             "prefix": "optional",
             "body": "optional${(1:type) 2:name}",
@@ -1445,8 +1461,8 @@
             "body": "receive () external {\n\t$0\n}",
             "description": [
                 "receive function is called in 2 cases:",
-                "1. msg.data (or message body) is empty.",
-                "2. msg.data starts with 32-bit zero.",
+                "1. msg.body is empty.",
+                "2. msg.body starts with 32-bit zero.",
                 "\nThen message body may contain data, for example string with comment."
             ]
         },
@@ -1547,7 +1563,39 @@
             "body": "msg.data",
             "description": [
                 "```\nmsg.data returns (TvmSlice);\n```\n",
-                "Returns a payload of the inbound message.\n"
+                "Returns the whole [Message](https://github.com/ton-blockchain/ton/blob/master/crypto/block/block.tlb#L155).\n"
+            ]
+        },
+        "msg.body": {
+            "prefix": "msg.body",
+            "body": "msg.body(${1:TvmSlice})",
+            "description": [
+                "```\nmsg.body returns (TvmSlice);\n```\n",
+                "Returns the payload (message body) of an inbound message.\n"
+            ]
+        },
+        "msg.forwardFee": {
+            "prefix": "msg.forwardFee",
+            "body": "msg.forwardFee",
+            "description": [
+                "msg.forwardFee returns (varUint16);\n```\n",
+                "Returns:\n - the forward fee for the internal inbound message.\n - 0 for the external inbound message.\n"
+            ]
+        },
+        "msg.importFee": {
+            "prefix": "msg.importFee",
+            "body": "msg.importFee",
+            "description": [
+                "```\nmsg.importFee returns (varUint16);\n```\n",
+                "Returns:\n - the field import_fee for external inbound message. Note: field import_fee is set offchain by user as they want and does not reflect the real import fee of the message.\n - 0 for the internal inbound message."
+            ]
+        },
+        "msg.hasStateInit": {
+            "prefix": "msg.hasStateInit",
+            "body": "msg.hasStateInit",
+            "description": [
+                "```\nmsg.hasStateInit(bool);\n```\n",
+                "Whether the internal/external inbound message contains field stateInit. Returns undefined value for tick/tock transaction. See [TL-B scheme](https://github.com/ton-blockchain/ton/blob/master/crypto/block/block.tlb) of Message X."
             ]
         },
         "tvm.accept": {
@@ -1698,8 +1746,13 @@
         },
         "tvm.checkSign": {
             "prefix": "tvm.checkSign",
-            "body": "tvm.checkSign(${1|uint256 hash\\, uint256 SignHighPart\\, uint256 SignLowPart\\, uint256 pubkey,uint256 hash\\, TvmSlice signature\\, uint256 pubkey,TvmSlice data\\, TvmSlice signature\\, uint256 pubkey|});",
-            "description": "returns (bool)\nExecutes TVM instruction \"CHKSIGNU\" for variants 1 and 2. This command checks the Ed25519-signature of a hash using public key pubkey. Signature is represented by two uint256 SignHighPart and SignLowPart in the first variant and by a slice signature in the second variant. In the third variant executes TVM instruction \"CHKSIGNS\". This command checks Ed25519-signature of data using public key pubkey. Signature is represented by a slice signature.\n"
+            "body": "tvm.checkSign(${1|uint256 dataHash\\, uint256 SignHighPart\\, uint256 SignLowPart\\, uint256 pubkey,uint256 hash\\, TvmSlice signature\\, uint256 pubkey,TvmSlice data\\, TvmSlice signature\\, uint256 pubkey|});",
+            "description": [         
+            "```\ntvm.checkSign(uint256 dataHash, uint256 SignHighPart, uint256 SignLowPart, uint256 pubkey) returns (bool);\n```\n",
+            "```\ntvm.checkSign(uint256 dataHash, TvmSlice signature, uint256 pubkey) returns (bool);\n```\n",
+            "```\ntvm.checkSign(TvmSlice data, TvmSlice signature, uint256 pubkey) returns (bool);\n```\n",
+            "Executes TVM instruction \"CHKSIGNU\" for variants 1 and 2. This command checks the Ed25519-signature of a dataHash using public key pubkey. Signature is represented by two uint256 SignHighPart and SignLowPart in the first variant and by a slice signature in the second variant. In the third variant executes TVM instruction \"CHKSIGNS\". This command checks Ed25519-signature of dataHash using public key pubkey. Signature is represented by a slice signature.\n"
+            ]
         },
         "tvm.insertPubkey": {
             "prefix": "tvm.insertPubkey",
@@ -2245,6 +2298,14 @@
                 "valueToGas(uint128 value) returns (uint128 gas);\n",
                 "valueToGas(uint128 value, int8 wid) returns (uint128 gas)\n",
                 "Returns how much gas could be bought on value nanotons in workchain wid. Throws an exception if wid doesn't equal 0 and -1.\n"
+            ]
+        },
+        "gasLeft": {
+            "prefix": "gasLeft",
+            "body": "gasLeft()",
+            "description": [                
+                "```\ngasLeft returns (uint64);\n```\n",                                 
+                "Returns the remaining gas. Supported only if CapGasRemainingInsn capability is set.\n"
             ]
         },
         "constant": {
@@ -3306,7 +3367,7 @@
         },
         "try-catch": {
             "prefix": "try",
-            "body": "try {\n\n}catch(variant value, uint number) { \n\n}",
+            "body": "try {\n\n}catch(variant value, uint16 number) { \n\n}",
             "description": [
                 "The try statement allows you to define a block of code to be tested for errors while it is executed. The catch statement allows you to define a block of code to be executed, if an error occurs in the try block. catch block gets two parameters of type variant and uint, which contain exception argument and code respectively. \n"                
             ]

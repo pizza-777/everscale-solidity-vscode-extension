@@ -120,6 +120,11 @@ function searchPath(absolutePath) {
     if (fs.existsSync(_path)) {
         return _path;
     }
+    const basePath = vscode.workspace.workspaceFolders[0].uri.fsPath;
+    const fromRoot = path.resolve(basePath, absolutePath).toLowerCase()// useful for win
+    if (fs.existsSync(fromRoot)) {
+        return fromRoot;
+    }
     return ifBroxus(absolutePath);
 }
 

@@ -1,4 +1,5 @@
 const path = require("path");
+const vscode = require("vscode") 
 
 function findNodeByPosition(ast, position, document) {
     for (let i = 0; i < ast.length; i++) {
@@ -62,11 +63,15 @@ function inRange(astPosition, position) {
     return false;
 }
 
-function pathsAreEqual(path1, path2) {
+function pathsAreEqual(path1, path2) {     
+    const basePath = vscode.workspace.workspaceFolders[0].uri.fsPath;
+    //useful for win
+    if (path.resolve(basePath, path1).toLowerCase() === path2.toLowerCase()){
+        return true;
+    }
     path1 = path.resolve(path1);
     path2 = path.resolve(path2);
-    if (process.platform == "win32")
-        return path1.toLowerCase() === path2.toLowerCase();
+
     return path1 === path2;
 }
 

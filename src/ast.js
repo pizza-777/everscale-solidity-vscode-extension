@@ -121,7 +121,12 @@ function searchPath(absolutePath) {
         return _path;
     }
     const basePath = vscode.workspace.workspaceFolders[0].uri.fsPath;
-    const fromRoot = path.resolve(basePath, absolutePath).toLowerCase()// useful for win
+    let fromRoot = path.resolve(basePath, absolutePath)// useful for win
+    if (fs.existsSync(fromRoot)) {
+        return fromRoot;
+    }
+    //with lower case
+    fromRoot = path.resolve(basePath, absolutePath).toLowerCase()// useful for win
     if (fs.existsSync(fromRoot)) {
         return fromRoot;
     }
@@ -130,5 +135,6 @@ function searchPath(absolutePath) {
 
 module.exports = {
     astParser,
-    findHoverNode
+    findHoverNode,
+    searchPath
 }

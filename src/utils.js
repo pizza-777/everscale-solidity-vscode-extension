@@ -4,6 +4,7 @@ const { findHoverNode } = require("./ast");
 const { astHoverMarkdown } = require("./ast/astHoverMarkdown")
 const snippetsJsonHover = require("./snippets/hover.json");
 const wordsSetHover = snippetsJsonHover['.source.ton-solidity'];
+const { searchPath } = require('./ast.js');
 
 const fs = require("fs");
 const path = require('path');
@@ -84,8 +85,9 @@ function getErrorFilePath(string) {
     const filePath = string.match(/--> (.+?\.t?sol)/);
     if (filePath == null || !filePath[1]) return null;
 
-    if (fs.existsSync(filePath[1])) {
-        return path.resolve(filePath[1]);
+    const resolvedPath = searchPath(filePath[1])
+    if (resolvedPath) {
+        return resolvedPath;
     }
     return vscode.window.activeTextEditor.document.uri.fsPath;
 }
@@ -118,7 +120,7 @@ function getErrors(string) {
         }
         const filePath = getErrorFilePath(value.join("\n"));
         if (filePath == null) {
-             //   throw "some technical errors, maybe compiller";
+            //   throw "some technical errors, maybe compiller";
             return;
         }
         let source = vscode.Uri.file(filePath);

@@ -1567,7 +1567,7 @@
         },
         "msg.body": {
             "prefix": "msg.body",
-            "body": "msg.body(${1:TvmSlice})",
+            "body": "msg.body",
             "description": [
                 "```\nmsg.body returns (TvmSlice);\n```\n",
                 "Returns the payload (message body) of an inbound message.\n"

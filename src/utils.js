@@ -125,7 +125,7 @@ function getErrors(string) {
         }
         let source = vscode.Uri.file(filePath);
         return {
-            info: changeErrorInfo(value[0]),
+            info: changeErrorInfo(value.join("\r\n")),
             coord: {
                 raw,
                 position

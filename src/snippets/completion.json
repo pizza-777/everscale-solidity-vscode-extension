@@ -216,6 +216,30 @@
                 "Converts the cell to a slice."
             ]
         },
+        "<TvmCell>..loadExoticCell": {
+            "prefix": ".loadExoticCell",
+            "body": ".loadExoticCell()",
+            "description": [
+                "<TvmCell>.loadExoticCell() returns (TvmCell)\n",
+                "Loads an exotic cell and returns an ordinary cell. If the cell is already ordinary, does nothing. If it cannot be loaded, throws an exception. It is wrapper for opcode XLOAD.\n"
+            ]
+        },
+        "<TvmCell>.loadExoticCellQ": {
+            "prefix": ".loadExoticCellQ",
+            "body": ".loadExoticCellQ()",
+            "description": [
+                "<TvmCell>.loadExoticCellQ() returns (TvmCell cell, bool ok)\n",
+                "Loads an exotic cell and returns an ordinary cell. If the cell is already ordinary, does nothing. If it cannot be loaded, does not throw exception and ok is equal to false. It is wrapper for opcode XLOADQ.\n"
+            ]
+        },
+        "<TvmCell>.exoticToSlice": {
+            "prefix": ".exoticToSlice()",
+            "body": ".exoticToSlice()",
+            "description": [
+                "<TvmCell>.exoticToSlice() returns (TvmSlice, bool)\n",
+                "Converts an ordinary or exotic cell into a TvmSlice, as if it were an ordinary cell. A flag is returned indicating whether TvmCell is exotic. If that be the case, its type can later be deserialized from the first eight bits of TvmSlice.\n"
+            ]
+        },
         "<TvmSlice>.empty": {
             "prefix": ".empty",
             "body": "empty()",
@@ -496,7 +520,8 @@
             "body": "loadSlice(${1:uint10 bits})",
             "description": [
                 "<TvmSlice>.loadSlice(uint10 bits) returns (TvmSlice);\n",
-                "<TvmSlice>.loadSlice(uint10 bits, uint refs) returns (TvmSlice);\n",
+                "<TvmSlice>.loadSlice(uint10 bits, uint2 refs) returns (TvmSlice);\n",
+                "<TvmSlice>.loadSliceQ(uint10 bits) returns (optional(TvmSlice));\n",
                 "Loads the first bits and `refs` references from `TvmSlice`"
             ]
         },
@@ -871,6 +896,14 @@
                 "Stores (serializes) an integer value and stores it in the builder as VarUInteger 16. See TL-B scheme."
             ]
         },
+        "<TvmBuilder>.toExoticCell": {
+            "prefix": ".toExoticCell",
+            "body": ".toExoticCell",
+            "description": [
+                "<TvmBuilder>.toExoticCell() returns (TvmCell);\n",
+                "Creates an exotic cell from TvmBuilder. It is wrapper for opcodes TRUE ENDXC.\n"
+            ]
+        },
         "<optional(Type)>.get": {
             "prefix": ".get",
             "body": "get()",
@@ -966,7 +999,7 @@
         "repeat": {
             "prefix": "repeat",
             "body": "repeat(${1:uint n}) {\n\t$0\n}",
-            "description": "Allows repeating block of code several times. A repeat loop evaluates the expression only one time. This expression must have an unsigned integer type."
+            "description": "Allows repeating the block of code several times. `exression` evaluates only one time."
         },
         "bitSize": {
             "prefix": "bitSize",
@@ -1077,10 +1110,14 @@
             "prefix": ".substr",
             "body": "substr()",
             "description": [
-                "<string>.substr(uint from[, uint count]) returns (string);\n",
-                "Returns a substring starting from the\nbyte with number from with byte length count. Note: if count is not set, then the new string will be cut from the from byte to the end of the string.\n",
-                "Example:\n",
-                "string long = \"0123456789\";\nstring a = long.substr(1, 2); // a = \"12\"\nstring b = long.substr(6); // b = \"6789\""
+                "<string>.substr(uint pos[, uint count]) returns (string);\n",
+                "1. Returns a string that is a substring of this string. The substring begins with the character at the specified `pos` and extends to the end of this string.\n",
+                "2. Returns a string that is a substring of this string. The substring begins with the character at the specified `pos` and copies at most `count` characters from the source string. If the string is shorter, as many characters as possible are used.\n",
+                "Throws an exception if `pos > string.byteLength()`.",
+                "Examples:\n",
+                "string text = \"0123456789\";\nstring a = text.substr(1, 2); // a = \"12\"\nstring b = text.substr(6); // b = \"6789\"\nstring c = text.substr(6, 100); // c = \"6789\"\nstring d = text.substr(777); // throws an exception\n",
+                "**Note:** if [Array Slices](https://docs.soliditylang.org/en/latest/types.html#array-slices) are used (they are written as `x[start:end]`), then `0 <= start <= end <= byteLength()`.\n",
+                "tring str = \"01234567890\";\nstring c = text.substr(6, 100); // c = \"6789\"\nstring d = text[6:106]; // throws an exception"           
             ]
         },
         "<string>.append": {
@@ -1140,7 +1177,9 @@
                 "format(string template, TypeA a, TypeB b, ...) returns (string);\n",
                 "Builds a string with arbitrary parameters.\n",
                 "Example:\n",
-                "format(\"Hello {}\", 123) \\\\ \"Hello 123\"\n"
+                "format(\"Hello {}\", 123) \\\\ \"Hello 123\"\n",
+                "`\"{}\"` - empty placeholder\n",
+                "`\"{:[0]<width>{\"x\",\"d\",\"X\",\"t\"}}\"` - placeholder for integers. Fills num with 0 if format starts with \"0\"."
             ]
         },
         "stoi": {
@@ -1171,9 +1210,19 @@
             "body": "address.makeAddrNone()",
             "description": "Constructs an address of type addr_none.\n"
         },
+        "address.addrNone": {
+            "prefix": "address.addrNone",
+            "body": "address.addrNone()",
+            "description": "Constructs an address of type addr_none.\n"
+        },
         "address.makeAddrExtern": {
             "prefix": "address.makeAddrExtern",
             "body": "address.makeAddrExtern(${1:addrNumber}, ${2:bitCnt})",
+            "description": "Constructs an address of type addr_extern with given value with bitCnt bit length.\n"
+        },
+        "address.addrExtern": {
+            "prefix": "address.addrExtern",
+            "body": "address.addrExtern(${1:addrNumber}, ${2:bitCnt})",
             "description": "Constructs an address of type addr_extern with given value with bitCnt bit length.\n"
         },
         "<address>.wid": {
@@ -1196,7 +1245,7 @@
             "prefix": ".balance",
             "body": "balance",
             "description": [
-                "address(this).balance returns (uint128);\n",
+                "address(this).balance returns (varUint16);\n",
                 "Returns the balance of this contract in nanoevers.\n"
             ]
         },
@@ -1261,10 +1310,10 @@
         },
         "<address>.transfer": {
             "prefix": ".transfer",
-            "body": "transfer(${1:uint128 value}, ${2:bool bounce}, ${3:uint16 flag}, ${4:TvmCell body}, ${5:ExtraCurrencyCollection currencies})",
+            "body": "transfer(${1:varUint16 value}, ${2:bool bounce}, ${3:uint16 flag}, ${4:TvmCell body}, ${5:ExtraCurrencyCollection currencies})",
             "description": [
                 "<address>.transfer(",
-                "      uint128 value, ",
+                "      varUint16 value, ",
                 "      bool bounce, ",
                 "      uint16 flag, ",
                 "      TvmCell body,",
@@ -1510,7 +1559,7 @@
             "prefix": "msg.value",
             "body": "msg.value",
             "description": [
-                "msg.value returns (uint128);\n",
+                "msg.value returns (varUint16);\n",
                 "Returns:\n\tBalance of the inbound message in nanoevers for internal message.\n\t0 for external message.\n\tUndefined value for tick/tock transaction."
             ]
         },
@@ -1895,7 +1944,7 @@
             "body": "tvm.sendrawmsg(${1:TvmCell msg}, ${2:uint8 flag});",
             "description": [
                 "tvm.sendrawmsg(TvmCell msg, uint8 flag);\n",
-                "Send the internal/external message msg with flag. It's wrapper for opcode SENDRAWMSG (TVM - A.11.10). Internal message msg can be generated by tvm.buildIntMsg().\n",
+                "Send the internal/external message msg with flag. It's wrapper for opcode SENDRAWMSG (TVM - A.11.10). Internal message msg can be generated by abi.encodeIntMsg().\n",
                 "--------\n",
                 "Possible values of parameter flag:\n",
                 " * 0 - message carries funds equal to the value parameter. Forward fee is subtracted from the value.",
@@ -1955,7 +2004,7 @@
             "body": "math.abs(${1|intM val,fixedMxN val|});",
             "description": [
                 "math.abs(intM val) returns (intM);\nmath.abs(fixedMxN val) returns (fixedMxN);\n",
-                "Computes the absolute value of the given integer.\n"
+                "Computes the absolute value of the given integer. Throws an exception if absolute value of `val` does not fit into T2.\n"
             ]
         },
         "math.modpow2": {
@@ -2052,7 +2101,7 @@
             "prefix": "tx.storageFee",
             "body": "tx.storageFee",
             "description": [
-                "tx.storageFee returns (uint120);\n",
+                "tx.storageFee returns (varUint16);\n",
                 "Returns the storage fee paid in the current transaction.\n"
             ]
         },
@@ -2131,6 +2180,14 @@
                 "TvmCell cell = abi.encode(uint(1), uint(2), uint(3), uint(4));"
             ]
         },
+        "abi.encodeBody": {
+            "prefix": "abi.encodeBody",
+            "body": "abi.encodeBody(${1: function/contract}, ${2: callbackfunction/arg0, arg1, arg2})",
+            "description": [
+                "abi.encodeBody(function, arg0, arg1, arg2, ...) returns (TvmCell);\n",
+                "Constructs a message body for the function call. Body can be used as a payload for <address>.transfer(). If the function is responsible, callbackFunction must be set.\n"                
+            ]
+        },
         "abi.decode": {
             "prefix": "abi.decode",
             "body": "abi.decode(${1:TvmCell}, (${2:TypeA}, ${3:TypeB}))",
@@ -2139,6 +2196,113 @@
                 "Decodes the cell and returns the values. Note: all types must be set in abi.decode. Otherwise, abi.decode throws an exception.\n",                
                 "Example:\n",
                 "(uint a, uint b, uint c, uint d) = abi.decode(cell, (uint, uint, uint, uint));"
+            ]
+        },
+        "abi.decodeData": {
+            "prefix": "abi.decodeData",
+            "body": "abi.decodeData(${1:ContractName}, ${2:TvmSlice})",
+            "description": [
+                "abi.decodeData(ContractName, TvmSlice) returns (uint256 /*pubkey*/, uint64 /*timestamp*/, bool /*constructorFlag*/, Type1 /*var1*/, Type2 /*var2*/, ...);",
+                "Loads state variables from TvmSlice that is obtained from the field data of stateInit.\n"                                
+            ]
+        },
+        "abi.decodeFunctionParams": {
+            "prefix": "abi.decodeFunctionParams",
+            "body": "abi.decodeFunctionParams(${1: functionName/contractName)}",
+            "description": [                
+                "Loads parameters of the function or constructor (if contract type is provided). This function is usually used in onBounce function.\n",
+                "// Loads parameters of the public/external function without \"responsible\" attribute\n",
+                "abi.decodeFunctionParams(functionName) returns (TypeA /*a*/, TypeB /*b*/, ...);\n",
+                "// Loads parameters of the public/external function with \"responsible\" attribute\n",
+                "abi.decodeFunctionParams(functionName) returns (uint32 callbackFunctionId, TypeA /*a*/, TypeB /*b*/, ...);\n",
+                "// Loads constructor parameters\n",
+                "abi.decodeFunctionParams(ContractName) returns (TypeA /*a*/, TypeB /*b*/, ...);\n"
+
+            ]
+        },
+        "abi.codeSalt": {
+            "prefix": "abi.codeSalt",
+            "body": "abi.codeSalt(${1: TvmCell code})",
+            "description": [                
+                "abi.codeSalt(TvmCell code) returns (optional(TvmCell) optSalt);\n",
+                "If code contains salt, then optSalt contains one. Otherwise, optSalt doesn't contain any value.\n"           
+            ]
+        },
+        "abi.setCodeSalt": {
+            "prefix": "abi.setCodeSalt",
+            "body": "abi.setCodeSalt(${1: TvmCell code}, ${2: TvmCell salt})",
+            "description": [                
+                "abi.setCodeSalt(TvmCell code, TvmCell salt) returns (TvmCell newCode);\n",
+                "Inserts salt into code and returns new code newCode.\n"           
+            ]
+        },
+        "abi.functionId": {
+            "prefix": "abi.functionId",
+            "body": "abi.functionId(${1: functionName/contractName})",
+            "description": [                
+                "abi.functionId(functionName) returns (uint32);\n",
+                "Returns the function id (uint32) of a public/external function or constructor.\n"           
+            ]
+        },
+        "abi.encodeIntMsg": {
+            "prefix": "abi.encodeIntMsg",
+            "body": "abi.encodeIntMsg(${params: params})",
+            "description": [                
+                "abi.encodeIntMsg({\n",
+                    "dest: address\n",
+                    "value: uint128\n",
+                    "call: {function, [callbackFunction,] arg0, arg1, arg2, ...}\n",
+                    "bounce: bool\n",
+                    "currencies: mapping(uint32 => varUint32)\n",
+                    "stateInit: TvmCell\n",
+                "})\n",
+                "returns (TvmCell);\n",
+                "Generates an internal outbound message that contains a function call. The result TvmCell can be used to send a message using tvm.sendrawmsg(). If the function is responsible, then callbackFunction parameter must be set.\n",
+                "dest, value and call parameters are mandatory. Another parameters can be omitted.\n"           
+            ]
+        },
+        "abi.encodeData": {
+            "prefix": "abi.encodeData",
+            "body": "abi.encodeData({${1: uint256 pubkey}, ${2: contr Contract}, ${3: varInit: {VarName0: varValue0, ...}}});",
+            "description": [
+                "abi.encodeData({uint256 pubkey, contract Contract, varInit: {VarName0: varValue0, ...}});",
+                "Generates data field of the StateInit (TBLKCH - 3.1.7.). Parameters are the same as in abi.encodeStateInit().\n",                
+                "Example:\n",
+                "(uint a, uint b, uint c, uint d) = abi.decode(cell, (uint, uint, uint, uint));"
+            ]
+        },
+        "abi.encodeOldDataInit()": {
+            "prefix": "abi.encodeOldDataInit",
+            "body": "abi.encodeOldDataInit({${1: uint256 pubkey}, ${2: contr Contract}, ${3: varInit: {VarName0: varValue0, ...}}});",
+            "description": [
+                "abi.encodeOldDataInit() returns (TvmCell);",
+                "Same as abi.encodeData() but generate data in the format that was used in the compiler < 0.72.0. This function can be used to deploy old contracts (that was compiled < 0.72.0) from new ones. \n"                                
+            ]
+        },
+        "abi.encodeStateInit()": {
+            "prefix": "abi.encodeStateInit",
+            "body": "abi.encodeStateInit({${1: TvmCell code}, ${2: TvmCell data}, ${3: uint8 splitDepth}, ${4: uint256 pubkey}, ${5: Contract contr}, ${6: varInit: {VarName0: varValue0, ...}}});",
+            "description": [
+                "Generates a StateInit (TBLKCH - 3.1.7.) from code and data TvmCells. Member splitDepth of the tree of cell StateInit:\n",
+                "abi.encodeStateInit(TvmCell code, TvmCell data) returns (TvmCell stateInit);\n",
+                "abi.encodeStateInit(TvmCell code, TvmCell data, uint8 splitDepth) returns (TvmCell stateInit);",
+                "abi.encodeStateInit({TvmCell code, TvmCell data, uint8 splitDepth",
+                "uint256 pubkey, Contract contr, varInit: {VarName0: varValue0, ...}});"
+            ]
+        },
+        "abi.stateInitHash()": {
+            "prefix": "abi.stateInitHash",
+            "body": "abi.stateInitHash(${1: uint256 codeHash}, ${2: uint256 dataHash}, ${3: uint16 codeDepth}, ${4: uint16 dataDepth})",
+            "description": [
+                "abi.stateInitHash(uint256 codeHash, uint256 dataHash, uint16 codeDepth, uint16 dataDepth) returns (uint256);\n",
+                "Calculates hash of the stateInit for given code and data specifications.\n",
+                "TvmCell code = ...;\n",
+                "TvmCell data = ...;\n",
+                "uint codeHash = tvm.hash(code);\n",
+                "uint dataHash = tvm.hash(data);\n",
+                "uint16 codeDepth = code.depth();\n",
+                "uint16 dataDepth = data.depth();\n",
+                "uint256 hash = abi.stateInitHash(codeHash, dataHash, codeDepth, dataDepth);\n"
             ]
         },
         "gosh.applyBinPatchQ": {
@@ -2308,6 +2472,14 @@
             "description": [
                 "Example: uint constant cost = 100;\n",
                 "For constant variables, the value has to be a constant at compile time and this value is substituted where the variable is used. The value has to be assigned where the variable is declared.\n"
+            ]
+        },
+        "nostorage": {
+            "prefix": "nostorage",
+            "body": "nostorage",
+            "description": [
+                "uint nostorage m_value;\n",
+                "`nostorage` state variables are not saved in the contract's storage. They have default values at the beginning of each transaction. \n"
             ]
         },
         "static": {
@@ -2597,7 +2769,10 @@
                 " * <TvmCell>.depth()",
                 " * <TvmCell>.dataSize()",
                 " * <TvmCell>.dataSizeQ()",
-                " * <TvmCell>.toSlice()"
+                " * <TvmCell>.toSlice()",
+                " * <TvmCell>.loadExoticCell()",
+                " * <TvmCell>.loadExoticCellQ()",
+                " * <TvmCell>.exoticToSlice()"
             ]
         },
         "TvmSlice": {
@@ -2663,7 +2838,8 @@
                 " * <TvmBuilder>.storeRef()",
                 " * <TvmBuilder>.storeTons()",
                 " * <TvmBuilder>.storeUint()",
-                " * <TvmBuilder>.storeInt()"
+                " * <TvmBuilder>.storeInt()",
+                " * <TvmBuilder>.toExoticCell()"
             ]
         },
         "AddressInput.get": {
@@ -3506,6 +3682,14 @@
             "body": "varUint16",
             "description": "Use this type if you want to store or send uintegers, and they usually have small size."
         },
+        "coins": {
+            "prefix": "coins",
+            "body": "coins",
+            "description": [
+                "coins` is an alias for `varUint16`\n",
+                "Use this type if you want to store or send uintegers, and they usually have small size."
+            ]
+        },
         "varUint32": {
             "prefix": "varUint32",
             "body": "varUint32",
@@ -3586,6 +3770,17 @@
             "body": "try {\n\n}catch(variant value, uint16 number) { \n\n}",
             "description": [
                 "The try statement allows you to define a block of code to be tested for errors while it is executed. The catch statement allows you to define a block of code to be executed, if an error occurs in the try block. catch block gets two parameters of type variant and uint, which contain exception argument and code respectively. \n"                
+            ]
+        },
+        "<Integer>.cast(T)":{
+            "prefix": ".cast",
+            "body": "cast(${1:Type})",
+            "description": [
+                "<Integer>.cast(T) returns (T)\n",
+                "Convert `<Integer>` to T type. `T` is integer type. Type of `<Integer>` and `T` must have same sign or bit-size. Never throws an exception. For example:\n",
+                "uint8 a = 255;\nuint4 b = a.cast(uint4); // b == 15\nuint8 a = 255;\nint8 b = a.cast(int8); // b == -1\nuint8 a = 255;\nint4 b = a.cast(uint4).cast(int4); // b == -1\nuint8 a = 255;\n// int4 b = a.cast(int4); // compilation fail\n",
+                "**Note:** conversion via `T(x)` throws an exception if `x` does not fit into `T` type.  For example:\n",
+                "uint8 a = 10;\nuint4 b = uint4(a); // OK, a == 10\nuint8 a = 100;\nuint4 b = uint4(a); // throws an exception because type(uint4).max == 15\nint8 a = -1;\nuint8 b = uint8(a); // throws an exception because type(uint8).min == 0\n"
             ]
         },
         "using ... for":{

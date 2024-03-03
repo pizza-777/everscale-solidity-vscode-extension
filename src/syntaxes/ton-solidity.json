@@ -505,7 +505,7 @@
                     }
                 },
                 {
-                    "match": "\\b(abi)\\.(encode|decode)\\b",
+                    "match": "\\b(abi)\\.(encode|decode|encodeData|decodeData|encodeStateInit|encodeOldDataInit|encodeIntMsg|stateInitHash|codeSalt|setCodeSalt|functionId|encodeExtMsg|encodeIntMsg|encodeBody)\\b",
                     "captures": {
                         "1": {
                             "name": "entity.name.class"
@@ -652,7 +652,7 @@
             "name": "storage.modifier.readonly"
         },
         "type-modifier-extended-scope": {
-            "match": "\\b(pure|view|inherited|indexed|storage|memory|virtual|calldata|override|abstract)\\b",
+            "match": "\\b(pure|view|inherited|indexed|storage|memory|virtual|calldata|override|abstract|nostorage)\\b",
             "name": "storage.modifier.extendedscope"
         },
         "variable": {
